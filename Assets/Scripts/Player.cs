@@ -53,39 +53,6 @@ namespace CapstoneGame
 
 	}
 
-	public class PlayerPhysics : IPhysics
-	{
-		
 
-
-		[Range(0.1f,0.5f)]
-		public float speed = 0.25f;
-		private Vector3 velocity;
-		private Transform playerTrans;
-
-		public PlayerPhysics (Transform playerTrans){
-			this.playerTrans = playerTrans;
-		}
-
-		public void UpdateSpeed(float speed){
-			this.speed = speed;
-		}
-
-		public void UpdateVelocity(Vector3 velocity){
-			this.velocity = velocity;		
-		}
-
-		public void UpdatePosition(){
-			if (playerTrans.position.y < -5.5f) {
-				playerTrans.position = new Vector3(playerTrans.position.x,-5.5f,playerTrans.position.z);
-			} else if (playerTrans.position.y > 5.5f) {
-				playerTrans.position = new Vector3(playerTrans.position.x,5.5f,playerTrans.position.z);
-			} else {
-				playerTrans.Translate (this.velocity * this.speed);
-			}
-		}
-				
-
-	}
 }
 

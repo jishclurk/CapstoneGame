@@ -38,9 +38,21 @@ namespace CapstoneGame{
 		
 		// Update is called once per frame
 		void FixedUpdate () {
-			
-			foreach (Ball ball in balls) {
-				ball.UpdatePhysics (new Vector3(0,0,0));
+
+			List<Ball> deleteList = new List<Ball> ();
+
+			int deleted = 0;
+			foreach (Ball b in balls){
+				if (b.ballObj != null) {
+					b.UpdatePhysics (new Vector3 (0, 0, 0));
+				} else {
+					deleted++;
+
+				}
+			}
+
+			foreach (Ball d in deleteList) {
+				balls.Remove (d);
 			}
 
 				

@@ -75,21 +75,43 @@ namespace CapstoneGame{
 			watching.Add (watchingObj);
 		}
 
+		public void ReleaseEntityToWatch(IEntity watchingObj){
+			watching.Remove (watchingObj);
+		}
+
 		public Command UpdateAI(){
+
+			List<IEntity> deleteList = new List<IEntity> ();
 
 			foreach (IEntity entity in watching) {
 
 				if (entity is Ball) {
-					Ball ball = (Ball)entity;
-
+						Ball ball = (Ball)entity;
+//					if (ball.GetVelocity ().x < 0) {
+//						
+//					}
+					if (ball.ballObj != null) {
+						//General AI
 						if (ball.ballTrans.position.y > enemyTrans.position.y) {
 							return new MoveUp ();
+							//enemyPhys.UpdateVelocity(new Vector3(0,1.0f,0));
+							
 						} else if (ball.ballTrans.position.y < enemyTrans.position.y) {
 							return new MoveDown ();
+							//enemyPhys.UpdateVelocity(new Vector3(0,-1.0f,0));
 						}
+					} else {
+						deleteList.Remove (ball);
+					}
+					//enemyPhys.UpdatePosition ();
+					//
 				}
 
 				//add other watchable objects
+			}
+
+			foreach (IEntity entity in deleteList) {
+				ReleaseEntityToWatch (entity);
 			}
 
 			return new DoNothing ();

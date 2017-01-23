@@ -58,46 +58,6 @@ namespace CapstoneGame
 		}
 	}
 
-	public class BallPhysics : IPhysics
-	{
 
-
-
-//		[Range(1.0010f,1.0100f)]
-//		public float speedUp = 1.0010f;
-		private Vector3 velocity;
-		private Rigidbody rb;
-		private float speed;
-
-		public BallPhysics (Rigidbody rb){
-			this.rb = rb;
-		}
-
-		public void UpdateSpeed(float speed){
-			this.speed = speed;
-		}
-
-		public void UpdateVelocity(Vector3 velocity){
-					rb.velocity = rb.velocity * speed;
-
-					if (rb.velocity.x < 2f && rb.velocity.x > -2.0f) {
-						float newX = rb.velocity.x * 1.5f;
-						rb.velocity = new Vector3 (newX, rb.velocity.y, rb.velocity.z);
-					}
-
-					if (rb.velocity.y < 2.0f && rb.velocity.y > -2.0f) {
-						float newY = rb.velocity.y * 1.5f;
-						rb.velocity = new Vector3 (rb.velocity.x, newY, rb.velocity.z);
-					}
-		}
-
-		public void UpdatePosition(){
-			//do nothing since rigidbody
-		}
-
-
-
-
-	}
 }
 
