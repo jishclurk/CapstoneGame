@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,6 +50,9 @@ public class GameManager : MonoBehaviour {
 		GUI.TextArea(new Rect (Screen.width-100,0,100,50),"Player Score   "+playerScore);
 		GUI.TextArea(new Rect (0,0,100,50),"Enemy Score   "+enemyScore);
 	}
+
+
+
 }
 
 }
