@@ -29,7 +29,7 @@ namespace CapstoneGame
 			playerPhys.UpdatePosition ();
 		}
 
-		public Command UpdateAI(){
+		public ICommand UpdateAI(IEntity entity){
 			//nothing here - for co-opping AI
 			return new DoNothing();
 		}

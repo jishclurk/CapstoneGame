@@ -64,7 +64,7 @@ namespace CapstoneGame
 
 					}
 				}
-				enemy.UpdateAI ().Execute(enemy);
+				enemy.UpdateAI (enemy).Execute();
 
 				//enemy.UpdateAI ();
 			}

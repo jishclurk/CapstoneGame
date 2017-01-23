@@ -7,7 +7,7 @@ namespace CapstoneGame{
 	
 	public interface IArtificialIntelligence
 	{
-		Command UpdateAI();
+		ICommand UpdateAI(IEntity entity);
 
 		void AddEntityToWatch(IEntity entity);
 

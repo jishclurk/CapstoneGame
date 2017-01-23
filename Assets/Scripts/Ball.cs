@@ -39,7 +39,7 @@ namespace CapstoneGame
 			return this.ballTrans;
 		}
 
-		public Command UpdateAI(){
+		public ICommand UpdateAI(IEntity entity){
 			//nothign here
 			return new DoNothing();
 		}

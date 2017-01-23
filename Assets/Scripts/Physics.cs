@@ -48,8 +48,6 @@ namespace CapstoneGame
 	public class PlayerPhysics : IPhysics
 	{
 
-
-
 		private float speed = 0.25f;
 		private Vector3 velocity;
 		private Transform playerTrans;

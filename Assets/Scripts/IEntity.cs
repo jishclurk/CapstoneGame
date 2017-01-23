@@ -8,7 +8,7 @@ namespace CapstoneGame
 	{
 
 		void UpdatePhysics(Vector3 velocity);
-		Command UpdateAI ();
+		ICommand UpdateAI (IEntity entity);
 		bool BeingWatched ();
 		void SetWatched (bool watched);
 		Transform GetTransform();

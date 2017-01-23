@@ -34,13 +34,14 @@ namespace CapstoneGame{
 			this.enemyPhys.UpdatePosition ();
 		}
 
-		public Command UpdateAI(){
-			//nothing here - for co-opping AI
-			//enemyAI
-			return enemyAI.UpdateAI();
-		}
+        public ICommand UpdateAI(IEntity enemy)
+        {
+            //nothing here - for co-opping AI
+            //enemyAI
+            return enemyAI.UpdateAI(enemy);
+        }
 
-		public bool BeingWatched(){
+        public bool BeingWatched(){
 			return this.watched;
 		}
 
@@ -61,7 +62,7 @@ namespace CapstoneGame{
 	{
 		private List<IEntity> watching;
 		private Transform enemyTrans;
-		private Command moveUp, moveDown;
+		private ICommand moveUp, moveDown;
 		private PlayerPhysics enemyPhys;
 
 		public EnemyAI(Transform enemyTrans, IPhysics enemyPhysics){
@@ -92,7 +93,7 @@ namespace CapstoneGame{
 			return watching;
 		}
 
-		public Command UpdateAI(){
+		public ICommand UpdateAI(IEntity enemy){
 
 			List<IEntity> deleteList = new List<IEntity> ();
 
@@ -107,11 +108,11 @@ namespace CapstoneGame{
 						//General AI
 //						if (ball.GetVelocity ().x < 0) {
 							if (ball.ballTrans.position.y > enemyTrans.position.y) {
-								return new MoveUp ();
+								return new MoveUp (enemy);
 								//enemyPhys.UpdateVelocity(new Vector3(0,1.0f,0));
 							
 							} else if (ball.ballTrans.position.y < enemyTrans.position.y) {
-								return new MoveDown ();
+								return new MoveDown (enemy);
 								//enemyPhys.UpdateVelocity(new Vector3(0,-1.0f,0));
 							}
 //						} else {

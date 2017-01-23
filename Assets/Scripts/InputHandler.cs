@@ -7,39 +7,39 @@ namespace CapstoneGame{
 	public class InputHandler : MonoBehaviour
 	{
 
-
 		//ATTACH GAME OBJECT TO PLAYER!!!!
 
 		public Player player;
+
+        //Object that moves based on input
 		public GameObject playerObject;
-		//The different keys we need
-		private Command buttonUp, buttonDown;
 
-		void Start(){
+        //The different keys we need
+        private ICommand move;
 
+        void Start(){
 			player = new Player (playerObject);
+            move = new Move(player);
 
-			buttonUp = new MoveUp ();
-			buttonDown = new MoveDown ();
-
+			//buttonUp = new MoveUp (player);
+			//buttonDown = new MoveDown (player);
 		}
 
 		void Update()
 		{
-
-			HandleInput ();
-
+            move.Execute();
+			//HandleInput ();
 		}
 
-		public void HandleInput(){
+		//public void HandleInput(){
 
-			if (Input.GetKey(KeyCode.UpArrow)) {
-				buttonUp.Execute (player);
-			} else if (Input.GetKey(KeyCode.DownArrow)) {
-				buttonDown.Execute (player);
-			}
+		//	if (Input.GetKey(KeyCode.UpArrow)) {
+		//		buttonUp.Execute ();
+		//	} else if (Input.GetKey(KeyCode.DownArrow)) {
+		//		buttonDown.Execute ();
+		//	}
 
-		}
+		//}
 
 	}
 }

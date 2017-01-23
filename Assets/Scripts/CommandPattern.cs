@@ -4,28 +4,33 @@ using UnityEngine;
 
 namespace CapstoneGame
 {
-	public abstract class Command
+	public interface ICommand
 	{
-
-
 
 		//move command
-		public abstract void Execute (IEntity player);
+		 void Execute ();
 
 		//Move player in certain direction
-		public abstract void Move (IEntity player);
+		// void Move (IEntity player);
 	}
 
-	public class MoveUp :Command
+	public class MoveUp :ICommand
 	{
-		//called on key press
-		public override void Execute(IEntity player)
+        private IEntity player;
+		
+        public MoveUp(IEntity player)
+        {
+            this.player = player;
+        }
+        
+        //called on key press
+		public void Execute()
 		{
 			Move(player);
 
 		}
 
-		public override void Move(IEntity player){
+		public void Move(IEntity player){
 			player.UpdatePhysics (new Vector3(0,1.0f,0 ));
 //			playerTrans.Translate (playerTrans.up * speed);
 //			if (playerTrans.position.y > 5.5f) {
@@ -35,61 +40,134 @@ namespace CapstoneGame
 		}
 	}
 
-	public class MoveDown :Command
+    public class Move : ICommand
+    {
+        private IEntity player;
+
+        public Move(IEntity player)
+        {
+            this.player = player;
+        }
+        //called on key press
+        public void Execute()
+        {
+            player.UpdatePhysics(new Vector3(0, Input.GetAxis("Vertical"), 0));
+            //player.UpdatePhysics(new Vector3(0, -1.0f, 0));
+           // Move(player);
+
+        }
+
+        //public void Move(IEntity player)
+        //{
+        //    player.UpdatePhysics(new Vector3(0, -1.0f, 0));
+
+        //}
+    }
+
+    public class MoveDown :ICommand
 	{
-		//called on key press
-		public override void Execute(IEntity player)
+        private IEntity player;
+
+        public MoveDown(IEntity player)
+        {
+            this.player = player;
+        }
+        //called on key press
+        public void Execute()
 		{
 			Move(player);
 
 		}
 
-		public override void Move(IEntity player){
+		public void Move(IEntity player){
 			player.UpdatePhysics (new Vector3(0,-1.0f,0 ));
 
 		}
 	}
 		
-	public class DoNothing : Command
+	public class DoNothing : ICommand
 	{
 		//Called when we press a key
-		public override void Execute(IEntity player)
+		public void Execute()
 		{
 			//Nothing will happen if we press this key
 		}
 
-		public override void Move(IEntity player)
+		public void Move(IEntity player)
 		{
 			//Nothing will happen if we press this key
 		}
 	}
 
-//	public class EnemyMoveUp :Command
-//	{
-//		//called on key press
-//		public override void Execute(Transform playerTrans, float speed)
-//		{
-//			Move(playerTrans,speed);
-//
-//		}
-//
-//		public override void Move(Transform playerTrans,float speed){
-//			playerTrans.Translate (0.0f, speed, 0.0f);
-//		}
-//	}
-//
-//	public class EnemyMoveDown :Command
-//	{
-//		//called on key press
-//		public override void Execute(Transform playerTrans, float speed)
-//		{
-//			Move(playerTrans,speed);
-//
-//		}
-//
-//		public override void Move(Transform playerTrans,float speed){
-//			playerTrans.Translate (0.0f, -speed, 0.0f);
-//		}
-//	}
+    public class Pause : ICommand
+    {
+        //Called when we press a key
+        public void Execute()
+        {
+            //IMPLEMENT
+        }
+
+        public void Move(IEntity player)
+        {
+            //IMPLEMENT
+
+        }
+    }
+
+    public class Play : ICommand
+    {
+        //Called when we press a key
+        public void Execute()
+        {
+            //IMPLEMENT
+
+        }
+
+        public void Move(IEntity player)
+        {
+            //IMPLEMENT
+
+        }
+    }
+    public class Exit : ICommand
+    {
+        //Called when we press a key
+        public void Execute()
+        {
+            //IMPLEMENT
+        }
+
+        public void Move(IEntity player)
+        {
+            //IMPLEMENT
+        }
+    }
+    //	public class EnemyMoveUp :Command
+    //	{
+    //		//called on key press
+    //		public override void Execute(Transform playerTrans, float speed)
+    //		{
+    //			Move(playerTrans,speed);
+    //
+    //		}
+    //
+    //		public override void Move(Transform playerTrans,float speed){
+    //			playerTrans.Translate (0.0f, speed, 0.0f);
+    //		}
+    //	}
+    //
+    //	public class EnemyMoveDown :Command
+    //	{
+    //		//called on key press
+    //		public override void Execute(Transform playerTrans, float speed)
+    //		{
+    //			Move(playerTrans,speed);
+    //
+    //		}
+    //
+    //		public override void Move(Transform playerTrans,float speed){
+    //			playerTrans.Translate (0.0f, -speed, 0.0f);
+    //		}
+    //	}
 }
 
