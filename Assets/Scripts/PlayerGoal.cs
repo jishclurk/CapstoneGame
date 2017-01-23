@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace CapstoneGame{
 public class PlayerGoal : MonoBehaviour {
 
-	private int eScore;
 	AudioSource audio;
+	public GameManager gm;
 
 	public ParticleSystem ballExplode;
 	// Use this for initialization
 	void Start () {
-		eScore = 0;
 		audio = gameObject.GetComponent<AudioSource> ();
 	}
 	
@@ -26,11 +26,9 @@ public class PlayerGoal : MonoBehaviour {
 		if (collision.gameObject.name.Contains("Ball")){
 			audio.Play ();
 			Instantiate (ballExplode, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
-			eScore++;
+			gm.EnemyScore++;
 		}
 	}
-
-	void OnGUI(){
-		GUI.TextArea(new Rect (0,0,100,50),"Enemy Score   "+eScore);
-	}
+		
+}
 }

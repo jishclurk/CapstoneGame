@@ -11,9 +11,10 @@ namespace CapstoneGame
 		//Enemy List
 		private List<Enemy> enemies;
 
-		//Set Range of Enemies
-		[Range(1,3)]
-		public int numEnemies = 1  ;
+
+		private int numEnemies = 1  ;
+
+		public int EnemyNumber { get { return numEnemies; } set  {numEnemies = value;}}
 
 		//Set enemy speed (difficulty)
 		[Range(0.001f,1.0f)]
@@ -31,10 +32,11 @@ namespace CapstoneGame
 				Enemy newEnemy = new Enemy (Instantiate (enemyPrefab, new Vector3 (-15.0f, 0+2*i, 0), transform.rotation));
 
 				//Using the ball handler, find a ball that is not being tracked by an enemy, and link the enemy to that ball
-				Ball unwatchedBall = ballHandler.GetUnWatchedBall ();
-				if (unwatchedBall != null){
-					newEnemy.enemyAI.AddEntityToWatch (unwatchedBall);
-				}
+
+//				Ball unwatchedBall = ballHandler.GetUnWatchedBall ();
+//				if (unwatchedBall != null){
+//					newEnemy.enemyAI.AddEntityToWatch (unwatchedBall);
+//				}
 
 				//
 				newEnemy.changeDiffculty (difficulty);
@@ -53,7 +55,17 @@ namespace CapstoneGame
 
 		public void HandleEnemies(){
 			foreach (Enemy enemy in enemies){
+				if (enemy.enemyAI.watchList ().Count == 0) {
+
+					Ball unwatchedBall = ballHandler.GetUnWatchedBall ();
+					if (unwatchedBall != null){
+						enemy.enemyAI.AddEntityToWatch (unwatchedBall);
+
+
+					}
+				}
 				enemy.UpdateAI ().Execute(enemy);
+
 				//enemy.UpdateAI ();
 			}
 

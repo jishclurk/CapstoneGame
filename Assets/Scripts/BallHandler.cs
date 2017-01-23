@@ -10,10 +10,13 @@ namespace CapstoneGame{
 
 		public GameObject ballPrefab;
 
-		public List<Ball> balls;
+		public List<Ball> balls = new List<Ball>();
 
-		[Range(1,4)]
-		public int numBalls = 1;
+
+		private int numBalls = 1;
+		public int BallCount { get { return balls.Count; }  }
+
+		public int StartBallNumber { get { return numBalls; } set  {numBalls = value;}}
 
 
 		[Range(1.0010f,1.0100f)]
@@ -21,19 +24,23 @@ namespace CapstoneGame{
 
 		// Use this for initialization
 		void Awake () {
-			balls = new List<Ball> ();
-			for (int i = 0; i < numBalls; i++) {
-				balls.Add (new Ball (Instantiate (ballPrefab, new Vector3 (0, 0+2*i, 0), transform.rotation)));
-			}
+
 
 		}
 
 		void Start(){
+			InstantiatBalls ();
+
+		}
+
+		void InstantiatBalls(){
 			foreach (Ball ball in balls) {
 				ball.SetSpeedUpConstant (speedUp);
-				ball.ballObj.GetComponent<Rigidbody> ().velocity = new Vector3 (5, 3, 0);
+				float i = Mathf.Pow (-1.0f, Random.Range (0, 2));
+				Debug.Log ("x velocity" + i);
+				float i2 = Mathf.Pow (-1.0f, Random.Range (0, 2));
+				ball.ballObj.GetComponent<Rigidbody> ().velocity = new Vector3 (i*Random.Range(3,6), i2*Random.Range(3,5), 0);
 			}
-
 		}
 		
 		// Update is called once per frame
@@ -47,7 +54,7 @@ namespace CapstoneGame{
 					b.UpdatePhysics (new Vector3 (0, 0, 0));
 				} else {
 					deleted++;
-
+					deleteList.Add (b);		
 				}
 			}
 
@@ -59,13 +66,20 @@ namespace CapstoneGame{
 		}
 
 		public Ball GetUnWatchedBall(){
-			for (int i=0; i<numBalls; i++){
+			for (int i=0; i<balls.Count; i++){
 				if (!balls [i].BeingWatched ()) {
-					balls [i].SetWatched (true);
+					//balls [i].SetWatched (true);
 					return balls [i];
 				}
 			}
 			return null;
+		}
+
+		public void addBalls(){
+			for (int i = 0; i < numBalls; i++) {
+				balls.Add (new Ball (Instantiate (ballPrefab, new Vector3 (0, 0+2*i, 0), transform.rotation)));
+			}
+			InstantiatBalls ();
 		}
 
 	//	void OnGUI(){

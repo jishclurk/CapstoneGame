@@ -72,11 +72,24 @@ namespace CapstoneGame{
 		}
 
 		public void AddEntityToWatch(IEntity watchingObj){
-			watching.Add (watchingObj);
+			//B
+			Ball ball = (Ball)watchingObj;
+			if (ball.ballObj != null) {
+				if (watchingObj.GetTransform ().position.x < 0) {
+				
+					ball.SetWatched (true);
+					watching.Add (watchingObj);
+					Debug.Log ("Added a ball to enemy atch list");
+				}
+			}
 		}
 
 		public void ReleaseEntityToWatch(IEntity watchingObj){
 			watching.Remove (watchingObj);
+		}
+
+		public List<IEntity> watchList(){
+			return watching;
 		}
 
 		public Command UpdateAI(){
@@ -92,16 +105,21 @@ namespace CapstoneGame{
 //					}
 					if (ball.ballObj != null) {
 						//General AI
-						if (ball.ballTrans.position.y > enemyTrans.position.y) {
-							return new MoveUp ();
-							//enemyPhys.UpdateVelocity(new Vector3(0,1.0f,0));
+//						if (ball.GetVelocity ().x < 0) {
+							if (ball.ballTrans.position.y > enemyTrans.position.y) {
+								return new MoveUp ();
+								//enemyPhys.UpdateVelocity(new Vector3(0,1.0f,0));
 							
-						} else if (ball.ballTrans.position.y < enemyTrans.position.y) {
-							return new MoveDown ();
-							//enemyPhys.UpdateVelocity(new Vector3(0,-1.0f,0));
-						}
+							} else if (ball.ballTrans.position.y < enemyTrans.position.y) {
+								return new MoveDown ();
+								//enemyPhys.UpdateVelocity(new Vector3(0,-1.0f,0));
+							}
+//						} else {
+//							deleteList.Add (ball);
+//						}
 					} else {
-						deleteList.Remove (ball);
+						//ball.SetWatched (false);
+						deleteList.Add (ball);
 					}
 					//enemyPhys.UpdatePosition ();
 					//
