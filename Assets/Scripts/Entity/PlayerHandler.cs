@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CapstoneGame{
 	
-	public class InputHandler : MonoBehaviour
+	public class PlayerHandler : MonoBehaviour
 	{
 
 		//ATTACH GAME OBJECT TO PLAYER!!!!
