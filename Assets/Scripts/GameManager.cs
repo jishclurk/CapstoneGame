@@ -16,17 +16,21 @@ public class GameManager : MonoBehaviour {
 	public EnemyHandler eh;
 
 	[Range(1,3)]
-	public int numBalls = 3;
-	private int numEnemies = 1;
+	//public int numBalls = 3;
+	//private int numEnemies = 1;
 	private int endScore = 5;
 	// Use this for initialization
 		void Awake(){
-			bh.StartBallNumber = numBalls;
-			bh.addBalls ();
-			eh.EnemyNumber = numEnemies;
-		}
+            bh.setGameManager(this);
+            //eh.setGameManager(this);
 
-	void Start () {
+            //  bh = (BallHandler)Instantiate(bh)
+            //bh.StartBallNumber = numBalls;
+            //bh.addBalls ();
+            //eh.EnemyNumber = numEnemies;
+        }
+
+        void Start () {
 
 
 		enemyScore = 0;
@@ -35,14 +39,14 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-			if (PlayerScore == endScore) {
+			//if (PlayerScore == endScore) {
 
-			} else if (EnemyScore == endScore) {
+			//} else if (EnemyScore == endScore) {
 
-			} else if (bh.BallCount == 0) {
-				bh.addBalls ();
-				Debug.Log ("Got here");
-			}
+			//} else if (bh.BallCount == 0) {
+			//	bh.addBalls ();
+			//	Debug.Log ("Got here");
+			//}
 	}
 		
 	void OnGUI(){

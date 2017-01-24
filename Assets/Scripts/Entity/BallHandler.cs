@@ -7,80 +7,87 @@ namespace CapstoneGame{
 
 	public class BallHandler : MonoBehaviour {
 
-
-		public GameObject ballPrefab;
-
+		public Ball ballPrefabRef;
 		public List<Ball> balls = new List<Ball>();
+        public ParticleSystem ballExplode;
+        public int numBalls = 1;
 
+        private GameManager gameManager;
+        private AudioSource enemyScore;
+        private AudioSource playerScore;
 
-		private int numBalls = 1;
+		//public int StartBallNumber { get { return numBalls; } set  {numBalls = value;}}
 		public int BallCount { get { return balls.Count; }  }
 
-		public int StartBallNumber { get { return numBalls; } set  {numBalls = value;}}
+        public void setGameManager(GameManager gameManager)
+        {
+            this.gameManager = gameManager;
+        }
 
-
-		[Range(1.0010f,1.0100f)]
-		public float speedUp = 1.0010f;
-
-		// Use this for initialization
-		void Awake () {
-
-
-		}
+        //???
+		//[Range(1.0010f,1.0100f)]
+		//public float speedUp = 1.0010f;
 
 		void Start(){
-			InstantiatBalls ();
+            CreateBalls();
+            enemyScore = gameObject.GetComponents<AudioSource>()[0];
+            playerScore = gameObject.GetComponents<AudioSource>()[1];
+        }
 
-		}
+        private void CreateBalls() {
+            for (int i = 0; i < numBalls; i++)
+            {
+                balls[i] = (Ball)Instantiate(ballPrefabRef);
+            }
+        }
 
-		void InstantiatBalls(){
-			foreach (Ball ball in balls) {
-				ball.SetSpeedUpConstant (speedUp);
-				float i = Mathf.Pow (-1.0f, Random.Range (0, 2));
-				Debug.Log ("x velocity" + i);
-				float i2 = Mathf.Pow (-1.0f, Random.Range (0, 2));
-				ball.ballObj.GetComponent<Rigidbody> ().velocity = new Vector3 (i*Random.Range(3,6), i2*Random.Range(3,5), 0);
-			}
-		}
-		
-		// Update is called once per frame
+		//Removes Balls that have been missed, creates new balls
 		void FixedUpdate () {
 
-			List<Ball> deleteList = new List<Ball> ();
+            foreach (Ball ball in balls)
+            {
+                if (ball.hitEnemy)
+                {
+                    enemyScore.Play();
+                    Instantiate(ballExplode, ball.gameObject.transform.position, ball.gameObject.transform.rotation);
+                    gameManager.EnemyScore++;
+                    Destroy(ball);
+                    balls.Remove(ball);
+                    //distroy ball, add score, if balls = zero
+                }
+                else if (ball.hitPlayer)
+                {
+                    playerScore.Play();
+                    Instantiate(ballExplode, ball.gameObject.transform.position, ball.gameObject.transform.rotation);
+                    gameManager.PlayerScore++;
+                    Destroy(ball);
+                    balls.Remove(ball);
+                }
+            }
 
-			int deleted = 0;
-			foreach (Ball b in balls){
-				if (b.ballObj != null) {
-					b.UpdatePhysics (new Vector3 (0, 0, 0));
-				} else {
-					deleted++;
-					deleteList.Add (b);		
-				}
-			}
-
-			foreach (Ball d in deleteList) {
-				balls.Remove (d);
-			}
+            if(balls.Count == 0)
+            {
+                CreateBalls();
+            }
 
 				
 		}
 
-		public Ball GetUnWatchedBall(){
-			for (int i=0; i<balls.Count; i++){
-				if (!balls [i].BeingWatched ()) {
-					//balls [i].SetWatched (true);
-					return balls [i];
-				}
-			}
-			return null;
-		}
+		//public Ball GetUnWatchedBall(){
+		//	for (int i=0; i<balls.Count; i++){
+		//		if (!balls [i].BeingWatched ()) {
+		//			//balls [i].SetWatched (true);
+		//			return balls [i];
+		//		}
+		//	}
+		//	return null;
+		//}
 
-		public void addBalls(){
-			for (int i = 0; i < numBalls; i++) {
-				balls.Add (new Ball (Instantiate (ballPrefab, new Vector3 (0, 0+2*i, 0), transform.rotation)));
-			}
-			InstantiatBalls ();
-		}
+		//public void addBalls(){
+		//	for (int i = 0; i < numBalls; i++) {
+  //              balls[i] = (Ball)Instantiate(ballPrefabRef);
+		//	}
+		//}
 
 	//	void OnGUI(){
 	//		GUI.TextArea(new Rect (0,0,100,50),"Enemy Score   "+eScore);
