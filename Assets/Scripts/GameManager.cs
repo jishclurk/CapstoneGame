@@ -33,12 +33,12 @@ namespace CapstoneGame {
 
         public void ScoreEnemyGoal()
         {
-
+            enemyScore++;
         }
 
         public void ScorePlayerGoal()
         {
-
+            playerScore++;
         }
 
         void OnGUI(){

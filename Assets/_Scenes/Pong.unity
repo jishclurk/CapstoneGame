@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 381336882}
   m_Layer: 0
   m_Name: Player_Goal
-  m_TagString: Player_Goal
+  m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 541257508}
   m_Layer: 0
   m_Name: Bottom Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -898,7 +898,7 @@ GameObject:
   - component: {fileID: 898864438}
   m_Layer: 0
   m_Name: Enemy_Goal
-  m_TagString: Enemy_Goal
+  m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1113,7 +1113,7 @@ GameObject:
   - component: {fileID: 1866550707}
   m_Layer: 0
   m_Name: Top Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1225,7 +1225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a2e8296e7914360be25f968c45b44c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballPrefabRef: {fileID: 114098048508801536, guid: d26567b25367b4038960c960abbec361,
+  ballPrefabRef: {fileID: 114145190174368842, guid: d26567b25367b4038960c960abbec361,
     type: 2}
   ballExplode: {fileID: 198655746919141324, guid: 28cd9b782f6d54fc1bc4f35fe3b14d52,
     type: 2}

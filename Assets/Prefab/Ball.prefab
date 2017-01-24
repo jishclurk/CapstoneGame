@@ -26,9 +26,9 @@ GameObject:
   - component: {fileID: 198185388853349204}
   - component: {fileID: 199832712174768150}
   - component: {fileID: 96998637276111700}
-  - component: {fileID: 114098048508801536}
   - component: {fileID: 82742138490707322}
   - component: {fileID: 82263154356247558}
+  - component: {fileID: 114145190174368842}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -360,7 +360,7 @@ TrailRenderer:
     textureMode: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
---- !u!114 &114098048508801536
+--- !u!114 &114145190174368842
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -368,11 +368,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1250454818870432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e15e7bdf1cf46ca9b70068ca768bfe, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d92d49e0e38a44e9a3033209e8f47d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitEnemy: 0
-  hitPlayer: 0
+  paddleHitAudio: {fileID: 82742138490707322}
+  wallHitAudio: {fileID: 82263154356247558}
+  spawner: {fileID: 0}
 --- !u!135 &135453921564932756
 SphereCollider:
   m_ObjectHideFlags: 1

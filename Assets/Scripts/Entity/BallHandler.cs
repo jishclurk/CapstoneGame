@@ -38,43 +38,21 @@ namespace CapstoneGame{
         private void CreateBalls() {
             for (int i = 0; i < numBalls; i++)
             {
-				balls.Add( (Ball)Instantiate(ballPrefabRef));
+                Ball ballToAdd = Instantiate(ballPrefabRef);
+                ballToAdd.spawner = this;
+				balls.Add(ballToAdd);
             }
         }
 
-        public void DestroyBall(GameObject ball)
+        public void DestroyBall(Ball ball)
         {
             Instantiate(ballExplode, ball.gameObject.transform.position, ball.gameObject.transform.rotation);
-            Destroy(ball);
+            balls.Remove(ball);
+            Destroy(ball.gameObject);
         }
 
 		//Removes Balls that have been missed, creates new balls
 		void FixedUpdate () {
-
-            for (int i = 0; i<balls.Count; i++)
-            {
-                if (balls[i].hitEnemyGoal)
-                {
-                    Debug.Log("enemy goal hit");
-                    enemyScore.Play();
-                    Instantiate(ballExplode, balls[i].gameObject.transform.position, balls[i].gameObject.transform.rotation);
-                    gameManager.EnemyScore++;
-                    Destroy(balls[i].gameObject);
-                    balls.Remove(balls[i]);
-                    i--;
-                    //distroy ball, add score, if balls = zero
-                }
-                else if (balls[i].hitPlayerGoal)
-                {
-                    Debug.Log("player goal hit");
-                    playerScore.Play();
-                    Instantiate(ballExplode, balls[i].gameObject.transform.position, balls[i].gameObject.transform.rotation);
-                    gameManager.PlayerScore++;
-                    Destroy(balls[i].gameObject);
-                    balls.Remove(balls[i]);
-                    i--;
-                }
-            }
 
             if(balls.Count == 0)
             {

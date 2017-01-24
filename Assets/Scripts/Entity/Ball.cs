@@ -6,13 +6,10 @@ namespace CapstoneGame
 {
     public class Ball : MonoBehaviour, IEntity {
 
-        AudioSource[] audio;
+        public AudioSource paddleHitAudio;
+        public AudioSource wallHitAudio;
 
         public BallHandler spawner;
-
-        public bool hitEnemyGoal = false;
-        public bool hitPlayerGoal = false;
-
 
         public Vector3 velocity { get; set; }
         private Rigidbody rb; 
@@ -23,12 +20,11 @@ namespace CapstoneGame
         {
             Debug.Log("Ball start");
 
-            audio = gameObject.GetComponents<AudioSource>();
             float i = Mathf.Pow(-1.0f, Random.Range(0, 2));
             //Debug.Log("x velocity" + i);
             float i2 = Mathf.Pow(-1.0f, Random.Range(0, 2));
             rb = this.GetComponent<Rigidbody>();
-            rb.velocity = new Vector3(i * Random.Range(8, 10), i2 * Random.Range(8, 10), 0); //random velocity
+            rb.velocity = new Vector3(i * Random.Range(12, 15), i2 * Random.Range(12, 15), 0); //random velocity
         }
 
         public Vector3 GetPosition()
@@ -58,15 +54,15 @@ namespace CapstoneGame
             if (collision.gameObject.CompareTag("Goal") && spawner != null)
             {
                 collision.gameObject.GetComponent<IGoal>().ScoreGoal();
-                spawner.DestroyBall(gameObject);
+                spawner.DestroyBall(this);
             }
-            else if (name.Contains("Paddle"))
+            else if (collision.gameObject.CompareTag("Paddle"))
             {
-                audio[0].Play();
+                paddleHitAudio.Play();
             }
-            else if (name.Contains("Wall"))
+            else if (collision.gameObject.CompareTag("Wall"))
             {
-                audio[1].Play();
+                wallHitAudio.Play();
             }
         }
     }
