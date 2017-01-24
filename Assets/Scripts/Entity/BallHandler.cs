@@ -28,6 +28,7 @@ namespace CapstoneGame{
 		//public float speedUp = 1.0010f;
 
 		void Start(){
+            Debug.Log("Ball handler start");
 			balls = new List<Ball> ();
             CreateBalls();
             enemyScore = gameObject.GetComponents<AudioSource>()[0];
@@ -44,24 +45,28 @@ namespace CapstoneGame{
 		//Removes Balls that have been missed, creates new balls
 		void FixedUpdate () {
 
-            foreach (Ball ball in balls)
+            for (int i = 0; i<balls.Count; i++)
             {
-                if (ball.hitEnemy)
+                if (balls[i].hitEnemy)
                 {
+                    Debug.Log("enemy hit");
                     enemyScore.Play();
-                    Instantiate(ballExplode, ball.gameObject.transform.position, ball.gameObject.transform.rotation);
+                    Instantiate(ballExplode, balls[i].gameObject.transform.position, balls[i].gameObject.transform.rotation);
                     gameManager.EnemyScore++;
-                    Destroy(ball);
-                    balls.Remove(ball);
+                    Destroy(balls[i]);
+                    balls.Remove(balls[i]);
+                    i--;
                     //distroy ball, add score, if balls = zero
                 }
-                else if (ball.hitPlayer)
+                else if (balls[i].hitPlayer)
                 {
+                    Debug.Log("player hit");
                     playerScore.Play();
-                    Instantiate(ballExplode, ball.gameObject.transform.position, ball.gameObject.transform.rotation);
+                    Instantiate(ballExplode, balls[i].gameObject.transform.position, balls[i].gameObject.transform.rotation);
                     gameManager.PlayerScore++;
-                    Destroy(ball);
-                    balls.Remove(ball);
+                    Destroy(balls[i]);
+                    balls.Remove(balls[i]);
+                    i--;
                 }
             }
 

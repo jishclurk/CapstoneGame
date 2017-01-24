@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 381336879}
   - component: {fileID: 381336878}
   - component: {fileID: 381336877}
-  - component: {fileID: 381336882}
   - component: {fileID: 381336881}
   m_Layer: 0
   m_Name: Player_Goal
@@ -298,17 +297,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &381336882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 381336876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3e7c45f6eeee491889007ef9fe61619, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &389178272
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,7 +729,6 @@ GameObject:
   - component: {fileID: 898864434}
   - component: {fileID: 898864433}
   - component: {fileID: 898864437}
-  - component: {fileID: 898864438}
   m_Layer: 0
   m_Name: Enemy_Goal
   m_TagString: Untagged
@@ -892,17 +879,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &898864438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 898864432}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b14046bbbaab4b50b364d00c61d34be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1128702708
 GameObject:
   m_ObjectHideFlags: 0

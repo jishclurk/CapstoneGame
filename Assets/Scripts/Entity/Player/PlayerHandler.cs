@@ -12,6 +12,8 @@ namespace CapstoneGame{
         private ICommand move;
 
         void Start(){
+            Debug.Log("player handler start");
+
             player = (Player)Instantiate(player);
             move = new MoveByAxis(player);
 		}
