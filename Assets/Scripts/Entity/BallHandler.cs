@@ -47,24 +47,24 @@ namespace CapstoneGame{
 
             for (int i = 0; i<balls.Count; i++)
             {
-                if (balls[i].hitEnemy)
+                if (balls[i].hitEnemyGoal)
                 {
-                    Debug.Log("enemy hit");
+                    Debug.Log("enemy goal hit");
                     enemyScore.Play();
                     Instantiate(ballExplode, balls[i].gameObject.transform.position, balls[i].gameObject.transform.rotation);
                     gameManager.EnemyScore++;
-                    Destroy(balls[i]);
+                    Destroy(balls[i].gameObject);
                     balls.Remove(balls[i]);
                     i--;
                     //distroy ball, add score, if balls = zero
                 }
-                else if (balls[i].hitPlayer)
+                else if (balls[i].hitPlayerGoal)
                 {
-                    Debug.Log("player hit");
+                    Debug.Log("player goal hit");
                     playerScore.Play();
                     Instantiate(ballExplode, balls[i].gameObject.transform.position, balls[i].gameObject.transform.rotation);
                     gameManager.PlayerScore++;
-                    Destroy(balls[i]);
+                    Destroy(balls[i].gameObject);
                     balls.Remove(balls[i]);
                     i--;
                 }

@@ -8,8 +8,8 @@ namespace CapstoneGame
 
         AudioSource[] audio;
 
-        public bool hitEnemy = false;
-        public bool hitPlayer = false;
+        public bool hitEnemyGoal = false;
+        public bool hitPlayerGoal = false;
 
         public Vector3 velocity { get; set; }
         private Rigidbody rb; 
@@ -54,11 +54,14 @@ namespace CapstoneGame
         {
             if (collision.gameObject.CompareTag("Player_Goal"))
             {
-                hitEnemy = true;
+                hitPlayerGoal = true;
+                //Destroy(this);
             }
             else if (collision.gameObject.CompareTag("Enemy_Goal"))
             {
-                hitPlayer = true;
+                hitEnemyGoal = true;
+                //Destroy(this);
+
             }
             else if (name.Contains("Paddle"))
             {
