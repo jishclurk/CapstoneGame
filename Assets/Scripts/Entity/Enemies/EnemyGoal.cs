@@ -3,30 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using CapstoneGame;
 
-public class EnemyGoal : MonoBehaviour {
+public class EnemyGoal : MonoBehaviour, IGoal {
 
-	//AudioSource audio;
-	//public GameManager gm;
-	//public ParticleSystem ballExplode;
-	//// Use this for initialization
-	//void Start () {
-	//	audio = gameObject.GetComponent<AudioSource> ();
-	//}
+    public GameManager manager;
 
-	//// Update is called once per frame
-	//void Update () {
+	public void ScoreGoal()
+    {
+        manager.ScoreEnemyGoal();
+    }
 
-
-
-
-	//}
-
-	//void OnCollisionEnter(Collision collision){
-	//	if (collision.gameObject.name.Contains("Ball")){
-	//		audio.Play ();
-	//		Instantiate (ballExplode, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
-	//		gm.PlayerScore++;
-	//	}
-	//}
-		
 }

@@ -41,6 +41,12 @@ namespace CapstoneGame{
             }
         }
 
+        public void DestroyBall(GameObject ball)
+        {
+            Instantiate(ballExplode, ball.gameObject.transform.position, ball.gameObject.transform.rotation);
+            Destroy(ball);
+        }
+
 		//Removes Balls that have been missed, creates new balls
 		void FixedUpdate () {
 
@@ -69,9 +75,9 @@ namespace CapstoneGame{
             {
                 CreateBalls();
             }
-
-				
 		}
+
+
 
     }
 }

@@ -10,6 +10,7 @@ namespace CapstoneGame
 
         public bool hitEnemy = false;
         public bool hitPlayer = false;
+        public BallHandler spawner;
 
         public Vector3 velocity { get; set; }
         private Rigidbody rb; 
@@ -50,9 +51,10 @@ namespace CapstoneGame
         //Handles collisions
         void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Goal"))
+            if (collision.gameObject.CompareTag("Goal") && spawner != null)
             {
-                hitEnemy = true;
+                collision.gameObject.GetComponent<IGoal>().ScoreGoal();
+                spawner.DestroyBall(gameObject);
             }
             else if (name.Contains("Paddle"))
             {

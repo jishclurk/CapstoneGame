@@ -5,39 +5,47 @@ using UnityEngine;
 
 namespace CapstoneGame {
 	
-public class GameManager : MonoBehaviour {
+    public class GameManager : MonoBehaviour {
 
-	private int enemyScore;
-	public int EnemyScore { get { return enemyScore; } set { enemyScore = value; } }
-	private int playerScore;
-	public int PlayerScore { get { return playerScore; } set { playerScore = value; } }
+	    private int enemyScore;
+	    public int EnemyScore { get { return enemyScore; } set { enemyScore = value; } }
+	    private int playerScore;
+	    public int PlayerScore { get { return playerScore; } set { playerScore = value; } }
 
-	public BallHandler bh;
+	    public BallHandler bh;
 
-	private int endScore = 5;
+	    private int endScore = 5;
 
-	// Use this for initialization
-	void Awake(){
-        bh.setGameManager(this);
-    }
+	    // Use this for initialization
+	    void Awake(){
+            bh.setGameManager(this);
+        }
 
-    void Start () {
-		enemyScore = 0;
-		playerScore = 0;
-	}
+        void Start () {
+		    enemyScore = 0;
+		    playerScore = 0;
+	    }
 	
-	// Update is called once per frame
-	void Update () {
+	    // Update is called once per frame
+	    void Update () {
 
-	}
-		
-	void OnGUI(){
-		GUI.TextArea(new Rect (Screen.width-100,0,100,50),"Player Score   "+playerScore);
-		GUI.TextArea(new Rect (0,0,100,50),"Enemy Score   "+enemyScore);
-	}
+	    }
 
+        public void ScoreEnemyGoal()
+        {
 
+        }
 
-}
+        public void ScorePlayerGoal()
+        {
+
+        }
+
+        void OnGUI(){
+		    GUI.TextArea(new Rect (Screen.width-100,0,100,50),"Player Score   "+playerScore);
+		    GUI.TextArea(new Rect (0,0,100,50),"Enemy Score   "+enemyScore);
+	    }
+
+    }
 
 }
