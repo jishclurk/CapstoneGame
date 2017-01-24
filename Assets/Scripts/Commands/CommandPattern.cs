@@ -9,7 +9,7 @@ namespace CapstoneGame
 		 void Execute ();
 	}
 
-	public class MoveUp :ICommand
+	public class MoveUp : ICommand
 	{
         private IEntity player;
 		
@@ -34,6 +34,7 @@ namespace CapstoneGame
         {
             this.player = player;
         }
+
         //called on key press
         public void Execute()
         {
@@ -41,7 +42,7 @@ namespace CapstoneGame
         }
     }
 
-    public class MoveDown :ICommand
+    public class MoveDown : ICommand
 	{
         private IEntity player;
 
@@ -49,6 +50,7 @@ namespace CapstoneGame
         {
             this.player = player;
         }
+
         //called on key press
         public void Execute()
 		{

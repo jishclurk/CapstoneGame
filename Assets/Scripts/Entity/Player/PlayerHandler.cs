@@ -13,7 +13,6 @@ namespace CapstoneGame{
 
         void Start(){
             move = new MoveByAxis(player);
-
 		}
 
 		void Update()

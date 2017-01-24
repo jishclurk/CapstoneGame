@@ -23,7 +23,7 @@ namespace CapstoneGame
             Debug.Log("x velocity" + i);
             float i2 = Mathf.Pow(-1.0f, Random.Range(0, 2));
             rb = this.GetComponent<Rigidbody>();
-            rb.velocity = new Vector3(i * Random.Range(3, 6), i2 * Random.Range(3, 5), 0); //random velocity
+            rb.velocity = new Vector3(i * Random.Range(8, 10), i2 * Random.Range(8, 10), 0); //random velocity
         }
 
         public Vector3 GetPosition()
@@ -34,34 +34,25 @@ namespace CapstoneGame
         //Moves Ball
         void FixedUpdate()
         {
-            rb.velocity = rb.velocity * speed;
-
             if (rb.velocity.x < 2f && rb.velocity.x > -2.0f)
             {
                 float newX = rb.velocity.x * 1.5f;
-                rb.velocity = new Vector3(newX, rb.velocity.y, rb.velocity.z);
+                rb.velocity = new Vector3(newX, rb.velocity.y, 0);
             }
 
             if (rb.velocity.y < 2.0f && rb.velocity.y > -2.0f)
             {
                 float newY = rb.velocity.y * 1.5f;
-                rb.velocity = new Vector3(rb.velocity.x, newY, rb.velocity.z);
+                rb.velocity = new Vector3(rb.velocity.x, newY, 0);
             }
         }
 
         //Handles collisions
         void OnCollisionEnter(Collision collision)
         {
-            string name = collision.gameObject.name;
-            if (name.Contains("Enemy_Goal"))
+            if (collision.gameObject.CompareTag("Goal"))
             {
                 hitEnemy = true;
-
-            }
-            else if (name.Contains("Player_Goal"))
-            {
-                hitPlayer = false;
-
             }
             else if (name.Contains("Paddle"))
             {
@@ -75,28 +66,6 @@ namespace CapstoneGame
     }
 }
 
-
-    //public void UpdateSpeed(float speed)
-    //{
-    //    this.speed = speed;
-    //}
-
-    //public void UpdateVelocity(Vector3 velocity)
-    //{
-    //    rb.velocity = rb.velocity * speed;
-
-    //    if (rb.velocity.x < 2f && rb.velocity.x > -2.0f)
-    //    {
-    //        float newX = rb.velocity.x * 1.5f;
-    //        rb.velocity = new Vector3(newX, rb.velocity.y, rb.velocity.z);
-    //    }
-
-    //    if (rb.velocity.y < 2.0f && rb.velocity.y > -2.0f)
-    //    {
-    //        float newY = rb.velocity.y * 1.5f;
-    //        rb.velocity = new Vector3(rb.velocity.x, newY, rb.velocity.z);
-    //    }
-    //}
 
 
 

@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114122292467301594}
   m_Layer: 0
   m_Name: Enemy Paddle
-  m_TagString: Untagged
+  m_TagString: Paddle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1471553986693410}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: -14.5, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -114,7 +114,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1471553986693410}
-  m_Material: {fileID: 13400000, guid: 16bf6bdd61f7c41b0b0091a26a30b20b, type: 2}
+  m_Material: {fileID: 13400000, guid: 366ebd61ace834d45a35f2f7b66a2634, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.25

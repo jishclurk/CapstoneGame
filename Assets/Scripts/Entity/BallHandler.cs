@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace CapstoneGame{
 
-
 	public class BallHandler : MonoBehaviour {
 
 		public Ball ballPrefabRef;
@@ -74,48 +73,5 @@ namespace CapstoneGame{
 				
 		}
 
-		//public Ball GetUnWatchedBall(){
-		//	for (int i=0; i<balls.Count; i++){
-		//		if (!balls [i].BeingWatched ()) {
-		//			//balls [i].SetWatched (true);
-		//			return balls [i];
-		//		}
-		//	}
-		//	return null;
-		//}
-
-		//public void addBalls(){
-		//	for (int i = 0; i < numBalls; i++) {
-  //              balls[i] = (Ball)Instantiate(ballPrefabRef);
-		//	}
-		//}
-
-	//	void OnGUI(){
-	//		GUI.TextArea(new Rect (0,0,100,50),"Enemy Score   "+eScore);
-	//		GUI.TextArea(new Rect (Screen.width-100,0,100,50),"PLayer Score   "+pScore);
-	//
-	//		if (pGoal && !endCondition) {
-	//			if (GUI.Button (new Rect (Screen.width / 2 - 100, Screen.height / 2 + 100, 200, 100), "Start New Round")) {
-	//				rb.velocity = new Vector3 (5, 3, 0);\
-	//				pGoal = false;
-	//			}
-	//		}
-	//
-	//		if (eGoal && !endCondition) {
-	//			if (GUI.Button (new Rect (Screen.width / 2 - 100, Screen.height / 2 + 100, 200, 100), "Start New Round")) {
-	//				rb.velocity = new Vector3 (5, 3, 0);
-	//				eGoal = false;
-	//			}
-	//		}
-	//
-	//		if (endCondition) {
-	//			if (GUI.Button (new Rect (Screen.width / 2 - 100, Screen.height / 2 + 100, 200, 100), "Quit?")) {
-	//				Application.Quit ();
-	//			}
-	//			if (GUI.Button (new Rect (Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "Game Over, New game?")) {
-	//				SceneManager.LoadScene("Pong");
-	//			}
-	//		}
-	//	}
-		}
+    }
 }
