@@ -8,9 +8,11 @@ namespace CapstoneGame
 
         AudioSource[] audio;
 
-        public bool hitEnemy = false;
-        public bool hitPlayer = false;
         public BallHandler spawner;
+
+        public bool hitEnemyGoal = false;
+        public bool hitPlayerGoal = false;
+
 
         public Vector3 velocity { get; set; }
         private Rigidbody rb; 
@@ -19,9 +21,11 @@ namespace CapstoneGame
         // Use this for initialization
         void Start()
         {
+            Debug.Log("Ball start");
+
             audio = gameObject.GetComponents<AudioSource>();
             float i = Mathf.Pow(-1.0f, Random.Range(0, 2));
-            Debug.Log("x velocity" + i);
+            //Debug.Log("x velocity" + i);
             float i2 = Mathf.Pow(-1.0f, Random.Range(0, 2));
             rb = this.GetComponent<Rigidbody>();
             rb.velocity = new Vector3(i * Random.Range(8, 10), i2 * Random.Range(8, 10), 0); //random velocity

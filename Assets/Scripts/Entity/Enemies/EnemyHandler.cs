@@ -21,8 +21,10 @@ namespace CapstoneGame
 
 		//on initialization, create all of your enemies
 		void Start(){
-			//initialize enemies
-			for (int i = 0; i < numEnemies; i++) {
+            Debug.Log("enemy handler start");
+
+            //initialize enemies
+            for (int i = 0; i < numEnemies; i++) {
 
                 Enemy newEnemy = (Enemy)Instantiate(enemyPrefabRef);
 
