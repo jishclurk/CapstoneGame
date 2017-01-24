@@ -8,7 +8,7 @@ namespace CapstoneGame{
 	public class BallHandler : MonoBehaviour {
 
 		public Ball ballPrefabRef;
-		public List<Ball> balls = new List<Ball>();
+		private List<Ball> balls;
         public ParticleSystem ballExplode;
         public int numBalls = 1;
 
@@ -29,6 +29,7 @@ namespace CapstoneGame{
 		//public float speedUp = 1.0010f;
 
 		void Start(){
+			balls = new List<Ball> ();
             CreateBalls();
             enemyScore = gameObject.GetComponents<AudioSource>()[0];
             playerScore = gameObject.GetComponents<AudioSource>()[1];
@@ -37,7 +38,7 @@ namespace CapstoneGame{
         private void CreateBalls() {
             for (int i = 0; i < numBalls; i++)
             {
-                balls[i] = (Ball)Instantiate(ballPrefabRef);
+				balls.Add( (Ball)Instantiate(ballPrefabRef));
             }
         }
 

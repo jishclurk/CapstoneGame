@@ -13,7 +13,7 @@ namespace CapstoneGame
 
         public Vector3 velocity { get; set; }
         private Rigidbody rb; 
-        private float speed;
+        private float speed=0.1f;
 
         // Use this for initialization
         void Start()
@@ -22,7 +22,7 @@ namespace CapstoneGame
             float i = Mathf.Pow(-1.0f, Random.Range(0, 2));
             Debug.Log("x velocity" + i);
             float i2 = Mathf.Pow(-1.0f, Random.Range(0, 2));
-            rb = GetComponent<Rigidbody>();
+            rb = this.GetComponent<Rigidbody>();
             rb.velocity = new Vector3(i * Random.Range(3, 6), i2 * Random.Range(3, 5), 0); //random velocity
         }
 
