@@ -9,7 +9,7 @@ public class EnemyGoal : MonoBehaviour, IGoal {
 
 	public void ScoreGoal()
     {
-        manager.ScoreEnemyGoal();
+        manager.ScorePlayerGoal();
     }
 
 }

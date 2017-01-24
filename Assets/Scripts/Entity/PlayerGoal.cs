@@ -11,7 +11,7 @@ namespace CapstoneGame
 
         public void ScoreGoal()
         {
-            manager.ScorePlayerGoal();
+            manager.ScoreEnemyGoal();
         }
 
     }

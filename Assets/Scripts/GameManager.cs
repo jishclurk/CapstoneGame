@@ -13,6 +13,7 @@ namespace CapstoneGame {
 	    public int PlayerScore { get { return playerScore; } set { playerScore = value; } }
 
 	    public BallHandler bh;
+        public Scoreboard scoreboard;
 
 	    private int endScore = 5;
 
@@ -24,7 +25,9 @@ namespace CapstoneGame {
         void Start () {
 		    enemyScore = 0;
 		    playerScore = 0;
-	    }
+            scoreboard.updateEnemyScore(enemyScore);
+            scoreboard.updatePlayerScore(playerScore);
+        }
 	
 	    // Update is called once per frame
 	    void Update () {
@@ -34,17 +37,14 @@ namespace CapstoneGame {
         public void ScoreEnemyGoal()
         {
             enemyScore++;
+            scoreboard.updateEnemyScore(enemyScore);
         }
 
         public void ScorePlayerGoal()
         {
             playerScore++;
+            scoreboard.updatePlayerScore(playerScore);
         }
-
-        void OnGUI(){
-		    GUI.TextArea(new Rect (Screen.width-100,0,100,50),"Player Score   "+playerScore);
-		    GUI.TextArea(new Rect (0,0,100,50),"Enemy Score   "+enemyScore);
-	    }
 
     }
 
