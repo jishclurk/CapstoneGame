@@ -8,29 +8,39 @@ namespace CapstoneGame {
     public class GameManager : MonoBehaviour {
 
 	    private int enemyScore;
-	    public int EnemyScore { get { return enemyScore; } set { enemyScore = value; } }
 	    private int playerScore;
-	    public int PlayerScore { get { return playerScore; } set { playerScore = value; } }
-
-	    public BallHandler bh;
-        public Scoreboard scoreboard;
-
 	    private int endScore = 5;
+        private bool paused = false;
 
-	    // Use this for initialization
-	    void Awake(){
-            bh.setGameManager(this);
-        }
+        private enum State { Load, Play, Pause, Menu}
+        private State state = State.Menu;
+
+        public Scoreboard scoreboard;
+        public GameObject MenuCamera;
+        public GameObject MainMenu;
+        public GameObject PauseMenu;
+        public BallHandler ballHandler;
 
         void Start () {
 		    enemyScore = 0;
 		    playerScore = 0;
-            scoreboard.updateEnemyScore(enemyScore);
-            scoreboard.updatePlayerScore(playerScore);
+            MenuCamera = Instantiate(MenuCamera);
+            LoadMenu();
         }
-	
-	    // Update is called once per frame
-	    void Update () {
+
+        //Checks for game state changes (playing and pausing)
+        void Update () {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (paused)
+                {
+                    new Resume(this).Execute();
+                }else
+                {
+                    paused = true;
+                    new Pause(this).Execute();
+                }
+            }
 
 	    }
 
@@ -44,6 +54,47 @@ namespace CapstoneGame {
         {
             playerScore++;
             scoreboard.updatePlayerScore(playerScore);
+        }
+
+        public void LoadPauseScreen()
+        {
+            PauseMenu.SetActive(true);
+        }
+
+        public void SaveGame()
+        {
+            //how though 
+        }
+
+        public void LoadSavedGame()
+        {
+            
+        }
+
+        public void LoadMenu()
+        {
+            MainMenu.SetActive(true);
+            MenuCamera.GetComponent<Camera>().enabled = true;
+
+        }
+        
+        public void ResumeGame()
+        {
+            PauseMenu.SetActive(false);
+        }
+
+        public void StartGame()
+        {
+            MainMenu.SetActive(false);
+            enemyScore = 0;
+            playerScore = 0;
+            scoreboard.updateEnemyScore(enemyScore);
+            scoreboard.updatePlayerScore(playerScore);
+           // ballHandler.Reset();
+            MenuCamera.GetComponent<Camera>().enabled = false;
+            Destroy(MainMenu);
+            Camera.main.enabled = true;
+            
         }
 
     }

@@ -368,11 +368,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1250454818870432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92d49e0e38a44e9a3033209e8f47d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 76e15e7bdf1cf46ca9b70068ca768bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paddleHitAudio: {fileID: 82742138490707322}
-  wallHitAudio: {fileID: 82263154356247558}
+  paddleHitAudio: {fileID: 0}
+  wallHitAudio: {fileID: 0}
   spawner: {fileID: 0}
 --- !u!135 &135453921564932756
 SphereCollider:

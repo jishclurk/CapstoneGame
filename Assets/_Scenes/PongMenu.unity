@@ -559,11 +559,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 81258230355977414, guid: 7baf45c4a37619940ac89e0aa91b68e2,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7baf45c4a37619940ac89e0aa91b68e2, type: 2}
   m_IsPrefabParent: 0
@@ -703,7 +698,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436b87621981f46fe8a8b71dc6017ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bh: {fileID: 1945575588}
+  scoreboard: {fileID: 0}
+  MenuCamera: {fileID: 0}
+  menu: {fileID: 0}
+  ballHandler: {fileID: 0}
 --- !u!4 &838098088
 Transform:
   m_ObjectHideFlags: 0
@@ -1023,21 +1021,21 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 223138296984895088, guid: d4475d85657e0f24c8d243ed704f076c,
-        type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1398192753}
-    - target: {fileID: 114507082101318238, guid: d4475d85657e0f24c8d243ed704f076c,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1207487192}
     - target: {fileID: 114579586966725816, guid: d4475d85657e0f24c8d243ed704f076c,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1207487192}
+    - target: {fileID: 114507082101318238, guid: d4475d85657e0f24c8d243ed704f076c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1207487192}
+    - target: {fileID: 223138296984895088, guid: d4475d85657e0f24c8d243ed704f076c,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1398192753}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4475d85657e0f24c8d243ed704f076c, type: 2}
   m_IsPrefabParent: 0
@@ -1172,7 +1170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a2e8296e7914360be25f968c45b44c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballPrefabRef: {fileID: 114098048508801536, guid: d26567b25367b4038960c960abbec361,
+  ballPrefabRef: {fileID: 114145190174368842, guid: d26567b25367b4038960c960abbec361,
     type: 2}
   ballExplode: {fileID: 198655746919141324, guid: 28cd9b782f6d54fc1bc4f35fe3b14d52,
     type: 2}

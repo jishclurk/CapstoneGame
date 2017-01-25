@@ -25,6 +25,7 @@ public class SceneLoader : MonoBehaviour {
 
     IEnumerator LoadScene()
     {
+        //Doesn't work when I change it to PongMenu
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Pong", LoadSceneMode.Single);
         asyncLoad.allowSceneActivation = false;
         /*

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CapstoneGame
 {
@@ -18,7 +19,6 @@ namespace CapstoneGame
             this.player = player;
         }
         
-        //called on key press
 		public void Execute()
 		{
             player.velocity = new Vector3(0, 1.0f, 0);
@@ -26,6 +26,7 @@ namespace CapstoneGame
 
 	}
 
+    //When excuted, moves player based on the input from the verticle axis
     public class MoveByAxis : ICommand
     {
         private IEntity player;
@@ -35,7 +36,6 @@ namespace CapstoneGame
             this.player = player;
         }
 
-        //called on key press
         public void Execute()
         {
             player.velocity = new Vector3(0, Input.GetAxis("Vertical"), 0);
@@ -51,7 +51,6 @@ namespace CapstoneGame
             this.player = player;
         }
 
-        //called on key press
         public void Execute()
 		{
             player.velocity = new Vector3(0, -1.0f, 0);
@@ -75,45 +74,48 @@ namespace CapstoneGame
 
     public class Pause : ICommand
     {
-        //Called when we press a key
+        GameManager gm;
+
+        public Pause(GameManager gm)
+        {
+            this.gm = gm;
+        }
         public void Execute()
         {
-            //IMPLEMENT
-        }
-
-        public void Move(IEntity player)
-        {
-            //IMPLEMENT
-
+            Time.timeScale = 0;
+            gm.LoadPauseScreen();
         }
     }
 
-    public class Play : ICommand
+    public class Resume : ICommand
     {
-        //Called when we press a key
+        GameManager gm;
+
+        public Resume(GameManager gm)
+        {
+            this.gm = gm;
+        }
         public void Execute()
         {
-            //IMPLEMENT
-
-        }
-
-        public void Move(IEntity player)
-        {
-            //IMPLEMENT
-
+            //Count down??
+            Time.timeScale = 1;
+            gm.ResumeGame();
         }
     }
+
+    public class ToMenu : ICommand
+    {
+        public void Execute()
+        {
+            SceneManager.LoadScene("Pong Menu");
+        }
+    }
+
     public class Exit : ICommand
     {
-        //Called when we press a key
         public void Execute()
         {
-            //IMPLEMENT
-        }
-
-        public void Move(IEntity player)
-        {
-            //IMPLEMENT
+            
         }
     }
    

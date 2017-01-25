@@ -12,7 +12,6 @@ namespace CapstoneGame
 		//Enemy List
 		private List<Enemy> enemies = new List<Enemy>();
 		public int numEnemies = 1  ;
-		public int EnemyNumber { get { return numEnemies; } set  {numEnemies = value;}}
 
 		//Set enemy speed (difficulty)
 		[Range(0.001f,1.0f)]
@@ -21,26 +20,15 @@ namespace CapstoneGame
 
 		//on initialization, create all of your enemies
 		void Start(){
-            Debug.Log("enemy handler start");
 
-            //initialize enemies
-            for (int i = 0; i < numEnemies; i++) {
-
+            for (int i = 0; i < numEnemies; i++)
+            {
                 Enemy newEnemy = (Enemy)Instantiate(enemyPrefabRef);
-
-                newEnemy.changeDiffculty (difficulty);
-				enemies.Add(newEnemy);
-			}
-
-
+                newEnemy.changeDiffculty(difficulty);
+                enemies.Add(newEnemy);
+            }
 		}
 
-        //add and remove new enemies potentially
-		void Update()
-		{
-
-
-		}
 	}
 }
 

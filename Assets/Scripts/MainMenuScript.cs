@@ -9,11 +9,11 @@ public class MainMenuScript : MonoBehaviour {
 	bool increasingRot = false;
 
 	// Use this for initialization
-	GameObject mainMenuCanvas;
+	//GameObject mainMenuCanvas;
 
 	//Set Range elements to not be active
 	void Start() {
-		mainMenuCanvas = GameObject.Find ("MainMenu");
+		//mainMenuCanvas = GameObject.Find ("MainMenu");
 	}
 	
 	// Update is called once per frame
