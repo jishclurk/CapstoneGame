@@ -29,7 +29,8 @@ namespace CapstoneGame{
 
         public void DestroyBall(Ball ball)
         {
-            Instantiate(ballExplode, ball.gameObject.transform.position, ball.gameObject.transform.rotation);
+            ParticleSystem explode = Instantiate(ballExplode, ball.gameObject.transform.position, ball.gameObject.transform.rotation);
+            Destroy(explode.gameObject, 5.0f);
             balls.Remove(ball);
             Destroy(ball.gameObject);
         }

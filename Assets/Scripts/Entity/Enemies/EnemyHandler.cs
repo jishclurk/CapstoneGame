@@ -14,8 +14,8 @@ namespace CapstoneGame
 		public int numEnemies = 1  ;
 
 		//Set enemy speed (difficulty)
-		[Range(0.001f,1.0f)]
-		public float difficulty = 0.01f;
+		[Range(0.001f, 0.5f)]
+		public float difficulty = 0.15f;
 
 
 		//on initialization, create all of your enemies
