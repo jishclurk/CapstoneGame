@@ -10,11 +10,15 @@ public class MainMenuScript : MonoBehaviour {
 
 	// Use this for initialization
 	GameObject mainMenuCanvas;
+    AudioSource hover;
+    AudioSource select;
 
-	//Set Range elements to not be active
-	void Start() {
+    //Sst MainMenu
+    void Start() {
 		mainMenuCanvas = GameObject.Find ("MainMenu");
-	}
+        hover = GameObject.Find("HoverSound").GetComponent<AudioSource>();
+        select = GameObject.Find("SelectSound").GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -31,9 +35,25 @@ public class MainMenuScript : MonoBehaviour {
 	
 	}
 
+    public void PlayHoverSound()
+    {
+            hover.Play();
+    }
+
+    public void PlaySelectSound()
+    {
+            select.Play();
+    }
+
     public void GameStart()
     {
+        Scene gameScene = SceneManager.GetSceneByName("Pong");
+        if (gameScene.isLoaded && gameScene.IsValid())
+        {
+            SceneManager.SetActiveScene(gameScene);
+        }
         SceneManager.LoadScene("Pong");
+
     }
 
     public void QuitGame()
