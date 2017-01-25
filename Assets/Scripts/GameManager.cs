@@ -16,22 +16,22 @@ namespace CapstoneGame {
         private State state = State.Menu;
 
         public Scoreboard scoreboard;
-        public GameObject MenuCamera;
         public GameObject MainMenu;
         public GameObject PauseMenu;
         public BallHandler ballHandler;
 
+        public AudioSource select;
+        public AudioSource hover;
         //Brings up Main Menu
         void Start () {
 		    enemyScore = 0;
 		    playerScore = 0;
-            MenuCamera = Instantiate(MenuCamera);
             LoadMenu();
         }
 
         //Checks for game state changes (playing and pausing)
         void Update () {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (!MainMenu.activeSelf && Input.GetKeyDown(KeyCode.Space))
             {
                 if (paused)
                 {
@@ -76,7 +76,7 @@ namespace CapstoneGame {
         {
             PauseMenu.SetActive(false);
             MainMenu.SetActive(true);
-            MenuCamera.GetComponent<Camera>().enabled = true;
+            Time.timeScale = 0;
         }
 
 
@@ -93,13 +93,23 @@ namespace CapstoneGame {
             MainMenu.SetActive(false);
             enemyScore = 0;
             playerScore = 0;
+            Time.timeScale = 1;
             scoreboard.updateEnemyScore(enemyScore);
             scoreboard.updatePlayerScore(playerScore);
-            MenuCamera.GetComponent<Camera>().enabled = false;
             MainMenu.SetActive(false);
-            Camera.main.enabled = true;
             
         }
+
+        public void PlayHoverSound()
+        {
+            hover.Play();
+        }
+
+        public void PlaySelectSound()
+        {
+            select.Play();
+        }
+
 
     }
 
