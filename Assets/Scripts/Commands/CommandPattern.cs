@@ -1,88 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CapstoneGame
 {
 	public interface ICommand
 	{
-
-		//move command
 		 void Execute ();
-
-		//Move player in certain direction
-		// void Move (IEntity player);
 	}
 
-	public class MoveUp :ICommand
+	public class MoveUp : ICommand
 	{
         private IEntity player;
+        private float amount;
 		
-        public MoveUp(IEntity player)
+        public MoveUp(IEntity player, float amount)
         {
             this.player = player;
+            this.amount = Mathf.Abs(amount);
         }
         
-        //called on key press
 		public void Execute()
 		{
-			Move(player);
+            player.velocity = new Vector3(0, amount, 0);
+        }
 
-		}
-
-		public void Move(IEntity player){
-			player.UpdatePhysics (new Vector3(0,1.0f,0 ));
-//			playerTrans.Translate (playerTrans.up * speed);
-//			if (playerTrans.position.y > 5.5f) {
-//				playerTrans.position = new Vector3 (15.0f, 5.5f, 0.0f);
-//			}
-
-		}
 	}
 
-    public class Move : ICommand
+    //When excuted, moves player based on the input from the verticle axis
+    public class MoveByAxis : ICommand
     {
         private IEntity player;
+        private float amount;
 
-        public Move(IEntity player)
+        public MoveByAxis(IEntity player)
         {
             this.player = player;
         }
-        //called on key press
+
         public void Execute()
         {
-            player.UpdatePhysics(new Vector3(0, Input.GetAxis("Vertical"), 0));
-            //player.UpdatePhysics(new Vector3(0, -1.0f, 0));
-           // Move(player);
-
+            player.velocity = new Vector3(0, Input.GetAxis("Vertical"), 0);
         }
-
-        //public void Move(IEntity player)
-        //{
-        //    player.UpdatePhysics(new Vector3(0, -1.0f, 0));
-
-        //}
     }
 
-    public class MoveDown :ICommand
+    public class MoveDown : ICommand
 	{
         private IEntity player;
+        private float amount;
 
-        public MoveDown(IEntity player)
+        public MoveDown(IEntity player, float amount)
         {
             this.player = player;
+            this.amount = Mathf.Abs(amount);
         }
-        //called on key press
+
         public void Execute()
 		{
-			Move(player);
+            player.velocity = new Vector3(0, -amount, 0);
+        }
 
-		}
-
-		public void Move(IEntity player){
-			player.UpdatePhysics (new Vector3(0,-1.0f,0 ));
-
-		}
 	}
 		
 	public class DoNothing : ICommand
@@ -101,73 +79,50 @@ namespace CapstoneGame
 
     public class Pause : ICommand
     {
-        //Called when we press a key
+        GameManager gm;
+
+        public Pause(GameManager gm)
+        {
+            this.gm = gm;
+        }
         public void Execute()
         {
-            //IMPLEMENT
-        }
-
-        public void Move(IEntity player)
-        {
-            //IMPLEMENT
-
+            Time.timeScale = 0;
+            gm.LoadPauseScreen();
         }
     }
 
-    public class Play : ICommand
+    public class Resume : ICommand
     {
-        //Called when we press a key
+        GameManager gm;
+
+        public Resume(GameManager gm)
+        {
+            this.gm = gm;
+        }
         public void Execute()
         {
-            //IMPLEMENT
-
-        }
-
-        public void Move(IEntity player)
-        {
-            //IMPLEMENT
-
+            //Count down??
+            Time.timeScale = 1;
+            gm.ResumeGame();
         }
     }
+
+    public class ToMenu : ICommand
+    {
+        public void Execute()
+        {
+            SceneManager.LoadScene("Pong Menu");
+        }
+    }
+
     public class Exit : ICommand
     {
-        //Called when we press a key
         public void Execute()
         {
-            //IMPLEMENT
-        }
-
-        public void Move(IEntity player)
-        {
-            //IMPLEMENT
+            
         }
     }
-    //	public class EnemyMoveUp :Command
-    //	{
-    //		//called on key press
-    //		public override void Execute(Transform playerTrans, float speed)
-    //		{
-    //			Move(playerTrans,speed);
-    //
-    //		}
-    //
-    //		public override void Move(Transform playerTrans,float speed){
-    //			playerTrans.Translate (0.0f, speed, 0.0f);
-    //		}
-    //	}
-    //
-    //	public class EnemyMoveDown :Command
-    //	{
-    //		//called on key press
-    //		public override void Execute(Transform playerTrans, float speed)
-    //		{
-    //			Move(playerTrans,speed);
-    //
-    //		}
-    //
-    //		public override void Move(Transform playerTrans,float speed){
-    //			playerTrans.Translate (0.0f, -speed, 0.0f);
-    //		}
-    //	}
+   
 }
 

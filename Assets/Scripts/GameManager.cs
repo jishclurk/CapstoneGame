@@ -3,56 +3,104 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CapstoneGame{
+namespace CapstoneGame {
 	
-public class GameManager : MonoBehaviour {
+    public class GameManager : MonoBehaviour {
 
-	private int enemyScore;
-	public int EnemyScore { get { return enemyScore; } set { enemyScore = value; } }
-	private int playerScore;
-	public int PlayerScore { get { return playerScore; } set { playerScore = value; } }
+	    private int enemyScore;
+	    private int playerScore;
+	    private int endScore = 5;
+        private bool paused = false;
 
-	public BallHandler bh;
-	public EnemyHandler eh;
+        private enum State { Load, Play, Pause, Menu}
+        private State state = State.Menu;
 
-	[Range(1,3)]
-	public int numBalls = 3;
-	private int numEnemies = 1;
-	private int endScore = 5;
-	// Use this for initialization
-		void Awake(){
-			bh.StartBallNumber = numBalls;
-			bh.addBalls ();
-			eh.EnemyNumber = numEnemies;
-		}
+        public Scoreboard scoreboard;
+        public GameObject MenuCamera;
+        public GameObject MainMenu;
+        public GameObject PauseMenu;
+        public BallHandler ballHandler;
 
-	void Start () {
+        //Brings up Main Menu
+        void Start () {
+		    enemyScore = 0;
+		    playerScore = 0;
+            MenuCamera = Instantiate(MenuCamera);
+            LoadMenu();
+        }
+
+        //Checks for game state changes (playing and pausing)
+        void Update () {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (paused)
+                {
+                    new Resume(this).Execute();
+                }else
+                {
+                    paused = true;
+                    new Pause(this).Execute();
+                }
+            }
+
+	    }
+
+        public void ScoreEnemyGoal()
+        {
+            enemyScore++;
+            scoreboard.updateEnemyScore(enemyScore);
+        }
+
+        public void ScorePlayerGoal()
+        {
+            playerScore++;
+            scoreboard.updatePlayerScore(playerScore);
+        }
+
+        public void LoadPauseScreen()
+        {
+            PauseMenu.SetActive(true);
+        }
+
+        public void SaveGame()
+        {
+            //how though 
+        }
+
+        public void LoadSavedGame()
+        {
+            
+        }
+
+        public void LoadMenu()
+        {
+            PauseMenu.SetActive(false);
+            MainMenu.SetActive(true);
+            MenuCamera.GetComponent<Camera>().enabled = true;
+        }
 
 
-		enemyScore = 0;
-		playerScore = 0;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-			if (PlayerScore == endScore) {
+        public void ResumeGame()
+        {
+            paused = false;
+            Time.timeScale = 1;
+            PauseMenu.SetActive(false);
+        }
 
-			} else if (EnemyScore == endScore) {
+        //Starts the game play
+        public void StartGame()
+        {
+            MainMenu.SetActive(false);
+            enemyScore = 0;
+            playerScore = 0;
+            scoreboard.updateEnemyScore(enemyScore);
+            scoreboard.updatePlayerScore(playerScore);
+            MenuCamera.GetComponent<Camera>().enabled = false;
+            MainMenu.SetActive(false);
+            Camera.main.enabled = true;
+            
+        }
 
-			} else if (bh.BallCount == 0) {
-				bh.addBalls ();
-				Debug.Log ("Got here");
-			}
-	}
-		
-	void OnGUI(){
-
-		GUI.TextArea(new Rect (Screen.width-100,0,100,50),"Player Score   "+playerScore);
-		GUI.TextArea(new Rect (0,0,100,50),"Enemy Score   "+enemyScore);
-	}
-
-
-
-}
+    }
 
 }

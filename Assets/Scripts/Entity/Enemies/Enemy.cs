@@ -1,143 +1,112 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace CapstoneGame
+{
+    public class Enemy : MonoBehaviour, IEntity
+    {
 
-namespace CapstoneGame{
-	
-	public class Enemy : IEntity
-	{
-		private GameObject enemyObj;
+        private float speed = 0.15f;
 
-		public Transform enemyTrans;
+        public Vector3 velocity { get; set; }
 
-		public IPhysics enemyPhys;
-
-
-
-
-		private bool watched;
-
-		public IArtificialIntelligence enemyAI;
-		
-		public Enemy (GameObject enemyObj)
-		{
-			this.enemyObj = enemyObj;
-			this.enemyTrans = enemyObj.transform;
-			this.enemyPhys = new PlayerPhysics (this.enemyTrans);
-			this.enemyAI = new EnemyAI (this.enemyTrans,this.enemyPhys);
-			watched = false;
-		}
-
-		public void UpdatePhysics (Vector3 velocity){
-			this.enemyPhys.UpdateVelocity (velocity);
-			this.enemyPhys.UpdatePosition ();
-		}
-
-        public ICommand UpdateAI(IEntity enemy)
+        private EnemyAI enemyAI;
+        //// Use this for initialization
+        void Start()
         {
-            //nothing here - for co-opping AI
-            //enemyAI
-            return enemyAI.UpdateAI(enemy);
+            Debug.Log("CREATED Enemy");
+
+            velocity = new Vector3(0, 0, 0);
+            this.enemyAI = new EnemyAI(speed);
         }
 
-        public bool BeingWatched(){
-			return this.watched;
-		}
+        // Update is called once per frame
+        void FixedUpdate()
+        {
+            enemyAI.UpdateAI(this).Execute();
 
-		public void SetWatched(bool watched){
-			this.watched = watched;
-		}
+            if (transform.position.y + velocity.y < -5.5f)
+            {
+                transform.position = new Vector3(transform.position.x, -5.5f, transform.position.z);
+            }
+            else if (transform.position.y + velocity.y > 5.5f)
+            {
+                transform.position = new Vector3(transform.position.x, 5.5f, transform.position.z);
+            }
+            else
+            {
+                transform.Translate(velocity);
+            }
+        }
 
-		public Transform GetTransform(){
-			return this.enemyTrans;
-		}
+        public void changeDiffculty(float speed)
+        {
+            this.speed = speed;
+            this.enemyAI = new EnemyAI(speed);
+        }
 
-		public void changeDiffculty(float speed){
-			this.enemyPhys.UpdateSpeed (speed);
-		}
-	}
+        public Vector3 GetPosition()
+        {
+            return transform.position;
+        }
 
-	public class EnemyAI : IArtificialIntelligence
-	{
-		private List<IEntity> watching;
-		private Transform enemyTrans;
-		private ICommand moveUp, moveDown;
-		private PlayerPhysics enemyPhys;
-
-		public EnemyAI(Transform enemyTrans, IPhysics enemyPhysics){
-			this.enemyTrans = enemyTrans;
-			this.enemyPhys = (PlayerPhysics)enemyPhysics;
-			watching = new List<IEntity> ();
-
-		}
-
-		public void AddEntityToWatch(IEntity watchingObj){
-			//B
-			Ball ball = (Ball)watchingObj;
-			if (ball.ballObj != null) {
-				if (watchingObj.GetTransform ().position.x < 0) {
-				
-					ball.SetWatched (true);
-					watching.Add (watchingObj);
-					Debug.Log ("Added a ball to enemy atch list");
-				}
-			}
-		}
-
-		public void ReleaseEntityToWatch(IEntity watchingObj){
-			watching.Remove (watchingObj);
-		}
-
-		public List<IEntity> watchList(){
-			return watching;
-		}
-
-		public ICommand UpdateAI(IEntity enemy){
-
-			List<IEntity> deleteList = new List<IEntity> ();
-
-			foreach (IEntity entity in watching) {
-
-				if (entity is Ball) {
-						Ball ball = (Ball)entity;
-//					if (ball.GetVelocity ().x < 0) {
-//						
-//					}
-					if (ball.ballObj != null) {
-						//General AI
-//						if (ball.GetVelocity ().x < 0) {
-							if (ball.ballTrans.position.y > enemyTrans.position.y) {
-								return new MoveUp (enemy);
-								//enemyPhys.UpdateVelocity(new Vector3(0,1.0f,0));
-							
-							} else if (ball.ballTrans.position.y < enemyTrans.position.y) {
-								return new MoveDown (enemy);
-								//enemyPhys.UpdateVelocity(new Vector3(0,-1.0f,0));
-							}
-//						} else {
-//							deleteList.Add (ball);
-//						}
-					} else {
-						//ball.SetWatched (false);
-						deleteList.Add (ball);
-					}
-					//enemyPhys.UpdatePosition ();
-					//
-				}
-
-				//add other watchable objects
-			}
-
-			foreach (IEntity entity in deleteList) {
-				ReleaseEntityToWatch (entity);
-			}
-
-			return new DoNothing ();
-
-		}
+    }
 
 
-	}
+    public class EnemyAI : IArtificialIntelligence
+    {
+        private float speedFactor = 1;
+
+        public EnemyAI(float speedFactor)
+        {
+            this.speedFactor = speedFactor;
+        }
+        
+        public ICommand UpdateAI(IEntity enemy)
+        {
+            Vector3 ballLocation = FindClosestBall(enemy.GetPosition());
+
+            ICommand command = new DoNothing();
+            if ((ballLocation.y - enemy.GetPosition().y) > 0.5f)
+            {
+                command = new MoveUp(enemy, speedFactor * Mathf.Abs(ballLocation.y - enemy.GetPosition().y));
+            }
+            else if ((ballLocation.y - enemy.GetPosition().y) < -0.5f)
+            {
+                command = new MoveDown(enemy, speedFactor * Mathf.Abs(ballLocation.y - enemy.GetPosition().y));
+            }
+
+            return command;
+        }
+
+        private Vector3 FindClosestBall(Vector3 enemyPosition)
+        {
+            GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
+
+            if (balls.Length == 0)
+            {
+                return enemyPosition;
+            }
+
+            float smallestDistance = Vector3.Magnitude(balls[0].transform.position - enemyPosition);
+            int closestBall = 0;
+            for (int i = 1; i < balls.Length; i++)
+            {
+                float potentialSmallestDistance = Vector3.Magnitude(balls[i].transform.position - enemyPosition);
+                if (potentialSmallestDistance < smallestDistance)
+                {
+                    smallestDistance = potentialSmallestDistance;
+                    closestBall = i;
+                }
+            }
+
+            return balls[closestBall].transform.position;
+        }
+    }
+
+
 }
+
+
 
