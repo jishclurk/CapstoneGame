@@ -14,25 +14,25 @@ public class Movement : MonoBehaviour {
 	void Update () {
 
 		if (Input.GetKey (KeyCode.DownArrow)) {
-			transform.Translate (0.0f, -0.25f, 0.0f);
+			transform.Translate (0.0f, 0.0f, -0.25f);
 		}
 		if (Input.GetKey (KeyCode.UpArrow)) {
-			transform.Translate (0.0f, 0.25f, 0.0f);
+			transform.Translate (0.0f, 0.0f, 0.25f);
 		}
 
-		if (transform.position.y > 7.5f) {
-			transform.position = new Vector3 (15.0f, 7.5f, 0.0f);
-		}
-		if (transform.position.y < -7.5f) {
-			transform.position = new Vector3 (15.0f, -7.5f, 0.0f);
-		}
+		//if (transform.position.y > 7.5f) {
+		//	transform.position = new Vector3 (15.0f, 7.5f, 0.0f);
+		//}
+		//if (transform.position.y < -7.5f) {
+		//	transform.position = new Vector3 (15.0f, -7.5f, 0.0f);
+		//}
         else if (Input.GetKeyDown(KeyCode.Q))
         {
             //Switch to exit state scene before running below
-            while (exitTime > 0)
-            {
-                exitTime -= Time.deltaTime;
-            }
+            //while (exitTime > 0)
+            //{
+            //    exitTime -= Time.deltaTime;
+            //}
                 Application.Quit();
             
         }

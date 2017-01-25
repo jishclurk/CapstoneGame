@@ -14,17 +14,17 @@ public class PongAI : MonoBehaviour {
 	void FixedUpdate () {
 
 		if (ball.transform.position.y > transform.position.y) {
-			transform.Translate (0.0f, 0.1f, 0.0f);
+			transform.Translate (0.0f, 0.0f, 0.1f);
 		}
 		if (ball.transform.position.y < transform.position.y) {
-			transform.Translate (0.0f, -0.1f, 0.0f);
+			transform.Translate (0.0f, 0.0f, -0.1f);
 		}
 
-		if (transform.position.y > 7.5f) {
-			transform.position = new Vector3 (-15.0f, 7.5f, 0.0f);
-		}
-		if (transform.position.y < -7.5f) {
-			transform.position = new Vector3 (-15.0f, -7.5f, 0.0f);
-		}
+		//if (transform.position.y > 7.5f) {
+		//	transform.position = new Vector3 (-15.0f, 7.5f, 0.0f);
+		//}
+		//if (transform.position.y < -7.5f) {
+		//	transform.position = new Vector3 (-15.0f, -7.5f, 0.0f);
+		//}
 	}
 }
