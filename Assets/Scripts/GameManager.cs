@@ -21,6 +21,7 @@ namespace CapstoneGame {
         public GameObject PauseMenu;
         public BallHandler ballHandler;
 
+        //Brings up Main Menu
         void Start () {
 		    enemyScore = 0;
 		    playerScore = 0;
@@ -73,16 +74,20 @@ namespace CapstoneGame {
 
         public void LoadMenu()
         {
+            PauseMenu.SetActive(false);
             MainMenu.SetActive(true);
             MenuCamera.GetComponent<Camera>().enabled = true;
-
         }
-        
+
+
         public void ResumeGame()
         {
+            paused = false;
+            Time.timeScale = 1;
             PauseMenu.SetActive(false);
         }
 
+        //Starts the game play
         public void StartGame()
         {
             MainMenu.SetActive(false);
@@ -90,10 +95,8 @@ namespace CapstoneGame {
             playerScore = 0;
             scoreboard.updateEnemyScore(enemyScore);
             scoreboard.updatePlayerScore(playerScore);
-           // ballHandler.Reset();
             MenuCamera.GetComponent<Camera>().enabled = false;
             MainMenu.SetActive(false);
-
             Camera.main.enabled = true;
             
         }
