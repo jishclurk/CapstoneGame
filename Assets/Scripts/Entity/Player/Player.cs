@@ -19,7 +19,6 @@ namespace CapstoneGame
 
         public void FixedUpdate()
         {
-            //Debug.Log("player velcity = " + velocity);
             if (transform.position.y < -5.5f)
             {
                 transform.position = new Vector3(transform.position.x, -5.5f, transform.position.z);

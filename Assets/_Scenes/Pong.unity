@@ -1227,6 +1227,21 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: b4ded0b01fc769242a3260d9603b50aa,
         type: 3}
+    - target: {fileID: 114131030443709348, guid: 506ce75d96fe74247a9015df6cf050f2,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 838098087}
+    - target: {fileID: 114131030443709348, guid: 506ce75d96fe74247a9015df6cf050f2,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Exit
+      objectReference: {fileID: 0}
+    - target: {fileID: 114131030443709348, guid: 506ce75d96fe74247a9015df6cf050f2,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 506ce75d96fe74247a9015df6cf050f2, type: 2}
   m_IsPrefabParent: 0

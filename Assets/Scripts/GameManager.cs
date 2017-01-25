@@ -12,14 +12,10 @@ namespace CapstoneGame {
 	    private int endScore = 5;
         private bool paused = false;
 
-        private enum State { Load, Play, Pause, Menu}
-        private State state = State.Menu;
-
         public Scoreboard scoreboard;
         public GameObject MenuCamera;
         public GameObject MainMenu;
         public GameObject PauseMenu;
-        public BallHandler ballHandler;
 
         //Brings up Main Menu
         void Start () {
@@ -35,11 +31,11 @@ namespace CapstoneGame {
             {
                 if (paused)
                 {
-                    new Resume(this).Execute();
+                    ResumeGame();
+
                 }else
                 {
-                    paused = true;
-                    new Pause(this).Execute();
+                    Pause();
                 }
             }
 
@@ -57,8 +53,10 @@ namespace CapstoneGame {
             scoreboard.updatePlayerScore(playerScore);
         }
 
-        public void LoadPauseScreen()
+        public void Pause()
         {
+            Time.timeScale = 0;
+            paused = true;
             PauseMenu.SetActive(true);
         }
 
@@ -74,6 +72,10 @@ namespace CapstoneGame {
 
         public void LoadMenu()
         {
+            if (paused)
+            {
+                Time.timeScale = 1;
+            }
             PauseMenu.SetActive(false);
             MainMenu.SetActive(true);
             MenuCamera.GetComponent<Camera>().enabled = true;
@@ -99,6 +101,12 @@ namespace CapstoneGame {
             MainMenu.SetActive(false);
             Camera.main.enabled = true;
             
+        }
+
+        //doesn't work
+        public void Exit()
+        {
+            Application.Quit();
         }
 
     }
