@@ -92,7 +92,8 @@ namespace CapstoneGame {
             scoreboard.updatePlayerScore(playerScore);
            // ballHandler.Reset();
             MenuCamera.GetComponent<Camera>().enabled = false;
-            Destroy(MainMenu);
+            MainMenu.SetActive(false);
+
             Camera.main.enabled = true;
             
         }
