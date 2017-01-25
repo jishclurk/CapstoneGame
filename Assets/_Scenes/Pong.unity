@@ -235,7 +235,7 @@ MonoBehaviour:
   enemyPrefabRef: {fileID: 114122292467301594, guid: 5e0b106f688fc49099d42d4b1d72286a,
     type: 2}
   numEnemies: 1
-  difficulty: 0.17
+  difficulty: 0.13
 --- !u!4 &239341063
 Transform:
   m_ObjectHideFlags: 0
