@@ -13,15 +13,17 @@ namespace CapstoneGame
 	public class MoveUp : ICommand
 	{
         private IEntity player;
+        private float amount;
 		
-        public MoveUp(IEntity player)
+        public MoveUp(IEntity player, float amount)
         {
             this.player = player;
+            this.amount = Mathf.Abs(amount);
         }
         
 		public void Execute()
 		{
-            player.velocity = new Vector3(0, 1.0f, 0);
+            player.velocity = new Vector3(0, amount, 0);
         }
 
 	}
@@ -30,6 +32,7 @@ namespace CapstoneGame
     public class MoveByAxis : ICommand
     {
         private IEntity player;
+        private float amount;
 
         public MoveByAxis(IEntity player)
         {
@@ -45,15 +48,17 @@ namespace CapstoneGame
     public class MoveDown : ICommand
 	{
         private IEntity player;
+        private float amount;
 
-        public MoveDown(IEntity player)
+        public MoveDown(IEntity player, float amount)
         {
             this.player = player;
+            this.amount = Mathf.Abs(amount);
         }
 
         public void Execute()
 		{
-            player.velocity = new Vector3(0, -1.0f, 0);
+            player.velocity = new Vector3(0, -amount, 0);
         }
 
 	}
