@@ -77,52 +77,52 @@ namespace CapstoneGame
 		}
 	}
 
-    public class Pause : ICommand
-    {
-        GameManager gm;
+    //public class Pause : ICommand
+    //{
+    //    GameManager gm;
 
-        public Pause(GameManager gm)
-        {
-            this.gm = gm;
-        }
-        public void Execute()
-        {
-            Time.timeScale = 0;
-            gm.LoadPauseScreen();
-        }
-    }
+    //    public Pause(GameManager gm)
+    //    {
+    //        this.gm = gm;
+    //    }
+    //    public void Execute()
+    //    {
+    //        Time.timeScale = 0;
+    //        gm.LoadPauseScreen();
+    //    }
+    //}
 
-    public class Resume : ICommand
-    {
-        GameManager gm;
+    //public class Resume : ICommand
+    //{
+    //    GameManager gm;
 
-        public Resume(GameManager gm)
-        {
-            this.gm = gm;
-        }
-        public void Execute()
-        {
-            //Count down??
-            Time.timeScale = 1;
-            gm.ResumeGame();
-        }
-    }
+    //    public Resume(GameManager gm)
+    //    {
+    //        this.gm = gm;
+    //    }
+    //    public void Execute()
+    //    {
+    //        //Count down??
+    //        Time.timeScale = 1;
+    //        gm.ResumeGame();
+    //    }
+    //}
 
-    public class ToMenu : ICommand
-    {
-        public void Execute()
-        {
-            SceneManager.LoadScene("Pong Menu");
-        }
-    }
+    //public class ToMenu : ICommand
+    //{
+    //    public void Execute()
+    //    {
+    //        SceneManager.LoadScene("Pong Menu");
+    //    }
+    //}
 
-    public class Exit : ICommand
-    {
-        public void Execute()
-        {
+    //public class Exit : ICommand
+    //{
+    //    public void Execute()
+    //    {
             
-        }
-    }
+    //    }
+    //}
    
 }
 
