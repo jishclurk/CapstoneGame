@@ -104,9 +104,13 @@ namespace CapstoneGame {
 
         public void PlayHoverSound()
         {
+            if (hover.isPlaying)
+            {
+                hover.Stop();
+            }
             hover.Play();
         }
-
+        
         public void PlaySelectSound()
         {
             select.Play();

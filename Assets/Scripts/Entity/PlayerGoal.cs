@@ -8,9 +8,11 @@ namespace CapstoneGame
     {
 
         public GameManager manager;
+        public AudioSource goalSound = new AudioSource();
 
         public void ScoreGoal()
         {
+            goalSound.Play();
             manager.ScoreEnemyGoal();
         }
 
