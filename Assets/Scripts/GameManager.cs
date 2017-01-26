@@ -10,7 +10,7 @@ namespace CapstoneGame {
 
 	    private int enemyScore;
 	    private int playerScore;
-	    private int endScore = 5;
+	    private int endScore = 2;
         private bool paused = true;
         private GameState test1;
         private GameState test2;
@@ -80,7 +80,7 @@ namespace CapstoneGame {
         {
             enemyScore++;
             scoreboard.updateEnemyScore(enemyScore);
-            if (enemyScore > 10) //End the game at 11 points.
+            if (enemyScore > endScore) 
             {
                 EndGame();
             }
@@ -90,7 +90,7 @@ namespace CapstoneGame {
         {
             playerScore++;
             scoreboard.updatePlayerScore(playerScore);
-            if(playerScore > 10)
+            if(playerScore > endScore)
             {
                 EndGame();
             }
