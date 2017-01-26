@@ -40,7 +40,11 @@ namespace CapstoneGame
             return transform.position;
         }
 
-	}
+        public void SetPosition(Vector3 position)
+        {
+            transform.position = position;
+        }
+    }
 
 
 }

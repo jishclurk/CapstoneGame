@@ -29,6 +29,38 @@ namespace CapstoneGame
             }
 		}
 
-	}
+        public List<Vector3> saveState()
+        {
+            List<Vector3> savedState = new List<Vector3>();
+            foreach(Enemy enemy in enemies)
+            {
+                savedState.Add(enemy.GetPosition());
+            }
+
+            return savedState;
+        }
+
+        public void setState(List<Vector3> positions)
+        {
+            if(enemies.Count != 0)
+            {
+                foreach (Enemy enemy in enemies)
+                {
+                    enemies.Remove(enemy);
+                    Destroy(enemy);
+                }
+
+            }
+
+            foreach (Vector3 position in positions)
+            {
+                Enemy newEnemy = (Enemy)Instantiate(enemyPrefabRef);
+                newEnemy.changeDiffculty(difficulty);
+                newEnemy.SetPosition(position);
+                enemies.Add(newEnemy);
+            }
+        }
+
+    }
 }
 
