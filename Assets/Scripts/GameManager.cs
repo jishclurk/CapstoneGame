@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 
 namespace CapstoneGame {
 	
@@ -88,20 +89,19 @@ namespace CapstoneGame {
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                //load test state1
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                //load test state1
+                LoadTestState(test1);
+
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                //load test state2
+                LoadTestState(test2);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                //load test state3
+                LoadTestState(test3);
+
             }
+
 
         }
 
@@ -165,17 +165,52 @@ namespace CapstoneGame {
             ph.Restart();
             bh.Restart();
             eh.Restart();
+            scoreboard.updateAll(enemyScore, playerScore);
         }
 
         //Loads game saved in saveSpot
         public void LoadSavedGame(int saveSpot)
         {
-            GameState savedGame = SaveLoad.Load(saveSpot);
-            bh.setState(savedGame.balls);
-            eh.setState(savedGame.enemies);
-            ph.setState(savedGame.player.Deserialize());
-            enemyScore = savedGame.cpuScore;
-            playerScore = savedGame.playerScore;
+            try
+            {
+                GameState savedGame = SaveLoad.Load(saveSpot);
+                bh.setState(savedGame.balls);
+                eh.setState(savedGame.enemies);
+                ph.setState(savedGame.player.Deserialize());
+                enemyScore = savedGame.cpuScore;
+                playerScore = savedGame.playerScore;
+                scoreboard.updateAll(enemyScore, playerScore);
+                if (paused)
+                {
+                    ResumeGame();
+                }
+                LoadScreen.SetActive(false);
+
+            }
+            catch (Exception e)
+            {
+
+            }
+
+        }
+
+        //Disables all menus
+        private void DisableMenus()
+        {
+            MainMenu.SetActive(false);
+            PauseMenu.SetActive(false);
+            GameResultMenu.SetActive(false);
+            SaveMenu.SetActive(false);
+            LoadScreen.SetActive(false);
+        }
+
+        private void LoadTestState(GameState testState)
+        {
+            bh.setState(testState.balls);
+            eh.setState(testState.enemies);
+            ph.setState(testState.player.Deserialize());
+            enemyScore = testState.cpuScore;
+            playerScore = testState.playerScore;
             if (paused)
             {
                 ResumeGame();

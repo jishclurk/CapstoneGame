@@ -19,4 +19,10 @@ public class Scoreboard : MonoBehaviour {
         if (playerScore != null)
             playerScore.text = newScore.ToString();
     }
+
+    public void updateAll(int enemyScore, int playerScore)
+    {
+        this.enemyScore.text = enemyScore.ToString();
+        this.enemyScore.text = playerScore.ToString();
+    }
 }
