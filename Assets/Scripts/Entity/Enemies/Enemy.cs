@@ -15,7 +15,6 @@ namespace CapstoneGame
         //// Use this for initialization
         void Start()
         {
-            Debug.Log("CREATED Enemy");
 
             velocity = new Vector3(0, 0, 0);
             this.enemyAI = new EnemyAI(speed);

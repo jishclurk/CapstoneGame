@@ -11,7 +11,7 @@ namespace CapstoneGame {
 	    private int enemyScore;
 	    private int playerScore;
 	    private int endScore = 5;
-        private bool paused = false;
+        private bool paused = true;
 
         public Scoreboard scoreboard;
         public GameObject MainMenu;
@@ -88,7 +88,14 @@ namespace CapstoneGame {
         //Saves game in saveSpot
         public void SaveGame(int saveSpot)
         {
-            GameState currentState = new GameState(bh.saveState(), ph.saveState(), eh.saveState(), playerScore, enemyScore);
+            GameState currentState = new GameState();
+            currentState.balls = bh.saveState();
+            SerializableVector3 player = new SerializableVector3();
+            player.setVector(ph.saveState());
+            currentState.player = player;
+            currentState.enemies = eh.saveState();
+            currentState.playerScore = playerScore;
+            currentState.cpuScore = enemyScore;
             SaveLoad.Save(currentState, saveSpot);
         }
 
@@ -98,9 +105,14 @@ namespace CapstoneGame {
             GameState savedGame = SaveLoad.Load(saveSpot);
             bh.setState(savedGame.balls);
             eh.setState(savedGame.enemies);
-            ph.setState(savedGame.player);
+            ph.setState(savedGame.player.Deserialize());
             enemyScore = savedGame.cpuScore;
             playerScore = savedGame.playerScore;
+            if (paused)
+            {
+                ResumeGame();
+            }
+            LoadScreen.SetActive(false);
         }
 
         //Loads main menu
@@ -127,6 +139,7 @@ namespace CapstoneGame {
         //Starts the game play
         public void StartGame()
         {
+            paused = false;
             MainMenu.SetActive(false);
             enemyScore = 0;
             playerScore = 0;

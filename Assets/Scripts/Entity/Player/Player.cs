@@ -12,7 +12,6 @@ namespace CapstoneGame
 
         public void Start()
         {
-            Debug.Log("CREATED PLAYER");    
             speed = .5f;
             velocity = new Vector3(0, 0, 0);
         }

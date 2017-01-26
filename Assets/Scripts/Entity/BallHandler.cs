@@ -50,7 +50,14 @@ namespace CapstoneGame{
 
             foreach(Ball ball in balls)
             {
-                savedStates.Add(new BallState(ball.velocity, ball.GetPosition()));
+                BallState ballState = new BallState();
+                SerializableVector3 velocity = new SerializableVector3();
+                velocity.setVector(ball.velocity);
+                ballState.velocity = velocity;
+                SerializableVector3 position = new SerializableVector3();
+                position.setVector(ball.GetPosition());
+                ballState.position = position;
+                savedStates.Add(ballState);
             }
 
             return savedStates;
@@ -58,17 +65,19 @@ namespace CapstoneGame{
 
         public void setState(List<BallState> savedState)
         {
-            foreach(Ball ball in balls)
+            for(int i = 0; i< balls.Count; i++)
             {
-                Destroy(ball);
+                Destroy(balls[i].gameObject);
+                balls.Remove(balls[i]);
+                i--;
             }
 
             foreach(BallState savedBall in savedState)
             {
                 Ball ballToAdd = Instantiate(ballPrefabRef);
                 ballToAdd.spawner = this;
-                ballToAdd.SetPosition(savedBall.position);
-                ballToAdd.velocity = savedBall.velocity;
+                ballToAdd.SetPosition(savedBall.position.Deserialize());
+                ballToAdd.velocity = savedBall.velocity.Deserialize();
                 balls.Add(ballToAdd);
             }
         }

@@ -1,19 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace CapstoneGame
 {
-    [System.Serializable]
     public class BallState
     {
-        public Vector3 velocity;
-        public Vector3 position;
+        [XmlElement("velocity")]
+        public SerializableVector3 velocity;
 
-        public BallState(Vector3 velocity, Vector3 position)
+        [XmlElement("position")]
+        public SerializableVector3 position;
+
+        public BallState()
         {
-            this.velocity = velocity;
-            this.position = position;
         }
 
     }

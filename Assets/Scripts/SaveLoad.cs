@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace CapstoneGame
 {
@@ -12,10 +13,9 @@ namespace CapstoneGame
         //Saves game in saveSpot
         public static void Save(GameState game, int saveSpot)
         {
-            //savedGames.Add(game);
-            BinaryFormatter bf = new BinaryFormatter();
+            var serializer = new XmlSerializer(typeof(GameState));
             FileStream file = File.Create(Application.persistentDataPath + "/savedGame" + saveSpot + ".gd");
-            bf.Serialize(file, game);
+            serializer.Serialize(file, game);
             file.Close();
         }
         
@@ -26,9 +26,9 @@ namespace CapstoneGame
 
             if (File.Exists(Application.persistentDataPath + "/savedGame" + saveSpot + ".gd"))
             {
-                BinaryFormatter bf = new BinaryFormatter();
+                var serializer = new XmlSerializer(typeof(GameState));
                 FileStream file = File.Open(Application.persistentDataPath + "/savedGame" + saveSpot + ".gd", FileMode.Open);
-                gameState = (GameState)bf.Deserialize(file);
+                gameState = (GameState)serializer.Deserialize(file);
                 file.Close();
             }
             return gameState;

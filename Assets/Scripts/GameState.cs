@@ -1,25 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Xml.Serialization;
 
 namespace CapstoneGame
 {
-    [System.Serializable]
+    [XmlRoot("GameState")]
     public class GameState
     {
+        [XmlArray("Balls")]
+        [XmlArrayItem("Ball")]
         public List<BallState> balls;
-        public Vector3 player;
-        public List<Vector3> enemies;
+
+        [XmlElement("Player")]
+        public SerializableVector3 player;
+
+        [XmlArray("Enemies")]
+        [XmlArrayItem("Enemy")]
+        public List<SerializableVector3> enemies;
+
         public int playerScore;
         public int cpuScore;
 
-        public GameState(List<BallState> balls, Vector3 player, List<Vector3> enemies, int playerScore, int cpuScore)
+        public GameState()
         {
-            this.balls = balls;
-            this.player = player;
-            this.enemies = enemies;
-            this.playerScore = playerScore;
-            this.cpuScore = cpuScore;
+
         }
 
     }

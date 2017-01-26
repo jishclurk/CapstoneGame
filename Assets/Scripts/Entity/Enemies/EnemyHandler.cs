@@ -29,34 +29,37 @@ namespace CapstoneGame
             }
 		}
 
-        public List<Vector3> saveState()
+        public List<SerializableVector3> saveState()
         {
-            List<Vector3> savedState = new List<Vector3>();
+            List<SerializableVector3> savedState = new List<SerializableVector3>();
             foreach(Enemy enemy in enemies)
             {
-                savedState.Add(enemy.GetPosition());
+                SerializableVector3 position = new SerializableVector3();
+                position.setVector(enemy.GetPosition());
+                savedState.Add(position);
             }
 
             return savedState;
         }
 
-        public void setState(List<Vector3> positions)
+        public void setState(List<SerializableVector3> positions)
         {
             if(enemies.Count != 0)
             {
-                foreach (Enemy enemy in enemies)
+                for(int i = 0; i<enemies.Count; i++)
                 {
-                    enemies.Remove(enemy);
-                    Destroy(enemy);
+                    Destroy(enemies[i].gameObject);
+                    enemies.RemoveAt(i);
+                    i--;
                 }
 
             }
 
-            foreach (Vector3 position in positions)
+            foreach (SerializableVector3 position in positions)
             {
                 Enemy newEnemy = (Enemy)Instantiate(enemyPrefabRef);
                 newEnemy.changeDiffculty(difficulty);
-                newEnemy.SetPosition(position);
+                newEnemy.SetPosition(position.Deserialize());
                 enemies.Add(newEnemy);
             }
         }
