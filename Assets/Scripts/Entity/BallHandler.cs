@@ -44,7 +44,35 @@ namespace CapstoneGame{
             }
 		}
 
+        public List<BallState> saveState()
+        {
+            List<BallState> savedStates = new List<BallState>();
 
+            foreach(Ball ball in balls)
+            {
+                savedStates.Add(new BallState(ball.velocity, ball.GetPosition()));
+            }
 
+            return savedStates;
+        }
+
+        public void setState(List<BallState> savedState)
+        {
+            foreach(Ball ball in balls)
+            {
+                Destroy(ball);
+            }
+
+            foreach(BallState savedBall in savedState)
+            {
+                Ball ballToAdd = Instantiate(ballPrefabRef);
+                ballToAdd.spawner = this;
+                ballToAdd.SetPosition(savedBall.position);
+                ballToAdd.velocity = savedBall.velocity;
+                balls.Add(ballToAdd);
+            }
+        }
     }
+
+    
 }

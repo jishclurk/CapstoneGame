@@ -18,10 +18,7 @@ namespace CapstoneGame
         // Use this for initialization
         void Start()
         {
-            Debug.Log("Ball start");
-
             float i = Mathf.Pow(-1.0f, Random.Range(0, 2));
-            //Debug.Log("x velocity" + i);
             float i2 = Mathf.Pow(-1.0f, Random.Range(0, 2));
             rb = this.GetComponent<Rigidbody>();
             rb.velocity = new Vector3(i * Random.Range(12, 15), i2 * Random.Range(12, 15), 0); //random velocity
@@ -35,6 +32,10 @@ namespace CapstoneGame
             return transform.position;
         }
 
+        public void SetPosition(Vector3 position)
+        {
+            transform.position = position;
+        }
         //Moves Ball
         void FixedUpdate()
         {

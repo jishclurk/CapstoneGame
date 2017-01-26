@@ -8,12 +8,9 @@ namespace CapstoneGame{
 	{
 		public Player player;
 
-        //The different keys we need
         private ICommand move;
 
         void Start(){
-            Debug.Log("player handler start");
-
             player = (Player)Instantiate(player);
             move = new MoveByAxis(player);
 		}
@@ -23,6 +20,20 @@ namespace CapstoneGame{
             move.Execute();
 		}
 
+        public Vector3 saveState()
+        {
+            return player.GetPosition();
+        }
+
+        public void setState(Vector3 position)
+        {
+            if(player == null)
+            {
+                player = (Player)Instantiate(player);
+            }
+
+            player.SetPosition(position);
+        }
 		
 	}
 }

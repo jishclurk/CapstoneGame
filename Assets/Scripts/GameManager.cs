@@ -15,9 +15,15 @@ namespace CapstoneGame {
         public Scoreboard scoreboard;
         public GameObject MainMenu;
         public GameObject PauseMenu;
+        public GameObject SaveMenu;
+
+        public BallHandler bh;
+        public EnemyHandler eh;
+        public PlayerHandler ph;
 
         public AudioSource select;
         public AudioSource hover;
+
         //Brings up Main Menu
         void Start () {
 		    enemyScore = 0;
@@ -53,6 +59,7 @@ namespace CapstoneGame {
             scoreboard.updatePlayerScore(playerScore);
         }
 
+        //Pauses game and brings up pause menu
         public void Pause()
         {
             Time.timeScale = 0;
@@ -60,16 +67,32 @@ namespace CapstoneGame {
             PauseMenu.SetActive(true);
         }
 
-        public void SaveGame()
+        //Brings down pause menu and opens save menu
+        public void LoadSaveMenu()
         {
-            //how though 
+            PauseMenu.SetActive(false);
+            SaveMenu.SetActive(true);
         }
 
-        public void LoadSavedGame()
+        //Saves game in saveSpot
+        public void SaveGame(int saveSpot)
         {
-            
+            GameState currentState = new GameState(bh.saveState(), ph.saveState(), eh.saveState(), playerScore, enemyScore);
+            SaveLoad.Save(currentState, saveSpot);
         }
 
+        //Loads game saved in saveSpot
+        public void LoadSavedGame(int saveSpot)
+        {
+            GameState savedGame = SaveLoad.Load(saveSpot);
+            bh.setState(savedGame.balls);
+            eh.setState(savedGame.enemies);
+            ph.setState(savedGame.player);
+            enemyScore = savedGame.cpuScore;
+            playerScore = savedGame.playerScore;
+        }
+
+        //Loads main menu
         public void LoadMenu()
         {
             if (paused)
@@ -81,7 +104,7 @@ namespace CapstoneGame {
             Time.timeScale = 0;
         }
 
-
+        //Brings down the pause menu and resumes the game
         public void ResumeGame()
         {
             paused = false;
@@ -116,8 +139,6 @@ namespace CapstoneGame {
             select.Play();
         }
 
-
-        //doesn't work
         public void Exit()
         {
             Application.Quit();
