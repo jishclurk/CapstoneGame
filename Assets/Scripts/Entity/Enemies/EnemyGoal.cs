@@ -6,9 +6,11 @@ using CapstoneGame;
 public class EnemyGoal : MonoBehaviour, IGoal {
 
     public GameManager manager;
+    public AudioSource goalSound = new AudioSource();
 
-	public void ScoreGoal()
+    public void ScoreGoal()
     {
+        goalSound.Play();
         manager.ScorePlayerGoal();
     }
 

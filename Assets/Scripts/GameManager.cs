@@ -8,29 +8,36 @@ namespace CapstoneGame {
     public class GameManager : MonoBehaviour {
 
 	    private int enemyScore;
-	    public int EnemyScore { get { return enemyScore; } set { enemyScore = value; } }
 	    private int playerScore;
-	    public int PlayerScore { get { return playerScore; } set { playerScore = value; } }
-
-	    public BallHandler bh;
-        public Scoreboard scoreboard;
-
 	    private int endScore = 5;
+        private bool paused = false;
 
-	    // Use this for initialization
-	    void Awake(){
-            bh.setGameManager(this);
-        }
+        public Scoreboard scoreboard;
+        public GameObject MainMenu;
+        public GameObject PauseMenu;
 
+        public AudioSource select;
+        public AudioSource hover;
+        //Brings up Main Menu
         void Start () {
 		    enemyScore = 0;
 		    playerScore = 0;
-            scoreboard.updateEnemyScore(enemyScore);
-            scoreboard.updatePlayerScore(playerScore);
+            LoadMenu();
         }
-	
-	    // Update is called once per frame
-	    void Update () {
+
+        //Checks for game state changes (playing and pausing)
+        void Update () {
+            if (!MainMenu.activeSelf && Input.GetKeyDown(KeyCode.Space))
+            {
+                if (paused)
+                {
+                    ResumeGame();
+
+                }else
+                {
+                    Pause();
+                }
+            }
 
 	    }
 
@@ -44,6 +51,76 @@ namespace CapstoneGame {
         {
             playerScore++;
             scoreboard.updatePlayerScore(playerScore);
+        }
+
+        public void Pause()
+        {
+            Time.timeScale = 0;
+            paused = true;
+            PauseMenu.SetActive(true);
+        }
+
+        public void SaveGame()
+        {
+            //how though 
+        }
+
+        public void LoadSavedGame()
+        {
+            
+        }
+
+        public void LoadMenu()
+        {
+            if (paused)
+            {
+                Time.timeScale = 1;
+            }
+            PauseMenu.SetActive(false);
+            MainMenu.SetActive(true);
+            Time.timeScale = 0;
+        }
+
+
+        public void ResumeGame()
+        {
+            paused = false;
+            Time.timeScale = 1;
+            PauseMenu.SetActive(false);
+        }
+
+        //Starts the game play
+        public void StartGame()
+        {
+            MainMenu.SetActive(false);
+            enemyScore = 0;
+            playerScore = 0;
+            Time.timeScale = 1;
+            scoreboard.updateEnemyScore(enemyScore);
+            scoreboard.updatePlayerScore(playerScore);
+            MainMenu.SetActive(false);
+            
+        }
+
+        public void PlayHoverSound()
+        {
+            if (hover.isPlaying)
+            {
+                hover.Stop();
+            }
+            hover.Play();
+        }
+        
+        public void PlaySelectSound()
+        {
+            select.Play();
+        }
+
+
+        //doesn't work
+        public void Exit()
+        {
+            Application.Quit();
         }
 
     }

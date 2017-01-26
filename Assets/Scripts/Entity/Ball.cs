@@ -25,6 +25,9 @@ namespace CapstoneGame
             float i2 = Mathf.Pow(-1.0f, Random.Range(0, 2));
             rb = this.GetComponent<Rigidbody>();
             rb.velocity = new Vector3(i * Random.Range(12, 15), i2 * Random.Range(12, 15), 0); //random velocity
+
+            paddleHitAudio = gameObject.GetComponents<AudioSource>()[0];
+            wallHitAudio = gameObject.GetComponents<AudioSource>()[1];
         }
 
         public Vector3 GetPosition()

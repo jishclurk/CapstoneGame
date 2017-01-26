@@ -19,18 +19,19 @@ namespace CapstoneGame
 
         public void FixedUpdate()
         {
-            //Debug.Log("player velcity = " + velocity);
-            if (transform.position.y < -5.5f)
+            velocity *= speed;
+
+            if (transform.position.y + velocity.y < -5.5f)
             {
                 transform.position = new Vector3(transform.position.x, -5.5f, transform.position.z);
             }
-            else if (transform.position.y > 5.5f)
+            else if (transform.position.y + velocity.y > 5.5f)
             {
                 transform.position = new Vector3(transform.position.x, 5.5f, transform.position.z);
             }
             else
             {
-                transform.Translate(velocity * this.speed);
+                transform.Translate(velocity);
             }
         }
 

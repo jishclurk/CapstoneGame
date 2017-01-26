@@ -7,8 +7,8 @@ namespace CapstoneGame
     public class Enemy : MonoBehaviour, IEntity
     {
 
-        private float speed = 0.25f;
-       // private Vector3 velocity;
+        private float speed = 0.15f;
+
         public Vector3 velocity { get; set; }
 
         private EnemyAI enemyAI;
@@ -18,30 +18,32 @@ namespace CapstoneGame
             Debug.Log("CREATED Enemy");
 
             velocity = new Vector3(0, 0, 0);
-            this.enemyAI = new EnemyAI();
+            this.enemyAI = new EnemyAI(speed);
         }
 
         // Update is called once per frame
         void FixedUpdate()
         {
             enemyAI.UpdateAI(this).Execute();
-            if (transform.position.y < -5.5f)
+
+            if (transform.position.y + velocity.y < -5.5f)
             {
                 transform.position = new Vector3(transform.position.x, -5.5f, transform.position.z);
             }
-            else if (transform.position.y > 5.5f)
+            else if (transform.position.y + velocity.y > 5.5f)
             {
                 transform.position = new Vector3(transform.position.x, 5.5f, transform.position.z);
             }
             else
             {
-                transform.Translate(velocity * this.speed);
+                transform.Translate(velocity);
             }
         }
 
         public void changeDiffculty(float speed)
         {
             this.speed = speed;
+            this.enemyAI = new EnemyAI(speed);
         }
 
         public Vector3 GetPosition()
@@ -54,20 +56,25 @@ namespace CapstoneGame
 
     public class EnemyAI : IArtificialIntelligence
     {
+        private float speedFactor = 1;
 
+        public EnemyAI(float speedFactor)
+        {
+            this.speedFactor = speedFactor;
+        }
+        
         public ICommand UpdateAI(IEntity enemy)
         {
             Vector3 ballLocation = FindClosestBall(enemy.GetPosition());
 
             ICommand command = new DoNothing();
-            if (ballLocation.y > enemy.GetPosition().y)
+            if ((ballLocation.y - enemy.GetPosition().y) > 0.5f)
             {
-                command = new MoveUp(enemy);
-
+                command = new MoveUp(enemy, speedFactor * Mathf.Abs(ballLocation.y - enemy.GetPosition().y));
             }
-            else if (ballLocation.y < enemy.GetPosition().y)
+            else if ((ballLocation.y - enemy.GetPosition().y) < -0.5f)
             {
-                command = new MoveDown(enemy);
+                command = new MoveDown(enemy, speedFactor * Mathf.Abs(ballLocation.y - enemy.GetPosition().y));
             }
 
             return command;
