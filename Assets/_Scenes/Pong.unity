@@ -433,7 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dfeadbd867074695965ba73d922e669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefabRef: {fileID: 114122292467301594, guid: 5e0b106f688fc49099d42d4b1d72286a,
+  enemyPrefabRef: {fileID: 114222821812518924, guid: 71e9e342eaab6b84ba5aa6df78406dd7,
     type: 2}
   numEnemies: 1
   difficulty: 0.13
@@ -1843,7 +1843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38c9c8fbdb1494eb1b1a11f4c37dbc87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 114102297703255676, guid: cb0338760f81b4a1da4e3d3497ddde8c, type: 2}
+  player: {fileID: 114677722448741362, guid: 7429014e898edb44c951584d9aa7d282, type: 2}
 --- !u!4 &1128702710
 Transform:
   m_ObjectHideFlags: 0
