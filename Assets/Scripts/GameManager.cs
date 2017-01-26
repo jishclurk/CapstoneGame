@@ -102,7 +102,14 @@ namespace CapstoneGame {
 
             }
 
+        }
 
+        void LateUpdate()
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Application.CaptureScreenshot(string.Format("screen_{0}.png", System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")));
+            }
         }
 
         public void ScoreEnemyGoal()
