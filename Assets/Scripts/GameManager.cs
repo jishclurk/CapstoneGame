@@ -18,6 +18,7 @@ namespace CapstoneGame {
         public GameObject PauseMenu;
         public GameObject GameResultMenu;
         public GameObject SaveMenu;
+        public GameObject LoadScreen;
 
         public BallHandler bh;
         public EnemyHandler eh;
@@ -30,7 +31,7 @@ namespace CapstoneGame {
         void Start () {
 		    enemyScore = 0;
 		    playerScore = 0;
-            LoadMenu();
+            LoadMainMenu();
         }
 
         //Checks for game state changes (playing and pausing)
@@ -103,7 +104,7 @@ namespace CapstoneGame {
         }
 
         //Loads main menu
-        public void LoadMenu()
+        public void LoadMainMenu()
         {
             if (paused)
             {
@@ -134,6 +135,13 @@ namespace CapstoneGame {
             scoreboard.updatePlayerScore(playerScore);
             MainMenu.SetActive(false);
             
+        }
+
+        public void LoadMenu()
+        {
+            PauseMenu.SetActive(false);
+            MainMenu.SetActive(false);
+            LoadScreen.SetActive(true);
         }
 
         //Display end menu
