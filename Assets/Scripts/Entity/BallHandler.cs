@@ -52,7 +52,7 @@ namespace CapstoneGame{
             {
                 BallState ballState = new BallState();
                 SerializableVector3 velocity = new SerializableVector3();
-                velocity.setVector(ball.velocity);
+                velocity.setVector(ball.GetComponent<Rigidbody>().velocity);
                 ballState.velocity = velocity;
                 SerializableVector3 position = new SerializableVector3();
                 position.setVector(ball.GetPosition());
@@ -77,7 +77,8 @@ namespace CapstoneGame{
                 Ball ballToAdd = Instantiate(ballPrefabRef);
                 ballToAdd.spawner = this;
                 ballToAdd.SetPosition(savedBall.position.Deserialize());
-                ballToAdd.velocity = savedBall.velocity.Deserialize();
+                Debug.Log(savedBall.velocity.Deserialize());
+                ballToAdd.GetComponent<Rigidbody>().velocity = savedBall.velocity.Deserialize();
                 balls.Add(ballToAdd);
             }
         }

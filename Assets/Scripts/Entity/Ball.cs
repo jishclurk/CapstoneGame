@@ -10,19 +10,20 @@ namespace CapstoneGame
         public AudioSource wallHitAudio;
 
         public BallHandler spawner;
-
         public Vector3 velocity { get; set; }
+
         private Rigidbody rb; 
         private float speed=0.1f;
+        private float angleEpsilon = 5.0f;
+        private float angleCorrect = 5.1f;
 
         // Use this for initialization
-        void Start()
+        void Awake()
         {
             float i = Mathf.Pow(-1.0f, Random.Range(0, 2));
             float i2 = Mathf.Pow(-1.0f, Random.Range(0, 2));
             rb = this.GetComponent<Rigidbody>();
-            rb.velocity = new Vector3(i * Random.Range(12, 15), i2 * Random.Range(12, 15), 0); //random velocity
-
+            rb.velocity = new Vector3(i * Random.Range(8, 10), i2 * Random.Range(8, 10), 0); //random velocity
             paddleHitAudio = gameObject.GetComponents<AudioSource>()[0];
             wallHitAudio = gameObject.GetComponents<AudioSource>()[1];
         }
@@ -62,12 +63,35 @@ namespace CapstoneGame
             }
             else if (collision.gameObject.CompareTag("Paddle"))
             {
-                paddleHitAudio.Play();
+                rb.velocity = rb.velocity * 1.2f;
+                paddleHitAudio.Play(); 
             }
             else if (collision.gameObject.CompareTag("Wall"))
             {
                 wallHitAudio.Play();
             }
+        }
+
+        //Handles collisions -> avoid ball from getting stuck in either x or y direction
+        void OnCollisionExit(Collision collision)
+        {
+           if(rb.velocity.x < angleEpsilon && rb.velocity.x > 0.0f)
+            {
+                rb.velocity = new Vector3(angleCorrect, rb.velocity.y);
+            }
+            else if (rb.velocity.x > -angleEpsilon && rb.velocity.x < 0.0f)
+            {
+                rb.velocity = new Vector3(-angleCorrect, rb.velocity.y);
+            }
+            if (rb.velocity.y < angleEpsilon && rb.velocity.y > 0.0f)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, angleCorrect);
+            }
+            else if (rb.velocity.y > -angleEpsilon && rb.velocity.y < 0.0f)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, -angleCorrect);
+            }
+
         }
     }
 }
