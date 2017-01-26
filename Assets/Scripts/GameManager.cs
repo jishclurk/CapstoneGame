@@ -73,6 +73,7 @@ namespace CapstoneGame {
         //Pauses game and brings up pause menu
         public void Pause()
         {
+            SaveMenu.SetActive(false);
             Time.timeScale = 0;
             paused = true;
             PauseMenu.SetActive(true);
@@ -122,6 +123,7 @@ namespace CapstoneGame {
             {
                 Time.timeScale = 1;
             }
+            LoadScreen.SetActive(false);
             GameResultMenu.SetActive(false);  //Adding this here to avoid creating a new func for end state
             PauseMenu.SetActive(false);
             MainMenu.SetActive(true);
