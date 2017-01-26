@@ -39,17 +39,17 @@ namespace CapstoneGame
         //Moves Ball
         void FixedUpdate()
         {
-            if (rb.velocity.x < 2f && rb.velocity.x > -2.0f)
-            {
-                float newX = rb.velocity.x * 1.5f;
-                rb.velocity = new Vector3(newX, rb.velocity.y, 0);
-            }
+            //if (rb.velocity.x < 2f && rb.velocity.x > -2.0f)
+            //{
+            //    float newX = rb.velocity.x * 1.5f;
+            //    rb.velocity = new Vector3(newX, rb.velocity.y, 0);
+            //}
 
-            if (rb.velocity.y < 2.0f && rb.velocity.y > -2.0f)
-            {
-                float newY = rb.velocity.y * 1.5f;
-                rb.velocity = new Vector3(rb.velocity.x, newY, 0);
-            }
+            //if (rb.velocity.y < 2.0f && rb.velocity.y > -2.0f)
+            //{
+            //    float newY = rb.velocity.y * 1.5f;
+            //    rb.velocity = new Vector3(rb.velocity.x, newY, 0);
+            //}
         }
 
         //Handles collisions

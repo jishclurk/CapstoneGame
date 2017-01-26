@@ -81,6 +81,11 @@ namespace CapstoneGame{
                 balls.Add(ballToAdd);
             }
         }
+
+        public void Reset()
+        {
+
+        }
     }
 
     

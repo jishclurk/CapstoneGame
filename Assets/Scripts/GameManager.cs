@@ -12,6 +12,9 @@ namespace CapstoneGame {
 	    private int playerScore;
 	    private int endScore = 5;
         private bool paused = true;
+        private GameState test1;
+        private GameState test2;
+        private GameState test3;
 
         public Scoreboard scoreboard;
         public GameObject MainMenu;
@@ -29,11 +32,17 @@ namespace CapstoneGame {
 
         //Brings up Main Menu
         void Start () {
+            Debug.Log(Application.dataPath);
 		    enemyScore = 0;
 		    playerScore = 0;
             LoadMainMenu();
+            SetUpTestStates();
         }
 
+        private void SetUpTestStates()
+        {
+
+        }
         //Checks for game state changes (playing and pausing)
         void Update () {
             if (!MainMenu.activeSelf && Input.GetKeyDown(KeyCode.Space))
@@ -48,7 +57,24 @@ namespace CapstoneGame {
                 }
             }
 
-	    }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                //load test state1
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                //load test state1
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                //load test state2
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                //load test state3
+            }
+
+        }
 
         public void ScoreEnemyGoal()
         {
@@ -98,6 +124,14 @@ namespace CapstoneGame {
             currentState.playerScore = playerScore;
             currentState.cpuScore = enemyScore;
             SaveLoad.Save(currentState, saveSpot);
+        }
+
+
+        private void ResetGame()
+        {
+            playerScore = 0;
+            enemyScore = 0;
+
         }
 
         //Loads game saved in saveSpot
@@ -199,6 +233,7 @@ namespace CapstoneGame {
         {
             Application.Quit();
         }
+
 
     }
 
