@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 namespace CapstoneGame {
@@ -15,6 +16,7 @@ namespace CapstoneGame {
         public Scoreboard scoreboard;
         public GameObject MainMenu;
         public GameObject PauseMenu;
+        public GameObject GameResultMenu;
 
         public AudioSource select;
         public AudioSource hover;
@@ -45,12 +47,20 @@ namespace CapstoneGame {
         {
             enemyScore++;
             scoreboard.updateEnemyScore(enemyScore);
+            if (enemyScore > 10) //End the game at 11 points.
+            {
+                EndGame();
+            }
         }
 
         public void ScorePlayerGoal()
         {
             playerScore++;
             scoreboard.updatePlayerScore(playerScore);
+            if(playerScore > 10)
+            {
+                EndGame();
+            }
         }
 
         public void Pause()
@@ -76,11 +86,11 @@ namespace CapstoneGame {
             {
                 Time.timeScale = 1;
             }
+            GameResultMenu.SetActive(false);  //Adding this here to avoid creating a new func for end state
             PauseMenu.SetActive(false);
             MainMenu.SetActive(true);
             Time.timeScale = 0;
         }
-
 
         public void ResumeGame()
         {
@@ -102,22 +112,42 @@ namespace CapstoneGame {
             
         }
 
+        //Display end menu
+        public void EndGame()
+        {
+            Time.timeScale = 0;
+            Text resultText = GameResultMenu.GetComponentInChildren<Text>();
+            if (playerScore > enemyScore)
+            {
+                resultText.color = Color.white;
+                resultText.text = "Winner!";
+            } else 
+            {
+                //assume we can't end in a draw
+                resultText.color = Color.red;
+                resultText.text = "Loser!";
+            }
+            GameResultMenu.SetActive(true);
+            paused = true;
+
+        }
+
         public void PlayHoverSound()
         {
-            if (hover.isPlaying)
+            if (hover.isPlaying) //avoids sound overlap issue
             {
                 hover.Stop();
             }
             hover.Play();
         }
-        
+
         public void PlaySelectSound()
         {
             select.Play();
         }
 
 
-        //doesn't work
+        //doesn't work -> will work in full build
         public void Exit()
         {
             Application.Quit();
