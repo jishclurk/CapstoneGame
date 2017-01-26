@@ -1713,6 +1713,8 @@ MonoBehaviour:
   bh: {fileID: 1945575588}
   eh: {fileID: 239341062}
   ph: {fileID: 1128702709}
+  defaultPlayerPosition: {x: 15.45, y: 0.3, z: 0}
+  defaultEnemyPosition: {x: -15.45, y: 0.3, z: 0}
   select: {fileID: 1684460264}
   hover: {fileID: 1283880536}
 --- !u!4 &838098088

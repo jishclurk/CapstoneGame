@@ -12,6 +12,7 @@ namespace CapstoneGame {
 	    private int playerScore;
 	    private int endScore = 2;
         private bool paused = true;
+        private bool gameOver = false;
         private GameState test1;
         private GameState test2;
         private GameState test3;
@@ -27,6 +28,9 @@ namespace CapstoneGame {
         public EnemyHandler eh;
         public PlayerHandler ph;
 
+        public Vector3 defaultPlayerPosition;
+        public Vector3 defaultEnemyPosition;
+
         public AudioSource select;
         public AudioSource hover;
 
@@ -41,11 +45,36 @@ namespace CapstoneGame {
 
         private void SetUpTestStates()
         {
+            //test 1, cpu is about to win
+            test1 = new GameState();
 
+            BallState ball1 = new BallState();
+            SerializableVector3 position = new SerializableVector3();
+            SerializableVector3 velocity = new SerializableVector3();
+            position.setVector(new Vector3(0, 0, 0));
+            velocity.setVector(new Vector3(-.5f, .5f, 0));
+            ball1.velocity = velocity;
+            ball1.position = position;
+            List<BallState> balls = new List<BallState>();
+            balls.Add(ball1);
+
+
+            SerializableVector3 player = new SerializableVector3();
+            player.setVector(defaultPlayerPosition);
+            SerializableVector3 enemy = new SerializableVector3();
+            enemy.setVector(defaultEnemyPosition);
+            List<SerializableVector3> enemies = new List<SerializableVector3>();
+            enemies.Add(enemy);
+
+            test1.balls = balls;
+            test1.cpuScore = endScore;
+            test1.playerScore = 0;
+            test1.player = player;
+            test1.enemies = enemies;
         }
         //Checks for game state changes (playing and pausing)
         void Update () {
-            if (!MainMenu.activeSelf && Input.GetKeyDown(KeyCode.Space))
+            if (!MainMenu.activeSelf && Input.GetKeyDown(KeyCode.Space) && !gameOver)
             {
                 if (paused)
                 {
@@ -124,6 +153,8 @@ namespace CapstoneGame {
             currentState.playerScore = playerScore;
             currentState.cpuScore = enemyScore;
             SaveLoad.Save(currentState, saveSpot);
+            SaveMenu.SetActive(false);
+            PauseMenu.SetActive(true);
         }
 
 
@@ -131,7 +162,9 @@ namespace CapstoneGame {
         {
             playerScore = 0;
             enemyScore = 0;
-
+            ph.Restart();
+            bh.Restart();
+            eh.Restart();
         }
 
         //Loads game saved in saveSpot
@@ -153,6 +186,7 @@ namespace CapstoneGame {
         //Loads main menu
         public void LoadMainMenu()
         {
+            ResetGame();
             if (paused)
             {
                 Time.timeScale = 1;
@@ -175,6 +209,7 @@ namespace CapstoneGame {
         //Starts the game play
         public void StartGame()
         {
+            gameOver = false;
             paused = false;
             MainMenu.SetActive(false);
             enemyScore = 0;
@@ -196,6 +231,7 @@ namespace CapstoneGame {
         //Display end menu
         public void EndGame()
         {
+            gameOver = true;
             Time.timeScale = 0;
             Text resultText = GameResultMenu.GetComponentInChildren<Text>();
             if (playerScore > enemyScore)

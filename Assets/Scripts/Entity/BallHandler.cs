@@ -82,7 +82,7 @@ namespace CapstoneGame{
             }
         }
 
-        public void Reset()
+        public void Restart()
         {
 
         }

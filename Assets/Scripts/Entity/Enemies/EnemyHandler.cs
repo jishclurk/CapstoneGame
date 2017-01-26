@@ -64,6 +64,11 @@ namespace CapstoneGame
             }
         }
 
+        public void Restart()
+        {
+
+        }
+
     }
 }
 
