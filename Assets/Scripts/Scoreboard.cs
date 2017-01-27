@@ -20,9 +20,15 @@ public class Scoreboard : MonoBehaviour {
             playerScore.text = newScore.ToString();
     }
 
-    public void updateAll(int enemyScore, int playerScore)
+    public void updateAll(int eScore, int pScore)
     {
-        this.enemyScore.text = enemyScore.ToString();
-        this.enemyScore.text = playerScore.ToString();
+        enemyScore.text = eScore.ToString();
+        playerScore.text = pScore.ToString();
+    }
+
+    public void clearAll()
+    {
+        enemyScore.text = "";
+        playerScore.text = "";
     }
 }

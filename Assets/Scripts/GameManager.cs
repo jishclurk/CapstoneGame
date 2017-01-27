@@ -229,6 +229,7 @@ namespace CapstoneGame {
         public void LoadMainMenu()
         {
             ResetGame();
+            scoreboard.clearAll();
             if (paused)
             {
                 Time.timeScale = 1;

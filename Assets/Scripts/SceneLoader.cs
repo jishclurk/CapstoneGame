@@ -38,7 +38,7 @@ public class SceneLoader : MonoBehaviour {
         for (int x = 0; x < 100; x++)
         {
             percentComplete = x;
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.1f);
         }
 
         asyncLoad.allowSceneActivation = true;
