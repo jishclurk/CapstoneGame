@@ -27,7 +27,7 @@ namespace CapstoneGame
             if (File.Exists(Application.dataPath + "/savedGame" + saveSpot + ".gd"))
             {
                 var serializer = new XmlSerializer(typeof(GameState));
-                FileStream file = File.Open(Application.persistentDataPath + "/savedGame" + saveSpot + ".gd", FileMode.Open);
+                FileStream file = File.Open(Application.dataPath + "/savedGame" + saveSpot + ".gd", FileMode.Open);
                 gameState = (GameState)serializer.Deserialize(file);
                 file.Close();
             }
