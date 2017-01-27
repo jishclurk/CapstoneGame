@@ -11,8 +11,6 @@ namespace CapstoneGame{
         public ParticleSystem ballExplode;
         public int numBalls = 1;
 
-        private GameManager gameManager;
-
 		void Start(){
 			balls = new List<Ball> ();
             CreateBalls();
@@ -27,6 +25,7 @@ namespace CapstoneGame{
             }
         }
 
+        //Destroys a single ball with an explosion
         public void DestroyBall(Ball ball)
         {
             ParticleSystem explode = Instantiate(ballExplode, ball.gameObject.transform.position, ball.gameObject.transform.rotation);
@@ -44,6 +43,7 @@ namespace CapstoneGame{
             }
 		}
 
+        //Saves current state of balls
         public List<BallState> saveState()
         {
             List<BallState> savedStates = new List<BallState>();
@@ -65,12 +65,7 @@ namespace CapstoneGame{
 
         public void setState(List<BallState> savedState)
         {
-            for(int i = 0; i< balls.Count; i++)
-            {
-                Destroy(balls[i].gameObject);
-                balls.Remove(balls[i]);
-                i--;
-            }
+            Destroy();
 
             foreach(BallState savedBall in savedState)
             {
@@ -83,9 +78,24 @@ namespace CapstoneGame{
             }
         }
 
+        public void Destroy()
+        {
+            if (balls.Count > 0)
+            {
+                for (int i = 0; i < balls.Count; i++)
+                {
+                    Destroy(balls[i].gameObject);
+                    balls.Remove(balls[i]);
+                    i--;
+                }
+            }
+
+        }
+
         public void Restart()
         {
-
+            Destroy();
+            CreateBalls();
         }
     }
 

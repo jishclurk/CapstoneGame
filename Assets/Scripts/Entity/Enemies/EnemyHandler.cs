@@ -29,6 +29,7 @@ namespace CapstoneGame
             }
 		}
 
+        //Returns a list of the locations of all current enemies
         public List<SerializableVector3> saveState()
         {
             List<SerializableVector3> savedState = new List<SerializableVector3>();
@@ -42,18 +43,10 @@ namespace CapstoneGame
             return savedState;
         }
 
+        //Makes an enemies based on positions
         public void setState(List<SerializableVector3> positions)
         {
-            if(enemies.Count != 0)
-            {
-                for(int i = 0; i<enemies.Count; i++)
-                {
-                    Destroy(enemies[i].gameObject);
-                    enemies.RemoveAt(i);
-                    i--;
-                }
-
-            }
+            Destroy();
 
             foreach (SerializableVector3 position in positions)
             {
@@ -64,9 +57,31 @@ namespace CapstoneGame
             }
         }
 
-        public void Restart()
+        //Resets enemies in default position
+        public void Restart(Vector3 defaultPosition)
         {
+            Destroy();
+            for (int i = 0; i < numEnemies; i++)
+            {
+                Enemy newEnemy = (Enemy)Instantiate(enemyPrefabRef);
+                newEnemy.changeDiffculty(difficulty);
+                newEnemy.SetPosition(defaultPosition);
+                enemies.Add(newEnemy);
+            }
+        }
 
+        private void Destroy()
+        {
+            if (enemies.Count != 0)
+            {
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    Destroy(enemies[i].gameObject);
+                    enemies.RemoveAt(i);
+                    i--;
+                }
+
+            }
         }
 
     }

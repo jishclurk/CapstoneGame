@@ -35,10 +35,6 @@ namespace CapstoneGame{
             player.SetPosition(position);
         }
 
-        public void Restart()
-        {
-
-        }
 
     }
 }
