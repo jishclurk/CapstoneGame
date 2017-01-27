@@ -13,7 +13,7 @@ namespace CapstoneGame
         public Vector3 velocity { get; set; }
 
         private Rigidbody rb; 
-        private float speed=0.1f;
+       // private float speed=0.1f;
         private float angleEpsilon = 5.0f;
         private float angleCorrect = 5.1f;
 
@@ -63,7 +63,7 @@ namespace CapstoneGame
             }
             else if (collision.gameObject.CompareTag("Paddle"))
             {
-                rb.velocity = rb.velocity * 1.2f;
+                rb.velocity = rb.velocity * 1.1f;
                 paddleHitAudio.Play(); 
             }
             else if (collision.gameObject.CompareTag("Wall"))

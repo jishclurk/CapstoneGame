@@ -53,12 +53,11 @@ namespace CapstoneGame {
             SerializableVector3 position = new SerializableVector3();
             SerializableVector3 velocity = new SerializableVector3();
             position.setVector(new Vector3(0, 0, 0));
-            velocity.setVector(new Vector3(-.5f, .5f, 0));
+            velocity.setVector(new Vector3(-8f, .5f, 0));
             ball1.velocity = velocity;
             ball1.position = position;
             List<BallState> balls = new List<BallState>();
             balls.Add(ball1);
-
 
             SerializableVector3 player = new SerializableVector3();
             player.setVector(defaultPlayerPosition);
@@ -72,8 +71,57 @@ namespace CapstoneGame {
             test1.playerScore = 0;
             test1.player = player;
             test1.enemies = enemies;
+
+            //test 2, player is winning, ball is coming towards them and enemy is not centered
+            test2 = new GameState();
+            position.setVector(new Vector3(10, 0, 0));
+            velocity.setVector(new Vector3(8f, .5f, 0));
+            ball1.velocity = velocity;
+            ball1.position = position;
+            balls = new List<BallState>();
+            balls.Add(ball1);
+
+            player = new SerializableVector3();
+            player.setVector(defaultPlayerPosition);
+            enemy = new SerializableVector3();
+            enemy.setVector(defaultEnemyPosition);
+            enemy.y = enemy.y - 5;
+            enemies = new List<SerializableVector3>();
+            enemies.Add(enemy);
+
+            test2.balls = balls;
+            test2.cpuScore = 0;
+            test2.playerScore = endScore;
+            test2.player = player;
+            test2.enemies = enemies;
+
+            //test 3, universe point! ball headed towards enemy who is out of place, player is also out of place
+            test3 = new GameState();
+            position.setVector(new Vector3(0, 0, 0));
+            velocity.setVector(new Vector3(-8f, .5f, 0));
+            ball1.velocity = velocity;
+            ball1.position = position;
+            balls = new List<BallState>();
+            balls.Add(ball1);
+
+            player = new SerializableVector3();
+            player.setVector(defaultPlayerPosition);
+            player.y = player.y - 5;
+            enemy = new SerializableVector3();
+            enemy.setVector(defaultEnemyPosition);
+            enemy.y = enemy.y + 5;
+            enemies = new List<SerializableVector3>();
+            enemies.Add(enemy);
+
+            test3.balls = balls;
+            test3.cpuScore = endScore;
+            test3.playerScore = endScore;
+            test3.player = player;
+            test3.enemies = enemies;
+
         }
-        //Checks for game state changes (playing and pausing)
+
+        //Checks for game state changes (playing, pausing, and test states)
         void Update () {
             if (!MainMenu.activeSelf && Input.GetKeyDown(KeyCode.Space) && !gameOver)
             {
@@ -213,11 +261,14 @@ namespace CapstoneGame {
 
         private void LoadTestState(GameState testState)
         {
+            //paused = false;
+            DisableMenus();
             bh.setState(testState.balls);
             eh.setState(testState.enemies);
             ph.setState(testState.player.Deserialize());
             enemyScore = testState.cpuScore;
             playerScore = testState.playerScore;
+            scoreboard.updateAll(enemyScore, playerScore);
             if (paused)
             {
                 ResumeGame();
