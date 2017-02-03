@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
                 if (hit.collider.CompareTag("Enemy"))
                 {
                     targetedEnemy = hit.transform;
+                    transform.LookAt(hit.transform); //prevents slow turn
                     enemyClicked = true;
                 }
                 else
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
                     walking = true;
                     enemyClicked = false;
                     navMeshAgent.destination = hit.point;
-                    transform.LookAt(hit.point); //prevents slow turn, could be omitted or replaced with animation
+                    transform.LookAt(hit.point); //prevents slow turn
                     navMeshAgent.Resume();
                 }
             }
@@ -88,7 +89,8 @@ public class PlayerController : MonoBehaviour
             return; //avoid running code we don't need to.
         }
         navMeshAgent.destination = targetedEnemy.position;
-        if (navMeshAgent.remainingDistance >= activeAbility.effectiveRange)
+        float remainingDistance = Vector3.Distance(targetedEnemy.position, transform.position);
+        if (remainingDistance >= activeAbility.effectiveRange)
         {
             navMeshAgent.Resume();
             walking = true;
@@ -97,16 +99,20 @@ public class PlayerController : MonoBehaviour
         {
             //Within range, look at enemy and shoot
             transform.LookAt(targetedEnemy);
-            Vector3 dirToShoot = targetedEnemy.transform.position - transform.position; //unused, would be for raycasting
-            if (activeAbility.repeating && Time.time > nextFire)
+            //Vector3 dirToShoot = targetedEnemy.transform.position - transform.position; //unused, would be for raycasting
+
+            if (activeAbility.isbasicAttack)
             {
-                nextFire = Time.time + activeAbility.fireRate;
-                activeAbility.Execute(gameObject, targetedEnemy.gameObject);
+                if (Time.time > nextFire) { 
+                    nextFire = Time.time + activeAbility.fireRate;
+                    activeAbility.Execute(gameObject, targetedEnemy.gameObject);
+                }
             }
-            else if (!activeAbility.repeating)
+            else
             {
+
                 activeAbility.Execute(gameObject, targetedEnemy.gameObject);
-                activeAbility = hotAbilities[0];
+                activeAbility = hotAbilities[0]; //reset to basic attack
             }
 
             navMeshAgent.Stop(); //within range, stop moving
