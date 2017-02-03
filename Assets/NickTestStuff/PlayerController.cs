@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         hotAbilities = new List<IAbility>();
         hotAbilities.Add(new PistolShoot()); //This would most likely be an external function that loads the player's abilities.
+        hotAbilities.Add(new Zap());
         activeAbility = hotAbilities[0];
         shootDistance = activeAbility.effectiveRange;
     }
@@ -60,6 +61,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            activeAbility = hotAbilities[1];
+        }
 
         if (enemyClicked)
         {
@@ -83,7 +88,7 @@ public class PlayerController : MonoBehaviour
             return; //avoid running code we don't need to.
         }
         navMeshAgent.destination = targetedEnemy.position;
-        if (navMeshAgent.remainingDistance >= shootDistance)
+        if (navMeshAgent.remainingDistance >= activeAbility.effectiveRange)
         {
             navMeshAgent.Resume();
             walking = true;
@@ -92,12 +97,16 @@ public class PlayerController : MonoBehaviour
         {
             //Within range, look at enemy and shoot
             transform.LookAt(targetedEnemy);
-            Vector3 dirToShoot = targetedEnemy.transform.position - transform.position;
+            Vector3 dirToShoot = targetedEnemy.transform.position - transform.position; //unused, would be for raycasting
             if (activeAbility.repeating && Time.time > nextFire)
             {
                 nextFire = Time.time + activeAbility.fireRate;
                 activeAbility.Execute(gameObject, targetedEnemy.gameObject);
-
+            }
+            else if (!activeAbility.repeating)
+            {
+                activeAbility.Execute(gameObject, targetedEnemy.gameObject);
+                activeAbility = hotAbilities[0];
             }
 
             navMeshAgent.Stop(); //within range, stop moving
