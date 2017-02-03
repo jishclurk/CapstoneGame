@@ -5,10 +5,12 @@ using UnityEngine;
 public class ChasingState : IEnemyState {
 
     private readonly EnemyStateControl enemy;
+    private EnemyAttack attack;
 
     public ChasingState(EnemyStateControl stateControl)
     {
         enemy = stateControl;
+        attack = enemy.gameObject.GetComponent<EnemyAttack>();
     }
 
     public void UpdateState()
@@ -32,7 +34,7 @@ public class ChasingState : IEnemyState {
         enemy.currentState = enemy.returningState;
     }
 
-    public void ToChaseState()
+    public void ToChasingState()
     {
         Debug.Log("Can't transition from chase state to chase state");
     }
@@ -49,10 +51,15 @@ public class ChasingState : IEnemyState {
         if (Physics.Raycast(enemy.transform.position, enemyToTarget, out hit, enemy.sightRange) && hit.collider.CompareTag("Player"))
         {
             enemy.chaseTarget = hit.transform;
+            if (Vector3.Distance(enemy.chaseTarget.position, enemy.transform.position) <= (attack.attackRange - attack.attackRangeOffset))
+            {
+                enemy.navMeshAgent.Stop();
+                ToAttackingState();
+            }
         }
         else
         {
-            // Change This?
+            // Change This? Shouldn't immediately return when player out of sight
             ToReturningState();
         }
     }

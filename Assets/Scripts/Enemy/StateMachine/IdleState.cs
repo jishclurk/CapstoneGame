@@ -25,14 +25,14 @@ public class IdleState : IEnemyState {
             if (Physics.Raycast(enemy.transform.position, enemyToTarget, out hit, enemy.sightRange) && hit.collider.CompareTag("Player"))
             {
                 enemy.chaseTarget = hit.transform;
-                ToChaseState();
+                ToChasingState();
             }
         }
     }
 
     public void ToIdleState()
     {
-        Debug.Log("Enemy can't patrol from idle state to idle state");
+        Debug.Log("Enemy can't transition from idle state to idle state");
     }
 
     public void ToReturningState()
@@ -40,7 +40,7 @@ public class IdleState : IEnemyState {
         enemy.currentState = enemy.returningState;
     }
 
-    public void ToChaseState()
+    public void ToChasingState()
     {
         enemy.currentState = enemy.chasingState;
     }

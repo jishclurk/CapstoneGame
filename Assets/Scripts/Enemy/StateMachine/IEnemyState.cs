@@ -12,7 +12,7 @@ public interface IEnemyState {
 
     void ToReturningState();
 
-    void ToChaseState();
+    void ToChasingState();
 
     void ToAttackingState();
 

@@ -48,7 +48,7 @@ public class EnemyStateControl : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	private void Update () {
+	private void FixedUpdate () {
         currentState.UpdateState();
 	}
 
