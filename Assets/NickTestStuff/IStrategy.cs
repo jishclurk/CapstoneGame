@@ -4,4 +4,6 @@ using UnityEngine;
 
 public interface IStrategy {
 
+    void Update();
+
 }

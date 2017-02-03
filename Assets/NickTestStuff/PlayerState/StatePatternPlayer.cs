@@ -17,6 +17,8 @@ public class StatePatternPlayer : MonoBehaviour {
     [HideInInspector] public CastState castState;
     [HideInInspector] public UnityEngine.AI.NavMeshAgent navMeshAgent;
 
+    private IStrategy stategy;
+
     private void Awake()
     {
         idleState = new IdleState(this);
