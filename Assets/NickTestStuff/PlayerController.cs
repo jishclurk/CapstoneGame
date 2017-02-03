@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
-    public float shootDistance = 2.0f;
+    public float shootDistance = 4.0f;
 
 
     private Animator anim;
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour {
     private bool walking;
     private bool enemyClicked;
     private float nextFire;
+    private List<IAbility> hotAbilities; //List? Map? Maybe a Map of hotbar key -> ability?
+    private IAbility activeAbility;
 
 
     // Use this for initialization
@@ -23,11 +26,18 @@ public class PlayerController : MonoBehaviour {
     {
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        hotAbilities = new List<IAbility>();
+        hotAbilities.Add(new PistolShoot()); //This would most likely be an external function that loads the player's abilities.
+        activeAbility = hotAbilities[0];
+        shootDistance = activeAbility.effectiveRange;
     }
 
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
+
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Input.GetButtonDown("Fire2"))
@@ -50,10 +60,12 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
+
         if (enemyClicked)
         {
             MoveAndShoot();
-        }else
+        }
+        else
         {
             walking = navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance;
         }
@@ -65,29 +77,34 @@ public class PlayerController : MonoBehaviour {
     private void MoveAndShoot()
     {
 
-        if(targetedEnemy == null)
+        if (targetedEnemy == null)
         {
             //this return happens if enemy dies
             return; //avoid running code we don't need to.
         }
+        navMeshAgent.destination = targetedEnemy.position;
+        if (navMeshAgent.remainingDistance >= shootDistance)
+        {
+            navMeshAgent.Resume();
+            walking = true;
+        }
         else
         {
-            navMeshAgent.destination = targetedEnemy.position;
-            if(navMeshAgent.remainingDistance >= shootDistance)
+            //Within range, look at enemy and shoot
+            transform.LookAt(targetedEnemy);
+            Vector3 dirToShoot = targetedEnemy.transform.position - transform.position;
+            if (activeAbility.repeating && Time.time > nextFire)
             {
-                navMeshAgent.Resume();
-                walking = true;
-            }else
-            {
-                //Within range, look at enemy and shoot
-                transform.LookAt(targetedEnemy);
-                Vector3 dirToShoot = targetedEnemy.transform.position - transform.position;
-                Debug.Log("Shooting!"); //Call the shoot()/use() method of weapon or ability
-                navMeshAgent.Stop(); //within range, stop moving
-                walking = false;
-            }
-           
+                nextFire = Time.time + activeAbility.fireRate;
+                activeAbility.Execute(gameObject, targetedEnemy.gameObject);
 
+            }
+
+            navMeshAgent.Stop(); //within range, stop moving
+            walking = false;
         }
+
+
     }
 }
+

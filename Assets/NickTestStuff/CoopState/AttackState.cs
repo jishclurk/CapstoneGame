@@ -39,7 +39,7 @@ public class AttackState : IPlayerState {
     private void MoveWithinRange()
     {
         //Movement can be greatly improved, just a proof of concept at the moment
-        if (Vector3.Distance(player.transform.position, player.attackTargetPosition) > player.selectedAbility.range)
+        if (Vector3.Distance(player.transform.position, player.attackTargetPosition) > player.selectedAbility.effectiveRange)
         {
             Vector3 forward = player.moveDestination - player.transform.position;
             player.transform.Translate(forward * 0.01f);

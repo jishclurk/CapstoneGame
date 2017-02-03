@@ -4,7 +4,11 @@ using UnityEngine;
 
 public interface IAbility {
 
-   float range { get; set; }
-   float baseDamage { get; set; }
+    float effectiveRange { get; set; }
+    float baseDamage { get; set; }
+    float fireRate { get; set; }
+    bool repeating { get; set; }
+
+    void Execute(GameObject origin, GameObject target);
 
 }
