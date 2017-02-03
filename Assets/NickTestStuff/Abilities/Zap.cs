@@ -12,13 +12,14 @@ public class Zap : IAbility {
     public float timeToCast { get; set; }
     public float coolDownTime { get; set; }
     public float lastUsedTime { get; set; }
+    private float nextFire;
 
     public Zap()
     {
         name = "Zap";
         effectiveRange = 5.0f;
         baseDamage = 100.0f;
-        fireRate = 0.5f;
+        fireRate = 0.0f;
         isbasicAttack = false;
         timeToCast = 0.0f;
         coolDownTime = 5.0f;
@@ -27,11 +28,12 @@ public class Zap : IAbility {
 
     public void Execute(GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
+        lastUsedTime = Time.time;
         Debug.Log(name + " on " + target.name + " does " + baseDamage + " damage.");
     }
 
     public bool isReady()
     {
-        return true;
+        return Time.time > lastUsedTime + coolDownTime;
     }
 }

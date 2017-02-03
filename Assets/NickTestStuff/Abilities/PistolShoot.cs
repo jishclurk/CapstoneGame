@@ -34,6 +34,6 @@ public class PistolShoot : IAbility {
 
     public bool isReady()
     {
-        return true; //true because this is a basic attack
+        return Time.time > lastUsedTime + fireRate;
     }
 }

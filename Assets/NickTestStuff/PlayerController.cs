@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Input.GetButtonDown("Fire2"))
         {
-            if (Physics.Raycast(ray, out hit, 100))
+            if (Physics.Raycast(ray, out hit))
             {
                 if (hit.collider.CompareTag("Enemy"))
                 {
@@ -101,7 +101,15 @@ public class PlayerController : MonoBehaviour
             transform.LookAt(targetedEnemy);
             //Vector3 dirToShoot = targetedEnemy.transform.position - transform.position; //unused, would be for raycasting
 
-            if (activeAbility.isbasicAttack)
+            if (activeAbility.isReady())
+            {
+                activeAbility.Execute(gameObject, targetedEnemy.gameObject);
+                if (!activeAbility.isbasicAttack) { 
+                    activeAbility = hotAbilities[0];
+                }
+            }
+
+            /*if (activeAbility.isbasicAttack)
             {
                 if (Time.time > nextFire) { 
                     nextFire = Time.time + activeAbility.fireRate;
@@ -113,7 +121,7 @@ public class PlayerController : MonoBehaviour
 
                 activeAbility.Execute(gameObject, targetedEnemy.gameObject);
                 activeAbility = hotAbilities[0]; //reset to basic attack
-            }
+            }*/
 
             navMeshAgent.Stop(); //within range, stop moving
             walking = false;
