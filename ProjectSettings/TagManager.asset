@@ -8,6 +8,8 @@ TagManager:
   - Goal
   - Paddle
   - Wall
+  - Enemy
+  - TeamManager
   layers:
   - Default
   - TransparentFX
