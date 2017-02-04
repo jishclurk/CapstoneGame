@@ -178,6 +178,11 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114447029004565284, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
+        type: 2}
+      propertyPath: isplayerControlled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9c2a451b1c19e7428ad2f77c0530c5a, type: 2}
   m_IsPrefabParent: 0
@@ -208,6 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bef1ce5e89b7ec4fb8dd97e2f28c2c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activePlayer: {fileID: 0}
 --- !u!4 &434794470
 Transform:
   m_ObjectHideFlags: 0
