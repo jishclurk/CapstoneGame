@@ -14,22 +14,8 @@ public class ReturningState : IEnemyState {
 
     public void UpdateState()
     {
+        CheckVision();
         ReturnToSpawn();
-    }
-
-    // This is really bad, not going to work for a lot of situations, or switching between multiple player targets
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            RaycastHit hit;
-            Vector3 enemyToTarget = other.transform.position - enemy.transform.position;
-            if (Physics.Raycast(enemy.transform.position, enemyToTarget, out hit, enemy.sightRange) && hit.collider.CompareTag("Player"))
-            {
-                enemy.chaseTarget = hit.transform;
-                ToChasingState();
-            }
-        }
     }
 
     public void ToIdleState()
@@ -50,6 +36,21 @@ public class ReturningState : IEnemyState {
     public void ToAttackingState()
     {
         Debug.Log("Can't transition between returning state and attack state");
+    }
+
+    private void CheckVision()
+    {
+        foreach (GameObject player in enemy.visiblePlayers)
+        {
+            RaycastHit hit;
+            Vector3 enemyToTarget = player.transform.position - enemy.transform.position;
+            if (Physics.Raycast(enemy.transform.position, enemyToTarget, out hit) && hit.collider.CompareTag("Player"))
+            {
+                enemy.chaseTarget = hit.collider.gameObject;
+                ToChasingState();
+                return;
+            }
+        }
     }
 
     private void ReturnToSpawn()

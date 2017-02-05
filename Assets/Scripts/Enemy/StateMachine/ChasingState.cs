@@ -15,13 +15,9 @@ public class ChasingState : IEnemyState {
 
     public void UpdateState()
     {
+        CheckSpawnDistance();
         Look();
         Chase();
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-
     }
 
     public void ToIdleState()
@@ -44,22 +40,41 @@ public class ChasingState : IEnemyState {
         enemy.currentState = enemy.attackingState;
     }
 
+    private void CheckSpawnDistance()
+    {
+        if (Vector3.Distance(enemy.transform.position, enemy.returnLocation.position) >= enemy.deaggroDistance)
+        {
+            ToReturningState();
+        }
+    }
+
     private void Look()
     {
         RaycastHit hit;
-        Vector3 enemyToTarget = enemy.chaseTarget.position - enemy.transform.position;
-        if (Physics.Raycast(enemy.transform.position, enemyToTarget, out hit, enemy.sightRange) && hit.collider.CompareTag("Player"))
+        Vector3 enemyToTarget = enemy.chaseTarget.transform.position - enemy.transform.position;
+        if (Physics.Raycast(enemy.transform.position, enemyToTarget, out hit) && hit.collider.CompareTag("Player"))
         {
-            enemy.chaseTarget = hit.transform;
-            if (Vector3.Distance(enemy.chaseTarget.position, enemy.transform.position) <= (attack.attackRange - attack.attackRangeOffset))
+            enemy.chaseTarget = hit.collider.gameObject;
+            if (Vector3.Distance(enemy.chaseTarget.transform.position, enemy.transform.position) <= (attack.attackRange - attack.attackRangeOffset))
             {
-                enemy.navMeshAgent.Stop();
                 ToAttackingState();
+                return;
             }
         }
         else
         {
-            // Change This? Shouldn't immediately return when player out of sight
+            // If chasing target is not in our vision, check if another player is
+            foreach (GameObject player in enemy.visiblePlayers)
+            {
+                enemyToTarget = player.transform.position - enemy.transform.position;
+                if (Physics.Raycast(enemy.transform.position, enemyToTarget, out hit) && hit.collider.CompareTag("Player"))
+                {
+                    enemy.chaseTarget = hit.collider.gameObject;
+                    return;
+                }
+            }
+
+            // If no players visible, return to spawn
             ToReturningState();
         }
     }
@@ -67,7 +82,7 @@ public class ChasingState : IEnemyState {
     private void Chase()
     {
         enemy.meshRendererFlag.material.color = Color.red;
-        enemy.navMeshAgent.destination = enemy.chaseTarget.position;
+        enemy.navMeshAgent.destination = enemy.chaseTarget.transform.position;
         enemy.navMeshAgent.Resume();
     }
 

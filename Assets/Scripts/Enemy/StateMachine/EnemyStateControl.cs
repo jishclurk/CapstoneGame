@@ -6,15 +6,12 @@ using UnityEngine.AI;
 public class EnemyStateControl : MonoBehaviour {
 
     public float chasingDuration = 4f;
-    public float sightRange = 20f;
     public Transform returnLocation;
+    public float deaggroDistance = 20f;
     public MeshRenderer meshRendererFlag;
 
     [HideInInspector]
     public NavMeshAgent navMeshAgent;
-
-    [HideInInspector]
-    public Transform chaseTarget;
 
     [HideInInspector]
     public IEnemyState currentState;
@@ -30,7 +27,13 @@ public class EnemyStateControl : MonoBehaviour {
 
     [HideInInspector]
     public AttackingState attackingState;
-    
+
+    [HideInInspector]
+    public List<GameObject> visiblePlayers;
+
+    [HideInInspector]
+    public GameObject chaseTarget;
+
 
     private void Awake()
     {
@@ -38,6 +41,7 @@ public class EnemyStateControl : MonoBehaviour {
         idleState = new IdleState(this);
         returningState = new ReturningState(this);
         attackingState = new AttackingState(this);
+        visiblePlayers = new List<GameObject>();
 
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
@@ -54,6 +58,27 @@ public class EnemyStateControl : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        currentState.OnTriggerEnter(other);
+        if (other.CompareTag("Player"))
+        {
+            visiblePlayers.Add(other.gameObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            visiblePlayers.Remove(other.gameObject);
+        }
+    }
+
+    public void DisableNavRotation()
+    {
+        navMeshAgent.updateRotation = false;
+    }
+
+    public void EnableNavRotation()
+    {
+        navMeshAgent.updateRotation = true;
     }
 }
