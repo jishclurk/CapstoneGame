@@ -8,6 +8,4 @@ public class EnemyAttack : MonoBehaviour {
     public float attackDamage = 10.0f;
     public float attackRange = 1.0f;
     public float attackRangeOffset = 0.1f;
-	
-
 }

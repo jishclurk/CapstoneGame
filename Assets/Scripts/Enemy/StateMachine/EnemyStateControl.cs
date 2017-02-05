@@ -53,6 +53,9 @@ public class EnemyStateControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	private void FixedUpdate () {
+
+        // Check for death here
+
         currentState.UpdateState();
 	}
 
