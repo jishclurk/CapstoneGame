@@ -6,9 +6,11 @@ using UnityEngine.AI;
 public class EnemyStateControl : MonoBehaviour {
 
     public float chasingDuration = 4f;
-    public Transform returnLocation;
     public float deaggroDistance = 20f;
     public MeshRenderer meshRendererFlag;
+
+    [HideInInspector]
+    public Vector3 returnPosition;
 
     [HideInInspector]
     public NavMeshAgent navMeshAgent;
@@ -34,6 +36,10 @@ public class EnemyStateControl : MonoBehaviour {
     [HideInInspector]
     public GameObject chaseTarget;
 
+    [HideInInspector]
+    public EnemyAnimationController animator;
+
+    private EnemyHealth health;
 
     private void Awake()
     {
@@ -43,6 +49,10 @@ public class EnemyStateControl : MonoBehaviour {
         attackingState = new AttackingState(this);
         visiblePlayers = new List<GameObject>();
 
+        returnPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+        health = GetComponent<EnemyHealth>();
+        animator = GetComponent<EnemyAnimationController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
@@ -55,8 +65,8 @@ public class EnemyStateControl : MonoBehaviour {
 	private void FixedUpdate () {
 
         // Check for death here
-
-        currentState.UpdateState();
+        if (!health.isDead)
+            currentState.UpdateState();
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -84,4 +94,5 @@ public class EnemyStateControl : MonoBehaviour {
     {
         navMeshAgent.updateRotation = true;
     }
+
 }

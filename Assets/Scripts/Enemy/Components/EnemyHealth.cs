@@ -25,11 +25,14 @@ public class EnemyHealth : MonoBehaviour {
     private bool deathHandled = false;
     private Image healthBar;
     private GameObject healthBarObj;
+    private EnemyAnimationController animator;
 
     void Awake()
     {
         currentHealth = maxHealth;
-        
+
+        animator = GetComponent<EnemyAnimationController>();
+
         healthBarObj = transform.FindChild("HealthBar").gameObject;
         healthBar = healthBarObj.transform.FindChild("Health").GetComponent<Image>();
         healthBar.fillAmount = 1;
@@ -63,6 +66,8 @@ public class EnemyHealth : MonoBehaviour {
     private void Death()
     {
         // Handle death animation stuff here
+        animator.AnimateDeath();
+        Destroy(gameObject, 5.0f);
     }
 
     private void HideHealthBar()

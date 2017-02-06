@@ -77,6 +77,7 @@ public class AttackingState : IEnemyState {
         enemy.transform.LookAt(enemy.chaseTarget.transform, enemy.transform.up);
         enemy.transform.rotation = new Quaternion(oldX, enemy.transform.rotation.y, oldZ, enemy.transform.rotation.w);
 
+        enemy.animator.AnimateAttack();
 
         if (timer >= attack.attackSpeed)
         {

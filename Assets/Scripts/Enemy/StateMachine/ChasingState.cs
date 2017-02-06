@@ -42,7 +42,7 @@ public class ChasingState : IEnemyState {
 
     private void CheckSpawnDistance()
     {
-        if (Vector3.Distance(enemy.transform.position, enemy.returnLocation.position) >= enemy.deaggroDistance)
+        if (Vector3.Distance(enemy.transform.position, enemy.returnPosition) >= enemy.deaggroDistance)
         {
             ToReturningState();
         }
@@ -84,6 +84,7 @@ public class ChasingState : IEnemyState {
         enemy.meshRendererFlag.material.color = Color.red;
         enemy.navMeshAgent.destination = enemy.chaseTarget.transform.position;
         enemy.navMeshAgent.Resume();
+        enemy.animator.AnimateMovement();
     }
 
 }
