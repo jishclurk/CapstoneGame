@@ -13,12 +13,14 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector]
     public NavMeshAgent navMeshAgent;
     [HideInInspector]
-    public float followDist = 4.0f;
+    public float followDist = 3.8f;
     [HideInInspector]
     public float followEpsilon = 2.0f; //Determines how far player has to move for ai to start to follow again
 
     [HideInInspector]
-    public List<IAbility> hotAbilities; //List? Map? Maybe a Map of hotbar key -> ability?
+    public PlayerAbilities abilities;
+    [HideInInspector]
+    public CharacterAttributes attributes;
     [HideInInspector]
     public TeamManager tm; //is this bad practice? Used to find which players are ai controlled or not
 
@@ -38,9 +40,7 @@ public class CoopAiController : MonoBehaviour {
 
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        hotAbilities = new List<IAbility>();
-        hotAbilities.Add(new PistolShot()); //This would most likely be an external function that loads the player's abilities.
-        hotAbilities.Add(new Zap());
+        abilities = new PlayerAbilities();
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>() ;
     }
 

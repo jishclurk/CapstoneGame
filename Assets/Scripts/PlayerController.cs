@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Ray shootRay;
     private RaycastHit shootHit;
     private bool walking;
-    private bool enemyClicked;
+    public bool enemyClicked; //How does AI determine if the team is currently in combat? Should playerController sent click info to TM? But it's not just if enemyClicked, relates to # enemies too.
     private bool selectingAbilityTarget = false;
     private float nextFire;
     private IAbility activeAbility;

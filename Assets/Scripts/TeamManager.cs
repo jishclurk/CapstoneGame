@@ -8,6 +8,8 @@ public class TeamManager : MonoBehaviour {
     private List<Strategy> strategyList;
     public GameObject activePlayer;
     public Strategy activeStrat;
+    public bool isInCombat;
+
     private OffsetCamera cameraScript;
 
 
