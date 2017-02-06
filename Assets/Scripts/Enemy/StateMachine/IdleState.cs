@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : IEnemyState {
+public class EnemyIdleState : IEnemyState {
 
     private readonly EnemyStateControl enemy;
 
-    public IdleState (EnemyStateControl stateControl)
+    public EnemyIdleState (EnemyStateControl stateControl)
     {
         enemy = stateControl;
     }

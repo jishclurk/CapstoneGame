@@ -22,7 +22,7 @@ public class EnemyStateControl : MonoBehaviour {
     public ChasingState chasingState;
 
     [HideInInspector]
-    public IdleState idleState;
+    public EnemyIdleState idleState;
 
     [HideInInspector]
     public ReturningState returningState;
@@ -44,7 +44,7 @@ public class EnemyStateControl : MonoBehaviour {
     private void Awake()
     {
         chasingState = new ChasingState(this);
-        idleState = new IdleState(this);
+        idleState = new EnemyIdleState(this);
         returningState = new ReturningState(this);
         attackingState = new AttackingState(this);
         visiblePlayers = new List<GameObject>();
