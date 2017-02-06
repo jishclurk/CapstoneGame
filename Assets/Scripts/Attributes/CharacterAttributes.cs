@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterAttributes : MonoBehaviour, IAttributes {
+public class CharacterAttributes : IAttributes {
 
     public int Level { get { return level; } set { level = value; } }
     public int Experience { get { return experience; } set { experience = value; } }
-    public int Strenth { get { return strength; } set { strength = value; } }
+    public int Strength { get { return strength; } set { strength = value; } }
     public int Intelligence { get { return intelligence; } set { intelligence = value; } }
     public int Stamina { get { return stamina; } set { stamina = value; } }
 

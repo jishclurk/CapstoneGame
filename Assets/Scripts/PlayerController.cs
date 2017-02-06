@@ -13,9 +13,11 @@ public class PlayerController : MonoBehaviour
     private RaycastHit shootHit;
     private bool walking;
     private bool enemyClicked;
+    private bool selectingAbilityTarget = false;
     private float nextFire;
-    private List<IAbility> hotAbilities; //List? Map? Maybe a Map of hotbar key -> ability?
     private IAbility activeAbility;
+    private CharacterAttributes attributes;
+    private PlayerAbilities abilities;
 
 
     // Use this for initialization
@@ -23,10 +25,9 @@ public class PlayerController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        hotAbilities = new List<IAbility>();
-        hotAbilities.Add(new PistolShoot()); //This would most likely be an external function that loads the player's abilities.
-        hotAbilities.Add(new Zap());
-        activeAbility = hotAbilities[0];
+        abilities = new PlayerAbilities();
+        activeAbility = abilities.Basic;
+        attributes = new CharacterAttributes();
     }
 
 
@@ -58,18 +59,19 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && hotAbilities[1].isReady())
+        if (Input.GetKeyDown(KeyCode.Q) && abilities.Q.isReady())
         {
             enemyClicked = false; //unclick an enemy when an ability is pressed
             walking = false;
-            activeAbility = hotAbilities[1];
+            activeAbility = abilities.Q;
+            selectingAbilityTarget = true; //This variable needs an overhaul. I'm thinking it should work with a property of an ability. (instant fire, select enemy, select point on ground, select teammate)
         }
 
         if (enemyClicked)
         {
             MoveAndShoot();
         }
-        else
+        else if(!selectingAbilityTarget)
         {
             walking = navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance;
         }
@@ -101,9 +103,10 @@ public class PlayerController : MonoBehaviour
 
             if (activeAbility.isReady())
             {
-                activeAbility.Execute(gameObject, targetedEnemy.gameObject);
-                if (!activeAbility.isbasicAttack) { 
-                    activeAbility = hotAbilities[0];
+                activeAbility.Execute(attributes, gameObject, targetedEnemy.gameObject);
+                if (!activeAbility.isbasicAttack) {
+                    selectingAbilityTarget = false;
+                    activeAbility = abilities.Basic;
                 }
             }
 

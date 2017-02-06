@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PistolShoot : IAbility {
+public class PistolShot : IAbility {
 
     public string name { get; set; }
     public float effectiveRange { get; set; }
@@ -13,10 +13,10 @@ public class PistolShoot : IAbility {
     public float coolDownTime { get; set; }
     public float lastUsedTime { get; set; }
 
-    public PistolShoot()
+    public PistolShot()
     {
-        name = "Pistol Shoot";
-        effectiveRange = 3.0f;
+        name = "Pistol Shot";
+        effectiveRange = 5.0f;
         baseDamage = 20.0f;
         fireRate = 0.5f;
         isbasicAttack = true;
@@ -26,10 +26,10 @@ public class PistolShoot : IAbility {
 
     }
 
-    public void Execute(GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
+    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        Debug.Log(name + " on " + target.name + " does " + baseDamage + " damage.");
+        Debug.Log(name + " on " + target.name + " does " + (baseDamage + attributes.Strength * 0.1f) + " damage.");
     }
 
     public bool isReady()

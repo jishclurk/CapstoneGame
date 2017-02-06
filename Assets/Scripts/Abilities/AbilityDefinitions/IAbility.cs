@@ -14,7 +14,7 @@ public interface IAbility {
     float lastUsedTime { get; set; }
     
 
-    void Execute(GameObject origin, GameObject target);
+    void Execute(CharacterAttributes attributes, GameObject origin, GameObject target);
     bool isReady();
 
 }

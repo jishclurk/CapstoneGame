@@ -3298,15 +3298,16 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1768873110878104}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a83a28a77d8661347aa80c7c23a6cdc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDestination: {x: 0, y: 0, z: 0}
-  attackTargetPosition: {x: 0, y: 0, z: 0}
-  players: []
+  anim: {fileID: 0}
   navMeshAgent: {fileID: 0}
+  followDist: 4
+  followEpsilon: 2
+  tm: {fileID: 0}
 --- !u!114 &114447029004565284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3318,7 +3319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 986fead5740847f46b02134b43dbc70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerControlled: 0
+  isplayerControlled: 1
 --- !u!114 &114837402876261364
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3330,7 +3331,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b0a873e79400644a4b07dfa21f734c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootDistance: 5
 --- !u!137 &137015228903427590
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

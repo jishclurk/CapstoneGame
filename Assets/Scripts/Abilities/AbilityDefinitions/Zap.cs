@@ -17,7 +17,7 @@ public class Zap : IAbility {
     public Zap()
     {
         name = "Zap";
-        effectiveRange = 5.0f;
+        effectiveRange = 9.0f;
         baseDamage = 100.0f;
         fireRate = 0.0f;
         isbasicAttack = false;
@@ -26,7 +26,7 @@ public class Zap : IAbility {
         lastUsedTime = -Mathf.Infinity;
     }
 
-    public void Execute(GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
+    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
         Debug.Log(name + " on " + target.name + " does " + baseDamage + " damage.");

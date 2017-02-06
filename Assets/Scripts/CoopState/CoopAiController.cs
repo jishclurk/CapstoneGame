@@ -39,7 +39,7 @@ public class CoopAiController : MonoBehaviour {
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         hotAbilities = new List<IAbility>();
-        hotAbilities.Add(new PistolShoot()); //This would most likely be an external function that loads the player's abilities.
+        hotAbilities.Add(new PistolShot()); //This would most likely be an external function that loads the player's abilities.
         hotAbilities.Add(new Zap());
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>() ;
     }

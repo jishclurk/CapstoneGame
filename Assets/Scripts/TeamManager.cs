@@ -7,6 +7,8 @@ public class TeamManager : MonoBehaviour {
     private GameObject[] playerList;
     private List<Strategy> strategyList;
     public GameObject activePlayer;
+    public Strategy activeStrat;
+    private OffsetCamera cameraScript;
 
 
     // Use this for initialization
@@ -19,10 +21,13 @@ public class TeamManager : MonoBehaviour {
             Strategy strat = playerList[i].GetComponent<Strategy>();
             strategyList.Add(strat);
             if (strat.isplayerControlled)
-            {   
+            {
+                activeStrat = strat;
                 activePlayer = strat.gameObject;
             }
         }
+
+        cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
     }
 
     void Start()
@@ -30,10 +35,33 @@ public class TeamManager : MonoBehaviour {
 
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            cycleActivePlayer();
+        }
+
+    }
+
+    public void cycleActivePlayer()
+    {
+        //set current player to AI control
+        activeStrat.setAsCoopAI();
+
+        //find next available player's strategy and set as Player control
+        int nextPlayer = (strategyList.IndexOf(activeStrat) + 1) % strategyList.Count;
+        activeStrat = strategyList[nextPlayer];
+        activeStrat.setAsPlayer();
+
+        //update activePlayer and camera
+        activePlayer = activeStrat.gameObject;
+        cameraScript.followPlayer = activePlayer;
+    }
 
     public void SpawnTeamMember()
     {
 
-
+        
     }
 }

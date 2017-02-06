@@ -5,7 +5,7 @@ using UnityEngine;
 public class OffsetCamera : MonoBehaviour
 {
 
-    private GameObject player;
+    public GameObject followPlayer;
     private TeamManager tm;
     private Vector3 offset;
 
@@ -13,12 +13,13 @@ public class OffsetCamera : MonoBehaviour
     void Start()
     {
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        player = tm.activePlayer;
-        offset = transform.position - player.transform.position;
+        followPlayer = tm.activePlayer;
+        offset = transform.position - followPlayer.transform.position;
     }
 
     void LateUpdate()
     {
-        transform.position = player.transform.position + offset;
+        transform.position = followPlayer.transform.position + offset;
     }
+
 }
