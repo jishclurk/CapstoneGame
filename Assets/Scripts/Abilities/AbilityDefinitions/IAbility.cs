@@ -12,7 +12,8 @@ public interface IAbility {
     float timeToCast { get; set; }
     float coolDownTime { get; set; }
     float lastUsedTime { get; set; }
-    
+    bool requiresTarget { get; set; }
+
 
     void Execute(CharacterAttributes attributes, GameObject origin, GameObject target);
     bool isReady();

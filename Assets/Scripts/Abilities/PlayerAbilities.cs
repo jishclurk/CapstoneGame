@@ -30,6 +30,7 @@ public class PlayerAbilities : ICharacterAbilities {
         //some sort of reading from save file would happen here
         unlockedAbilities.Add(new PistolShot());
         unlockedAbilities.Add(new Zap());
+        unlockedAbilities.Add(new SelfHeal());
     }
 
     private void LoadHotBar()
@@ -37,6 +38,7 @@ public class PlayerAbilities : ICharacterAbilities {
         //some sort of reading from save file would happen here
         Basic = unlockedAbilities[0];
         Q = unlockedAbilities[1];
+        W = unlockedAbilities[2];
     }
 
 }

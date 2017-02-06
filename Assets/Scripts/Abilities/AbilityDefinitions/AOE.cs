@@ -12,6 +12,7 @@ public class AOE : IAbility {
     public float timeToCast { get; set; }
     public float coolDownTime { get; set; }
     public float lastUsedTime { get; set; }
+    public bool requiresTarget { get; set; }
     private float nextFire;
 
     public AOE()
@@ -24,6 +25,7 @@ public class AOE : IAbility {
         timeToCast = 0.0f;
         coolDownTime = 5.0f;
         lastUsedTime = -Mathf.Infinity;
+        requiresTarget = true;
     }
 
     public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?

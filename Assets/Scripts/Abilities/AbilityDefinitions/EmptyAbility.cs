@@ -12,6 +12,7 @@ public class EmptyAbility : IAbility {
     public float timeToCast { get; set; }
     public float coolDownTime { get; set; }
     public float lastUsedTime { get; set; }
+    public bool requiresTarget { get; set; }
 
     public EmptyAbility()
     {
@@ -23,6 +24,7 @@ public class EmptyAbility : IAbility {
         timeToCast = 0.0f;
         coolDownTime = 0.0f;
         lastUsedTime = 0.0f;
+        requiresTarget = true;
 
     }
 

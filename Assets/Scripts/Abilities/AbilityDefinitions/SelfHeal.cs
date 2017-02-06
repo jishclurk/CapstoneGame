@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PistolShot : IAbility {
+public class SelfHeal : IAbility
+{
 
     public string name { get; set; }
     public float effectiveRange { get; set; }
@@ -14,28 +15,28 @@ public class PistolShot : IAbility {
     public float lastUsedTime { get; set; }
     public bool requiresTarget { get; set; }
 
-    public PistolShot()
+    public SelfHeal()
     {
-        name = "Pistol Shot";
+        name = "Heal";
         effectiveRange = 5.0f;
         baseDamage = 20.0f;
-        fireRate = 0.5f;
-        isbasicAttack = true;
+        fireRate = 0.0f;
+        isbasicAttack = false;
         timeToCast = 0.0f;
-        coolDownTime = 0.0f;
-        lastUsedTime = 0.0f;
-        requiresTarget = true;
+        coolDownTime = 4.0f;
+        lastUsedTime = -Mathf.Infinity;
+        requiresTarget = false;
 
     }
 
     public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        Debug.Log(name + " on " + target.name + " does " + (baseDamage + attributes.Strength * 0.1f) + " damage.");
+        Debug.Log("Healed " + target.name);
     }
 
     public bool isReady()
     {
-        return Time.time > lastUsedTime + fireRate;
+        return Time.time > lastUsedTime + coolDownTime;
     }
 }

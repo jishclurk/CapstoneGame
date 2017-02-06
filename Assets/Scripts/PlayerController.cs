@@ -8,11 +8,16 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
     private NavMeshAgent navMeshAgent;
-    private Transform targetedEnemy;
+    private Transform target;
+    private bool enemyClicked; //How does AI determine if the team is currently in combat? Should playerController sent click info to TM? But it's not just if enemyClicked, relates to # enemies too.
+    private Transform targetedFriend;
+    private bool friendClicked;
+
     private Ray shootRay;
     private RaycastHit shootHit;
+
     private bool walking;
-    public bool enemyClicked; //How does AI determine if the team is currently in combat? Should playerController sent click info to TM? But it's not just if enemyClicked, relates to # enemies too.
+   
     private bool selectingAbilityTarget = false;
     private IAbility activeAbility;
     private CharacterAttributes attributes;
@@ -35,6 +40,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Player click input
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Input.GetButtonDown("Fire2"))
@@ -44,15 +50,25 @@ public class PlayerController : MonoBehaviour
                 if (hit.collider.CompareTag("Enemy"))
                 {
                     //target is instead the raycast hit, rather than a transform. Put work into Execute().
-                    targetedEnemy = hit.transform;
+                    target = hit.transform;
                     transform.LookAt(hit.transform); //prevents slow turn
                     enemyClicked = true;
+                    friendClicked = false;
                     tm.isTeamInCombat = true;
+                }
+                else if (hit.collider.CompareTag("Player"))
+                {
+                    //target is instead the raycast hit, rather than a transform. Put work into Execute().
+                    target = hit.transform;
+                    transform.LookAt(hit.transform); //prevents slow turn
+                    friendClicked = true;
+                    enemyClicked = false;
                 }
                 else
                 {
                     walking = true;
                     enemyClicked = false;
+                    friendClicked = false;
                     navMeshAgent.destination = hit.point;
                     transform.LookAt(hit.point); //prevents slow turn
                     navMeshAgent.Resume();
@@ -60,13 +76,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && abilities.Q.isReady())
-        {
-            enemyClicked = false; //unclick an enemy when an ability is pressed
-            walking = false;
-            activeAbility = abilities.Q;
-            selectingAbilityTarget = true; //This variable needs an overhaul. I'm thinking it should work with a property of an ability. (instant fire, select enemy, select point on ground, select teammate)
-        }
+        HandleAbilityInput();
 
         if (enemyClicked)
         {
@@ -84,13 +94,13 @@ public class PlayerController : MonoBehaviour
     private void MoveAndShoot()
     {
 
-        if (targetedEnemy == null)
+        if (target == null)
         {
             //this return happens if enemy dies
             return; //avoid running code we don't need to.
         }
-        navMeshAgent.destination = targetedEnemy.position;
-        float remainingDistance = Vector3.Distance(targetedEnemy.position, transform.position);
+        navMeshAgent.destination = target.position;
+        float remainingDistance = Vector3.Distance(target.position, transform.position);
         if (remainingDistance >= activeAbility.effectiveRange)
         {
             navMeshAgent.Resume();
@@ -99,14 +109,14 @@ public class PlayerController : MonoBehaviour
         else
         {
             //Within range, look at enemy and shoot
-            transform.LookAt(targetedEnemy);
+            transform.LookAt(target);
             //Vector3 dirToShoot = targetedEnemy.transform.position - transform.position; //unused, would be for raycasting
 
             if (activeAbility.isReady())
             {
-                activeAbility.Execute(attributes, gameObject, targetedEnemy.gameObject);
+                activeAbility.Execute(attributes, gameObject, target.gameObject);
                 if (!activeAbility.isbasicAttack) {
-                    selectingAbilityTarget = false;
+                    //selectingAbilityTarget = false;
                     activeAbility = abilities.Basic;
                 }
             }
@@ -117,5 +127,35 @@ public class PlayerController : MonoBehaviour
 
 
     }
+
+    private void HandleAbilityInput()
+    {
+        //Handle ability input
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            useSpecialIfPossible(abilities.Q);
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            useSpecialIfPossible(abilities.W);
+        }
+    }
+    
+    private void useSpecialIfPossible(IAbility ability)
+    {
+        if (ability.isReady())
+        {
+            if (ability.requiresTarget && (friendClicked || enemyClicked))
+            {
+                activeAbility = ability;
+            }
+            if (!ability.requiresTarget)
+            {
+                ability.Execute(attributes, gameObject, gameObject);
+            }
+        }
+
+    }
+
 }
 
