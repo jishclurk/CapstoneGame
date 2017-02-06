@@ -202,7 +202,8 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 135598140257639690, guid: e9c2a451b1c19e7428ad2f77c0530c5a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: e9c2a451b1c19e7428ad2f77c0530c5a, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &553395889
@@ -252,9 +253,36 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 45
       objectReference: {fileID: 0}
+    - target: {fileID: 20253624994454282, guid: 49fdc49f02db34542bafdd8e7cc9de21,
+        type: 2}
+      propertyPath: near clip plane
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 20253624994454282, guid: 49fdc49f02db34542bafdd8e7cc9de21,
+        type: 2}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 49fdc49f02db34542bafdd8e7cc9de21, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1048290190 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1768873110878104, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
+    type: 2}
+  m_PrefabInternal: {fileID: 430119835}
+--- !u!65 &1048290191
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1048290190}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1055384060
 Prefab:
   m_ObjectHideFlags: 0
