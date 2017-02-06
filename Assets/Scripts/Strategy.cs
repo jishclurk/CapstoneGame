@@ -8,9 +8,6 @@ public class Strategy : MonoBehaviour {
 
     private PlayerController playerScript;
     private CoopAiController aiScript;
-    
-
-
 
 	// Use this for initialization
 	void Awake () {

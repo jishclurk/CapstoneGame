@@ -8,7 +8,7 @@ public class TeamManager : MonoBehaviour {
     private List<Strategy> strategyList;
     public GameObject activePlayer;
     public Strategy activeStrat;
-    public bool isInCombat;
+    public bool isTeamInCombat;
 
     private OffsetCamera cameraScript;
 
@@ -43,9 +43,10 @@ public class TeamManager : MonoBehaviour {
         {
             cycleActivePlayer();
         }
-
     }
 
+
+    //eventually will take a parameter to change certain player
     public void cycleActivePlayer()
     {
         //set current player to AI control

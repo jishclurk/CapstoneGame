@@ -10,12 +10,27 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector]
     public Animator anim;
 
+
     [HideInInspector]
     public NavMeshAgent navMeshAgent;
+
+    //move state variables
     [HideInInspector]
     public float followDist = 3.8f;
     [HideInInspector]
     public float followEpsilon = 2.0f; //Determines how far player has to move for ai to start to follow again
+
+    //attack state variables
+    [HideInInspector]
+    public Collider sightCollider;
+    [HideInInspector]
+    public float sightDist = 10.0f;
+    [HideInInspector]
+    public List<GameObject> visibleEnemies;
+    [HideInInspector]
+    public IAbility activeAbility;
+    [HideInInspector]
+    public Transform targetedEnemy;
 
     [HideInInspector]
     public PlayerAbilities abilities;
@@ -23,7 +38,6 @@ public class CoopAiController : MonoBehaviour {
     public CharacterAttributes attributes;
     [HideInInspector]
     public TeamManager tm; //is this bad practice? Used to find which players are ai controlled or not
-
 
     [HideInInspector] public ICoopState currentState;
     [HideInInspector] public IdleState idleState;
@@ -41,6 +55,8 @@ public class CoopAiController : MonoBehaviour {
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         abilities = new PlayerAbilities();
+        activeAbility = abilities.Basic;
+        sightCollider = GetComponent<SphereCollider>();
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>() ;
     }
 
@@ -54,6 +70,31 @@ public class CoopAiController : MonoBehaviour {
     void Update()
     {
         currentState.UpdateState();
+    }
+
+
+    public void CheckForCombat()
+    {
+        if (tm.isTeamInCombat)
+        {
+            currentState = attackState;
+        } 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("Enemy"))
+        {
+            visibleEnemies.Add(other.gameObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag.Equals("Enemy"))
+        {
+            visibleEnemies.Remove(other.gameObject);
+        }
     }
 
 }

@@ -128,7 +128,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4182263858944896, guid: 966904b7f2f5b3645b052f5be7e4cf7e, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 966904b7f2f5b3645b052f5be7e4cf7e, type: 2}
@@ -175,6 +175,26 @@ Prefab:
     - target: {fileID: 1768873110878104, guid: e9c2a451b1c19e7428ad2f77c0530c5a, type: 2}
       propertyPath: m_Name
       value: Captain
+      objectReference: {fileID: 0}
+    - target: {fileID: 114081347294090246, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114837402876261364, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114447029004565284, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
+        type: 2}
+      propertyPath: isplayerControlled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 135598140257639690, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9c2a451b1c19e7428ad2f77c0530c5a, type: 2}
@@ -300,25 +320,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4211899192002228, guid: e9c2a451b1c19e7428ad2f77c0530c5a, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1768873110878104, guid: e9c2a451b1c19e7428ad2f77c0530c5a, type: 2}
       propertyPath: m_Name
       value: AI
       objectReference: {fileID: 0}
-    - target: {fileID: 114837402876261364, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
+    - target: {fileID: 135598140257639690, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
         type: 2}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114081347294090246, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114447029004565284, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
-        type: 2}
-      propertyPath: isplayerControlled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -385,5 +395,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 60, y: -45, z: 0}

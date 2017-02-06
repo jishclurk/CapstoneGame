@@ -14,7 +14,9 @@ public class MoveState : ICoopState
 
     public void UpdateState()
     {
+        Debug.Log("Moving");
         FollowActivePlayer();
+        aiPlayer.CheckForCombat();
         aiPlayer.anim.SetBool("Idling", false);
         aiPlayer.anim.SetBool("NonCombat", true);
     }

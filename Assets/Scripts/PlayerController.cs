@@ -14,10 +14,10 @@ public class PlayerController : MonoBehaviour
     private bool walking;
     public bool enemyClicked; //How does AI determine if the team is currently in combat? Should playerController sent click info to TM? But it's not just if enemyClicked, relates to # enemies too.
     private bool selectingAbilityTarget = false;
-    private float nextFire;
     private IAbility activeAbility;
     private CharacterAttributes attributes;
     private PlayerAbilities abilities;
+    private TeamManager tm;
 
 
     // Use this for initialization
@@ -28,14 +28,13 @@ public class PlayerController : MonoBehaviour
         abilities = new PlayerAbilities();
         activeAbility = abilities.Basic;
         attributes = new CharacterAttributes();
+        tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
     }
 
 
     // Update is called once per frame
     void Update()
     {
-
-
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Input.GetButtonDown("Fire2"))
@@ -47,6 +46,7 @@ public class PlayerController : MonoBehaviour
                     targetedEnemy = hit.transform;
                     transform.LookAt(hit.transform); //prevents slow turn
                     enemyClicked = true;
+                    tm.isTeamInCombat = true;
                 }
                 else
                 {

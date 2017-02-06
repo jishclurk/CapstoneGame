@@ -1192,6 +1192,7 @@ GameObject:
   - component: {fileID: 114837402876261364}
   - component: {fileID: 114447029004565284}
   - component: {fileID: 114081347294090246}
+  - component: {fileID: 135598140257639690}
   m_Layer: 0
   m_Name: CaptainPrefab
   m_TagString: Player
@@ -1713,7 +1714,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1768873110878104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.6, y: 3.2, z: -66.6}
+  m_LocalPosition: {x: 8.6, y: 3.2, z: -70}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4804777471991154}
@@ -3298,7 +3299,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1768873110878104}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a83a28a77d8661347aa80c7c23a6cdc9, type: 3}
   m_Name: 
@@ -3307,6 +3308,8 @@ MonoBehaviour:
   navMeshAgent: {fileID: 0}
   followDist: 4
   followEpsilon: 2
+  sightDist: 12
+  targetedEnemy: {fileID: 0}
   tm: {fileID: 0}
 --- !u!114 &114447029004565284
 MonoBehaviour:
@@ -3319,18 +3322,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 986fead5740847f46b02134b43dbc70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isplayerControlled: 1
+  isplayerControlled: 0
 --- !u!114 &114837402876261364
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1768873110878104}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98b0a873e79400644a4b07dfa21f734c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyClicked: 0
+--- !u!135 &135598140257639690
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1768873110878104}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137015228903427590
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

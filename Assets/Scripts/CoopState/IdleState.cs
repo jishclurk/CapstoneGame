@@ -14,7 +14,9 @@ public class IdleState : ICoopState
 
     public void UpdateState()
     {
+        Debug.Log("IDLE");
         WatchActivePlayer();
+        aiPlayer.CheckForCombat();
         aiPlayer.anim.SetBool("Idling", true);
         aiPlayer.anim.SetBool("NonCombat", true);
     }
@@ -54,6 +56,10 @@ public class IdleState : ICoopState
         {
             aiPlayer.transform.LookAt(userPlayer.transform);
             ToMoveState();
+        }
+        if (aiPlayer.tm.isTeamInCombat)
+        {
+            ToAttackState();
         }
     }
 
