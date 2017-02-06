@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Enemy"))
                 {
+                    //target is instead the raycast hit, rather than a transform. Put work into Execute().
                     targetedEnemy = hit.transform;
                     transform.LookAt(hit.transform); //prevents slow turn
                     enemyClicked = true;
