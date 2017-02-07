@@ -690,7 +690,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1647642782025588
 GameObject:
   m_ObjectHideFlags: 1
@@ -716,13 +716,14 @@ GameObject:
   - component: {fileID: 224057058366687736}
   - component: {fileID: 222737974461513820}
   - component: {fileID: 114102983659346750}
+  - component: {fileID: 114028112548939722}
   m_Layer: 5
   m_Name: FloatingDamageText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1661072069893676
 GameObject:
   m_ObjectHideFlags: 1
@@ -2241,6 +2242,21 @@ MonoBehaviour:
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
+--- !u!114 &114028112548939722
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1657392128382910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab3f62f9f136d746ab4f7739e2a0b0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 0.8
+  minXOffset: -15
+  maxXOffset: 15
+  endHeightOffset: 25
 --- !u!114 &114078748188385628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2272,19 +2288,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 42
+    m_Font: {fileID: 12800000, guid: b20f139c373fa4555a05cdd0036dfa44, type: 3}
+    m_FontSize: 64
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 4
-    m_MaxSize: 42
+    m_MinSize: 0
+    m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Damage
 --- !u!114 &114130090405825192
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2481,7 +2497,7 @@ SkinnedMeshRenderer:
   m_GameObject: {fileID: 1609717999999844}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1

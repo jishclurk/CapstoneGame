@@ -59,18 +59,21 @@ public class EnemyHealth : MonoBehaviour {
     {
         amount = Mathf.Abs(amount);
         currentHealth -= amount;
-
-        DisplayCombatText(amount);
-
-        if (isDead && !deathHandled)
-        {
-            Death();
-        }
-
         healthBar.fillAmount = currentHealth / maxHealth;
 
         if (isDamaged)
             ShowHealthBar();
+
+        if (isDead && !deathHandled)
+        {
+            DisplayCombatText(amount);
+            Death();
+            deathHandled = true;
+        }
+        else if (!isDead)
+        {
+            DisplayCombatText(amount);
+        }
     }
 
     private void Death()
@@ -97,7 +100,7 @@ public class EnemyHealth : MonoBehaviour {
         newDmg.transform.localPosition = damageTextTrans.localPosition;
         newDmg.transform.localRotation = damageTextTrans.localRotation;
         newDmg.transform.localScale = damageTextTrans.localScale;
-        newDmg.GetComponent<Text>().text = damage.ToString();
+        newDmg.GetComponent<Text>().text = ((int) damage).ToString();
         newDmg.SetActive(true);
     }
 }
