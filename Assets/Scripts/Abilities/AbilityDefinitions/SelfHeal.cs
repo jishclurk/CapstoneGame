@@ -10,6 +10,7 @@ public class SelfHeal : IAbility
     public float baseDamage { get; set; }
     public float fireRate { get; set; }
     public bool isbasicAttack { get; set; }
+    public float energyRequired { get; set; }
     public float timeToCast { get; set; }
     public float coolDownTime { get; set; }
     public float lastUsedTime { get; set; }
@@ -26,6 +27,7 @@ public class SelfHeal : IAbility
         coolDownTime = 4.0f;
         lastUsedTime = -Mathf.Infinity;
         requiresTarget = false;
+        energyRequired = 20.0f;
 
     }
 
@@ -34,7 +36,8 @@ public class SelfHeal : IAbility
         lastUsedTime = Time.time;
         float adjustedDamage = baseDamage + attributes.Intelligence;
         Debug.Log(name + " on " + target.name + " heals " + adjustedDamage + ".");
-        target.GetComponent<PlayerHealth>().Heal(adjustedDamage);
+        target.GetComponent<PlayerResources>().Heal(adjustedDamage);
+        origin.GetComponent<PlayerResources>().UseEnergy(energyRequired);
     }
 
     public bool isReady()

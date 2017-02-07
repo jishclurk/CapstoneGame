@@ -82,7 +82,7 @@ public class AttackingState : IEnemyState {
         if (timer >= attack.attackSpeed)
         {
             timer = 0;
-            PlayerHealth playerHP = enemy.chaseTarget.GetComponent<PlayerHealth>();
+            PlayerResources playerHP = enemy.chaseTarget.GetComponent<PlayerResources>();
             if (playerHP != null)
             {
                 playerHP.TakeDamage(attack.attackDamage);

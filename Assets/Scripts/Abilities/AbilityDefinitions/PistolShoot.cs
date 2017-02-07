@@ -9,6 +9,7 @@ public class PistolShot : IAbility {
     public float baseDamage { get; set; }
     public float fireRate { get; set; }
     public bool isbasicAttack { get; set; }
+    public float energyRequired { get; set; }
     public float timeToCast { get; set; }
     public float coolDownTime { get; set; }
     public float lastUsedTime { get; set; }
@@ -25,6 +26,7 @@ public class PistolShot : IAbility {
         coolDownTime = 0.0f;
         lastUsedTime = 0.0f;
         requiresTarget = true;
+        energyRequired = 0.0f;
 
     }
 
@@ -34,6 +36,7 @@ public class PistolShot : IAbility {
         float adjustedDamage = baseDamage + attributes.Strength * 0.1f;
         Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
+        //useEnergy not required
     }
 
     public bool isReady()

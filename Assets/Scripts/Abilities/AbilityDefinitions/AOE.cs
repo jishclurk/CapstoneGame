@@ -9,6 +9,7 @@ public class AOE : IAbility {
     public float baseDamage { get; set; }
     public float fireRate { get; set; }
     public bool isbasicAttack { get; set; }
+    public float energyRequired { get; set; }
     public float timeToCast { get; set; }
     public float coolDownTime { get; set; }
     public float lastUsedTime { get; set; }
@@ -26,6 +27,7 @@ public class AOE : IAbility {
         coolDownTime = 5.0f;
         lastUsedTime = -Mathf.Infinity;
         requiresTarget = true;
+        energyRequired = 20.0f;
     }
 
     public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?

@@ -9,6 +9,7 @@ public class EmptyAbility : IAbility {
     public float baseDamage { get; set; }
     public float fireRate { get; set; }
     public bool isbasicAttack { get; set; }
+    public float energyRequired { get; set; }
     public float timeToCast { get; set; }
     public float coolDownTime { get; set; }
     public float lastUsedTime { get; set; }
@@ -25,6 +26,7 @@ public class EmptyAbility : IAbility {
         coolDownTime = 0.0f;
         lastUsedTime = 0.0f;
         requiresTarget = true;
+        energyRequired = 0.0f;
 
     }
 

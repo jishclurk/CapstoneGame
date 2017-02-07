@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private CharacterAttributes attributes;
     private PlayerAbilities abilities;
     private TeamManager tm;
+    private PlayerResources resources;
+
 
 
     // Use this for initialization
@@ -34,6 +36,7 @@ public class PlayerController : MonoBehaviour
         activeAbility = abilities.Basic;
         attributes = new CharacterAttributes();
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
+        resources = GetComponent<PlayerResources>();
     }
 
 
@@ -143,7 +146,8 @@ public class PlayerController : MonoBehaviour
     
     private void useSpecialIfPossible(IAbility ability)
     {
-        if (ability.isReady())
+        //TODO: add debug/actual messages saying why ability failed
+        if (ability.isReady() && resources.currentEnergy > ability.energyRequired)
         {
             if (ability.requiresTarget && (friendClicked || enemyClicked))
             {
