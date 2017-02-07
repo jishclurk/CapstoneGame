@@ -17,8 +17,8 @@ public class PistolShot : IAbility {
     public PistolShot()
     {
         name = "Pistol Shot";
-        effectiveRange = 5.0f;
-        baseDamage = 20.0f;
+        effectiveRange = 8.0f;
+        baseDamage = 5.0f;
         fireRate = 0.5f;
         isbasicAttack = true;
         timeToCast = 0.0f;
@@ -31,7 +31,9 @@ public class PistolShot : IAbility {
     public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        Debug.Log(name + " on " + target.name + " does " + (baseDamage + attributes.Strength * 0.1f) + " damage.");
+        float adjustedDamage = baseDamage + attributes.Strength * 0.1f;
+        Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
+        target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
     }
 
     public bool isReady()

@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour {
         {
             _currentHealth = value;
             if (_currentHealth < 0) _currentHealth = 0;
+            if (_currentHealth > maxHealth) _currentHealth = maxHealth;
         }
     }
 
@@ -36,9 +37,19 @@ public class PlayerHealth : MonoBehaviour {
     {
         currentHealth -= Mathf.Abs(amount);
         Debug.Log("Player Lost " + amount.ToString() + " Health");
+        Debug.Log("Player Health:  " + currentHealth);
         if (isDead && !deathHandled)
         {
             Death();
+        }
+    }
+
+    public void Heal(float amount)
+    {
+        if (!isDead)
+        {
+            currentHealth += Mathf.Abs(amount);
+            Debug.Log("Player Health:  " + currentHealth);
         }
     }
 

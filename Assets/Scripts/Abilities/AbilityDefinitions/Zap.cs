@@ -19,7 +19,7 @@ public class Zap : IAbility {
     {
         name = "Zap";
         effectiveRange = 9.0f;
-        baseDamage = 100.0f;
+        baseDamage = 50.0f;
         fireRate = 0.0f;
         isbasicAttack = false;
         timeToCast = 0.0f;
@@ -31,7 +31,9 @@ public class Zap : IAbility {
     public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        Debug.Log(name + " on " + target.name + " does " + baseDamage + " damage.");
+        float adjustedDamage = baseDamage + attributes.Intelligence*2;
+        Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
+        target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
     }
 
     public bool isReady()

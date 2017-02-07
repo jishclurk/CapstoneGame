@@ -32,7 +32,9 @@ public class SelfHeal : IAbility
     public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        Debug.Log("Healed " + target.name);
+        float adjustedDamage = baseDamage + attributes.Intelligence;
+        Debug.Log(name + " on " + target.name + " heals " + adjustedDamage + ".");
+        target.GetComponent<PlayerHealth>().Heal(adjustedDamage);
     }
 
     public bool isReady()

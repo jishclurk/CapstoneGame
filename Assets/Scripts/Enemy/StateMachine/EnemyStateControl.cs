@@ -42,6 +42,9 @@ public class EnemyStateControl : MonoBehaviour {
     [HideInInspector]
     public Transform eyes;
 
+    [HideInInspector]
+    public TeamManager tm;
+
     private EnemyHealth health;
 
     private void Awake()
@@ -58,6 +61,8 @@ public class EnemyStateControl : MonoBehaviour {
         health = GetComponent<EnemyHealth>();
         animator = GetComponent<EnemyAnimationController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+
+        tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
     }
 
 	// Use this for initialization

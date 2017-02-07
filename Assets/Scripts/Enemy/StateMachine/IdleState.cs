@@ -29,6 +29,7 @@ public class EnemyIdleState : IEnemyState {
 
     public void ToChasingState()
     {
+        enemy.tm.isTeamInCombat = true;
         enemy.currentState = enemy.chasingState;
     }
 
