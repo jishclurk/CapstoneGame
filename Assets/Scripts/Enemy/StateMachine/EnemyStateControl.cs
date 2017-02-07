@@ -39,6 +39,9 @@ public class EnemyStateControl : MonoBehaviour {
     [HideInInspector]
     public EnemyAnimationController animator;
 
+    [HideInInspector]
+    public Transform eyes;
+
     private EnemyHealth health;
 
     private void Awake()
@@ -51,6 +54,7 @@ public class EnemyStateControl : MonoBehaviour {
 
         returnPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
+        eyes = transform.FindChild("Eyes");
         health = GetComponent<EnemyHealth>();
         animator = GetComponent<EnemyAnimationController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -63,7 +67,6 @@ public class EnemyStateControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	private void FixedUpdate () {
-
         // Check for death here
         if (!health.isDead)
             currentState.UpdateState();
@@ -73,6 +76,7 @@ public class EnemyStateControl : MonoBehaviour {
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Player Seen");
             visiblePlayers.Add(other.gameObject);
         }
     }
@@ -81,6 +85,7 @@ public class EnemyStateControl : MonoBehaviour {
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Player Left");
             visiblePlayers.Remove(other.gameObject);
         }
     }

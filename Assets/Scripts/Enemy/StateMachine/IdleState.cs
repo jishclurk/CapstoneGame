@@ -42,8 +42,8 @@ public class EnemyIdleState : IEnemyState {
         foreach (GameObject player in enemy.visiblePlayers)
         {
             RaycastHit hit;
-            Vector3 enemyToTarget = player.transform.position - enemy.transform.position;
-            if (Physics.Raycast(enemy.transform.position, enemyToTarget, out hit) && hit.collider.CompareTag("Player"))
+            Vector3 enemyToTarget = new Vector3(player.transform.position.x - enemy.eyes.position.x, 0, player.transform.position.z - enemy.eyes.position.z);
+            if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player"))
             {
                 enemy.chaseTarget = hit.collider.gameObject;
                 ToChasingState();

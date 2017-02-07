@@ -51,8 +51,8 @@ public class ChasingState : IEnemyState {
     private void Look()
     {
         RaycastHit hit;
-        Vector3 enemyToTarget = enemy.chaseTarget.transform.position - enemy.transform.position;
-        if (Physics.Raycast(enemy.transform.position, enemyToTarget, out hit) && hit.collider.CompareTag("Player"))
+        Vector3 enemyToTarget = new Vector3(enemy.chaseTarget.transform.position.x - enemy.eyes.position.x, 0, enemy.chaseTarget.transform.position.z - enemy.eyes.position.z);
+        if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player"))
         {
             enemy.chaseTarget = hit.collider.gameObject;
             if (Vector3.Distance(enemy.chaseTarget.transform.position, enemy.transform.position) <= (attack.attackRange - attack.attackRangeOffset))
@@ -66,8 +66,8 @@ public class ChasingState : IEnemyState {
             // If chasing target is not in our vision, check if another player is
             foreach (GameObject player in enemy.visiblePlayers)
             {
-                enemyToTarget = player.transform.position - enemy.transform.position;
-                if (Physics.Raycast(enemy.transform.position, enemyToTarget, out hit) && hit.collider.CompareTag("Player"))
+                enemyToTarget = new Vector3(player.transform.position.x - enemy.eyes.position.x, 0, player.transform.position.z - enemy.eyes.position.z);
+                if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player"))
                 {
                     enemy.chaseTarget = hit.collider.gameObject;
                     return;
