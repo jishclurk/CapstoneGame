@@ -21,4 +21,5 @@ public class CheckPointTrigger : MonoBehaviour {
             CheckPointSceen.enabled = true;
         }
     }
+
 }
