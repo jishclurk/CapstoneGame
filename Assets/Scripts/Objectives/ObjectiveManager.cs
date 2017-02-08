@@ -11,9 +11,15 @@ public class ObjectiveManager : MonoBehaviour {
 	private bool activeObjective;
 	private string objectiveList;
 	private int activeObjNum = 0;
+	private int completedObjectives = 0;
+	public TeamManager tm;
 
 	void Awake() {
 		objectives = new List<GoalManager>(GetComponentsInChildren<GoalManager> ());
+		foreach (GoalManager gm in objectives){
+			gm.tm = this.tm;
+
+		}
 		activeObjective = false;
 		objectiveList =  "Objectives: \n";
 	}
@@ -22,6 +28,10 @@ public class ObjectiveManager : MonoBehaviour {
 		objectiveList =  "Objectives: \n";
 		for (int i = 0; i<objectives.Count ; i++){
 			objectiveList += "\n"+(i+1)+".  " + objectives[i].objectiveName;
+			if (objectives [i].isComplete ()) {
+				objectiveList += "\n **Completed**";
+
+			}
 			if (!objectives [i].isComplete () && !activeObjective) {
 				activeObjective = true;
 				activeObjNum = i;

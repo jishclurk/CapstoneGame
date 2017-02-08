@@ -11,8 +11,14 @@ public class GoalManager : MonoBehaviour {
 
 	private bool active = false;
 
+	[HideInInspector]
+	public TeamManager tm;
+
 	void Awake() {
 		goals = new List<IGoal>(GetComponentsInChildren<IGoal> ());
+		foreach (IGoal goal in goals) {
+			goal.TeamM = this.tm;
+		}
 	}
 
 	void Update() {
@@ -23,15 +29,18 @@ public class GoalManager : MonoBehaviour {
 	}
 
 	public string goalList(){
-		string goalList = "\n\t\tGoals:";
+		string goalList = "\nGoals:";
 			for (int i = 0; i < goals.Count; i++) {
-				goalList += "\n\t\t\t - " + goals [i].GoalText;
+				goalList += "\n" + goals [i].GoalText;
 				if (goals [i].IsAchieved ()) {
 					goals [i].Complete ();
 					goals [i].DestroyGoal ();
 					goals.RemoveAt (i);
 				}
 			}
+		if (goals.Count == 0) {
+			goalList = "";
+		}
 		return goalList;
 	}
 

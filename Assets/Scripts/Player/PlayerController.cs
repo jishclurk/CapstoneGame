@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
         attributes = new CharacterAttributes();
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         resources = GetComponent<PlayerResources>();
+		tm.playerResources = resources;
     }
 
 

@@ -3,35 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Add this to GoalManager to run a "kill the enemies" goal:    
-public class LoseHealth : MonoBehaviour ,IGoal{
+public class ReachTrigger : MonoBehaviour ,IGoal{
 
-	public int healthLost= 50;
+	private CheckPointTrigger checkpoint;
 	public AudioClip trumpetSound;
+
+
 
 	//PlayerHealth playerHealth;
 	public string goalText;
+	private TeamManager tm;
+
+	public TeamManager TeamM { 
+		get {
+			return tm;
+
+		}
+		set {
+			tm = value;
+		}
+	}
+
 	public string GoalText { 
 		get {
 			return goalText;
 
 		}
 		set {
-			value = goalText;
+			goalText = value;
 		}
 	}
 
 	void Awake() {
 		//playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+		checkpoint = GameObject.Find("CheckPointTrigger").GetComponent<CheckPointTrigger>();
 	}
 
 	public bool IsAchieved() {
-		//return (playerHealth.currentHealth <= healthLost);
-		return false;
+		return (checkpoint.checkpointReached);
+		//return false;
 	}
 
 	public void Complete() {
 		//ScoreSingleton.score += 50;
 		//audio.Play(trumpetSound);
+		checkpoint.openCheckPointScreen();
 	}
 
 	public void DestroyGoal() {
