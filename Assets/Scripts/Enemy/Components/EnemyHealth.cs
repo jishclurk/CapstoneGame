@@ -24,7 +24,9 @@ public class EnemyHealth : MonoBehaviour {
 
     private bool deathHandled = false;
     private Image healthBar;
-    private GameObject healthBarObj;
+    private GameObject healthBarCanvas;
+    private GameObject damageText;
+    private Transform damageTextTrans;
     private EnemyAnimationController animator;
 
     void Awake()
@@ -33,10 +35,14 @@ public class EnemyHealth : MonoBehaviour {
 
         animator = GetComponent<EnemyAnimationController>();
 
-        healthBarObj = transform.FindChild("HealthBar").gameObject;
-        healthBar = healthBarObj.transform.FindChild("Health").GetComponent<Image>();
+        healthBarCanvas = transform.FindChild("EnemyHealthCanvas").gameObject;
+
+        healthBar = healthBarCanvas.transform.FindChild("Health").GetComponent<Image>();
         healthBar.fillAmount = 1;
         HideHealthBar();
+
+        damageText = healthBarCanvas.transform.FindChild("FloatingDamageText").gameObject;
+        damageTextTrans = damageText.transform;
     }
 
     void Update()
@@ -51,16 +57,23 @@ public class EnemyHealth : MonoBehaviour {
 
     public void TakeDamage(float amount)
     {
-        currentHealth -= Mathf.Abs(amount);
-        if (isDead && !deathHandled)
-        {
-            Death();
-        }
-
+        amount = Mathf.Abs(amount);
+        currentHealth -= amount;
         healthBar.fillAmount = currentHealth / maxHealth;
 
         if (isDamaged)
             ShowHealthBar();
+
+        if (isDead && !deathHandled)
+        {
+            DisplayCombatText(amount);
+            Death();
+            deathHandled = true;
+        }
+        else if (!isDead)
+        {
+            DisplayCombatText(amount);
+        }
     }
 
     private void Death()
@@ -72,11 +85,22 @@ public class EnemyHealth : MonoBehaviour {
 
     private void HideHealthBar()
     {
-        healthBarObj.SetActive(false);
+        healthBarCanvas.SetActive(false);
     }
 
     private void ShowHealthBar()
     {
-        healthBarObj.SetActive(true);
+        healthBarCanvas.SetActive(true);
+    }
+
+    private void DisplayCombatText(float damage)
+    {
+        GameObject newDmg = Instantiate(damageText);
+        newDmg.transform.SetParent(healthBarCanvas.transform);
+        newDmg.transform.localPosition = damageTextTrans.localPosition;
+        newDmg.transform.localRotation = damageTextTrans.localRotation;
+        newDmg.transform.localScale = damageTextTrans.localScale;
+        newDmg.GetComponent<Text>().text = ((int) damage).ToString();
+        newDmg.SetActive(true);
     }
 }
