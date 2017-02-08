@@ -8,7 +8,7 @@ public class TeamManager : MonoBehaviour {
     private List<Strategy> strategyList;
     public GameObject activePlayer;
     public Strategy activeStrat;
-    public bool isTeamInCombat;
+    public bool teamInCombat;
 
     private OffsetCamera cameraScript;
 
@@ -47,23 +47,56 @@ public class TeamManager : MonoBehaviour {
         }
     }
 
-
     //eventually will take a parameter to change certain player
     public void cycleActivePlayer()
     {
-        //set current player to AI control
-        activeStrat.setAsCoopAI();
-
         //find next available player's strategy and set as Player control
         int nextPlayer = (strategyList.IndexOf(activeStrat) + 1) % strategyList.Count;
-        activeStrat = strategyList[nextPlayer];
-        activeStrat.setAsPlayer();
 
-        //update activePlayer and camera
-        activePlayer = activeStrat.gameObject;
-        cameraScript.followPlayer = activePlayer;
+        if (!strategyList[nextPlayer].GetComponent<PlayerResources>().isDead)
+        {
+            //set current player to AI control
+            if (!activeStrat.GetComponent<PlayerResources>().isDead)
+            {
+                activeStrat.setAsCoopAI();
+            }
+
+            //set next player as player Control
+            activeStrat = strategyList[nextPlayer];
+            activeStrat.setAsPlayer();
+
+            //update activePlayer and camera
+            activePlayer = activeStrat.gameObject;
+            cameraScript.followPlayer = activePlayer;
+        } else
+        {
+            Debug.Log("Cannot switch to a dead player!");
+        }
+
     }
 
+
+    public bool isTeamInCombat()
+    {
+        if (teamInCombat)
+        {
+            return teamInCombat;
+        }
+        bool playerCombat = false;
+        bool aiCombat = true;
+        foreach (Strategy strat in strategyList)
+        {
+            if (strat.isplayerControlled)
+            {
+                playerCombat = strat.gameObject.GetComponent<PlayerController>().enemyClicked;
+            }
+            else
+            {
+                aiCombat = strat.gameObject.GetComponent<CoopAiController>().currentState == strat.gameObject.GetComponent<CoopAiController>().attackState;
+            }
+        }
+        return playerCombat || aiCombat;
+    }
 
 
     public void SpawnTeamMember()

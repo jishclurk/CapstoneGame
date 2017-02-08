@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private NavMeshAgent navMeshAgent;
     private Transform target;
-    private bool enemyClicked; //How does AI determine if the team is currently in combat? Should playerController sent click info to TM? But it's not just if enemyClicked, relates to # enemies too.
+    public bool enemyClicked; //Team manager accesses this to determine if player is in combat
     private Transform targetedFriend;
     private bool friendClicked;
 
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
                     transform.LookAt(hit.transform); //prevents slow turn
                     enemyClicked = true;
                     friendClicked = false;
-                    tm.isTeamInCombat = true;
+                    tm.teamInCombat = true;
                 }
                 else if (hit.collider.CompareTag("Player"))
                 {
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         {
             MoveAndShoot();
         }
-        else if(!selectingAbilityTarget)
+        else
         {
             walking = navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance;
         }
@@ -115,8 +115,8 @@ public class PlayerController : MonoBehaviour
             //Within range, look at enemy and shoot
             transform.LookAt(target);
             //Vector3 dirToShoot = targetedEnemy.transform.position - transform.position; //unused, would be for raycasting
-
-            if (activeAbility.isReady())
+            bool targetIsDead = target.GetComponent<EnemyHealth>().isDead;
+            if (activeAbility.isReady() && !targetIsDead)
             {
                 activeAbility.Execute(attributes, gameObject, target.gameObject);
                 if (!activeAbility.isbasicAttack) {
@@ -126,6 +126,11 @@ public class PlayerController : MonoBehaviour
             }
 
             navMeshAgent.Stop(); //within range, stop moving
+            if (targetIsDead)
+            {
+                enemyClicked = false;
+                navMeshAgent.destination = transform.position;
+            }
             walking = false;
         }
 

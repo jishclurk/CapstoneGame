@@ -44,4 +44,11 @@ public class Strategy : MonoBehaviour {
         playerScript.enabled = false;
 
     }
+
+    public void setAsDead()
+    {
+        isplayerControlled = false;
+        aiScript.enabled = false;
+        playerScript.enabled = false;
+    }
 }
