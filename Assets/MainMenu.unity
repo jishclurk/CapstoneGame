@@ -595,7 +595,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -15.1, y: 7.7}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 250, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &546387470
 MonoBehaviour:
@@ -618,10 +618,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 0
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -4019,7 +4019,6 @@ GameObject:
   - component: {fileID: 1735597640}
   - component: {fileID: 1735597639}
   - component: {fileID: 1735597643}
-  - component: {fileID: 1735597644}
   m_Layer: 5
   m_Name: StartMenu
   m_TagString: Untagged
@@ -4120,18 +4119,6 @@ MonoBehaviour:
   Menu: {fileID: 1735597641}
   Loading: {fileID: 1522052067}
   LoadMenu: {fileID: 1891696354}
---- !u!114 &1735597644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1735597638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5b01eb497714c1449cb2df46eb5ac6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: {x: 5, y: 3}
 --- !u!1 &1891696351
 GameObject:
   m_ObjectHideFlags: 0
