@@ -12,6 +12,8 @@ public class TeamManager : MonoBehaviour {
 
     private OffsetCamera cameraScript;
 
+	public PlayerResources playerResources;
+
 
     // Use this for initialization
     void Awake () {
