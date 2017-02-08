@@ -62,6 +62,8 @@ public class TeamManager : MonoBehaviour {
         cameraScript.followPlayer = activePlayer;
     }
 
+
+
     public void SpawnTeamMember()
     {
 
