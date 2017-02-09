@@ -45,11 +45,6 @@ public class ObjectiveManager : MonoBehaviour {
 		}
 		goalListText.text = objectiveList;
 	}
-
-    //public List<bool> getCurrentState()
-    //{
-
-    //}
 }
 
 
