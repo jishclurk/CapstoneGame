@@ -22,9 +22,11 @@ public class ObjectiveManager : MonoBehaviour {
 		}
 		activeObjective = false;
 		objectiveList =  "Objectives: \n";
-	}
+        GameManager.manager.SetObjectiveManager(this);
 
-	void Update() {
+    }
+
+    void Update() {
 		objectiveList =  "Objectives: \n";
 		for (int i = 0; i<objectives.Count ; i++){
 			objectiveList += "\n"+(i+1)+".  " + objectives[i].objectiveName;

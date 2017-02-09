@@ -53,3 +53,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activePlayer: {fileID: 0}
   activeStrat: {fileID: 0}
+  teamInCombat: 0
+  playerResources: {fileID: 0}
