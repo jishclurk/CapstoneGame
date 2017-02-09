@@ -93,6 +93,15 @@ public class PlayerController : MonoBehaviour
             walking = navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance;
         }
 
+        //temporary fix
+        if(enemyClicked || enemyEngaged)
+        {
+            navMeshAgent.speed = 7.0f;
+        }
+        else
+        {
+            navMeshAgent.speed = 4.0f;
+        }
         anim.SetBool("Idling", !walking);
         anim.SetBool("NonCombat", !(enemyClicked || enemyEngaged));
     }

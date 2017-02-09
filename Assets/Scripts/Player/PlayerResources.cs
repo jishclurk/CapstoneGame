@@ -26,8 +26,8 @@ public class PlayerResources : MonoBehaviour {
         set
         {
             _currentEnergy = value;
-            if (_currentEnergy< 0) _currentHealth = 0;
-            if (_currentEnergy > maxEnergy) _currentEnergy = currentEnergy;
+            if (_currentEnergy < 0) _currentEnergy = 0;
+            if (_currentEnergy > maxEnergy) _currentEnergy = maxEnergy;
         }
     }
     public float energyRegenRateInSeconds = 2.0f;
@@ -56,6 +56,7 @@ public class PlayerResources : MonoBehaviour {
         {
             TakeDamage(10);
         }
+        Debug.Log(currentEnergy);
 		
 	}
 

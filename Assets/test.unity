@@ -854,6 +854,16 @@ Prefab:
       propertyPath: experiencePoints
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 65629677123843166, guid: 205c1036cff286247bb53cfa64914139,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 65629677123843166, guid: 205c1036cff286247bb53cfa64914139,
+        type: 2}
+      propertyPath: m_Size.z
+      value: 0.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 205c1036cff286247bb53cfa64914139, type: 2}
   m_IsPrefabParent: 0
@@ -914,17 +924,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1768873110878104, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
     type: 2}
   m_PrefabInternal: {fileID: 430119835}
---- !u!114 &1587183419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1587183418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0261d015f70fe42449d334eb5b002b75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1595633154
 Prefab:
   m_ObjectHideFlags: 0
