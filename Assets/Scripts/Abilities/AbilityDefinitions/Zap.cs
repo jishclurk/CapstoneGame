@@ -20,7 +20,7 @@ public class Zap : IAbility {
     {
         name = "Zap";
         effectiveRange = 9.0f;
-        baseDamage = 40.0f;
+        baseDamage = 50.0f;
         fireRate = 0.0f;
         isbasicAttack = false;
         timeToCast = 0.0f;

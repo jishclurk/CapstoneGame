@@ -40,18 +40,15 @@ public class ReturningState : IEnemyState {
 
     private void CheckVision()
     {
-        float minDist = float.PositiveInfinity;
-        float testDist = 0;
         foreach (GameObject player in enemy.visiblePlayers)
         {
             RaycastHit hit;
             Vector3 enemyToTarget = new Vector3(player.transform.position.x - enemy.eyes.position.x, 0, player.transform.position.z - enemy.eyes.position.z);
-            testDist = Vector3.Magnitude(enemyToTarget);
-            if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player") && testDist < minDist)
+            if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player"))
             {
                 enemy.chaseTarget = hit.collider.gameObject;
-                minDist = testDist;
                 ToChasingState();
+                return;
             }
         }
     }

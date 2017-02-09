@@ -18,9 +18,9 @@ public class PistolShot : IAbility {
     public PistolShot()
     {
         name = "Pistol Shot";
-        effectiveRange = 9.0f;
+        effectiveRange = 8.0f;
         baseDamage = 5.0f;
-        fireRate = 0.8f;
+        fireRate = 0.5f;
         isbasicAttack = true;
         timeToCast = 0.0f;
         coolDownTime = 0.0f;

@@ -75,11 +75,6 @@ public class EnemyStateControl : MonoBehaviour {
         // Check for death here
         if (!health.isDead)
             currentState.UpdateState();
-        else
-        {
-            DisableNavRotation();
-            DisableNavPosition();
-        }
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -108,16 +103,6 @@ public class EnemyStateControl : MonoBehaviour {
     public void EnableNavRotation()
     {
         navMeshAgent.updateRotation = true;
-    }
-
-    public void DisableNavPosition()
-    {
-        navMeshAgent.updatePosition = false;
-    }
-
-    public void EnableNavPosition()
-    {
-        navMeshAgent.updatePosition = true;
     }
 
 }

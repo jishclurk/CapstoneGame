@@ -6,10 +6,9 @@ using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour {
 
     public float maxHealth = 100;
-    public int experiencePoints;
 
     private float _currentHealth;
-    public float currentHealth  
+    public float currentHealth
     {
         get { return _currentHealth; }
         set
@@ -29,7 +28,6 @@ public class EnemyHealth : MonoBehaviour {
     private GameObject damageText;
     private Transform damageTextTrans;
     private EnemyAnimationController animator;
-    private TeamManager teamManager;
 
     void Awake()
     {
@@ -45,7 +43,6 @@ public class EnemyHealth : MonoBehaviour {
 
         damageText = healthBarCanvas.transform.FindChild("FloatingDamageText").gameObject;
         damageTextTrans = damageText.transform;
-        teamManager = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
     }
 
     void Update()
@@ -83,7 +80,6 @@ public class EnemyHealth : MonoBehaviour {
     {
         // Handle death animation stuff here
         animator.AnimateDeath();
-        teamManager.AwardExperience(experiencePoints);
         Destroy(gameObject, 5.0f);
     }
 

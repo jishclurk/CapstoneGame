@@ -9,8 +9,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private NavMeshAgent navMeshAgent;
     private Transform target;
-    public bool enemyClicked; //Team manager accesses this to determine if player is in combat
-    public bool enemyEngaged;
+    private bool enemyClicked; //How does AI determine if the team is currently in combat? Should playerController sent click info to TM? But it's not just if enemyClicked, relates to # enemies too.
     private Transform targetedFriend;
     private bool friendClicked;
 
@@ -35,7 +34,7 @@ public class PlayerController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         abilities = new PlayerAbilities();
         activeAbility = abilities.Basic;
-        attributes = GetComponent<CharacterAttributes>();
+        attributes = new CharacterAttributes();
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         resources = GetComponent<PlayerResources>();
 		tm.playerResources = resources;
@@ -58,9 +57,8 @@ public class PlayerController : MonoBehaviour
                     target = hit.transform;
                     transform.LookAt(hit.transform); //prevents slow turn
                     enemyClicked = true;
-                    enemyEngaged = true;
                     friendClicked = false;
-                    tm.teamInCombat = true;
+                    tm.isTeamInCombat = true;
                 }
                 else if (hit.collider.CompareTag("Player"))
                 {
@@ -76,7 +74,7 @@ public class PlayerController : MonoBehaviour
                     enemyClicked = false;
                     friendClicked = false;
                     navMeshAgent.destination = hit.point;
-                    transform.LookAt(new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z));
+                    transform.LookAt(hit.point); //prevents slow turn
                     navMeshAgent.Resume();
                 }
             }
@@ -88,22 +86,13 @@ public class PlayerController : MonoBehaviour
         {
             MoveAndShoot();
         }
-        else
+        else if(!selectingAbilityTarget)
         {
             walking = navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance;
         }
 
-        //temporary fix
-        if(enemyClicked || enemyEngaged)
-        {
-            navMeshAgent.speed = 7.0f;
-        }
-        else
-        {
-            navMeshAgent.speed = 4.0f;
-        }
         anim.SetBool("Idling", !walking);
-        anim.SetBool("NonCombat", !(enemyClicked || enemyEngaged));
+        anim.SetBool("NonCombat", !enemyClicked);
     }
 
     private void MoveAndShoot()
@@ -126,8 +115,8 @@ public class PlayerController : MonoBehaviour
             //Within range, look at enemy and shoot
             transform.LookAt(target);
             //Vector3 dirToShoot = targetedEnemy.transform.position - transform.position; //unused, would be for raycasting
-            bool targetIsDead = target.GetComponent<EnemyHealth>().isDead;
-            if (activeAbility.isReady() && !targetIsDead)
+
+            if (activeAbility.isReady())
             {
                 activeAbility.Execute(attributes, gameObject, target.gameObject);
                 if (!activeAbility.isbasicAttack) {
@@ -137,12 +126,6 @@ public class PlayerController : MonoBehaviour
             }
 
             navMeshAgent.Stop(); //within range, stop moving
-            if (targetIsDead)
-            {
-                enemyEngaged = false;
-                enemyClicked = false;
-                navMeshAgent.destination = transform.position;
-            }
             walking = false;
         }
 

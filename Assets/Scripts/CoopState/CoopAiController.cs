@@ -75,7 +75,7 @@ public class CoopAiController : MonoBehaviour {
 
     public void CheckForCombat()
     {
-        if (tm.isTeamInCombat())
+        if (tm.isTeamInCombat)
         {
             currentState = attackState;
         } 

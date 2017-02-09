@@ -26,23 +26,19 @@ public class PlayerResources : MonoBehaviour {
         set
         {
             _currentEnergy = value;
-            if (_currentEnergy < 0) _currentEnergy = 0;
-            if (_currentEnergy > maxEnergy) _currentEnergy = maxEnergy;
+            if (_currentEnergy< 0) _currentHealth = 0;
+            if (_currentEnergy > maxEnergy) _currentEnergy = currentEnergy;
         }
     }
-    public float energyRegenRateInSeconds = 0.5f;
+    public float energyRegenRateInSeconds = 2.0f;
     public float energyRegenAmt = 1.0f;
 
-    private Animator anim;
-    private TeamManager tm;
     public bool isDead { get { return currentHealth <= 0; } }
     public bool isDamaged { get { return currentHealth < maxHealth; } }
     private bool deathHandled = false;
 
 	void Awake ()
     {
-        tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        anim = GetComponent<Animator>();
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
         InvokeRepeating("RegenerateEnergy", 1.0f, energyRegenRateInSeconds);
@@ -51,12 +47,7 @@ public class PlayerResources : MonoBehaviour {
 
 	void Update ()
     {
-        //debug key, currently hurts ALL players
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            TakeDamage(10);
-        }
-        //Debug.Log(currentEnergy);
+        
 		
 	}
 
@@ -94,14 +85,7 @@ public class PlayerResources : MonoBehaviour {
 
     private void Death()
     {
-        anim.SetInteger("Death", 1);
         deathHandled = true;
-        gameObject.GetComponent<Strategy>().setAsDead();
-
-        // Disable collider so enemies don't see player anymore
-        gameObject.GetComponent<Collider>().enabled = false;
-
-       //Destroy(gameObject, 5.0f);
         Debug.Log("Player died!");
         // Animation stuff goes here
     }
