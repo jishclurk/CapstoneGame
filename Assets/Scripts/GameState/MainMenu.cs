@@ -30,6 +30,8 @@ public class MainMenu : MonoBehaviour{
         Menu.enabled = false;
         Loading.enabled = true;
         StartCoroutine(LoadGame("test"));
+        GameManager.manager.StartNewGame();
+
     }
 
     //Loads game 
