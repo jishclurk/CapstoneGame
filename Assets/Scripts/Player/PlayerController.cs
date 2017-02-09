@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private NavMeshAgent navMeshAgent;
     private Transform target;
     public bool enemyClicked; //Team manager accesses this to determine if player is in combat
+    public bool enemyEngaged;
     private Transform targetedFriend;
     private bool friendClicked;
 
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour
                     target = hit.transform;
                     transform.LookAt(hit.transform); //prevents slow turn
                     enemyClicked = true;
+                    enemyEngaged = true;
                     friendClicked = false;
                     tm.teamInCombat = true;
                 }
@@ -74,7 +76,7 @@ public class PlayerController : MonoBehaviour
                     enemyClicked = false;
                     friendClicked = false;
                     navMeshAgent.destination = hit.point;
-                    transform.LookAt(hit.point); //prevents slow turn
+                    transform.LookAt(new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z));
                     navMeshAgent.Resume();
                 }
             }
@@ -92,7 +94,7 @@ public class PlayerController : MonoBehaviour
         }
 
         anim.SetBool("Idling", !walking);
-        anim.SetBool("NonCombat", !enemyClicked);
+        anim.SetBool("NonCombat", !(enemyClicked || enemyEngaged));
     }
 
     private void MoveAndShoot()
@@ -128,6 +130,7 @@ public class PlayerController : MonoBehaviour
             navMeshAgent.Stop(); //within range, stop moving
             if (targetIsDead)
             {
+                enemyEngaged = false;
                 enemyClicked = false;
                 navMeshAgent.destination = transform.position;
             }
