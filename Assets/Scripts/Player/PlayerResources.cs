@@ -30,7 +30,7 @@ public class PlayerResources : MonoBehaviour {
             if (_currentEnergy > maxEnergy) _currentEnergy = maxEnergy;
         }
     }
-    public float energyRegenRateInSeconds = 2.0f;
+    public float energyRegenRateInSeconds = 0.5f;
     public float energyRegenAmt = 1.0f;
 
     private Animator anim;
@@ -56,7 +56,7 @@ public class PlayerResources : MonoBehaviour {
         {
             TakeDamage(10);
         }
-        Debug.Log(currentEnergy);
+        //Debug.Log(currentEnergy);
 		
 	}
 

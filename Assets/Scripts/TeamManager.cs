@@ -59,8 +59,8 @@ public class TeamManager : MonoBehaviour {
     {
         //find next available player's strategy and set as Player control
         int nextPlayer = (strategyList.IndexOf(activeStrat) + 1) % strategyList.Count;
-
-        if (!strategyList[nextPlayer].GetComponent<PlayerResources>().isDead)
+        PlayerResources nextResources = strategyList[nextPlayer].GetComponent<PlayerResources>();
+        if (!nextResources.isDead)
         {
             //set current player to AI control
             if (!activeStrat.GetComponent<PlayerResources>().isDead)
@@ -74,6 +74,7 @@ public class TeamManager : MonoBehaviour {
 
             //update activePlayer and camera
             activePlayer = activeStrat.gameObject;
+            playerResources = nextResources;
             cameraScript.followPlayer = activePlayer;
         } else
         {
