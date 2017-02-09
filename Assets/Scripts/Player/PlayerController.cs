@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         abilities = new PlayerAbilities();
         activeAbility = abilities.Basic;
-        attributes = new CharacterAttributes();
+        attributes = GetComponent<CharacterAttributes>();
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         resources = GetComponent<PlayerResources>();
 		tm.playerResources = resources;

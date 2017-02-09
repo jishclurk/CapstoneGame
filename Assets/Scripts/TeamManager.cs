@@ -11,6 +11,7 @@ public class TeamManager : MonoBehaviour {
     public bool teamInCombat;
 
     private OffsetCamera cameraScript;
+    private CharacterAttributes[] characterAttributesArray;
 
 	public PlayerResources playerResources;
 
@@ -32,6 +33,12 @@ public class TeamManager : MonoBehaviour {
         }
 
         cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
+
+        characterAttributesArray = new CharacterAttributes[playerList.Length];
+        for(int i = 0; i < playerList.Length; i++)
+        {
+            characterAttributesArray[i] = playerList[i].GetComponent<CharacterAttributes>();
+        }
     }
 
     void Start()
@@ -103,5 +110,13 @@ public class TeamManager : MonoBehaviour {
     {
 
         
+    }
+
+    public void AwardExperience(int experiencePoints)
+    {
+        for (int i = 0; i < playerList.Length; i++)
+        {
+            characterAttributesArray[i].Experience += experiencePoints;
+        }
     }
 }
