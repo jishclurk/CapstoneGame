@@ -64,7 +64,16 @@ public class TeamManager : MonoBehaviour {
         cameraScript.followPlayer = activePlayer;
     }
 
+    public SerializedPlayer[] currentState()
+    {
+        SerializedPlayer[] players = new SerializedPlayer[playerList.Length];
+        foreach (GameObject player in playerList)
+        {
 
+        }
+
+        return players;
+    }
 
     public void SpawnTeamMember()
     {
