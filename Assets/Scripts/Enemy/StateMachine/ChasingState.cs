@@ -27,7 +27,6 @@ public class ChasingState : IEnemyState {
 
     public void ToReturningState()
     {
-        enemy.tm.isTeamInCombat = false;
         enemy.currentState = enemy.returningState;
     }
 
