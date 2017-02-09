@@ -51,11 +51,15 @@ public class MainMenu : MonoBehaviour{
         LoadMenu.enabled = true;
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
     //Displays the percent loaded while game is loading
     void OnGUI()
     {
         LoadingProgress.text = "Loading... " + percentComplete.ToString() + "%";
     }
-
 
 }
