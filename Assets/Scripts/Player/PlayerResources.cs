@@ -96,6 +96,10 @@ public class PlayerResources : MonoBehaviour {
         anim.SetInteger("Death", 1);
         deathHandled = true;
         gameObject.GetComponent<Strategy>().setAsDead();
+
+        // Disable collider so enemies don't see player anymore
+        gameObject.GetComponent<Collider>().enabled = false;
+
        //Destroy(gameObject, 5.0f);
         Debug.Log("Player died!");
         // Animation stuff goes here
