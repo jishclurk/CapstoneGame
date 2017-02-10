@@ -432,6 +432,10 @@ Prefab:
       propertyPath: m_Name
       value: Cube
       objectReference: {fileID: 0}
+    - target: {fileID: 4637356971858064, guid: 1ab1b27c67f7af24c8c07c11f6c276aa, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 5.6579013
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1ab1b27c67f7af24c8c07c11f6c276aa, type: 2}
   m_IsPrefabParent: 0
