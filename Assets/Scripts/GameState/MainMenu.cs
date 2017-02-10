@@ -55,6 +55,18 @@ public class MainMenu : MonoBehaviour{
         LoadMenu.enabled = true;
     }
 
+    public void LoadSavedGame(string name)
+    {
+        List<string> gameNames = SaveLoad.savedGames();
+        if (gameNames.Contains(name))
+        {
+            GameManager.manager.LastSavedState = SaveLoad.Load(name);
+            StartCoroutine(LoadGame("test"));
+            GameManager.manager.StartSavedGame();
+        }
+
+    }
+
     public void ExitGame()
     {
         Application.Quit();

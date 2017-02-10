@@ -14,8 +14,8 @@ public class GameState {
     public SerializedPlayer[] players;
 
     [XmlArray("Objectives")]
-    [XmlArrayItem("Objective")]
-    public List<bool> objectives; 
+    [XmlArrayItem("objectives")]
+    public bool[] objectives; 
 
     public GameState()
     {

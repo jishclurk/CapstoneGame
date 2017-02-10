@@ -1,23 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
+    //singleton instance
     public static GameManager manager;
 
     public TeamManager teamManager;
     public ObjectiveManager objManager;
     public int currentCheckpoint;
     public Canvas SaveAsScreen;
+    public Canvas SavedSuccessfully;
 
-    public bool newGame = true;
-    private string gameName;
+    private bool newGame = true;
+    public string gameName;
+    public GameState LastSavedState { get; set; }
 
     //creates singleton, possibly change if universe asset is used
     public void Awake()
     {
+        newGame = true;
         if (manager == null)
         {
             DontDestroyOnLoad(gameObject);
@@ -27,48 +31,58 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    public void Update()
-    {
+        Debug.Log(newGame);
 
     }
+
     //saves the current state of the game
     private void SaveGame()
     {
+        Debug.Log("SAVING GAME");
+        Debug.Log(gameName);
 
         GameState gameState = new GameState();
 
-        //get player states
-
-        //get objective states
-
-        //get checkpoint
+        //gameState.players = teamManager.currentState();
+        //gameState.objectives = objManager.currentState();
+        //gameState.checkPoint = currentCheckpoint;
 
         SaveLoad.Save(gameState, gameName);
+        SavedSuccessfully = Instantiate(SavedSuccessfully) as Canvas;
+        SavedSuccessfully.enabled = true;
     }
 
     //Sets the name for the game to be saved as
     public void setName(string name)
     {
+        Debug.Log("set name");
         gameName = name;
-        newGame = false;
         SaveAsScreen.enabled = false;
+        SaveGame();
+        nextLevel();
     }
 
     //if the game has never been saved, lets user save as, otherwise saves game as gameNfame
     public void OpenSaveScreen()
     {
+        //newGame = true;
+        Debug.Log(newGame);
         Debug.Log("open save screen");
         if (newGame)
         {
+            Debug.Log("here 1");
+
             SaveAsScreen = Instantiate(SaveAsScreen) as Canvas;
             SaveAsScreen.enabled = true;
         }
         else
         {
+            Debug.Log("here 2");
+
             SaveGame();
+
         }
+
     }
 
     //closes save screen
@@ -76,22 +90,49 @@ public class GameManager : MonoBehaviour
     {
         SaveAsScreen.enabled = false;
     }
+
+
     public void nextLevel()
     {
 
     }
 
-    public void openSavedGame(string name)
+    public void MainMenu()
     {
-        SaveLoad.Load(name);
-    }
+        SavedSuccessfully.enabled = false;
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Single);
 
+        //StartCoroutine(LoadMenu());
+
+    }
+    //Loads game 
+    IEnumerator LoadMenu()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Single);
+        while (!asyncLoad.isDone)
+        {
+           // percentComplete = asyncLoad.progress;
+            //Debug.Log(percentComplete);
+            yield return null;
+        }
+    }
     public void StartNewGame()
     {
         newGame = true;
         currentCheckpoint = 1;
     }
 
+    public void StartSavedGame()
+    {
+        //teamManager.
+        //for this just point them at the end 
+    } 
+
+    public void LoadGameState(GameState state)
+    {
+        //in the future you can load the right scene for the checkpoint in state 
+
+    }
 
     public void SetTeamManager(TeamManager tm)
     {
@@ -102,4 +143,5 @@ public class GameManager : MonoBehaviour
     {
         objManager = om;
     }
+
 }

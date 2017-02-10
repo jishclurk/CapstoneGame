@@ -51,6 +51,29 @@ public class ObjectiveManager : MonoBehaviour {
 		}
 		goalListText.text = objectiveList;
 	}
+
+    public void loadState(bool[] state)
+    {
+        if(state.Length == objectives.Count)
+        {
+            for (int i = 0; i< objectives.Count; i++)
+            {
+                objectives[i].setActive(state[i]);
+            }
+        }
+    }
+
+    //returns the index of the 
+    public bool[] currentState()
+    {
+        bool[] state = new bool[objectives.Count];
+        for (int i = 0; i < state.Length; i++)
+        {
+            state[i] = objectives[i].isComplete();
+        }
+
+        return state;
+    }
 }
 
 

@@ -17,7 +17,7 @@ public class CheckPointTrigger : MonoBehaviour
     public void Start()
     {
         CheckPointSceen = Instantiate(CheckPointSceen) as Canvas;
-      //  CheckPointSceen = CheckPointSceen.GetComponent<Canvas>();
+        CheckPointSceen = CheckPointSceen.GetComponent<Canvas>();
 
         CheckPointSceen.enabled = false;
         checkpointReached = false;
@@ -36,8 +36,8 @@ public class CheckPointTrigger : MonoBehaviour
             col.isTrigger = false;
             //yes.onClick.AddListener(GameManager.manager.OpenSaveScreen);
             //no.onClick.AddListener(GameManager.manager.nextLevel);
-            //yes.onClick.AddListener(closeCheckpointScreen);
-            //no.onClick.AddListener(closeCheckpointScreen);
+            yes.onClick.AddListener(closeCheckpointScreen);
+            no.onClick.AddListener(closeCheckpointScreen);
         }
     }
 

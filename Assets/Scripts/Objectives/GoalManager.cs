@@ -44,9 +44,15 @@ public class GoalManager : MonoBehaviour {
 		return goalList;
 	}
 
+    public void setActive(bool active)
+    {
+        this.active = active;
+    }
+
 	public bool isComplete(){
 		return active;
 	}
+
 }
 	
 

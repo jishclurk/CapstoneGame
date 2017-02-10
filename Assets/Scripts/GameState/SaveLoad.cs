@@ -30,4 +30,16 @@ public static class SaveLoad {
         return gameState;
     }
 
+    public static List<string> savedGames()
+    {
+        string[] nameArray = Directory.GetFiles(Application.dataPath + "/savedGame*");
+        List<string> names = new List<string>(nameArray);
+        for(int i = 0; i<names.Count; i++)
+        {
+            names[i] = names[i].Substring(names[i].IndexOf("/savedGame") + 10);
+        }
+
+        return names;
+    }
+
 }

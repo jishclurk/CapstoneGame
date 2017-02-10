@@ -134,10 +134,29 @@ public class TeamManager : MonoBehaviour {
             player.strength = characterAttributesArray[i].Strength;
             player.intelligence = characterAttributesArray[i].Intelligence;
             player.stamina = characterAttributesArray[i].Stamina;
+            player.isInControl = strategyList[i].isplayerControlled;
             players[i] = player;
-            players[i].isInControl = strategyList[i].isplayerControlled;
         }
 
         return players;
+    }
+
+    public void LoadSavedState(SerializedPlayer[] state)
+    {
+        for (int i = 0; i<playerList.Length; i++)
+        {
+            characterAttributesArray[i].Level = state[i].level;
+            characterAttributesArray[i].Experience = state[i].experience;
+            characterAttributesArray[i].Strength = state[i].strength;
+            characterAttributesArray[i].Intelligence = state[i].intelligence;
+            characterAttributesArray[i].Stamina = state[i].stamina;
+
+            if (state[i].isInControl)
+            {
+                activeStrat = strategyList[i];
+                activePlayer = strategyList[i].gameObject;
+            }
+
+        }
     }
 }

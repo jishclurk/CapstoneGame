@@ -9,17 +9,17 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1158046399599262}
+  m_RootGameObject: {fileID: 1335074120923658}
   m_IsPrefabParent: 1
---- !u!1 &1158046399599262
+--- !u!1 &1335074120923658
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4483919420979084}
-  - component: {fileID: 114020842515858840}
+  - component: {fileID: 4477339648272160}
+  - component: {fileID: 114119774485454698}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -27,28 +27,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4483919420979084
+--- !u!4 &4477339648272160
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1158046399599262}
+  m_GameObject: {fileID: 1335074120923658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 380.5, y: 185, z: 0}
+  m_LocalPosition: {x: 23.4, y: 5.7800007, z: 11.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114020842515858840
+--- !u!114 &114119774485454698
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1158046399599262}
+  m_GameObject: {fileID: 1335074120923658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bb1ffb0b317a684e89aa054e089a5ac, type: 3}
+  m_Script: {fileID: 11500000, guid: be89a359cc8cef04d8199ae11254c8f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   teamManager: {fileID: 0}
@@ -56,4 +56,6 @@ MonoBehaviour:
   currentCheckpoint: 0
   SaveAsScreen: {fileID: 223862019541839082, guid: 4125aa48aa6fced488c4633ab929ab04,
     type: 2}
-  newGame: 0
+  SavedSuccessfully: {fileID: 223914826919277342, guid: a3cabd713882ad443b57b5e18369342e,
+    type: 2}
+  gameName: 
