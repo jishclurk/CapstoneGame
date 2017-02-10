@@ -8,6 +8,9 @@ TagManager:
   - Goal
   - Paddle
   - Wall
+  - Enemy
+  - TeamManager
+  - Door
   layers:
   - Default
   - TransparentFX
