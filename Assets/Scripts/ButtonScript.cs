@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    // Use this for initialization
+   private AudioSource sound;
+
+    void Start () {
+        sound = GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -17,6 +19,7 @@ public class ButtonScript : MonoBehaviour {
     {
         if (other.CompareTag("Player"))
         {
+            sound.Play();
             GameObject.FindGameObjectWithTag("Door").SetActive(false);
         }
     }
