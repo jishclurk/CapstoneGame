@@ -211,7 +211,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7e2662e5f54846645b13198374c6750c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.663
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -430,11 +430,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1332636665557990, guid: 1ab1b27c67f7af24c8c07c11f6c276aa, type: 2}
       propertyPath: m_Name
-      value: Cube
+      value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 4637356971858064, guid: 1ab1b27c67f7af24c8c07c11f6c276aa, type: 2}
       propertyPath: m_LocalScale.x
       value: 5.6579013
+      objectReference: {fileID: 0}
+    - target: {fileID: 208740528623660186, guid: 1ab1b27c67f7af24c8c07c11f6c276aa,
+        type: 2}
+      propertyPath: m_Carve
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1ab1b27c67f7af24c8c07c11f6c276aa, type: 2}
