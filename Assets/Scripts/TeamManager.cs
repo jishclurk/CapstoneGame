@@ -39,13 +39,12 @@ public class TeamManager : MonoBehaviour {
         {
             characterAttributesArray[i] = playerList[i].GetComponent<CharacterAttributes>();
         }
-        GameManager.manager.SetTeamManager(this);
 
     }
 
     void Start()
     {
-
+        GameManager.manager.SetTeamManager(this);
     }
 
     void Update()
@@ -128,7 +127,15 @@ public class TeamManager : MonoBehaviour {
         SerializedPlayer[] players = new SerializedPlayer[playerList.Length];
         for (int i = 0; i < playerList.Length; i++)
         {
-
+            SerializedPlayer player = new SerializedPlayer();
+            player.level = characterAttributesArray[i].Level;
+            player.experience = characterAttributesArray[i].Experience;
+           // player.experienceNeededForNextLevel = characterAttributesArray[i].;
+            player.strength = characterAttributesArray[i].Strength;
+            player.intelligence = characterAttributesArray[i].Intelligence;
+            player.stamina = characterAttributesArray[i].Stamina;
+            players[i] = player;
+            players[i].isInControl = strategyList[i].isplayerControlled;
         }
 
         return players;

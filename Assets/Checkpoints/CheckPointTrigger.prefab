@@ -106,4 +106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95ee59d56486144798786b8f6305043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CheckPointSceen: {fileID: 0}
+  CheckPointSceen: {fileID: 223354557463085662, guid: 0c4b125ac5c9bb14d8fa835e549302ef,
+    type: 2}
+  checkpointReached: 0

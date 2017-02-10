@@ -22,8 +22,12 @@ public class ObjectiveManager : MonoBehaviour {
 		}
 		activeObjective = false;
 		objectiveList =  "Objectives: \n";
-        GameManager.manager.SetObjectiveManager(this);
 
+    }
+
+    private void Start()
+    {
+        GameManager.manager.SetObjectiveManager(this);
     }
 
     void Update() {

@@ -12,7 +12,7 @@ public class SerializedPlayer {
     public List<int> Abilities;
     public int level;
     public int experience;
-    public int experienceNeededForNextLevel;
+   // public int experienceNeededForNextLevel;
     public int strength;
     public int intelligence;
     public int stamina;

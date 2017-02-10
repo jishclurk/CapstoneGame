@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public int currentCheckpoint;
     public Canvas SaveAsScreen;
 
-    public bool newGame;
+    public bool newGame = true;
     private string gameName;
 
     //creates singleton, possibly change if universe asset is used
@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
     //if the game has never been saved, lets user save as, otherwise saves game as gameNfame
     public void OpenSaveScreen()
     {
+        Debug.Log("open save screen");
         if (newGame)
         {
             SaveAsScreen = Instantiate(SaveAsScreen) as Canvas;
@@ -70,6 +71,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //closes save screen
+    public void CloseSaveScreen()
+    {
+        SaveAsScreen.enabled = false;
+    }
     public void nextLevel()
     {
 
