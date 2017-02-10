@@ -34,7 +34,7 @@ public class CheckPointTrigger : MonoBehaviour
         {
             checkpointReached = true;
             Collider col = gameObject.GetComponent<Collider>();
-            col.isTrigger = false;
+            col.enabled = false;
             yes.onClick.AddListener(GameManager.manager.OpenSaveScreen);
             no.onClick.AddListener(GameManager.manager.nextLevel);
             yes.onClick.AddListener(closeCheckpointScreen);
