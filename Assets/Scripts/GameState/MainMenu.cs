@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour{
     public Canvas Loading;  //canvus shows when a game is loading
     public Canvas LoadMenu;  //load a saved game
     private Text LoadingProgress;
+    private Image LoadingBar;
 
     public void Start()
     {
@@ -18,6 +19,7 @@ public class MainMenu : MonoBehaviour{
         Menu = Menu.GetComponent<Canvas>();
         Loading = Loading.GetComponent<Canvas>();
         LoadingProgress = Loading.GetComponentInChildren<Text>();
+        LoadingBar = Loading.GetComponentInChildren<Image>();
         percentComplete = 0;
 
         Loading.enabled = false;
@@ -61,7 +63,8 @@ public class MainMenu : MonoBehaviour{
     //Displays the percent loaded while game is loading
     void OnGUI()
     {
-        LoadingProgress.text = "Loading... " + percentComplete.ToString() + "%";
+        LoadingProgress.text = "Loading... ";
+        LoadingBar.fillAmount = percentComplete;
     }
 
 }
