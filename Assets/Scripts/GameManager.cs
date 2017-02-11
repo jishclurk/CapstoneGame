@@ -66,19 +66,13 @@ public class GameManager : MonoBehaviour
     public void OpenSaveScreen()
     {
         //newGame = true;
-        Debug.Log(newGame);
-        Debug.Log("open save screen");
         if (newGame)
         {
-            Debug.Log("here 1");
-
             SaveAsScreen = Instantiate(SaveAsScreen) as Canvas;
             SaveAsScreen.enabled = true;
         }
         else
         {
-            Debug.Log("here 2");
-
             SaveGame();
 
         }
@@ -103,20 +97,9 @@ public class GameManager : MonoBehaviour
         SavedSuccessfully.enabled = false;
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Single);
 
-        //StartCoroutine(LoadMenu());
 
     }
-    //Loads game 
-    IEnumerator LoadMenu()
-    {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Single);
-        while (!asyncLoad.isDone)
-        {
-           // percentComplete = asyncLoad.progress;
-            //Debug.Log(percentComplete);
-            yield return null;
-        }
-    }
+  
     public void StartNewGame()
     {
         newGame = true;
@@ -125,8 +108,7 @@ public class GameManager : MonoBehaviour
 
     public void StartSavedGame()
     {
-        //teamManager.
-        //for this just point them at the end 
+        
     } 
 
     public void LoadGameState(GameState state)

@@ -30,7 +30,6 @@ public class CheckPointTrigger : MonoBehaviour
 
 		col = gameObject.GetComponent<Collider>();
 		col.enabled = true;
-		Debug.Log ("starting trigger");
 
     }
 
@@ -38,12 +37,9 @@ public class CheckPointTrigger : MonoBehaviour
     {
         if (other.gameObject.tag.Equals("Player"))
         {
-            Debug.Log("triggered checkpoint");
             checkpointReached = true;
             Collider col = gameObject.GetComponent<Collider>();
             col.enabled = false;
-            //yes.onClick.AddListener(GameManager.manager.OpenSaveScreen);
-            //no.onClick.AddListener(GameManager.manager.nextLevel);
             yes.onClick.AddListener(closeCheckpointScreen);
             no.onClick.AddListener(closeCheckpointScreen);
             exit.onClick.AddListener(GameManager.manager.MainMenu);
@@ -53,14 +49,8 @@ public class CheckPointTrigger : MonoBehaviour
 
     public void closeCheckpointScreen()
     {
-        Debug.Log("close");
         CheckPointSceen.enabled = false;
 		Destroy (CheckPointSceen);
     }
 
-    //public void openCheckPointScreen()
-    //{
-    //    Debug.Log("open");
-    //    CheckPointSceen.enabled = true;
-    //}
 }
