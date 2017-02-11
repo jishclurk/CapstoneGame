@@ -47,7 +47,7 @@ public class ReachTrigger : MonoBehaviour ,IGoal{
 	public void Complete() {
 		//ScoreSingleton.score += 50;
 		//audio.Play(trumpetSound);
-		checkpoint.openCheckPointScreen();
+		//checkpoint.openCheckPointScreen();
 	}
 
 	public void DestroyGoal() {

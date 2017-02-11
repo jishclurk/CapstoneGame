@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour
 
     public void MainMenu()
     {
+        Debug.Log("main menu opening!!!!");
         SavedSuccessfully.enabled = false;
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Single);
 

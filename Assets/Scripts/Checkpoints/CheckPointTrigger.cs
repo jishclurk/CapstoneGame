@@ -10,8 +10,10 @@ public class CheckPointTrigger : MonoBehaviour
     public Canvas CheckPointSceen;
     private Button yes;
     private Button no;
-    public bool checkpointReached;
+    private Button exit;
 
+    public bool checkpointReached;
+	private Collider col;
 
 
     public void Start()
@@ -24,6 +26,11 @@ public class CheckPointTrigger : MonoBehaviour
 
         yes = CheckPointSceen.transform.GetChild(2).GetComponent<Button>();
         no = CheckPointSceen.transform.GetChild(3).GetComponent<Button>();
+        exit = CheckPointSceen.transform.GetChild(4).GetComponent<Button>();
+
+		col = gameObject.GetComponent<Collider>();
+		col.enabled = true;
+		Debug.Log ("starting trigger");
 
     }
 
@@ -31,13 +38,16 @@ public class CheckPointTrigger : MonoBehaviour
     {
         if (other.gameObject.tag.Equals("Player"))
         {
+            Debug.Log("triggered checkpoint");
             checkpointReached = true;
             Collider col = gameObject.GetComponent<Collider>();
-            col.isTrigger = false;
+            col.enabled = false;
             //yes.onClick.AddListener(GameManager.manager.OpenSaveScreen);
             //no.onClick.AddListener(GameManager.manager.nextLevel);
             yes.onClick.AddListener(closeCheckpointScreen);
             no.onClick.AddListener(closeCheckpointScreen);
+            exit.onClick.AddListener(GameManager.manager.MainMenu);
+            CheckPointSceen.enabled = true;
         }
     }
 
@@ -45,11 +55,12 @@ public class CheckPointTrigger : MonoBehaviour
     {
         Debug.Log("close");
         CheckPointSceen.enabled = false;
+		Destroy (CheckPointSceen);
     }
 
-    public void openCheckPointScreen()
-    {
-        Debug.Log("open");
-        CheckPointSceen.enabled = true;
-    }
+    //public void openCheckPointScreen()
+    //{
+    //    Debug.Log("open");
+    //    CheckPointSceen.enabled = true;
+    //}
 }
