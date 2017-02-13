@@ -73,13 +73,13 @@ public class CoopAiController : MonoBehaviour {
     }
 
 
-    public void CheckForCombat()
+    /*public void CheckForCombat()
     {
         if (tm.isTeamInCombat())
         {
             currentState = attackState;
         } 
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {

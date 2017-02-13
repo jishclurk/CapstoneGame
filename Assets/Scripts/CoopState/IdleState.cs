@@ -44,7 +44,7 @@ public class IdleState : ICoopState
     private void WatchActivePlayer()
     {
         aiPlayer.navMeshAgent.Stop();
-        GameObject userPlayer = aiPlayer.tm.activePlayer;
+        GameObject userPlayer = aiPlayer.tm.activePlayer.gameObject;
         if (userPlayer == null)
         {
             //this return happens if player dies

@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        abilities = new PlayerAbilities();
+        abilities = GetComponent<PlayerAbilities>();
         activeAbility = abilities.Basic;
         attributes = GetComponent<CharacterAttributes>();
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();

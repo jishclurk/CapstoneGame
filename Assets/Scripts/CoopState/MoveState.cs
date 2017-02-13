@@ -44,7 +44,7 @@ public class MoveState : ICoopState
 
     private void FollowActivePlayer()
     {
-        GameObject userPlayer = aiPlayer.tm.activePlayer;
+        GameObject userPlayer = aiPlayer.tm.activePlayer.gameObject;
         if (userPlayer == null)
         {
             //this return happens if enemy dies
