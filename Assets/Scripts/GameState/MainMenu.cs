@@ -12,9 +12,11 @@ public class MainMenu : MonoBehaviour{
     public Canvas LoadMenu;  //load a saved game
     private Text LoadingProgress;
     private Image LoadingBar;
-
+	SimpleGameManager gm;
     public void Start()
     {
+		gm = SimpleGameManager.Instance;
+
         LoadMenu = LoadMenu.GetComponent<Canvas>();
         Menu = Menu.GetComponent<Canvas>();
         Loading = Loading.GetComponent<Canvas>();
@@ -26,15 +28,22 @@ public class MainMenu : MonoBehaviour{
         LoadMenu.enabled = false;
     }
 
-    //Loads test level (will be start new game in the future)
-    public void LoadTestGame()
-    {
-        Menu.enabled = false;
-        Loading.enabled = true;
-        StartCoroutine(LoadGame("test"));
-        GameManager.manager.StartNewGame();
+	public void LoadNewGame(){
+		gm.OnStateChange += LoadLevel1;
+		Play ();
+	}
 
-    }
+
+	public void LoadLevel1(){
+		Menu.enabled = false;
+		Loading.enabled = true;
+		StartCoroutine(LoadGame("Level1"));
+		//GameManager.manager.StartNewGame();
+	}
+
+	private void Play(){
+		gm.SetGameState(State.PLAY);
+	}
 
     //Loads game 
     IEnumerator LoadGame(string sceneName)
@@ -57,12 +66,14 @@ public class MainMenu : MonoBehaviour{
 
     public void LoadSavedGame(string name)
     {
+		
         List<string> gameNames = SaveLoad.savedGames();
         if (gameNames.Contains(name))
         {
-            GameManager.manager.LastSavedState = SaveLoad.Load(name);
-            StartCoroutine(LoadGame("test"));
-            GameManager.manager.StartSavedGame();
+			//gm.OnStateChange += SaveLoad
+           // GameManager.manager.LastSavedState = SaveLoad.Load(name);
+          //  StartCoroutine(LoadGame("test"));
+           //GameManager.manager.StartSavedGame();
         }
 
     }

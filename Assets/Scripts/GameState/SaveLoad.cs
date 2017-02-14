@@ -6,6 +6,8 @@ using UnityEngine;
 
 public static class SaveLoad {
 
+	static GameState lastSaved;
+
     //Saves game in saveSpot
     public static void Save(GameState game, string name)
     {

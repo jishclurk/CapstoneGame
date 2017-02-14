@@ -10,18 +10,22 @@ public class GameManager : MonoBehaviour
 
     public TeamManager teamManager;
     public ObjectiveManager objManager;
-    public int currentCheckpoint;
+    
+	public int currentCheckpoint;
+	public int level;
+
     public Canvas SaveAsScreen;
     public Canvas SavedSuccessfully;
 
-    private bool newGame = true;
+	private bool newGame;
     public string gameName;
     public GameState LastSavedState { get; set; }
+
+	private string[] levels;
 
     //creates singleton, possibly change if universe asset is used
     public void Awake()
     {
-        newGame = true;
         if (manager == null)
         {
             DontDestroyOnLoad(gameObject);
@@ -31,8 +35,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        Debug.Log(newGame);
-
     }
 
     //saves the current state of the game
@@ -53,13 +55,10 @@ public class GameManager : MonoBehaviour
     }
 
     //Sets the name for the game to be saved as
-    public void setName(string name)
+    public void setNameAndSave(string name)
     {
-        Debug.Log("set name");
         gameName = name;
-        SaveAsScreen.enabled = false;
-        SaveGame();
-        nextLevel();
+		SaveGame ();
     }
 
     //if the game has never been saved, lets user save as, otherwise saves game as gameNfame
@@ -70,6 +69,7 @@ public class GameManager : MonoBehaviour
         {
             SaveAsScreen = Instantiate(SaveAsScreen) as Canvas;
             SaveAsScreen.enabled = true;
+			newGame = false;
         }
         else
         {
@@ -93,17 +93,15 @@ public class GameManager : MonoBehaviour
 
     public void MainMenu()
     {
-        Debug.Log("main menu opening!!!!");
         SavedSuccessfully.enabled = false;
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Single);
-
-
     }
   
     public void StartNewGame()
     {
         newGame = true;
         currentCheckpoint = 1;
+		level = 1;
     }
 
     public void StartSavedGame()
