@@ -32,12 +32,13 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
+        Player player = GetComponent<Player>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        abilities = GetComponent<PlayerAbilities>();
+        abilities = player.abilities;
         activeAbility = abilities.Basic;
-        attributes = GetComponent<CharacterAttributes>();
+        attributes = player.attributes;
+        resources = player.resources;
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        resources = GetComponent<PlayerResources>();
 		tm.playerResources = resources;
     }
 

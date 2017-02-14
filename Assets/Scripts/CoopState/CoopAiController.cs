@@ -54,8 +54,11 @@ public class CoopAiController : MonoBehaviour {
 
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        abilities = new PlayerAbilities();
+        Player player = GetComponent<Player>();
+
+        abilities = player.abilities;
         activeAbility = abilities.Basic;
+        attributes = player.attributes;
         sightCollider = GetComponent<SphereCollider>();
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>() ;
     }
@@ -73,13 +76,14 @@ public class CoopAiController : MonoBehaviour {
     }
 
 
-    /*public void CheckForCombat()
+    public void CheckForCombat()
     {
-        if (tm.isTeamInCombat())
-        {
+        if (visibleEnemies.Count > 0){
             currentState = attackState;
-        } 
-    }*/
+            //this is where we could put attacking priority logic
+            targetedEnemy = visibleEnemies[0].transform;
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {

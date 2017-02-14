@@ -1198,6 +1198,7 @@ GameObject:
   - component: {fileID: 114320022151010280}
   - component: {fileID: 114479550262570530}
   - component: {fileID: 114188789285389498}
+  - component: {fileID: 135201060280399926}
   m_Layer: 0
   m_Name: CaptainPrefab
   m_TagString: Player
@@ -3424,6 +3425,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyClicked: 0
   enemyEngaged: 0
+--- !u!135 &135201060280399926
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1768873110878104}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 12
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137015228903427590
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

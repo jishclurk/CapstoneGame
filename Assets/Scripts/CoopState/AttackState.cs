@@ -23,7 +23,7 @@ public class AttackState : ICoopState
         {
             MoveAndShoot();
         }
-        aiPlayer.anim.SetBool("Idling", walking);
+        aiPlayer.anim.SetBool("Idling", !walking);
         aiPlayer.anim.SetBool("NonCombat", false);
 
     }
@@ -50,14 +50,12 @@ public class AttackState : ICoopState
 
     private void LookForEnemy()
     {
-        RaycastHit hit;
-        foreach (GameObject gb in aiPlayer.visibleEnemies)
+        if(aiPlayer.visibleEnemies.Count > 0)
         {
-            Vector3 playerToEnemy = gb.transform.position - aiPlayer.transform.position;
-            if (Physics.Raycast(aiPlayer.transform.position, playerToEnemy, out hit, aiPlayer.sightDist) && hit.collider.CompareTag("Enemy"))
-            {
-                aiPlayer.targetedEnemy = hit.transform;
-            }
+            aiPlayer.targetedEnemy = aiPlayer.visibleEnemies[0].transform;
+        } else
+        {
+            ToIdleState();
         }
         
     }
@@ -92,6 +90,17 @@ public class AttackState : ICoopState
                 if (!aiPlayer.activeAbility.isbasicAttack)
                 {
                     aiPlayer.activeAbility = aiPlayer.abilities.Basic;
+                }
+            }
+
+            //check if enemy died
+            EnemyHealth enemyHP = aiPlayer.targetedEnemy.GetComponent<EnemyHealth>();
+            if (enemyHP != null)
+            {
+                if (enemyHP.isDead)
+                {
+                    aiPlayer.visibleEnemies.Remove(aiPlayer.targetedEnemy.gameObject);
+                    ToIdleState();
                 }
             }
 

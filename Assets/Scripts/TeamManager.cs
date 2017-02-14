@@ -17,7 +17,7 @@ public class TeamManager : MonoBehaviour {
 
 
     // Use this for initialization
-    void Awake () {
+    void Start () {
         gObjList = GameObject.FindGameObjectsWithTag("Player");
 
         playerList = new List<Player>();
@@ -36,13 +36,10 @@ public class TeamManager : MonoBehaviour {
         }
 
         cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
-
-    }
-
-    void Start()
-    {
         GameManager.manager.SetTeamManager(this);
+
     }
+
 
     void Update()
     {
