@@ -31,6 +31,8 @@ public class CoopAiController : MonoBehaviour {
     public IAbility activeAbility;
     [HideInInspector]
     public Transform targetedEnemy;
+    [HideInInspector]
+    public Transform eyes;
 
     [HideInInspector]
     public PlayerAbilities abilities;
@@ -59,6 +61,7 @@ public class CoopAiController : MonoBehaviour {
         abilities = player.abilities;
         activeAbility = abilities.Basic;
         attributes = player.attributes;
+        eyes = transform.FindChild("Eyes");
         sightCollider = GetComponent<SphereCollider>();
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>() ;
     }
@@ -78,11 +81,32 @@ public class CoopAiController : MonoBehaviour {
 
     public void CheckForCombat()
     {
-        if (visibleEnemies.Count > 0){
+        if (visibleEnemies.Count > 0 && CheckVision())
+        {
             currentState = attackState;
-            //this is where we could put attacking priority logic
-            targetedEnemy = visibleEnemies[0].transform;
+            //attack priority moved to attackState
         }
+    }
+
+    public bool isTargetVisible(Transform target)
+    {
+        RaycastHit hit;
+        Vector3 playerToTarget = target.position - eyes.position;
+        return Physics.Raycast(eyes.position, playerToTarget, out hit) && hit.collider.gameObject.CompareTag("Enemy");
+    }
+
+    //Reports if the aiPlayer has sight on at least one enemy
+    private bool CheckVision()
+    {
+        bool canSeeOneEnemy = false;
+        foreach (GameObject enemy in visibleEnemies)
+        {
+            if (isTargetVisible(enemy.transform))
+            {
+                canSeeOneEnemy = true;
+            }
+        }
+        return canSeeOneEnemy;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -100,5 +124,7 @@ public class CoopAiController : MonoBehaviour {
             visibleEnemies.Remove(other.gameObject);
         }
     }
+
+
 
 }

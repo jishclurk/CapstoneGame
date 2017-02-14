@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 4969180664323980}
   - component: {fileID: 137629342557709942}
   m_Layer: 0
-  m_Name: m01
+  m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3345,6 +3345,7 @@ MonoBehaviour:
   sightDist: 12
   visibleEnemies: []
   targetedEnemy: {fileID: 0}
+  eyes: {fileID: 0}
   abilities: {fileID: 0}
   attributes: {fileID: 0}
   tm: {fileID: 0}

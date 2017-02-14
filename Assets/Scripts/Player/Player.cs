@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    [HideInInspector]
     public CharacterAttributes attributes;
+    [HideInInspector]
     public PlayerResources resources;
+    [HideInInspector]
     public Strategy strategy;
+    [HideInInspector]
     public PlayerAbilities abilities;
 
 	// Use this for initialization

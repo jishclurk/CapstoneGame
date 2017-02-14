@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private PlayerAbilities abilities;
     private TeamManager tm;
     private PlayerResources resources;
+    private Transform eyes;
 
 
 
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
         resources = player.resources;
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
 		tm.playerResources = resources;
+        eyes = transform.FindChild("Eyes");
     }
 
 
@@ -117,7 +119,7 @@ public class PlayerController : MonoBehaviour
         }
         navMeshAgent.destination = target.position;
         float remainingDistance = Vector3.Distance(target.position, transform.position);
-        if (remainingDistance >= activeAbility.effectiveRange)
+        if (remainingDistance >= activeAbility.effectiveRange || !isTargetVisible(target))
         {
             navMeshAgent.Resume();
             walking = true;
@@ -126,7 +128,7 @@ public class PlayerController : MonoBehaviour
         {
             //Within range, look at enemy and shoot
             transform.LookAt(target);
-            //Vector3 dirToShoot = targetedEnemy.transform.position - transform.position; //unused, would be for raycasting
+
             bool targetIsDead = target.GetComponent<EnemyHealth>().isDead;
             if (activeAbility.isReady() && !targetIsDead)
             {
@@ -177,6 +179,14 @@ public class PlayerController : MonoBehaviour
                 ability.Execute(attributes, gameObject, gameObject);
             }
         }
+
+    }
+
+    private bool isTargetVisible(Transform target)
+    {
+        RaycastHit hit;
+        Vector3 playerToTarget = target.position - eyes.position;
+        return Physics.Raycast(eyes.position, playerToTarget, out hit) && hit.collider.gameObject.CompareTag("Enemy");
 
     }
 

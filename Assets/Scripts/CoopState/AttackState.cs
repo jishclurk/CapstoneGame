@@ -15,10 +15,9 @@ public class AttackState : ICoopState
 
     public void UpdateState()
     {
-        Debug.Log("Attack");
         if (aiPlayer.targetedEnemy == null)
         {
-            LookForEnemy();
+            FindFirstEnemy();
         } else
         {
             MoveAndShoot();
@@ -48,9 +47,9 @@ public class AttackState : ICoopState
         aiPlayer.currentState = aiPlayer.castState;
     }
 
-    private void LookForEnemy()
+    private void FindFirstEnemy()
     {
-        if(aiPlayer.visibleEnemies.Count > 0)
+        if(aiPlayer.visibleEnemies.Count > 0 && aiPlayer.isTargetVisible(aiPlayer.visibleEnemies[0].transform))
         {
             aiPlayer.targetedEnemy = aiPlayer.visibleEnemies[0].transform;
         } else
@@ -59,6 +58,7 @@ public class AttackState : ICoopState
         }
         
     }
+
 
 
 
@@ -72,7 +72,7 @@ public class AttackState : ICoopState
 
         aiPlayer.navMeshAgent.destination = aiPlayer.targetedEnemy.position;
         float remainingDistance = Vector3.Distance(aiPlayer.targetedEnemy.position, aiPlayer.transform.position);
-        if (remainingDistance >= aiPlayer.activeAbility.effectiveRange)
+        if (remainingDistance >= aiPlayer.activeAbility.effectiveRange || !aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
         {
             aiPlayer.navMeshAgent.Resume();
             walking = true;
