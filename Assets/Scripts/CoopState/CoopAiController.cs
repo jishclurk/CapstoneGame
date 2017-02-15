@@ -56,11 +56,14 @@ public class CoopAiController : MonoBehaviour {
 
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        Player player = GetComponent<Player>();
 
+        //this is a mess. These are "shared" variables between co-op ai and player script
+        Player player = GetComponent<Player>();
         abilities = player.abilities;
         activeAbility = abilities.Basic;
         attributes = player.attributes;
+        watchedEnemies = player.watchedEnemies;
+
         eyes = transform.FindChild("Eyes");
         sightCollider = GetComponent<SphereCollider>();
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>() ;
@@ -109,17 +112,29 @@ public class CoopAiController : MonoBehaviour {
         return canSeeOneEnemy;
     }
 
+    //called by strategy when switching from ai -> player
+    public void ResetOnSwitch()
+    {
+        targetedEnemy = null;
+        currentState = idleState;
+        activeAbility = abilities.Basic;
+
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Enemy"))
+        if (!other.isTrigger && other.tag.Equals("Enemy"))
         {
-            watchedEnemies.Add(other.gameObject);
+            if (!watchedEnemies.Contains(other.gameObject))
+            {
+                watchedEnemies.Add(other.gameObject);
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag.Equals("Enemy"))
+        if (!other.isTrigger && other.tag.Equals("Enemy"))
         {
             watchedEnemies.Remove(other.gameObject);
         }

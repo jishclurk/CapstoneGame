@@ -60,7 +60,6 @@ public class AttackState : ICoopState
         }
         else if (aiPlayer.tm.visibleEnemies.Count > 0){
             //check global enemies
-            Debug.Log("hello?");
             aiPlayer.targetedEnemy = aiPlayer.tm.visibleEnemies[0].transform;
         }
         else

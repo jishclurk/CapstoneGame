@@ -12,18 +12,20 @@ public class Player : MonoBehaviour {
     public Strategy strategy;
     [HideInInspector]
     public PlayerAbilities abilities;
+    [HideInInspector]
+    public List<GameObject> watchedEnemies;
 
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake () {
         attributes = GetComponent<CharacterAttributes>();
         resources = GetComponent<PlayerResources>();
         strategy = GetComponent<Strategy>();
         abilities = GetComponent<PlayerAbilities>();
-
+        watchedEnemies = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        Debug.Log( gameObject.name + " Watched enemy Count:" + watchedEnemies.Count);
 	}
 }

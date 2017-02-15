@@ -8,9 +8,13 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
     private NavMeshAgent navMeshAgent;
-    private Transform target;
+
+    //public things that need to be changed on strategy switch
+    [HideInInspector]
+    public Transform target;
+    [HideInInspector]
     public bool enemyClicked; //Team manager accesses this to determine if player is in combat
-    public bool enemyEngaged;
+
     private Transform targetedFriend;
     private bool friendClicked;
 
@@ -23,8 +27,11 @@ public class PlayerController : MonoBehaviour
     private IAbility activeAbility;
     private CharacterAttributes attributes;
     private PlayerAbilities abilities;
-    private TeamManager tm;
+    
     private PlayerResources resources;
+    private List<GameObject> watchedEnemies;
+    private TeamManager tm;
+
     private Transform eyes;
 
 
@@ -32,12 +39,17 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
-        Player player = GetComponent<Player>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+
+
+        //this is a mess. These are "shared" variables between co-op ai and player script
+        Player player = GetComponent<Player>(); ;
         abilities = player.abilities;
         activeAbility = abilities.Basic;
         attributes = player.attributes;
         resources = player.resources;
+        watchedEnemies = player.watchedEnemies;
+
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
 		tm.playerResources = resources;
         eyes = transform.FindChild("Eyes");
@@ -60,7 +72,6 @@ public class PlayerController : MonoBehaviour
                     target = hit.transform;
                     transform.LookAt(hit.transform); //prevents slow turn
                     enemyClicked = true;
-                    enemyEngaged = true;
                     friendClicked = false;
                     if (!tm.visibleEnemies.Contains(target.gameObject))
                     {
@@ -144,8 +155,8 @@ public class PlayerController : MonoBehaviour
             navMeshAgent.Stop(); //within range, stop moving
             if (targetIsDead)
             {
-                enemyEngaged = false;
                 enemyClicked = false;
+                watchedEnemies.Remove(target.gameObject);
                 tm.visibleEnemies.Remove(target.gameObject);
                 navMeshAgent.destination = transform.position;
             }
@@ -191,6 +202,41 @@ public class PlayerController : MonoBehaviour
         Vector3 playerToTarget = target.position - eyes.position;
         return Physics.Raycast(eyes.position, playerToTarget, out hit) && hit.collider.gameObject.CompareTag("Enemy");
 
+    }
+
+    public void ResetOnSwitch()
+    {
+        target = null;
+        navMeshAgent.destination = transform.position;
+        enemyClicked = false;
+        targetedFriend = null;
+        friendClicked = false;
+        walking = false;
+        selectingAbilityTarget = false;
+        activeAbility = abilities.Basic;
+       
+    }
+
+
+    //update shared watchedEnemies between co-op and ai
+    private void OnTriggerEnter(Collider other)
+    {
+       
+        if (!other.isTrigger && other.tag.Equals("Enemy"))
+        {
+            if (!watchedEnemies.Contains(other.gameObject))
+            {
+                watchedEnemies.Add(other.gameObject);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.isTrigger && other.tag.Equals("Enemy"))
+        {
+            watchedEnemies.Remove(other.gameObject);
+        }
     }
 
 }
