@@ -8,12 +8,13 @@ public class TeamManager : MonoBehaviour {
     private List<Player> playerList;
     public Player activePlayer;
     //public Strategy activeStrat;
-    public bool teamInCombat;
 
     private OffsetCamera cameraScript;
     //private CharacterAttributes[] characterAttributesArray;
 
 	public PlayerResources playerResources;
+
+    public List<GameObject> visibleEnemies;
 
 
     // Use this for initialization
@@ -36,6 +37,7 @@ public class TeamManager : MonoBehaviour {
         }
 
         cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
+        visibleEnemies = new List<GameObject>();
         GameManager.manager.SetTeamManager(this);
 
     }
@@ -61,6 +63,7 @@ public class TeamManager : MonoBehaviour {
             if (!activePlayer.resources.isDead)
             {
                 activePlayer.strategy.setAsCoopAI();
+                //TODO: change over enemyclicked to aiPlayer.targetedEnemy and updated WatchedPlayers.
             }
 
             //set next player as player Control
@@ -78,28 +81,10 @@ public class TeamManager : MonoBehaviour {
     }
 
 
-    /* Currently not being used. If we need a team-wide combat "state" this can be used.
     public bool isTeamInCombat()
     {
-        if (teamInCombat)
-        {
-            return teamInCombat;
-        }
-        bool playerCombat = false;
-        bool aiCombat = true;
-        foreach (Player p in playerList)
-        {
-            if (p.strategy.isplayerControlled)
-            {
-                playerCombat = p.strategy.gameObject.GetComponent<PlayerController>().enemyClicked;
-            }
-            else
-            {
-                aiCombat = p.strategy.gameObject.GetComponent<CoopAiController>().currentState == p.strategy.gameObject.GetComponent<CoopAiController>().attackState;
-            }
-        }
-        return playerCombat || aiCombat;
-    } */
+        return visibleEnemies.Count > 0;
+    } 
 
 
     public void AwardExperience(int experiencePoints)

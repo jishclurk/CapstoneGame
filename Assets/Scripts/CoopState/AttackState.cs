@@ -49,10 +49,21 @@ public class AttackState : ICoopState
 
     private void FindFirstEnemy()
     {
-        if(aiPlayer.visibleEnemies.Count > 0 && aiPlayer.isTargetVisible(aiPlayer.visibleEnemies[0].transform))
+        //check local sphere, target must be line-of-sight to add to global visibleEnemies
+        if (aiPlayer.watchedEnemies.Count > 0 && aiPlayer.isTargetVisible(aiPlayer.watchedEnemies[0].transform))
         {
-            aiPlayer.targetedEnemy = aiPlayer.visibleEnemies[0].transform;
-        } else
+            if (!aiPlayer.tm.visibleEnemies.Contains(aiPlayer.watchedEnemies[0]))
+            {
+                aiPlayer.tm.visibleEnemies.Add(aiPlayer.watchedEnemies[0]);
+            }
+            aiPlayer.targetedEnemy = aiPlayer.watchedEnemies[0].transform;
+        }
+        else if (aiPlayer.tm.visibleEnemies.Count > 0){
+            //check global enemies
+            Debug.Log("hello?");
+            aiPlayer.targetedEnemy = aiPlayer.tm.visibleEnemies[0].transform;
+        }
+        else
         {
             ToIdleState();
         }
@@ -99,8 +110,14 @@ public class AttackState : ICoopState
             {
                 if (enemyHP.isDead)
                 {
-                    aiPlayer.visibleEnemies.Remove(aiPlayer.targetedEnemy.gameObject);
-                    ToIdleState();
+                    //on kill, remove from both team manager visible enemies and local watchedenemies
+                    aiPlayer.watchedEnemies.Remove(aiPlayer.targetedEnemy.gameObject);
+                    aiPlayer.tm.visibleEnemies.Remove(aiPlayer.targetedEnemy.gameObject);
+                    aiPlayer.targetedEnemy = null;
+                    if (!aiPlayer.tm.isTeamInCombat())
+                    {
+                        ToIdleState();
+                    }
                 }
             }
 

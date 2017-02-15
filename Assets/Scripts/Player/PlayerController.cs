@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     private Transform eyes;
 
 
-
     // Use this for initialization
     void Awake()
     {
@@ -63,7 +62,10 @@ public class PlayerController : MonoBehaviour
                     enemyClicked = true;
                     enemyEngaged = true;
                     friendClicked = false;
-                    tm.teamInCombat = true;
+                    if (!tm.visibleEnemies.Contains(target.gameObject))
+                    {
+                        tm.visibleEnemies.Add(target.gameObject);
+                    }
                 }
                 else if (hit.collider.CompareTag("Player"))
                 {
@@ -97,16 +99,16 @@ public class PlayerController : MonoBehaviour
         }
 
         //temporary fix
-        if(enemyClicked || enemyEngaged)
+        if(tm.isTeamInCombat())
         {
-            navMeshAgent.speed = 7.0f;
+            navMeshAgent.speed = 5.5f;
         }
         else
         {
-            navMeshAgent.speed = 4.0f;
+            navMeshAgent.speed = 4.5f;
         }
         anim.SetBool("Idling", !walking);
-        anim.SetBool("NonCombat", !(enemyClicked || enemyEngaged));
+        anim.SetBool("NonCombat", !tm.isTeamInCombat());
     }
 
     private void MoveAndShoot()
@@ -144,6 +146,7 @@ public class PlayerController : MonoBehaviour
             {
                 enemyEngaged = false;
                 enemyClicked = false;
+                tm.visibleEnemies.Remove(target.gameObject);
                 navMeshAgent.destination = transform.position;
             }
             walking = false;

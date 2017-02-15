@@ -26,7 +26,7 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector]
     public float sightDist = 10.0f;
     [HideInInspector]
-    public List<GameObject> visibleEnemies;
+    public List<GameObject> watchedEnemies;
     [HideInInspector]
     public IAbility activeAbility;
     [HideInInspector]
@@ -81,7 +81,7 @@ public class CoopAiController : MonoBehaviour {
 
     public void CheckForCombat()
     {
-        if (visibleEnemies.Count > 0 && CheckVision())
+        if (CheckLocalVision() || tm.visibleEnemies.Count > 0)
         {
             currentState = attackState;
             //attack priority moved to attackState
@@ -96,10 +96,10 @@ public class CoopAiController : MonoBehaviour {
     }
 
     //Reports if the aiPlayer has sight on at least one enemy
-    private bool CheckVision()
+    private bool CheckLocalVision()
     {
         bool canSeeOneEnemy = false;
-        foreach (GameObject enemy in visibleEnemies)
+        foreach (GameObject enemy in watchedEnemies)
         {
             if (isTargetVisible(enemy.transform))
             {
@@ -113,7 +113,7 @@ public class CoopAiController : MonoBehaviour {
     {
         if (other.tag.Equals("Enemy"))
         {
-            visibleEnemies.Add(other.gameObject);
+            watchedEnemies.Add(other.gameObject);
         }
     }
 
@@ -121,7 +121,7 @@ public class CoopAiController : MonoBehaviour {
     {
         if (other.tag.Equals("Enemy"))
         {
-            visibleEnemies.Remove(other.gameObject);
+            watchedEnemies.Remove(other.gameObject);
         }
     }
 
