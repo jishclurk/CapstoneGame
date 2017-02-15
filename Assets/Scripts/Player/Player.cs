@@ -26,6 +26,6 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log( gameObject.name + " Watched enemy Count:" + watchedEnemies.Count);
+        //Debug.Log( gameObject.name + " Watched enemy Count:" + watchedEnemies.Count);
 	}
 }

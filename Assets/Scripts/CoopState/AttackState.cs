@@ -22,6 +22,7 @@ public class AttackState : ICoopState
         {
             MoveAndShoot();
         }
+        WatchActiveplayerForFlee();
         aiPlayer.anim.SetBool("Idling", !walking);
         aiPlayer.anim.SetBool("NonCombat", false);
 
@@ -47,6 +48,11 @@ public class AttackState : ICoopState
         aiPlayer.currentState = aiPlayer.castState;
     }
 
+    public void ToFleeState()
+    {
+        aiPlayer.currentState = aiPlayer.fleeState;
+    }
+
     private void FindFirstEnemy()
     {
         //check local sphere, target must be line-of-sight to add to global visibleEnemies
@@ -68,9 +74,6 @@ public class AttackState : ICoopState
         }
         
     }
-
-
-
 
     private void MoveAndShoot()
     {
@@ -109,11 +112,10 @@ public class AttackState : ICoopState
             {
                 if (enemyHP.isDead)
                 {
-                    //on kill, remove from both team manager visible enemies and local watchedenemies
-                    aiPlayer.watchedEnemies.Remove(aiPlayer.targetedEnemy.gameObject);
-                    aiPlayer.tm.visibleEnemies.Remove(aiPlayer.targetedEnemy.gameObject);
+                    //on kill, remove from both team manager visible enemies and all local watchedenemies
+                    aiPlayer.tm.RemoveDeadEnemy(aiPlayer.targetedEnemy.gameObject);
                     aiPlayer.targetedEnemy = null;
-                    if (!aiPlayer.tm.isTeamInCombat())
+                    if (!aiPlayer.tm.IsTeamInCombat())
                     {
                         ToIdleState();
                     }
@@ -123,7 +125,16 @@ public class AttackState : ICoopState
             aiPlayer.navMeshAgent.Stop(); //within range, stop moving
             walking = false;
         }
+    }
 
 
+
+    private void WatchActiveplayerForFlee()
+    {
+        if(aiPlayer.tm.activePlayer.watchedEnemies.Count == 0)
+        {
+            aiPlayer.targetedEnemy = null;
+            ToFleeState();
+        }
     }
 }

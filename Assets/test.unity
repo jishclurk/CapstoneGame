@@ -868,22 +868,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6872b151999b6466f9b20b551547d83f, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &909669537 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1768873110878104, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1595633154}
---- !u!114 &909669538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 909669537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0261d015f70fe42449d334eb5b002b75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &917448920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,27 +1287,19 @@ Prefab:
       propertyPath: m_Name
       value: AI
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 114837402876261364, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
         type: 2}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114081347294090246, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114447029004565284, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
         type: 2}
       propertyPath: isplayerControlled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1768873110878104, guid: e9c2a451b1c19e7428ad2f77c0530c5a, type: 2}
-      propertyPath: m_IsActive
+    - target: {fileID: 114081347294090246, guid: e9c2a451b1c19e7428ad2f77c0530c5a,
+        type: 2}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

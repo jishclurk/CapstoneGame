@@ -36,4 +36,8 @@ public class CastState : ICoopState
     {
 
     }
+
+    public void ToFleeState()
+    {
+    }
 }

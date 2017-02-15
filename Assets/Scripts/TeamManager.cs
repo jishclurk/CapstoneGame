@@ -81,10 +81,39 @@ public class TeamManager : MonoBehaviour {
     }
 
 
-    public bool isTeamInCombat()
+    public bool IsTeamInCombat()
     {
         return visibleEnemies.Count > 0;
-    } 
+    }
+
+    public void RemoveDeadEnemy(GameObject enemy)
+    {
+        visibleEnemies.Remove(enemy);
+        foreach (Player p in playerList)
+        {
+            p.watchedEnemies.Remove(enemy);
+        }
+    }
+
+    public void RemoveEnemyIfNotTeamVisible(GameObject enemy)
+    {
+        bool toRemove = true;
+        foreach(Player p in playerList)
+        {
+            RaycastHit hit; //this is bad code! Only an enemy from visibleEnemies if it cannot be seen by any player. Currently do not have access to eyes. 
+            Transform eyes = p.transform.FindChild("Eyes");
+            Vector3 playerToTarget = enemy.transform.position - eyes.position;
+            bool sightline = Physics.Raycast(eyes.position, playerToTarget, out hit) && hit.collider.gameObject.CompareTag("Enemy");
+            if (p.watchedEnemies.Contains(enemy) && sightline)
+            {
+                toRemove = false;
+            }
+        }
+        if (toRemove)
+        {
+            visibleEnemies.Remove(enemy);
+        }
+    }
 
 
     public void AwardExperience(int experiencePoints)

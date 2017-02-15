@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : ICoopState
+public class FleeState : ICoopState
 {
+
     private readonly CoopAiController aiPlayer;
 
-    public IdleState (CoopAiController statePatternPlayer)
+    public FleeState(CoopAiController coopAi)
     {
-        aiPlayer = statePatternPlayer;
+        aiPlayer = coopAi;
     }
-
 
     public void UpdateState()
     {
-        //Debug.Log("IDLE");
-        WatchActivePlayer();
-        aiPlayer.CheckForCombat();
-        aiPlayer.anim.SetBool("Idling", true);
-        aiPlayer.anim.SetBool("NonCombat", true);
+        FollowActivePlayer();
+        //aiPlayer.CheckForCombat();
+        aiPlayer.anim.SetBool("Idling", false);
+        aiPlayer.anim.SetBool("NonCombat", false);
     }
+
 
     public void ToMoveState()
     {
@@ -33,34 +33,40 @@ public class IdleState : ICoopState
 
     public void ToIdleState()
     {
-        Debug.Log("Can't transition to same state Idle.");
+        aiPlayer.currentState = aiPlayer.idleState;
     }
 
     public void ToCastState()
     {
         aiPlayer.currentState = aiPlayer.castState;
+
     }
 
     public void ToFleeState()
     {
-        aiPlayer.currentState = aiPlayer.fleeState;
+        Debug.Log("Cannot go to Flee state from Flee State");
     }
 
-    private void WatchActivePlayer()
+    private void FollowActivePlayer()
     {
-        aiPlayer.navMeshAgent.Stop();
         GameObject userPlayer = aiPlayer.tm.activePlayer.gameObject;
         if (userPlayer == null)
         {
-            //this return happens if player dies
+            //this return happens if enemy dies
             return; //avoid running code we don't need to.
         }
-       
+        aiPlayer.navMeshAgent.destination = userPlayer.transform.position;
         float remainingDistance = Vector3.Distance(userPlayer.transform.position, aiPlayer.transform.position);
-        if (remainingDistance >= aiPlayer.followDist + aiPlayer.followEpsilon)
+        if (remainingDistance >= aiPlayer.followDist)
         {
-            aiPlayer.transform.LookAt(userPlayer.transform);
-            ToMoveState();
+            aiPlayer.navMeshAgent.Resume();
+        }
+        else
+        {
+            aiPlayer.navMeshAgent.Stop();
+            ToIdleState();
+
+           
         }
     }
 

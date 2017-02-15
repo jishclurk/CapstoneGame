@@ -42,6 +42,11 @@ public class MoveState : ICoopState
 
     }
 
+    public void ToFleeState()
+    {
+        aiPlayer.currentState = aiPlayer.fleeState;
+    }
+
     private void FollowActivePlayer()
     {
         GameObject userPlayer = aiPlayer.tm.activePlayer.gameObject;

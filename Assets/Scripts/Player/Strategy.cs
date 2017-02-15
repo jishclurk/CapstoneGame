@@ -38,7 +38,7 @@ public class Strategy : MonoBehaviour {
         if (aiScript.targetedEnemy != null)
         {
             playerScript.enemyClicked = true;
-            playerScript.target = aiScript.targetedEnemy;
+            playerScript.targetedEnemy = aiScript.targetedEnemy;
         }
        
         aiScript.enabled = false;

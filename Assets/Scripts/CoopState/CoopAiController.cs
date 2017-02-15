@@ -46,6 +46,8 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector] public MoveState moveState;
     [HideInInspector] public AttackState attackState;
     [HideInInspector] public CastState castState;
+    [HideInInspector]
+    public FleeState fleeState;
 
     private void Awake()
     {
@@ -53,6 +55,7 @@ public class CoopAiController : MonoBehaviour {
         moveState = new MoveState(this);
         attackState = new AttackState(this);
         castState = new CastState(this);
+        fleeState = new FleeState(this);
 
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -137,6 +140,7 @@ public class CoopAiController : MonoBehaviour {
         if (!other.isTrigger && other.tag.Equals("Enemy"))
         {
             watchedEnemies.Remove(other.gameObject);
+            tm.RemoveEnemyIfNotTeamVisible(other.gameObject);
         }
     }
 
