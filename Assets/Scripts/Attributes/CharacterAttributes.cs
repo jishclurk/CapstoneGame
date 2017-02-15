@@ -28,6 +28,8 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
     int level;
     int experience;
     int experienceNeededForNextLevel;
+    int experienceMultiplier;
+    int bonusPoints;
     int strength;
     int intelligence;
     int stamina;
@@ -36,7 +38,9 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
     {
         level = 1;
         experience = 0;
-        experienceNeededForNextLevel = 1;
+        experienceNeededForNextLevel = 10;
+        experienceMultiplier = 10;
+        bonusPoints = 0;
         strength = 1;
         intelligence = 1;
         stamina = 1;
@@ -45,10 +49,12 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
     void LevelUp()
     {
         level += 1;
-        experienceNeededForNextLevel += 10;
-        strength += 1;
-        intelligence += 1;
-        stamina += 1;
+        experience -= experienceNeededForNextLevel;
+        experienceNeededForNextLevel = level * experienceMultiplier;
+        bonusPoints += 3;
+        // strength += 1;
+        // intelligence += 1;
+        // stamina += 1;
         Debug.Log("level = " + level);
         Debug.Log("experienceNeededForNextLevel = " + experienceNeededForNextLevel);
     }
