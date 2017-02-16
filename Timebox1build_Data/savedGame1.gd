@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Balls>
+    <Ball>
+      <velocity>
+        <x>-5.609999</x>
+        <y>18.4948349</y>
+        <z>0</z>
+      </velocity>
+      <position>
+        <x>-11.2660427</x>
+        <y>2.47310424</y>
+        <z>0</z>
+      </position>
+    </Ball>
+  </Balls>
+  <Player>
+    <x>15.4499989</x>
+    <y>5.5</y>
+    <z>0</z>
+  </Player>
+  <Enemies>
+    <Enemy>
+      <x>-15.4500093</x>
+      <y>-0.231935024</y>
+      <z>0</z>
+    </Enemy>
+  </Enemies>
+  <playerScore>0</playerScore>
+  <cpuScore>0</cpuScore>
+</GameState>
