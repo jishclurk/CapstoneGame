@@ -15,7 +15,7 @@ public class MoveState : ICoopState
     public void UpdateState()
     {
         FollowActivePlayer();
-        //aiPlayer.CheckForCombat();
+        aiPlayer.CheckForCombat();
         aiPlayer.anim.SetBool("Idling", false);
         aiPlayer.anim.SetBool("NonCombat", true);
     }
@@ -42,9 +42,14 @@ public class MoveState : ICoopState
 
     }
 
+    public void ToFleeState()
+    {
+        aiPlayer.currentState = aiPlayer.fleeState;
+    }
+
     private void FollowActivePlayer()
     {
-        GameObject userPlayer = aiPlayer.tm.activePlayer;
+        GameObject userPlayer = aiPlayer.tm.activePlayer.gameObject;
         if (userPlayer == null)
         {
             //this return happens if enemy dies

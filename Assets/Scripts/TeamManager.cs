@@ -4,48 +4,44 @@ using UnityEngine;
 
 public class TeamManager : MonoBehaviour {
 
-    private GameObject[] playerList;
-    private List<Strategy> strategyList;
-    public GameObject activePlayer;
-    public Strategy activeStrat;
-    public bool teamInCombat;
+    private GameObject[] gObjList;
+    private List<Player> playerList;
+    public Player activePlayer;
+    //public Strategy activeStrat;
 
     private OffsetCamera cameraScript;
-    private CharacterAttributes[] characterAttributesArray;
+    //private CharacterAttributes[] characterAttributesArray;
 
 	public PlayerResources playerResources;
 
+    public List<GameObject> visibleEnemies;
+
 
     // Use this for initialization
-    void Awake () {
-        playerList = GameObject.FindGameObjectsWithTag("Player");
-        strategyList = new List<Strategy>();
+    void Start () {
+        gObjList = GameObject.FindGameObjectsWithTag("Player");
+
+        playerList = new List<Player>();
         //assign active player to user controller player
-        for (int i = 0; i < playerList.Length; i++)
+        for (int i = 0; i < gObjList.Length; i++)
         {
-            Strategy strat = playerList[i].GetComponent<Strategy>();
-            strategyList.Add(strat);
-            if (strat.isplayerControlled)
+            Player player = gObjList[i].GetComponent<Player>();
+
+            playerList.Add(player);
+            Debug.Log(player);
+            Debug.Log(player.strategy);
+            if (player.strategy.isplayerControlled)
             {
-                activeStrat = strat;
-                activePlayer = strat.gameObject;
+                activePlayer = player;
             }
         }
 
         cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
-
-        characterAttributesArray = new CharacterAttributes[playerList.Length];
-        for(int i = 0; i < playerList.Length; i++)
-        {
-            characterAttributesArray[i] = playerList[i].GetComponent<CharacterAttributes>();
-        }
-
-    }
-
-    void Start()
-    {
+        visibleEnemies = new List<GameObject>();
         GameManager.manager.SetTeamManager(this);
+
     }
+
 
     void Update()
     {
@@ -59,24 +55,24 @@ public class TeamManager : MonoBehaviour {
     public void cycleActivePlayer()
     {
         //find next available player's strategy and set as Player control
-        int nextPlayer = (strategyList.IndexOf(activeStrat) + 1) % strategyList.Count;
-        PlayerResources nextResources = strategyList[nextPlayer].GetComponent<PlayerResources>();
+        int nextPlayer = (playerList.IndexOf(activePlayer) + 1) % playerList.Count;
+        PlayerResources nextResources = playerList[nextPlayer].resources;
         if (!nextResources.isDead)
         {
             //set current player to AI control
-            if (!activeStrat.GetComponent<PlayerResources>().isDead)
+            if (!activePlayer.resources.isDead)
             {
-                activeStrat.setAsCoopAI();
+                activePlayer.strategy.setAsCoopAI();
+                //TODO: change over enemyclicked to aiPlayer.targetedEnemy and updated WatchedPlayers.
             }
 
             //set next player as player Control
-            activeStrat = strategyList[nextPlayer];
-            activeStrat.setAsPlayer();
+            activePlayer = playerList[nextPlayer];
+            activePlayer.strategy.setAsPlayer();
 
             //update activePlayer and camera
-            activePlayer = activeStrat.gameObject;
             playerResources = nextResources;
-            cameraScript.followPlayer = activePlayer;
+            cameraScript.followPlayer = activePlayer.gameObject;
         } else
         {
             Debug.Log("Cannot switch to a dead player!");
@@ -85,47 +81,53 @@ public class TeamManager : MonoBehaviour {
     }
 
 
-    public bool isTeamInCombat()
+    public bool IsTeamInCombat()
     {
-        if (teamInCombat)
-        {
-            return teamInCombat;
-        }
-        bool playerCombat = false;
-        bool aiCombat = true;
-        foreach (Strategy strat in strategyList)
-        {
-            if (strat.isplayerControlled)
-            {
-                playerCombat = strat.gameObject.GetComponent<PlayerController>().enemyClicked;
-            }
-            else
-            {
-                aiCombat = strat.gameObject.GetComponent<CoopAiController>().currentState == strat.gameObject.GetComponent<CoopAiController>().attackState;
-            }
-        }
-        return playerCombat || aiCombat;
+        return visibleEnemies.Count > 0;
     }
 
-
-    public void SpawnTeamMember()
+    public void RemoveDeadEnemy(GameObject enemy)
     {
-
-        
+        visibleEnemies.Remove(enemy);
+        foreach (Player p in playerList)
+        {
+            p.watchedEnemies.Remove(enemy);
+        }
     }
+
+    public void RemoveEnemyIfNotTeamVisible(GameObject enemy)
+    {
+        bool toRemove = true;
+        foreach(Player p in playerList)
+        {
+            RaycastHit hit; //this is bad code! Only an enemy from visibleEnemies if it cannot be seen by any player. Currently do not have access to eyes. 
+            Transform eyes = p.transform.FindChild("Eyes");
+            Vector3 playerToTarget = enemy.transform.position - eyes.position;
+            bool sightline = Physics.Raycast(eyes.position, playerToTarget, out hit) && hit.collider.gameObject.CompareTag("Enemy");
+            if (p.watchedEnemies.Contains(enemy) && sightline)
+            {
+                toRemove = false;
+            }
+        }
+        if (toRemove)
+        {
+            visibleEnemies.Remove(enemy);
+        }
+    }
+
 
     public void AwardExperience(int experiencePoints)
     {
-        for (int i = 0; i < playerList.Length; i++)
+        for (int i = 0; i < gObjList.Length; i++)
         {
-            characterAttributesArray[i].Experience += experiencePoints;
+            playerList[i].attributes.Experience += experiencePoints;
         }
     }
 
     public SerializedPlayer[] currentState()
     {
-        SerializedPlayer[] players = new SerializedPlayer[playerList.Length];
-        for (int i = 0; i < playerList.Length; i++)
+        SerializedPlayer[] players = new SerializedPlayer[gObjList.Length];
+       /* for (int i = 0; i < gObjList.Length; i++)
         {
             SerializedPlayer player = new SerializedPlayer();
             player.level = characterAttributesArray[i].Level;
@@ -134,16 +136,19 @@ public class TeamManager : MonoBehaviour {
             player.strength = characterAttributesArray[i].Strength;
             player.intelligence = characterAttributesArray[i].Intelligence;
             player.stamina = characterAttributesArray[i].Stamina;
-            player.isInControl = strategyList[i].isplayerControlled;
+            player.isInControl = playerList[i].isplayerControlled;
             players[i] = player;
         }
-
+        */
         return players;
     }
 
     public void LoadSavedState(SerializedPlayer[] state)
     {
-        for (int i = 0; i<playerList.Length; i++)
+
+
+        /*
+        for (int i = 0; i<gObjList.Length; i++)
         {
             characterAttributesArray[i].Level = state[i].level;
             characterAttributesArray[i].Experience = state[i].experience;
@@ -153,10 +158,11 @@ public class TeamManager : MonoBehaviour {
 
             if (state[i].isInControl)
             {
-                activeStrat = strategyList[i];
-                activePlayer = strategyList[i].gameObject;
+                activeStrat = playerList[i];
+                activePlayer = playerList[i].gameObject;
             }
 
         }
+        */
     }
 }

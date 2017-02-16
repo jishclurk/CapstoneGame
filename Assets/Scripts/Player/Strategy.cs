@@ -10,7 +10,7 @@ public class Strategy : MonoBehaviour {
     private CoopAiController aiScript;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
         playerScript = GetComponent<PlayerController>();
         aiScript = GetComponent<CoopAiController>();
         if (isplayerControlled)
@@ -32,6 +32,15 @@ public class Strategy : MonoBehaviour {
     public void setAsPlayer()
     {
         isplayerControlled = true;
+        playerScript.ResetOnSwitch(); //reset player to default values
+
+        //set values based on previous ai control
+        if (aiScript.targetedEnemy != null)
+        {
+            playerScript.enemyClicked = true;
+            playerScript.targetedEnemy = aiScript.targetedEnemy;
+        }
+       
         aiScript.enabled = false;
         playerScript.enabled = true;
 
@@ -40,6 +49,10 @@ public class Strategy : MonoBehaviour {
     public void setAsCoopAI()
     {
         isplayerControlled = false;
+        aiScript.ResetOnSwitch(); //reset ai default values
+        //set values based on previous player control
+
+
         aiScript.enabled = true;
         playerScript.enabled = false;
 

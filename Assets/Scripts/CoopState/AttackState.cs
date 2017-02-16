@@ -15,15 +15,15 @@ public class AttackState : ICoopState
 
     public void UpdateState()
     {
-        Debug.Log("Attack");
         if (aiPlayer.targetedEnemy == null)
         {
-            LookForEnemy();
+            FindFirstEnemy();
         } else
         {
             MoveAndShoot();
         }
-        aiPlayer.anim.SetBool("Idling", walking);
+        WatchActiveplayerForFlee();
+        aiPlayer.anim.SetBool("Idling", !walking);
         aiPlayer.anim.SetBool("NonCombat", false);
 
     }
@@ -48,21 +48,32 @@ public class AttackState : ICoopState
         aiPlayer.currentState = aiPlayer.castState;
     }
 
-    private void LookForEnemy()
+    public void ToFleeState()
     {
-        RaycastHit hit;
-        foreach (GameObject gb in aiPlayer.visibleEnemies)
+        aiPlayer.currentState = aiPlayer.fleeState;
+    }
+
+    private void FindFirstEnemy()
+    {
+        //check local sphere, target must be line-of-sight to add to global visibleEnemies
+        if (aiPlayer.watchedEnemies.Count > 0 && aiPlayer.isTargetVisible(aiPlayer.watchedEnemies[0].transform))
         {
-            Vector3 playerToEnemy = gb.transform.position - aiPlayer.transform.position;
-            if (Physics.Raycast(aiPlayer.transform.position, playerToEnemy, out hit, aiPlayer.sightDist) && hit.collider.CompareTag("Enemy"))
+            if (!aiPlayer.tm.visibleEnemies.Contains(aiPlayer.watchedEnemies[0]))
             {
-                aiPlayer.targetedEnemy = hit.transform;
+                aiPlayer.tm.visibleEnemies.Add(aiPlayer.watchedEnemies[0]);
             }
+            aiPlayer.targetedEnemy = aiPlayer.watchedEnemies[0].transform;
+        }
+        else if (aiPlayer.tm.visibleEnemies.Count > 0){
+            //check global enemies
+            aiPlayer.targetedEnemy = aiPlayer.tm.visibleEnemies[0].transform;
+        }
+        else
+        {
+            ToIdleState();
         }
         
     }
-
-
 
     private void MoveAndShoot()
     {
@@ -74,7 +85,7 @@ public class AttackState : ICoopState
 
         aiPlayer.navMeshAgent.destination = aiPlayer.targetedEnemy.position;
         float remainingDistance = Vector3.Distance(aiPlayer.targetedEnemy.position, aiPlayer.transform.position);
-        if (remainingDistance >= aiPlayer.activeAbility.effectiveRange)
+        if (remainingDistance >= aiPlayer.activeAbility.effectiveRange || !aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
         {
             aiPlayer.navMeshAgent.Resume();
             walking = true;
@@ -95,10 +106,35 @@ public class AttackState : ICoopState
                 }
             }
 
+            //check if enemy died
+            EnemyHealth enemyHP = aiPlayer.targetedEnemy.GetComponent<EnemyHealth>();
+            if (enemyHP != null)
+            {
+                if (enemyHP.isDead)
+                {
+                    //on kill, remove from both team manager visible enemies and all local watchedenemies
+                    aiPlayer.tm.RemoveDeadEnemy(aiPlayer.targetedEnemy.gameObject);
+                    aiPlayer.targetedEnemy = null;
+                    if (!aiPlayer.tm.IsTeamInCombat())
+                    {
+                        ToIdleState();
+                    }
+                }
+            }
+
             aiPlayer.navMeshAgent.Stop(); //within range, stop moving
             walking = false;
         }
+    }
 
 
+
+    private void WatchActiveplayerForFlee()
+    {
+        if(aiPlayer.tm.activePlayer.watchedEnemies.Count == 0)
+        {
+            aiPlayer.targetedEnemy = null;
+            ToFleeState();
+        }
     }
 }

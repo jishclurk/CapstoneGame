@@ -8,9 +8,13 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
     private NavMeshAgent navMeshAgent;
-    private Transform target;
+
+    //public things that need to be changed on strategy switch
+    [HideInInspector]
+    public Transform targetedEnemy;
+    [HideInInspector]
     public bool enemyClicked; //Team manager accesses this to determine if player is in combat
-    public bool enemyEngaged;
+
     private Transform targetedFriend;
     private bool friendClicked;
 
@@ -23,9 +27,12 @@ public class PlayerController : MonoBehaviour
     private IAbility activeAbility;
     private CharacterAttributes attributes;
     private PlayerAbilities abilities;
-    private TeamManager tm;
+    
     private PlayerResources resources;
+    private List<GameObject> watchedEnemies;
+    private TeamManager tm;
 
+    private Transform eyes;
 
 
     // Use this for initialization
@@ -33,12 +40,19 @@ public class PlayerController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        abilities = new PlayerAbilities();
+
+
+        //this is a mess. These are "shared" variables between co-op ai and player script
+        Player player = GetComponent<Player>(); ;
+        abilities = player.abilities;
         activeAbility = abilities.Basic;
-        attributes = GetComponent<CharacterAttributes>();
+        attributes = player.attributes;
+        resources = player.resources;
+        watchedEnemies = player.watchedEnemies;
+
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        resources = GetComponent<PlayerResources>();
 		tm.playerResources = resources;
+        eyes = transform.FindChild("Eyes");
     }
 
 
@@ -52,33 +66,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("Enemy"))
-                {
-                    //target is instead the raycast hit, rather than a transform. Put work into Execute().
-                    target = hit.transform;
-                    transform.LookAt(hit.transform); //prevents slow turn
-                    enemyClicked = true;
-                    enemyEngaged = true;
-                    friendClicked = false;
-                    tm.teamInCombat = true;
-                }
-                else if (hit.collider.CompareTag("Player"))
-                {
-                    //target is instead the raycast hit, rather than a transform. Put work into Execute().
-                    target = hit.transform;
-                    transform.LookAt(hit.transform); //prevents slow turn
-                    friendClicked = true;
-                    enemyClicked = false;
-                }
-                else
-                {
-                    walking = true;
-                    enemyClicked = false;
-                    friendClicked = false;
-                    navMeshAgent.destination = hit.point;
-                    transform.LookAt(new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z));
-                    navMeshAgent.Resume();
-                }
+                HandleRayCastHit(hit);
             }
         }
 
@@ -94,29 +82,29 @@ public class PlayerController : MonoBehaviour
         }
 
         //temporary fix
-        if(enemyClicked || enemyEngaged)
+        if(tm.IsTeamInCombat())
         {
-            navMeshAgent.speed = 7.0f;
+            navMeshAgent.speed = 5.5f;
         }
         else
         {
-            navMeshAgent.speed = 4.0f;
+            navMeshAgent.speed = 5.4f;
         }
         anim.SetBool("Idling", !walking);
-        anim.SetBool("NonCombat", !(enemyClicked || enemyEngaged));
+        anim.SetBool("NonCombat", !tm.IsTeamInCombat());
     }
 
     private void MoveAndShoot()
     {
 
-        if (target == null)
+        if (targetedEnemy == null)
         {
             //this return happens if enemy dies
             return; //avoid running code we don't need to.
         }
-        navMeshAgent.destination = target.position;
-        float remainingDistance = Vector3.Distance(target.position, transform.position);
-        if (remainingDistance >= activeAbility.effectiveRange)
+        navMeshAgent.destination = targetedEnemy.position;
+        float remainingDistance = Vector3.Distance(targetedEnemy.position, transform.position);
+        if (remainingDistance >= activeAbility.effectiveRange || !isTargetVisible(targetedEnemy))
         {
             navMeshAgent.Resume();
             walking = true;
@@ -124,12 +112,12 @@ public class PlayerController : MonoBehaviour
         else
         {
             //Within range, look at enemy and shoot
-            transform.LookAt(target);
-            //Vector3 dirToShoot = targetedEnemy.transform.position - transform.position; //unused, would be for raycasting
-            bool targetIsDead = target.GetComponent<EnemyHealth>().isDead;
+            transform.LookAt(targetedEnemy);
+
+            bool targetIsDead = targetedEnemy.GetComponent<EnemyHealth>().isDead;
             if (activeAbility.isReady() && !targetIsDead)
             {
-                activeAbility.Execute(attributes, gameObject, target.gameObject);
+                activeAbility.Execute(attributes, gameObject, targetedEnemy.gameObject);
                 if (!activeAbility.isbasicAttack) {
                     //selectingAbilityTarget = false;
                     activeAbility = abilities.Basic;
@@ -139,14 +127,58 @@ public class PlayerController : MonoBehaviour
             navMeshAgent.Stop(); //within range, stop moving
             if (targetIsDead)
             {
-                enemyEngaged = false;
                 enemyClicked = false;
+                tm.RemoveDeadEnemy(targetedEnemy.gameObject);
                 navMeshAgent.destination = transform.position;
             }
             walking = false;
         }
 
 
+    }
+
+    private void HandleRayCastHit(RaycastHit hit)
+    {
+        if (hit.collider.CompareTag("Enemy"))
+        {
+            //target is instead the raycast hit, rather than a transform. Put work into Execute().
+            targetedEnemy = hit.transform;
+            transform.LookAt(hit.transform); //prevents slow turn
+            enemyClicked = true;
+            friendClicked = false;
+            if (!tm.visibleEnemies.Contains(targetedEnemy.gameObject))
+            {
+                tm.visibleEnemies.Add(targetedEnemy.gameObject);
+            }
+            if (!watchedEnemies.Contains(targetedEnemy.gameObject))
+            {
+                watchedEnemies.Add(targetedEnemy.gameObject);
+            }
+        }
+        else if (hit.collider.CompareTag("Player"))
+        {
+            if (targetedEnemy != null)
+            {
+                tm.RemoveEnemyIfNotTeamVisible(targetedEnemy.gameObject);
+            }
+            targetedFriend = hit.transform;
+            transform.LookAt(hit.transform); //prevents slow turn
+            friendClicked = true;
+            enemyClicked = false;
+        }
+        else
+        {
+            if (targetedEnemy != null)
+            {
+                tm.RemoveEnemyIfNotTeamVisible(targetedEnemy.gameObject);
+            }
+            walking = true;
+            enemyClicked = false;
+            friendClicked = false;
+            navMeshAgent.destination = hit.point;
+            transform.LookAt(new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z));
+            navMeshAgent.Resume();
+        }
     }
 
     private void HandleAbilityInput()
@@ -177,6 +209,50 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+    }
+
+    private bool isTargetVisible(Transform target)
+    {
+        RaycastHit hit;
+        Vector3 playerToTarget = target.position - eyes.position;
+        return Physics.Raycast(eyes.position, playerToTarget, out hit) && hit.collider.gameObject.CompareTag("Enemy");
+
+    }
+
+    public void ResetOnSwitch()
+    {
+        targetedEnemy = null;
+        navMeshAgent.destination = transform.position;
+        enemyClicked = false;
+        targetedFriend = null;
+        friendClicked = false;
+        walking = false;
+        selectingAbilityTarget = false;
+        activeAbility = abilities.Basic;
+       
+    }
+
+
+    //update shared watchedEnemies between co-op and ai
+    private void OnTriggerEnter(Collider other)
+    {
+       
+        if (!other.isTrigger && other.tag.Equals("Enemy"))
+        {
+            if (!watchedEnemies.Contains(other.gameObject))
+            {
+                watchedEnemies.Add(other.gameObject);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.isTrigger && other.tag.Equals("Enemy"))
+        {
+            watchedEnemies.Remove(other.gameObject);
+            tm.RemoveEnemyIfNotTeamVisible(other.gameObject);
+        }
     }
 
 }

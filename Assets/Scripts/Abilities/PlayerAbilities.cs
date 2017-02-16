@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAbilities : ICharacterAbilities {
+public class PlayerAbilities : MonoBehaviour {
 
     public IAbility Q { get; set; }
     public IAbility W { get; set; }
@@ -10,7 +10,7 @@ public class PlayerAbilities : ICharacterAbilities {
     public IAbility R { get; set; }
     public IAbility T { get; set; }
     public IAbility Basic { get; set; }
-    public List<IAbility> unlockedAbilities;
+    public List<IAbility> unlockedAbilities { get; set; }
 
     public PlayerAbilities()
     {

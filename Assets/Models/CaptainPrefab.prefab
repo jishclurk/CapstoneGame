@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 4969180664323980}
   - component: {fileID: 137629342557709942}
   m_Layer: 0
-  m_Name: m01
+  m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1196,6 +1196,10 @@ GameObject:
   - component: {fileID: 65550989248922716}
   - component: {fileID: 114794458988707158}
   - component: {fileID: 114320022151010280}
+  - component: {fileID: 114479550262570530}
+  - component: {fileID: 114188789285389498}
+  - component: {fileID: 135201060280399926}
+  - component: {fileID: 114554021390192006}
   m_Layer: 0
   m_Name: CaptainPrefab
   m_TagString: Player
@@ -3340,10 +3344,28 @@ MonoBehaviour:
   followEpsilon: 2
   sightCollider: {fileID: 0}
   sightDist: 12
-  visibleEnemies: []
+  watchedEnemies: []
   targetedEnemy: {fileID: 0}
+  eyes: {fileID: 0}
+  abilities: {fileID: 0}
   attributes: {fileID: 0}
   tm: {fileID: 0}
+--- !u!114 &114188789285389498
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1768873110878104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 203e4e3c320f01345903dfd770a95afd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attributes: {fileID: 0}
+  resources: {fileID: 0}
+  strategy: {fileID: 0}
+  abilities: {fileID: 0}
+  watchedEnemies: []
 --- !u!114 &114320022151010280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3367,6 +3389,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isplayerControlled: 1
+--- !u!114 &114479550262570530
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1768873110878104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b8b39a7fefbcee43904c4eb04819ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114554021390192006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1768873110878104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0261d015f70fe42449d334eb5b002b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114794458988707158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3393,8 +3437,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b0a873e79400644a4b07dfa21f734c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetedEnemy: {fileID: 0}
   enemyClicked: 0
-  enemyEngaged: 0
+--- !u!135 &135201060280399926
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1768873110878104}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137015228903427590
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -4426,10 +4482,10 @@ NavMeshAgent:
   m_GameObject: {fileID: 1768873110878104}
   m_Enabled: 1
   m_Radius: 0.5
-  m_Speed: 4
+  m_Speed: 5.5
   m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 360
   m_StoppingDistance: 0.4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

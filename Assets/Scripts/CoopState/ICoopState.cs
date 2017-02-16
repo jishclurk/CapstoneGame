@@ -16,6 +16,8 @@ public interface ICoopState {
 
     void ToMoveState();
 
+    void ToFleeState();
+
 
     /// <summary>
     /// Character will cast an ability.

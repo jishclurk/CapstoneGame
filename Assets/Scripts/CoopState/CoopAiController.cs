@@ -26,11 +26,13 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector]
     public float sightDist = 10.0f;
     [HideInInspector]
-    public List<GameObject> visibleEnemies;
+    public List<GameObject> watchedEnemies;
     [HideInInspector]
     public IAbility activeAbility;
     [HideInInspector]
     public Transform targetedEnemy;
+    [HideInInspector]
+    public Transform eyes;
 
     [HideInInspector]
     public PlayerAbilities abilities;
@@ -44,6 +46,8 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector] public MoveState moveState;
     [HideInInspector] public AttackState attackState;
     [HideInInspector] public CastState castState;
+    [HideInInspector]
+    public FleeState fleeState;
 
     private void Awake()
     {
@@ -51,11 +55,19 @@ public class CoopAiController : MonoBehaviour {
         moveState = new MoveState(this);
         attackState = new AttackState(this);
         castState = new CastState(this);
+        fleeState = new FleeState(this);
 
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        abilities = new PlayerAbilities();
+
+        //this is a mess. These are "shared" variables between co-op ai and player script
+        Player player = GetComponent<Player>();
+        abilities = player.abilities;
         activeAbility = abilities.Basic;
+        attributes = player.attributes;
+        watchedEnemies = player.watchedEnemies;
+
+        eyes = transform.FindChild("Eyes");
         sightCollider = GetComponent<SphereCollider>();
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>() ;
     }
@@ -75,26 +87,63 @@ public class CoopAiController : MonoBehaviour {
 
     public void CheckForCombat()
     {
-        if (tm.isTeamInCombat())
+        if (CheckLocalVision() || tm.visibleEnemies.Count > 0)
         {
             currentState = attackState;
-        } 
+            //attack priority moved to attackState
+        }
+    }
+
+    public bool isTargetVisible(Transform target)
+    {
+        RaycastHit hit;
+        Vector3 playerToTarget = target.position - eyes.position;
+        return Physics.Raycast(eyes.position, playerToTarget, out hit) && hit.collider.gameObject.CompareTag("Enemy");
+    }
+
+    //Reports if the aiPlayer has sight on at least one enemy
+    private bool CheckLocalVision()
+    {
+        bool canSeeOneEnemy = false;
+        foreach (GameObject enemy in watchedEnemies)
+        {
+            if (isTargetVisible(enemy.transform))
+            {
+                canSeeOneEnemy = true;
+            }
+        }
+        return canSeeOneEnemy;
+    }
+
+    //called by strategy when switching from ai -> player
+    public void ResetOnSwitch()
+    {
+        targetedEnemy = null;
+        currentState = idleState;
+        activeAbility = abilities.Basic;
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Enemy"))
+        if (!other.isTrigger && other.tag.Equals("Enemy"))
         {
-            visibleEnemies.Add(other.gameObject);
+            if (!watchedEnemies.Contains(other.gameObject))
+            {
+                watchedEnemies.Add(other.gameObject);
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag.Equals("Enemy"))
+        if (!other.isTrigger && other.tag.Equals("Enemy"))
         {
-            visibleEnemies.Remove(other.gameObject);
+            watchedEnemies.Remove(other.gameObject);
+            tm.RemoveEnemyIfNotTeamVisible(other.gameObject);
         }
     }
+
+
 
 }
