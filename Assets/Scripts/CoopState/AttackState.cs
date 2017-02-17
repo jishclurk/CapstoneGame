@@ -17,7 +17,7 @@ public class AttackState : ICoopState
     {
         if (aiPlayer.targetedEnemy == null)
         {
-            FindFirstEnemy();
+            FindClosestEnemy();
         } else
         {
             MoveAndShoot();
@@ -53,24 +53,25 @@ public class AttackState : ICoopState
         aiPlayer.currentState = aiPlayer.fleeState;
     }
 
-    private void FindFirstEnemy()
+    private void FindClosestEnemy()
     {
-        //check local sphere, target must be line-of-sight to add to global visibleEnemies
-        if (aiPlayer.watchedEnemies.Count > 0 && aiPlayer.isTargetVisible(aiPlayer.watchedEnemies[0].transform))
+        float bestDist = float.PositiveInfinity;
+        GameObject bestTarget = null;
+
+        foreach(GameObject enemy in aiPlayer.tm.visibleEnemies)
         {
-            if (!aiPlayer.tm.visibleEnemies.Contains(aiPlayer.watchedEnemies[0]))
+            Vector3 option = enemy.transform.position - aiPlayer.transform.position;
+            if(Vector3.SqrMagnitude(option) < bestDist)
             {
-                aiPlayer.tm.visibleEnemies.Add(aiPlayer.watchedEnemies[0]);
+                bestDist = Vector3.SqrMagnitude(option);
+                bestTarget = enemy;
             }
-            aiPlayer.targetedEnemy = aiPlayer.watchedEnemies[0].transform;
         }
-        else if (aiPlayer.tm.visibleEnemies.Count > 0){
-            //check global enemies
-            aiPlayer.targetedEnemy = aiPlayer.tm.visibleEnemies[0].transform;
-        }
-        else
-        {
+           
+        if(bestTarget == null){
             ToIdleState();
+        } else {
+            aiPlayer.targetedEnemy = bestTarget.transform;
         }
         
     }

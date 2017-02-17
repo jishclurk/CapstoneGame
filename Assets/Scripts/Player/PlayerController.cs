@@ -29,7 +29,8 @@ public class PlayerController : MonoBehaviour
     private PlayerAbilities abilities;
     
     private PlayerResources resources;
-    private List<GameObject> watchedEnemies;
+    private HashSet<GameObject> watchedEnemies;
+    private HashSet<GameObject> visibleEnemies;
     private TeamManager tm;
 
     private Transform eyes;
@@ -50,14 +51,13 @@ public class PlayerController : MonoBehaviour
         attributes = player.attributes;
         resources = player.resources;
         watchedEnemies = player.watchedEnemies;
+        visibleEnemies = player.visibleEnemies;
         Debug.Log("PC start we: " + watchedEnemies);
     }
 
     //things from other scripts go here
     void Start()
     {
-
-
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
 		tm.playerResources = resources;
     }
@@ -146,6 +146,14 @@ public class PlayerController : MonoBehaviour
 
     private void HandleRayCastHit(RaycastHit hit)
     {
+        //Reset Current enemy target
+        if (targetedEnemy != null)
+        {
+            tm.RemoveEnemyIfNotTeamVisible(targetedEnemy.gameObject);
+            visibleEnemies.Remove(targetedEnemy.gameObject);
+            targetedEnemy = null;
+        }
+
         if (hit.collider.CompareTag("Enemy"))
         {
             //target is instead the raycast hit, rather than a transform. Put work into Execute().
@@ -153,21 +161,14 @@ public class PlayerController : MonoBehaviour
             transform.LookAt(hit.transform); //prevents slow turn
             enemyClicked = true;
             friendClicked = false;
-            if (!tm.visibleEnemies.Contains(targetedEnemy.gameObject))
-            {
-                tm.visibleEnemies.Add(targetedEnemy.gameObject);
-            }
-            if (!watchedEnemies.Contains(targetedEnemy.gameObject))
-            {
-                watchedEnemies.Add(targetedEnemy.gameObject);
-            }
+
+            //update combat
+            visibleEnemies.Add(targetedEnemy.gameObject);
+            tm.visibleEnemies.Add(targetedEnemy.gameObject);
+            watchedEnemies.Add(targetedEnemy.gameObject);
         }
         else if (hit.collider.CompareTag("Player"))
         {
-            if (targetedEnemy != null)
-            {
-                tm.RemoveEnemyIfNotTeamVisible(targetedEnemy.gameObject);
-            }
             targetedFriend = hit.transform;
             transform.LookAt(hit.transform); //prevents slow turn
             friendClicked = true;
@@ -175,10 +176,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (targetedEnemy != null)
-            {
-                tm.RemoveEnemyIfNotTeamVisible(targetedEnemy.gameObject);
-            }
             walking = true;
             enemyClicked = false;
             friendClicked = false;
@@ -239,18 +236,13 @@ public class PlayerController : MonoBehaviour
        
     }
 
-
     //update shared watchedEnemies between co-op and ai
     private void OnTriggerEnter(Collider other)
     {
        
         if (!other.isTrigger && other.tag.Equals("Enemy"))
         {
-            Debug.Log(watchedEnemies);
-            if (!watchedEnemies.Contains(other.gameObject))
-            {
-                watchedEnemies.Add(other.gameObject);
-            }
+            watchedEnemies.Add(other.gameObject);
         }
     }
 
@@ -259,7 +251,13 @@ public class PlayerController : MonoBehaviour
         if (!other.isTrigger && other.tag.Equals("Enemy"))
         {
             watchedEnemies.Remove(other.gameObject);
-            tm.RemoveEnemyIfNotTeamVisible(other.gameObject);
+            visibleEnemies.Remove(other.gameObject);
+            //Debug.Log("OnTriggerExit: " + (tm == null));
+            if (tm != null)
+            { //WTF I have no idea how teamManager becomes null here but it does. seriously wtf
+                //Happens when AI is attacking an enemy. You are not, but are being chased by 2nd enemy. AI's enemy exits range
+                tm.RemoveEnemyIfNotTeamVisible(other.gameObject);
+            }
         }
     }
 

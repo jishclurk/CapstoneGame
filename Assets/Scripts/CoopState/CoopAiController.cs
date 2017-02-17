@@ -26,7 +26,9 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector]
     public float sightDist = 10.0f;
     [HideInInspector]
-    public List<GameObject> watchedEnemies;
+    public HashSet<GameObject> watchedEnemies;
+    [HideInInspector]
+    public HashSet<GameObject> visibleEnemies;
     [HideInInspector]
     public IAbility activeAbility;
     [HideInInspector]
@@ -70,6 +72,7 @@ public class CoopAiController : MonoBehaviour {
         activeAbility = abilities.Basic;
         attributes = player.attributes;
         watchedEnemies = player.watchedEnemies;
+        visibleEnemies = player.visibleEnemies;
     }
 
     // Use this for initialization
@@ -109,6 +112,8 @@ public class CoopAiController : MonoBehaviour {
         {
             if (isTargetVisible(enemy.transform))
             {
+                visibleEnemies.Add(enemy);
+                tm.visibleEnemies.Add(enemy);
                 canSeeOneEnemy = true;
             }
         }
@@ -131,10 +136,7 @@ public class CoopAiController : MonoBehaviour {
     {
         if (!other.isTrigger && other.tag.Equals("Enemy"))
         {
-            if (!watchedEnemies.Contains(other.gameObject))
-            {
-                watchedEnemies.Add(other.gameObject);
-            }
+            watchedEnemies.Add(other.gameObject);
         }
     }
 
@@ -143,6 +145,7 @@ public class CoopAiController : MonoBehaviour {
         if (!other.isTrigger && other.tag.Equals("Enemy"))
         {
             watchedEnemies.Remove(other.gameObject);
+            visibleEnemies.Remove(other.gameObject);
             tm.RemoveEnemyIfNotTeamVisible(other.gameObject);
         }
     }

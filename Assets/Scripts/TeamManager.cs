@@ -14,7 +14,7 @@ public class TeamManager : MonoBehaviour {
 
 	public PlayerResources playerResources;
 
-    public List<GameObject> visibleEnemies;
+    public HashSet<GameObject> visibleEnemies;
 
 
     // Use this for initialization
@@ -38,7 +38,7 @@ public class TeamManager : MonoBehaviour {
 
         cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
         cameraScript.followPlayer = activePlayer.gameObject;
-        visibleEnemies = new List<GameObject>();
+        visibleEnemies = new HashSet<GameObject>();
         GameManager.manager.SetTeamManager(this);
 
     }
@@ -92,6 +92,7 @@ public class TeamManager : MonoBehaviour {
         visibleEnemies.Remove(enemy);
         foreach (Player p in playerList)
         {
+            p.visibleEnemies.Remove(enemy);
             p.watchedEnemies.Remove(enemy);
         }
     }
@@ -101,11 +102,11 @@ public class TeamManager : MonoBehaviour {
         bool toRemove = true;
         foreach(Player p in playerList)
         {
-            RaycastHit hit; //this is bad code! Only an enemy from visibleEnemies if it cannot be seen by any player. Currently do not have access to eyes. 
+            /*RaycastHit hit; //this is bad code! Only an enemy from visibleEnemies if it cannot be seen by any player. Currently do not have access to eyes. 
             Transform eyes = p.transform.FindChild("Eyes");
             Vector3 playerToTarget = enemy.transform.position - eyes.position;
-            bool sightline = Physics.Raycast(eyes.position, playerToTarget, out hit) && hit.collider.gameObject.CompareTag("Enemy");
-            if (p.watchedEnemies.Contains(enemy) && sightline)
+            bool sightline = Physics.Raycast(eyes.position, playerToTarget, out hit) && hit.collider.gameObject.CompareTag("Enemy");*/
+            if (p.visibleEnemies.Contains(enemy))
             {
                 toRemove = false;
             }
