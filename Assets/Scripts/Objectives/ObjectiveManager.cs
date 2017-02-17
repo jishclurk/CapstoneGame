@@ -25,11 +25,6 @@ public class ObjectiveManager : MonoBehaviour {
 
     }
 
-    private void Start()
-    {
-        GameManager.manager.SetObjectiveManager(this);
-    }
-
     void Update() {
 		objectiveList =  "Objectives: \n";
 		for (int i = 0; i<objectives.Count ; i++){
