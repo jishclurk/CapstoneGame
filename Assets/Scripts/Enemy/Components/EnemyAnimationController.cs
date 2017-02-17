@@ -16,10 +16,7 @@ public class EnemyAnimationController : MonoBehaviour {
     {
         if (!deathAnimated)
         {
-            animator.SetBool("Moving", false);
-            animator.SetBool("Sprinting", false);
-            animator.SetInteger("Action", 0);
-            animator.SetInteger("Death", 2);
+            animator.SetTrigger("death");
             deathAnimated = true;
         }
     }
@@ -28,10 +25,7 @@ public class EnemyAnimationController : MonoBehaviour {
     {
         if (!deathAnimated)
         {
-            animator.SetBool("Moving", true);
-            animator.SetBool("Sprinting", true);
-            animator.SetInteger("Action", 0);
-            animator.SetInteger("Death", 0);
+            animator.SetTrigger("running");
         }
     }
 
@@ -39,10 +33,7 @@ public class EnemyAnimationController : MonoBehaviour {
     {
         if (!deathAnimated)
         {
-            animator.SetBool("Moving", false);
-            animator.SetBool("Sprinting", false);
-            animator.SetInteger("Action", 0);
-            animator.SetInteger("Death", 0);
+            animator.SetTrigger("idle");
         }
     }
 
@@ -50,10 +41,7 @@ public class EnemyAnimationController : MonoBehaviour {
     {
         if (!deathAnimated)
         {
-            animator.SetBool("Moving", false);
-            animator.SetBool("Sprinting", false);
-            animator.SetInteger("Action", 1);
-            animator.SetInteger("Death", 0);
+            animator.SetTrigger("attacking");
         }
     }
 }

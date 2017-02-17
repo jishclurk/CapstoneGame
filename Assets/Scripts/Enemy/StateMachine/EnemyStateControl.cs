@@ -7,7 +7,6 @@ public class EnemyStateControl : MonoBehaviour {
 
     public float chasingDuration = 4f;
     public float deaggroDistance = 20f;
-    public MeshRenderer meshRendererFlag;
 
     [HideInInspector]
     public Vector3 returnPosition;
