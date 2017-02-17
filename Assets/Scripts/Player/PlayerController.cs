@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
         //this is a mess. These are "shared" variables between co-op ai and player script
         Player player = GetComponent<Player>();
         abilities = player.abilities;
+        Debug.Log("This should happen second "+ player);
         activeAbility = abilities.Basic;
         attributes = player.attributes;
         resources = player.resources;

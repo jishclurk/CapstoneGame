@@ -43,6 +43,15 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector]
     public TeamManager tm; //is this bad practice? Used to find which players are ai controlled or not
 
+    //Animation
+    [HideInInspector]
+    public PlayerAnimationController animController;
+    [HideInInspector]
+    public float animSpeed;
+    [HideInInspector]
+    public float walkSpeed;
+
+
     [HideInInspector] public ICoopState currentState;
     [HideInInspector] public IdleState idleState;
     [HideInInspector] public MoveState moveState;
@@ -60,6 +69,8 @@ public class CoopAiController : MonoBehaviour {
         fleeState = new FleeState(this);
 
         anim = GetComponent<Animator>();
+        animController = GetComponent<PlayerAnimationController>();
+        walkSpeed = 1.0f;
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         eyes = transform.FindChild("Eyes");

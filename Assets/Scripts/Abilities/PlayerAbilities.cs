@@ -21,6 +21,7 @@ public class PlayerAbilities : MonoBehaviour {
         R = new EmptyAbility();
         T = new EmptyAbility();
         Basic = new EmptyAbility();
+        Debug.Log("This should happen first");
         unlockedAbilities = new List<IAbility>();
         LoadUnlockedAbilities();
         LoadHotBar();

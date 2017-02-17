@@ -16,8 +16,7 @@ public class FleeState : ICoopState
     {
         FollowActivePlayer();
         //aiPlayer.CheckForCombat();
-        aiPlayer.anim.SetBool("Idling", false);
-        aiPlayer.anim.SetBool("NonCombat", false);
+        aiPlayer.animController.AnimateMovement(aiPlayer.walkSpeed);
     }
 
 

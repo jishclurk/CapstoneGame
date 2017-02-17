@@ -6,10 +6,11 @@ public class AttackState : ICoopState
 {
 
     private readonly CoopAiController aiPlayer;
-    private bool walking;
+    private float animSpeed;
 
     public AttackState(CoopAiController statePatternPlayer)
     {
+        animSpeed = 0.0f;
         aiPlayer = statePatternPlayer;
     }
 
@@ -23,8 +24,10 @@ public class AttackState : ICoopState
             MoveAndShoot();
         }
         WatchActiveplayerForFlee();
-        aiPlayer.anim.SetBool("Idling", !walking);
-        aiPlayer.anim.SetBool("NonCombat", false);
+        if (animSpeed > 0.0f)
+            aiPlayer.animController.AnimateMovement(animSpeed);
+        else
+            aiPlayer.animController.AnimateIdle();
 
     }
 
@@ -89,12 +92,13 @@ public class AttackState : ICoopState
         if (remainingDistance >= aiPlayer.activeAbility.effectiveRange || !aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
         {
             aiPlayer.navMeshAgent.Resume();
-            walking = true;
+            animSpeed = aiPlayer.walkSpeed;
         }
         else
         {
             //Within range, look at enemy and shoot
             aiPlayer.transform.LookAt(aiPlayer.targetedEnemy);
+            aiPlayer.animController.AnimateAim();
             //Vector3 dirToShoot = targetedEnemy.transform.position - transform.position; //unused, would be for raycasting
 
             if (aiPlayer.activeAbility.isReady())
@@ -124,7 +128,7 @@ public class AttackState : ICoopState
             }
 
             aiPlayer.navMeshAgent.Stop(); //within range, stop moving
-            walking = false;
+            animSpeed = 0.0f;
         }
     }
 

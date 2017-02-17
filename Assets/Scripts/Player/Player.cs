@@ -17,12 +17,14 @@ public class Player : MonoBehaviour {
     [HideInInspector]
     public HashSet<GameObject> visibleEnemies;
 
+
     // Use this for initialization
     void Awake () {
         attributes = GetComponent<CharacterAttributes>();
+        abilities = GetComponent<PlayerAbilities>();
         resources = GetComponent<PlayerResources>();
         strategy = GetComponent<Strategy>();
-        abilities = GetComponent<PlayerAbilities>();
+
         watchedEnemies = new HashSet<GameObject>();
         visibleEnemies = new HashSet<GameObject>();
 	}
