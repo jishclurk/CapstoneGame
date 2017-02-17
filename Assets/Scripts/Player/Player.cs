@@ -22,6 +22,7 @@ public class Player : MonoBehaviour {
         strategy = GetComponent<Strategy>();
         abilities = GetComponent<PlayerAbilities>();
         watchedEnemies = new List<GameObject>();
+        Debug.Log(watchedEnemies);
 	}
 	
 	// Update is called once per frame
