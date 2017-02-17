@@ -36,19 +36,20 @@ public class PlayerController : MonoBehaviour
 
 
     // Use this for initialization
-    void Awake()
+    void Start()
     {
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
 
         //this is a mess. These are "shared" variables between co-op ai and player script
-        Player player = GetComponent<Player>(); ;
+        Player player = GetComponent<Player>();
         abilities = player.abilities;
         activeAbility = abilities.Basic;
         attributes = player.attributes;
         resources = player.resources;
         watchedEnemies = player.watchedEnemies;
+        Debug.Log("PC start we: " + watchedEnemies);
 
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
 		tm.playerResources = resources;
@@ -239,6 +240,7 @@ public class PlayerController : MonoBehaviour
        
         if (!other.isTrigger && other.tag.Equals("Enemy"))
         {
+            Debug.Log(watchedEnemies);
             if (!watchedEnemies.Contains(other.gameObject))
             {
                 watchedEnemies.Add(other.gameObject);
