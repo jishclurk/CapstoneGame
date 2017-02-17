@@ -21,7 +21,9 @@ public class PlayerController : MonoBehaviour
     private Ray shootRay;
     private RaycastHit shootHit;
 
-    private bool walking;
+    private PlayerAnimationController animController;
+    private float animSpeed;
+    private float walkSpeed;
    
     private bool selectingAbilityTarget = false;
     private IAbility activeAbility;
@@ -41,8 +43,10 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        animController = GetComponent<PlayerAnimationController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         eyes = transform.FindChild("Eyes");
+        walkSpeed = 1.0f;
 
         //this is a mess. These are "shared" variables between co-op ai and player script
         Player player = GetComponent<Player>();
@@ -85,20 +89,18 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            walking = navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance;
+            if (navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance)
+                animSpeed = walkSpeed;
+            else
+                animSpeed = 0.0f;
         }
 
         //temporary fix
-        if(tm.IsTeamInCombat())
-        {
-            navMeshAgent.speed = 5.5f;
-        }
+        if (animSpeed > 0.0f)
+            animController.AnimateMovement(animSpeed);
         else
-        {
-            navMeshAgent.speed = 5.4f;
-        }
-        anim.SetBool("Idling", !walking);
-        anim.SetBool("NonCombat", !tm.IsTeamInCombat());
+            animController.AnimateIdle();
+        //anim.SetBool("NonCombat", !tm.IsTeamInCombat());
     }
 
     private void MoveAndShoot()
@@ -114,12 +116,13 @@ public class PlayerController : MonoBehaviour
         if (remainingDistance >= activeAbility.effectiveRange || !isTargetVisible(targetedEnemy))
         {
             navMeshAgent.Resume();
-            walking = true;
+            animSpeed = walkSpeed;
         }
         else
         {
             //Within range, look at enemy and shoot
             transform.LookAt(targetedEnemy);
+            animController.AnimateAim();
 
             bool targetIsDead = targetedEnemy.GetComponent<EnemyHealth>().isDead;
             if (activeAbility.isReady() && !targetIsDead)
@@ -138,7 +141,7 @@ public class PlayerController : MonoBehaviour
                 tm.RemoveDeadEnemy(targetedEnemy.gameObject);
                 navMeshAgent.destination = transform.position;
             }
-            walking = false;
+            animSpeed = 0.0f;
         }
 
 
@@ -176,7 +179,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            walking = true;
+            animSpeed = walkSpeed;
             enemyClicked = false;
             friendClicked = false;
             navMeshAgent.destination = hit.point;
@@ -230,7 +233,7 @@ public class PlayerController : MonoBehaviour
         enemyClicked = false;
         targetedFriend = null;
         friendClicked = false;
-        walking = false;
+        animSpeed = 0.0f;
         selectingAbilityTarget = false;
         activeAbility = abilities.Basic;
        
