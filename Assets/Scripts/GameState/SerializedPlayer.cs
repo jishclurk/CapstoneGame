@@ -10,6 +10,7 @@ public class SerializedPlayer {
     public bool isInControl;
 
     public List<int> Abilities;
+
     public int level;
     public int experience;
    // public int experienceNeededForNextLevel;

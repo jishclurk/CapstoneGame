@@ -4,26 +4,38 @@ using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour {
 
-    public IAbility Q { get; set; }
-    public IAbility W { get; set; }
-    public IAbility E { get; set; }
-    public IAbility R { get; set; }
-    public IAbility T { get; set; }
+    //binding from key to spot in the ability array
+    public Dictionary<KeyCode, int> AbilityBindings;
+
+    //array that corresponds with ability bar in HUB
+    public IAbility[] abilityArray;
+
+    //possibly eleminate these and just keep track of abilites in the array??
+    public IAbility one { get; set; }
+    public IAbility two { get; set; }
+    public IAbility three { get; set; }
+    public IAbility four { get; set; }
+    public IAbility five { get; set; }
     public IAbility Basic { get; set; }
     public List<IAbility> unlockedAbilities { get; set; }
 
     public void Awake()
     {
-        
-        Q = new EmptyAbility();
-        W = new EmptyAbility();
-        E = new EmptyAbility();
-        R = new EmptyAbility();
-        T = new EmptyAbility();
+        AbilityBindings = new Dictionary<KeyCode, int>();
+
+        one = new EmptyAbility();
+        two = new EmptyAbility();
+        three = new EmptyAbility();
+        four = new EmptyAbility();
+        five = new EmptyAbility();
         Basic = new EmptyAbility();
+
         unlockedAbilities = new List<IAbility>();
         LoadUnlockedAbilities();
         LoadHotBar();
+
+        abilityArray = new IAbility[5] { one, two, three, four, five };
+        SetDefaultBindings();
     }
 
     private void LoadUnlockedAbilities()
@@ -40,8 +52,30 @@ public class PlayerAbilities : MonoBehaviour {
         Debug.Log("Abilities Created");
         Basic = unlockedAbilities[0];
         Debug.Log(Basic);
-        Q = unlockedAbilities[1];
-        W = unlockedAbilities[2];
+        one = unlockedAbilities[1];
+        two = unlockedAbilities[2];
     }
+
+    public void SetDefaultBindings()
+    {
+        AbilityBindings[KeyCode.Q] = 0;
+        AbilityBindings[KeyCode.W] = 1;
+        AbilityBindings[KeyCode.E] = 2;
+        AbilityBindings[KeyCode.R] = 3;
+        AbilityBindings[KeyCode.T] = 4;
+    }
+
+    public void SetNewBinding(KeyCode key, int spot)
+    {
+        AbilityBindings[key] = spot;
+    }
+
+    public void SetNewAbility(IAbility ability, int spot)
+    {
+        abilityArray[spot] = ability;
+    }
+
+
+
 
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour{
+public class MainMenu : MonoBehaviour
+{
 
     private float percentComplete;
     public Canvas Menu;  //main menu of game
@@ -12,9 +13,12 @@ public class MainMenu : MonoBehaviour{
     public Canvas LoadMenu;  //load a saved game
     private Text LoadingProgress;
     private Image LoadingBar;
+    SimpleGameManager gm;
 
     public void Start()
     {
+        gm = SimpleGameManager.Instance;
+
         LoadMenu = LoadMenu.GetComponent<Canvas>();
         Menu = Menu.GetComponent<Canvas>();
         Loading = Loading.GetComponent<Canvas>();
@@ -26,14 +30,27 @@ public class MainMenu : MonoBehaviour{
         LoadMenu.enabled = false;
     }
 
-    //Loads test level (will be start new game in the future)
-    public void LoadTestGame()
+    public void LoadNewGame()
     {
+        Debug.Log("setting state change to Load level 1");
+        gm.OnStateChange += LoadLevel1;
+        Play();
+    }
+
+
+    public void LoadLevel1()
+    {
+        Debug.Log("loading level 1");
         Menu.enabled = false;
         Loading.enabled = true;
-        StartCoroutine(LoadGame("test"));
-        GameManager.manager.StartNewGame();
+        gm.NewGame();
+        StartCoroutine(LoadGame("LevelTest"));
+        //GameManager.manager.StartNewGame();
+    }
 
+    private void Play()
+    {
+        gm.SetGameState(GameState.PLAY);
     }
 
     //Loads game 
@@ -57,13 +74,14 @@ public class MainMenu : MonoBehaviour{
 
     public void LoadSavedGame(string name)
     {
+
         List<string> gameNames = SaveLoad.savedGames();
         if (gameNames.Contains(name))
         {
-            GameManager.manager.LastSavedState = SaveLoad.Load(name);
-            StartCoroutine(LoadGame("test"));
-            GameManager.manager.StartSavedGame();
+            //gm.OnStateChange += gm.LoadSavedGame (SaveLoad.Load (name));
+
         }
+        Play();
 
     }
 

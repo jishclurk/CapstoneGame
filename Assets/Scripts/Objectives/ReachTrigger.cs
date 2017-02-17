@@ -5,7 +5,7 @@ using UnityEngine;
 // Add this to GoalManager to run a "kill the enemies" goal:    
 public class ReachTrigger : MonoBehaviour ,IGoal{
 
-	private CheckPointTrigger checkpoint;
+	private CheckPoint checkpoint;
 	public AudioClip trumpetSound;
 
 
@@ -36,7 +36,7 @@ public class ReachTrigger : MonoBehaviour ,IGoal{
 
 	void Awake() {
 		//playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
-		checkpoint = GameObject.Find("CheckPointTrigger").GetComponent<CheckPointTrigger>();
+		checkpoint = GameObject.Find("CheckPointTrigger").GetComponent<CheckPoint>();
 	}
 
 	public bool IsAchieved() {

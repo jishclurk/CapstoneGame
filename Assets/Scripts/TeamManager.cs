@@ -39,7 +39,6 @@ public class TeamManager : MonoBehaviour {
         cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
         cameraScript.followPlayer = activePlayer.gameObject;
         visibleEnemies = new List<GameObject>();
-        GameManager.manager.SetTeamManager(this);
 
     }
 
