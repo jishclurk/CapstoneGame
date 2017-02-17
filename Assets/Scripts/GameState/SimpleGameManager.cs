@@ -28,7 +28,8 @@ public class SimpleGameManager {
     //name game is saved under
 	public string name { get; set; }
 
-	public int level { get; private set; }
+    public int level = 0;
+
 	public int checkpoint{ get; set; } //current checkpoint that a player is working towards
 
 	//last saved State

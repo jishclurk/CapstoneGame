@@ -9,6 +9,15 @@ public class DDOL : MonoBehaviour {
 	void Awake () {
 		DontDestroyOnLoad (this);
 	}
+
+    private void Start()
+    {
+        if(SimpleGameManager.Instance.level == 0)
+        {
+            SimpleGameManager.Instance.NewGame();
+        }
+    }
+
 	
 
 }
