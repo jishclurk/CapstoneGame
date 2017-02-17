@@ -11,6 +11,7 @@ TagManager:
   - Enemy
   - TeamManager
   - Door
+  - Floor
   layers:
   - Default
   - TransparentFX

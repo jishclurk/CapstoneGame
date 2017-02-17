@@ -12,8 +12,9 @@ public class PlayerAbilities : MonoBehaviour {
     public IAbility Basic { get; set; }
     public List<IAbility> unlockedAbilities { get; set; }
 
-    public PlayerAbilities()
+    public void Awake()
     {
+        
         Q = new EmptyAbility();
         W = new EmptyAbility();
         E = new EmptyAbility();
@@ -36,7 +37,9 @@ public class PlayerAbilities : MonoBehaviour {
     private void LoadHotBar()
     {
         //some sort of reading from save file would happen here
+        Debug.Log("Abilities Created");
         Basic = unlockedAbilities[0];
+        Debug.Log(Basic);
         Q = unlockedAbilities[1];
         W = unlockedAbilities[2];
     }

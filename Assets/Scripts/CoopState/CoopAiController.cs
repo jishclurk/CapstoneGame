@@ -60,16 +60,16 @@ public class CoopAiController : MonoBehaviour {
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
+        eyes = transform.FindChild("Eyes");
+        sightCollider = GetComponent<SphereCollider>();
+        tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>() ;
+
         //this is a mess. These are "shared" variables between co-op ai and player script
         Player player = GetComponent<Player>();
         abilities = player.abilities;
         activeAbility = abilities.Basic;
         attributes = player.attributes;
         watchedEnemies = player.watchedEnemies;
-
-        eyes = transform.FindChild("Eyes");
-        sightCollider = GetComponent<SphereCollider>();
-        tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>() ;
     }
 
     // Use this for initialization
@@ -120,7 +120,10 @@ public class CoopAiController : MonoBehaviour {
     {
         targetedEnemy = null;
         currentState = idleState;
-        activeAbility = abilities.Basic;
+        if (abilities != null)
+        {
+            activeAbility = abilities.Basic;
+        }
 
     }
 
