@@ -41,10 +41,10 @@ public class TeamManager : MonoBehaviour {
         }
 
     }
-
+	 
     void Start()
     {
-        GameManager.manager.SetTeamManager(this);
+        //GameManager.manager.SetTeamManager(this);
     }
 
     void Update()

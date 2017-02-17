@@ -9,7 +9,7 @@ public class StartGame : MonoBehaviour {
 	void Start () {
 		SimpleGameManager gm = SimpleGameManager.Instance;
 		gm.OnStateChange += LoadMainMenu;
-		gm.SetGameState (State.MAIN_MENU);
+		gm.SetGameState (GameState.MAIN_MENU);
 	}
 
 	public void LoadMainMenu(){

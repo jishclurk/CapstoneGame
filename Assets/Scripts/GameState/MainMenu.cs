@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour{
     private Text LoadingProgress;
     private Image LoadingBar;
 	SimpleGameManager gm;
+
     public void Start()
     {
 		gm = SimpleGameManager.Instance;
@@ -29,20 +30,23 @@ public class MainMenu : MonoBehaviour{
     }
 
 	public void LoadNewGame(){
+        Debug.Log("setting state change to Load level 1");
 		gm.OnStateChange += LoadLevel1;
 		Play ();
 	}
 
 
 	public void LoadLevel1(){
+        Debug.Log("loading level 1");
 		Menu.enabled = false;
 		Loading.enabled = true;
+		gm.NewGame ();
 		StartCoroutine(LoadGame("Level1"));
 		//GameManager.manager.StartNewGame();
 	}
 
 	private void Play(){
-		gm.SetGameState(State.PLAY);
+		gm.SetGameState(GameState.PLAY);
 	}
 
     //Loads game 
@@ -70,11 +74,10 @@ public class MainMenu : MonoBehaviour{
         List<string> gameNames = SaveLoad.savedGames();
         if (gameNames.Contains(name))
         {
-			//gm.OnStateChange += SaveLoad
-           // GameManager.manager.LastSavedState = SaveLoad.Load(name);
-          //  StartCoroutine(LoadGame("test"));
-           //GameManager.manager.StartSavedGame();
+			//gm.OnStateChange += gm.LoadSavedGame (SaveLoad.Load (name));
+
         }
+		Play ();
 
     }
 

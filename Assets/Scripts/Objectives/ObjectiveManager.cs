@@ -27,7 +27,7 @@ public class ObjectiveManager : MonoBehaviour {
 
     private void Start()
     {
-        GameManager.manager.SetObjectiveManager(this);
+        //GameManager.manager.SetObjectiveManager(this);
     }
 
     void Update() {
