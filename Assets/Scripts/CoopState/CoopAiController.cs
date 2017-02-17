@@ -63,18 +63,18 @@ public class CoopAiController : MonoBehaviour {
         eyes = transform.FindChild("Eyes");
         sightCollider = GetComponent<SphereCollider>();
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>() ;
-    }
 
-    // Use this for initialization
-    void Start()
-    {
         //this is a mess. These are "shared" variables between co-op ai and player script
         Player player = GetComponent<Player>();
         abilities = player.abilities;
         activeAbility = abilities.Basic;
         attributes = player.attributes;
         watchedEnemies = player.watchedEnemies;
+    }
 
+    // Use this for initialization
+    void Start()
+    {
         currentState = idleState;
     }
 
