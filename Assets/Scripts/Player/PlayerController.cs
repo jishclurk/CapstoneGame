@@ -190,15 +190,23 @@ public class PlayerController : MonoBehaviour
 
     private void HandleAbilityInput()
     {
+
+        foreach (KeyCode key in abilities.AbilityBindings.Keys)
+        {
+            if (Input.GetKeyDown(key))
+            {
+                useSpecialIfPossible(abilities.abilityArray[abilities.AbilityBindings[key]]);
+            }
+        }
         //Handle ability input
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            useSpecialIfPossible(abilities.Q);
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            useSpecialIfPossible(abilities.W);
-        }
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    useSpecialIfPossible(abilities.one);
+        //}
+        //if (Input.GetKeyDown(KeyCode.W))
+        //{
+        //    useSpecialIfPossible(abilities.two);
+        //}
     }
     
     private void useSpecialIfPossible(IAbility ability)
