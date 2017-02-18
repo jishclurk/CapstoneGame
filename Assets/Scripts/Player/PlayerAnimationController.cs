@@ -11,6 +11,10 @@ public class PlayerAnimationController : MonoBehaviour {
     void Awake()
     {
         animator = GetComponent<Animator>();
+        AnimationEvent evt = new AnimationEvent();
+        evt.functionName = "FootStep";
+        AnimationClip clip = animator.runtimeAnimatorController.animationClips[0];
+        clip.AddEvent(evt);
     }
 
     public void AnimateDeath()
@@ -50,4 +54,10 @@ public class PlayerAnimationController : MonoBehaviour {
             animator.SetBool("Aiming", true);
         }
     }
+
+    private void FootStep()
+    {
+        //here is where we can put footstep related things if we want
+    }
+
 }
