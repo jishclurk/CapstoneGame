@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
+    public CombatPause combatPause;
 
     private Animator anim;
     private NavMeshAgent navMeshAgent;
@@ -34,11 +35,14 @@ public class PlayerController : MonoBehaviour
 
     private Transform eyes;
 
+    private SimpleGameManager gm;
+
 
     // Use this for initialization
     //things local to player go here
     private void Awake()
     {
+        combatPause = Instantiate(combatPause) as CombatPause;
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         eyes = transform.FindChild("Eyes");
@@ -51,6 +55,8 @@ public class PlayerController : MonoBehaviour
         resources = player.resources;
         watchedEnemies = player.watchedEnemies;
         Debug.Log("PC start we: " + watchedEnemies);
+
+        gm = SimpleGameManager.Instance;
     }
 
     //things from other scripts go here
@@ -78,6 +84,21 @@ public class PlayerController : MonoBehaviour
         }
 
         HandleAbilityInput();
+
+        //enter combat pause
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (gm.gameState.Equals(GameState.COMABT_PAUSE))
+            {
+                gm.OnStateChange += combatPause.Disable;
+                gm.SetGameState(GameState.PLAY);
+            }else
+            {
+                gm.OnStateChange += combatPause.Enable;
+                gm.SetGameState(GameState.COMABT_PAUSE);
+            }
+
+        }
 
         if (enemyClicked)
         {

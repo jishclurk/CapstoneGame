@@ -100,4 +100,14 @@ public class SimpleGameManager {
 		level = 1;
 	}
 
+    //public void Pause()
+    //{
+    //    Time.timeScale = 0;
+    //}
+    
+    //public void UnPause()
+    //{
+    //    Time.time = 1;
+    //}
+
 }
