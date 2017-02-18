@@ -36,6 +36,11 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector]
     public Transform eyes;
 
+    //attack prefs
+    [HideInInspector]
+    public enum TargetPref { Closest, Lowest, Active};
+    public TargetPref targetChoose;
+
     [HideInInspector]
     public PlayerAbilities abilities;
     [HideInInspector]
@@ -116,7 +121,7 @@ public class CoopAiController : MonoBehaviour {
     }
 
     //Reports if the aiPlayer has sight on at least one enemy
-    private bool CheckLocalVision()
+    public bool CheckLocalVision()
     {
         bool canSeeOneEnemy = false;
         foreach (GameObject enemy in watchedEnemies)

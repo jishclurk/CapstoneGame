@@ -28,8 +28,8 @@ public class TeamManager : MonoBehaviour {
             Player player = gObjList[i].GetComponent<Player>();
 
             playerList.Add(player);
-            Debug.Log(player);
-            Debug.Log(player.strategy);
+            //Debug.Log(player);
+            //Debug.Log(player.strategy);
             if (player.strategy.isplayerControlled)
             {
                 activePlayer = player;

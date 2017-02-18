@@ -21,7 +21,6 @@ public class PlayerAbilities : MonoBehaviour {
         R = new EmptyAbility();
         T = new EmptyAbility();
         Basic = new EmptyAbility();
-        Debug.Log("This should happen first");
         unlockedAbilities = new List<IAbility>();
         LoadUnlockedAbilities();
         LoadHotBar();
@@ -38,9 +37,7 @@ public class PlayerAbilities : MonoBehaviour {
     private void LoadHotBar()
     {
         //some sort of reading from save file would happen here
-        Debug.Log("Abilities Created");
         Basic = unlockedAbilities[0];
-        Debug.Log(Basic);
         Q = unlockedAbilities[1];
         W = unlockedAbilities[2];
     }

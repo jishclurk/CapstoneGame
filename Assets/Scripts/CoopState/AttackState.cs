@@ -7,20 +7,39 @@ public class AttackState : ICoopState
 
     private readonly CoopAiController aiPlayer;
     private float animSpeed;
+    private bool reEvalutateTarget;
 
     public AttackState(CoopAiController statePatternPlayer)
     {
         animSpeed = 0.0f;
         aiPlayer = statePatternPlayer;
+        reEvalutateTarget = true;
     }
 
     public void UpdateState()
     {
-        if (aiPlayer.targetedEnemy == null)
+        if (aiPlayer.targetedEnemy == null || reEvalutateTarget)
         {
-            FindClosestEnemy();
+            switch (aiPlayer.targetChoose)
+            {
+                case CoopAiController.TargetPref.Closest:
+                    FindClosestTarget();
+                    break;
+                case CoopAiController.TargetPref.Lowest:
+                    FindLowestHealthTarget();
+                    break;
+                case CoopAiController.TargetPref.Active:
+                    FindActivePlayerTarget();
+                    break;
+                default:
+                    FindClosestTarget();
+                    break;
+            }
+            reEvalutateTarget = false;
+            
         } else
         {
+            aiPlayer.CheckLocalVision(); //Update visible enemies
             MoveAndShoot();
         }
         WatchActiveplayerForFlee();
@@ -56,7 +75,7 @@ public class AttackState : ICoopState
         aiPlayer.currentState = aiPlayer.fleeState;
     }
 
-    private void FindClosestEnemy()
+    private void FindClosestTarget()
     {
         float bestDist = float.PositiveInfinity;
         GameObject bestTarget = null;
@@ -77,6 +96,43 @@ public class AttackState : ICoopState
             aiPlayer.targetedEnemy = bestTarget.transform;
         }
         
+    }
+
+
+    private void FindLowestHealthTarget()
+    {
+        float lowestHealth = float.PositiveInfinity;
+        GameObject bestTarget = null;
+
+        foreach (GameObject enemy in aiPlayer.tm.visibleEnemies)
+        {
+            float enemyHealth = enemy.GetComponent<EnemyHealth>().currentHealth;
+            if (enemyHealth < lowestHealth)
+            {
+                lowestHealth = enemyHealth;
+                bestTarget = enemy;
+            }
+        }
+
+        if (bestTarget == null)
+        {
+            ToIdleState();
+        }
+        else
+        {
+            aiPlayer.targetedEnemy = bestTarget.transform;
+        }
+
+    }
+
+    private void FindActivePlayerTarget()
+    {
+        aiPlayer.targetedEnemy = aiPlayer.tm.activePlayer.GetComponent<PlayerController>().targetedEnemy;
+        if (aiPlayer.targetedEnemy == null)
+        {
+            FindClosestTarget();
+        }
+
     }
 
     private void MoveAndShoot()
@@ -104,27 +160,27 @@ public class AttackState : ICoopState
             if (aiPlayer.activeAbility.isReady())
             {
                 aiPlayer.activeAbility.Execute(aiPlayer.attributes, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
-
                 if (!aiPlayer.activeAbility.isbasicAttack)
                 {
                     aiPlayer.activeAbility = aiPlayer.abilities.Basic;
                 }
-            }
 
-            //check if enemy died
-            EnemyHealth enemyHP = aiPlayer.targetedEnemy.GetComponent<EnemyHealth>();
-            if (enemyHP != null)
-            {
-                if (enemyHP.isDead)
+                //check if enemy died
+                EnemyHealth enemyHP = aiPlayer.targetedEnemy.GetComponent<EnemyHealth>();
+                if (enemyHP != null)
                 {
-                    //on kill, remove from both team manager visible enemies and all local watchedenemies
-                    aiPlayer.tm.RemoveDeadEnemy(aiPlayer.targetedEnemy.gameObject);
-                    aiPlayer.targetedEnemy = null;
-                    if (!aiPlayer.tm.IsTeamInCombat())
+                    if (enemyHP.isDead)
                     {
-                        ToIdleState();
+                        //on kill, remove from both team manager visible enemies and all local watchedenemies
+                        aiPlayer.tm.RemoveDeadEnemy(aiPlayer.targetedEnemy.gameObject);
+                        aiPlayer.targetedEnemy = null;
+                        if (!aiPlayer.tm.IsTeamInCombat())
+                        {
+                            ToIdleState();
+                        }
                     }
                 }
+                reEvalutateTarget = true;
             }
 
             aiPlayer.navMeshAgent.Stop(); //within range, stop moving
