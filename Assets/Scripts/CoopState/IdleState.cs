@@ -17,8 +17,7 @@ public class IdleState : ICoopState
         //Debug.Log("IDLE");
         WatchActivePlayer();
         aiPlayer.CheckForCombat();
-        aiPlayer.anim.SetBool("Idling", true);
-        aiPlayer.anim.SetBool("NonCombat", true);
+        aiPlayer.animController.AnimateIdle();
     }
 
     public void ToMoveState()

@@ -13,20 +13,24 @@ public class Player : MonoBehaviour {
     [HideInInspector]
     public PlayerAbilities abilities;
     [HideInInspector]
-    public List<GameObject> watchedEnemies;
+    public HashSet<GameObject> watchedEnemies;
+    [HideInInspector]
+    public HashSet<GameObject> visibleEnemies;
+
 
     // Use this for initialization
     void Awake () {
         attributes = GetComponent<CharacterAttributes>();
+        abilities = GetComponent<PlayerAbilities>();
         resources = GetComponent<PlayerResources>();
         strategy = GetComponent<Strategy>();
-        abilities = GetComponent<PlayerAbilities>();
-        watchedEnemies = new List<GameObject>();
-        Debug.Log(watchedEnemies);
+
+        watchedEnemies = new HashSet<GameObject>();
+        visibleEnemies = new HashSet<GameObject>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        //Debug.Log( gameObject.name + " Watched enemy Count:" + watchedEnemies.Count);
+        //Debug.Log( gameObject.name + " Visible enemy Count:" + visibleEnemies.Count);
 	}
 }

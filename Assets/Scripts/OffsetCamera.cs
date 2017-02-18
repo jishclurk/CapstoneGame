@@ -10,16 +10,23 @@ public class OffsetCamera : MonoBehaviour
     private Vector3 offset;
 
     //Simple script from Roll a Ball
-    void Awake()
+    void Start()
     {
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        followPlayer = GameObject.FindWithTag("Player"); //Find temporary player until TeamManager updates this
+        followPlayer = tm.activePlayer.gameObject;
         offset = transform.position - followPlayer.transform.position;
     }
 
     void LateUpdate()
     {
-        transform.position = followPlayer.transform.position + offset;
+        if (transform.position != followPlayer.transform.position + offset)
+        {
+            transform.position = Vector3.Lerp(transform.position, followPlayer.transform.position + offset, 0.2f);
+
+        }else
+        {
+            transform.position = followPlayer.transform.position + offset;
+        }
     }
 
 }
