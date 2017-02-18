@@ -31,6 +31,6 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log( gameObject.name + " Visible enemy Count:" + visibleEnemies.Count);
+        //Debug.Log( gameObject.name + " Visible enemy Count:" + visibleEnemies.Count);
 	}
 }

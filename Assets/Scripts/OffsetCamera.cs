@@ -13,13 +13,20 @@ public class OffsetCamera : MonoBehaviour
     void Start()
     {
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        followPlayer = tm.activePlayer.gameObject; //Find temporary player until TeamManager updates this
+        followPlayer = tm.activePlayer.gameObject;
         offset = transform.position - followPlayer.transform.position;
     }
 
     void LateUpdate()
     {
-        transform.position = followPlayer.transform.position + offset;
+        if (transform.position != followPlayer.transform.position + offset)
+        {
+            transform.position = Vector3.Lerp(transform.position, followPlayer.transform.position + offset, 0.2f);
+
+        }else
+        {
+            transform.position = followPlayer.transform.position + offset;
+        }
     }
 
 }
