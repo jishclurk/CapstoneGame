@@ -24,7 +24,6 @@ public class AttackingState : IEnemyState {
 
     public void UpdateState()
     {
-        enemy.meshRendererFlag.material.color = Color.black;
         timer += Time.fixedDeltaTime;
 
         enemy.DisableNavRotation();

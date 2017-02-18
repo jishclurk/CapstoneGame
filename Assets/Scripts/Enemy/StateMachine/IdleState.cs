@@ -58,7 +58,6 @@ public class EnemyIdleState : IEnemyState {
     private void Idle()
     {
         enemy.navMeshAgent.Stop();
-        enemy.meshRendererFlag.material.color = Color.green;
         enemy.animator.AnimateIdle();
     }
 

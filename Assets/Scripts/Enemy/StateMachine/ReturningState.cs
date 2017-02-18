@@ -58,7 +58,6 @@ public class ReturningState : IEnemyState {
 
     private void ReturnToSpawn()
     {
-        enemy.meshRendererFlag.material.color = Color.blue;
         enemy.navMeshAgent.destination = enemy.returnPosition;
         enemy.navMeshAgent.Resume();
         enemy.animator.AnimateMovement();
