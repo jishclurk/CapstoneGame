@@ -39,7 +39,7 @@ public class TeamManager : MonoBehaviour {
         cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
         cameraScript.followPlayer = activePlayer.gameObject;
         visibleEnemies = new HashSet<GameObject>();
-        GameManager.manager.SetTeamManager(this);
+       //GameManager.manager.SetTeamManager(this); says this GameManager does not exist in current context CLAUDIALOOKHERE
 
     }
 

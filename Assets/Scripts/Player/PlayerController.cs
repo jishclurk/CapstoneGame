@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     //things local to player go here
     private void Awake()
     {
-        combatPause = Instantiate(combatPause) as CombatPause;
+        //combatPause = Instantiate(combatPause) as CombatPause; CLAUDIALOOKHERE
         anim = GetComponent<Animator>();
         animController = GetComponent<PlayerAnimationController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
