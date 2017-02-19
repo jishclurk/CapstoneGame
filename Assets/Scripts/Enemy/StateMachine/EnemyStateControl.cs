@@ -33,10 +33,10 @@ public class EnemyStateControl : MonoBehaviour {
     public List<GameObject> visiblePlayers;
 
     [HideInInspector]
-    public GameObject chaseTarget;
+    public EnemyAnimationController animator;
 
     [HideInInspector]
-    public EnemyAnimationController animator;
+    public EnemyAttack attack;
 
     [HideInInspector]
     public Transform eyes;
@@ -45,6 +45,9 @@ public class EnemyStateControl : MonoBehaviour {
     public TeamManager tm;
 
     private EnemyHealth health;
+    private GameObject chaseTarget;
+    private PlayerResources chaseTargetResources;
+    
 
     private void Awake()
     {
@@ -58,6 +61,7 @@ public class EnemyStateControl : MonoBehaviour {
 
         eyes = transform.FindChild("Eyes");
         health = GetComponent<EnemyHealth>();
+        attack = GetComponent<EnemyAttack>();
         animator = GetComponent<EnemyAnimationController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
@@ -83,7 +87,7 @@ public class EnemyStateControl : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !other.isTrigger)
         {
             Debug.Log("Player Seen");
             visiblePlayers.Add(other.gameObject);
@@ -92,11 +96,41 @@ public class EnemyStateControl : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !other.isTrigger)
         {
             Debug.Log("Player Left");
             visiblePlayers.Remove(other.gameObject);
         }
+    }
+
+    public void DamageCurrentTarget()
+    {
+        if (chaseTargetResources != null)
+        {
+            chaseTargetResources.TakeDamage(attack.attackDamage);
+        }
+    }
+
+    public void ChangeTarget(GameObject newTarget)
+    {
+        chaseTarget = newTarget;
+        chaseTargetResources = newTarget.GetComponent<PlayerResources>();
+    }
+
+    public Vector3 GetTargetPosition()
+    {
+        if (chaseTarget != null)
+            return chaseTarget.transform.position;
+        else
+            return transform.position;
+    }
+
+    public bool IsTargetDead()
+    {
+        if (chaseTargetResources != null)
+            return chaseTargetResources.isDead;
+
+        return true;
     }
 
     public void DisableNavRotation()
@@ -118,5 +152,7 @@ public class EnemyStateControl : MonoBehaviour {
     {
         navMeshAgent.updatePosition = true;
     }
+
+    
 
 }

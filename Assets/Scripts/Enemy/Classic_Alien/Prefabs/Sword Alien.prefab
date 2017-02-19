@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 114692629131809826}
   m_Layer: 0
   m_Name: Sword Alien
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1859,8 +1859,8 @@ MonoBehaviour:
   returnPosition: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 0}
   visiblePlayers: []
-  chaseTarget: {fileID: 0}
   animator: {fileID: 0}
+  attack: {fileID: 0}
   eyes: {fileID: 0}
   tm: {fileID: 0}
 --- !u!114 &114969492220894680

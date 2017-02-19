@@ -49,7 +49,7 @@ public class ReturningState : IEnemyState {
             testDist = Vector3.Magnitude(enemyToTarget);
             if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player") && testDist < minDist)
             {
-                enemy.chaseTarget = hit.collider.gameObject;
+                enemy.ChangeTarget(hit.collider.gameObject);
                 minDist = testDist;
                 ToChasingState();
             }

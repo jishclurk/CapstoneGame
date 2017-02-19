@@ -50,12 +50,8 @@ public class EnemyHealth : MonoBehaviour {
 
     void Update()
     {
-        // Just for testing purposes
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(10);
-            Debug.Log("Enemy Damaged");
-        }
+        if (isDamaged && !isDead)
+            ShowHealthBar();
     }
 
     public void TakeDamage(float amount)
@@ -63,9 +59,6 @@ public class EnemyHealth : MonoBehaviour {
         amount = Mathf.Abs(amount);
         currentHealth -= amount;
         healthBar.fillAmount = currentHealth / maxHealth;
-
-        if (isDamaged)
-            ShowHealthBar();
 
         if (isDead && !deathHandled)
         {
@@ -79,11 +72,13 @@ public class EnemyHealth : MonoBehaviour {
         }
     }
 
+
     private void Death()
     {
         // Handle death animation stuff here
         animator.AnimateDeath();
         teamManager.AwardExperience(experiencePoints);
+        HideHealthBar();
         Destroy(gameObject, 5.0f);
     }
 

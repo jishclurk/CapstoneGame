@@ -5,12 +5,10 @@ using UnityEngine;
 public class ChasingState : IEnemyState {
 
     private readonly EnemyStateControl enemy;
-    private EnemyAttack attack;
 
     public ChasingState(EnemyStateControl stateControl)
     {
         enemy = stateControl;
-        attack = enemy.gameObject.GetComponent<EnemyAttack>();
     }
 
     public void UpdateState()
@@ -51,11 +49,11 @@ public class ChasingState : IEnemyState {
     private void Look()
     {
         RaycastHit hit;
-        Vector3 enemyToTarget = new Vector3(enemy.chaseTarget.transform.position.x - enemy.eyes.position.x, 0, enemy.chaseTarget.transform.position.z - enemy.eyes.position.z);
+        Vector3 enemyToTarget = new Vector3(enemy.GetTargetPosition().x - enemy.eyes.position.x, 0, enemy.GetTargetPosition().z - enemy.eyes.position.z);
         if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player"))
         {
-            enemy.chaseTarget = hit.collider.gameObject;
-            if (Vector3.Distance(enemy.chaseTarget.transform.position, enemy.transform.position) <= (attack.attackRange - attack.attackRangeOffset))
+            enemy.ChangeTarget(hit.collider.gameObject);
+            if (Vector3.Distance(enemy.GetTargetPosition(), enemy.transform.position) <= (enemy.attack.attackRange - enemy.attack.attackRangeOffset))
             {
                 ToAttackingState();
                 return;
@@ -69,7 +67,7 @@ public class ChasingState : IEnemyState {
                 enemyToTarget = new Vector3(player.transform.position.x - enemy.eyes.position.x, 0, player.transform.position.z - enemy.eyes.position.z);
                 if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player"))
                 {
-                    enemy.chaseTarget = hit.collider.gameObject;
+                    enemy.ChangeTarget(hit.collider.gameObject);
                     return;
                 }
             }
@@ -81,7 +79,7 @@ public class ChasingState : IEnemyState {
 
     private void Chase()
     {
-        enemy.navMeshAgent.destination = enemy.chaseTarget.transform.position;
+        enemy.navMeshAgent.destination = enemy.GetTargetPosition();
         enemy.navMeshAgent.Resume();
         enemy.animator.AnimateMovement();
     }
