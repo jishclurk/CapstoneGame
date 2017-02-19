@@ -39,6 +39,9 @@ public class EnemyStateControl : MonoBehaviour {
     public EnemyAttack attack;
 
     [HideInInspector]
+    public EnemySoundController sounds;
+
+    [HideInInspector]
     public Transform eyes;
 
     [HideInInspector]
@@ -62,6 +65,7 @@ public class EnemyStateControl : MonoBehaviour {
         eyes = transform.FindChild("Eyes");
         health = GetComponent<EnemyHealth>();
         attack = GetComponent<EnemyAttack>();
+        sounds = GetComponent<EnemySoundController>();
         animator = GetComponent<EnemyAnimationController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 

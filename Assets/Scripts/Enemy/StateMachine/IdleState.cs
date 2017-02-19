@@ -29,6 +29,7 @@ public class EnemyIdleState : IEnemyState {
 
     public void ToChasingState()
     {
+        enemy.sounds.PlayAggroSound();
         enemy.currentState = enemy.chasingState;
     }
 
