@@ -5,43 +5,46 @@ using UnityEngine;
 public class EnemyAnimationController : MonoBehaviour {
 
     private Animator animator;
-    private bool deathAnimated;
+
+    private enum AnimState { Idle, Attacking, Running}
+
+    private AnimState currentAnim;
 
 	// Use this for initialization
 	void Awake () {
         animator = GetComponent<Animator>();
-	}
+        currentAnim = AnimState.Idle;
+    }
 
     public void AnimateDeath()
     {
-        if (!deathAnimated)
-        {
-            animator.SetTrigger("death");
-            deathAnimated = true;
-        }
+        animator.SetBool("dead", true);
     }
 
     public void AnimateMovement()
     {
-        if (!deathAnimated)
+        if (currentAnim != AnimState.Running)
         {
             animator.SetTrigger("running");
+            currentAnim = AnimState.Running;
         }
     }
 
     public void AnimateIdle()
     {
-        if (!deathAnimated)
+        if (currentAnim != AnimState.Idle)
         {
             animator.SetTrigger("idle");
+            currentAnim = AnimState.Idle;
         }
     }
 
     public void AnimateAttack()
     {
-        if (!deathAnimated)
+        if (currentAnim != AnimState.Attacking)
         {
             animator.SetTrigger("attacking");
+            currentAnim = AnimState.Attacking;
         }
     }
 }
