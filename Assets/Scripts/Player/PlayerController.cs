@@ -88,6 +88,8 @@ public class PlayerController : MonoBehaviour
         }
         if (activeAbility.requiresAim)
         {
+            enemyClicked = false; //This line allows the player to still click on floor and move from above HandleRayCastHit, 
+                                    //but any targets clicked will not be recognized. Stops active ability from switching to basic and still having AOE circle. can be changed
             HandleAbilityAim();
         }
 
@@ -243,7 +245,7 @@ public class PlayerController : MonoBehaviour
             {
                 ability.Execute(attributes, gameObject, gameObject);
             }
-            else if (ability.requiresAim)
+            else if (!activeAbility.requiresAim && ability.requiresAim)
             {
                 enemyClicked = false;
                 friendClicked = false;
@@ -289,6 +291,7 @@ public class PlayerController : MonoBehaviour
         animSpeed = 0.0f;
         selectingAbilityTarget = false;
         activeAbility = abilities.Basic;
+        Destroy(aoeArea);
        
     }
 

@@ -34,6 +34,7 @@ public class PlayerResources : MonoBehaviour {
     public float energyRegenAmt = 1.0f;
 
     private Animator anim;
+    private PlayerAnimationController animController;
     private TeamManager tm;
     public bool isDead { get { return currentHealth <= 0; } }
     public bool isDamaged { get { return currentHealth < maxHealth; } }
@@ -43,6 +44,7 @@ public class PlayerResources : MonoBehaviour {
     {
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         anim = GetComponent<Animator>();
+        animController = GetComponent<PlayerAnimationController>();
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
         InvokeRepeating("RegenerateEnergy", 1.0f, energyRegenRateInSeconds);
@@ -94,7 +96,7 @@ public class PlayerResources : MonoBehaviour {
 
     private void Death()
     {
-        anim.SetInteger("Death", 1);
+        animController.AnimateDeath();
         deathHandled = true;
         gameObject.GetComponent<Strategy>().setAsDead();
 

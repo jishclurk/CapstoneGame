@@ -32,8 +32,7 @@ public class Strategy : MonoBehaviour {
     public void setAsPlayer()
     {
         isplayerControlled = true;
-        playerScript.ResetOnSwitch(); //reset player to default values
-
+        playerScript.ResetOnSwitch(); //reset player to default values Why do this? reset run and targets
         //set values based on previous ai control
         if (aiScript.targetedEnemy != null)
         {
@@ -49,6 +48,7 @@ public class Strategy : MonoBehaviour {
     public void setAsCoopAI()
     {
         isplayerControlled = false;
+        playerScript.ResetOnSwitch(); //reset player to default values. Why do this? Disable AOETarget
         aiScript.ResetOnSwitch(); //reset ai default values
         //set values based on previous player control
 
