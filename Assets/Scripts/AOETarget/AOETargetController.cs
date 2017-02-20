@@ -6,10 +6,14 @@ public class AOETargetController : MonoBehaviour
 {
 
     public HashSet<GameObject> affectedEnemies;
+    public float effectiveRange;
+    public Player activePlayer;
 
-    private void Start()
+    private void Awake()
     {
         affectedEnemies = new HashSet<GameObject>();
+        effectiveRange = Mathf.Infinity;
+        activePlayer = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>().activePlayer;
     }
 
     // Update is called once per frame
@@ -23,7 +27,17 @@ public class AOETargetController : MonoBehaviour
         {
             if (hit.collider.CompareTag("Floor"))
             {
-                transform.position = hit.point;
+                if (Vector3.Distance(activePlayer.transform.position, hit.point) < effectiveRange)
+                {
+                    transform.position = hit.point;
+                }
+                else
+                {
+                    Vector3 playerToPoint = hit.point - activePlayer.transform.position;
+                    Vector3 adjustedPosition = activePlayer.transform.position + (Vector3.Normalize(playerToPoint) * effectiveRange);
+                    transform.position = adjustedPosition;
+                }
+                
             }
         }
     }

@@ -22,7 +22,7 @@ public class AOE : IAbility {
     public AOE()
     {
         name = "Area of Effect";
-        effectiveRange = 9.0f;
+        effectiveRange = 10.0f;
         baseDamage = 25.0f;
         fireRate = 0.0f;
         isbasicAttack = false;

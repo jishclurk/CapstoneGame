@@ -250,6 +250,7 @@ public class PlayerController : MonoBehaviour
                 enemyClicked = false;
                 friendClicked = false;
                 aoeArea = Instantiate(ability.aoeTarget) as GameObject;
+                aoeArea.GetComponent<AOETargetController>().effectiveRange = ability.effectiveRange;
                 activeAbility = ability;
             }
             else if (ability.requiresTarget && (friendClicked || enemyClicked))
