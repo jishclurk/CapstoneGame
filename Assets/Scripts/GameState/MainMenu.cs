@@ -70,12 +70,17 @@ public class MainMenu : MonoBehaviour
     {
         Menu.enabled = false;
         LoadMenu.enabled = true;
+        List<string> gameNames = SaveLoad.savedGames();
+        Debug.Log(gameNames[0]);
+        //created buttons for each saved game
+
     }
 
     public void LoadSavedGame(string name)
     {
 
         List<string> gameNames = SaveLoad.savedGames();
+        Debug.Log(gameNames);
         if (gameNames.Contains(name))
         {
             //gm.OnStateChange += gm.LoadSavedGame (SaveLoad.Load (name));

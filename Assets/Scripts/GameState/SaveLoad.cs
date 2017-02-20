@@ -35,7 +35,7 @@ public static class SaveLoad
 
     public static List<string> savedGames()
     {
-        string[] nameArray = Directory.GetFiles(Application.dataPath + "/savedGame*");
+        string[] nameArray = Directory.GetFiles(Application.dataPath, "savedGame*");
         List<string> names = new List<string>(nameArray);
         for (int i = 0; i < names.Count; i++)
         {
