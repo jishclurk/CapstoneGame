@@ -44,6 +44,7 @@ public class PlayerAbilities : MonoBehaviour {
         unlockedAbilities.Add(new PistolShot());
         unlockedAbilities.Add(new Zap());
         unlockedAbilities.Add(new SelfHeal());
+        unlockedAbilities.Add(new AOE());
     }
 
     private void LoadHotBar()
@@ -54,6 +55,7 @@ public class PlayerAbilities : MonoBehaviour {
         Debug.Log(Basic);
         one = unlockedAbilities[1];
         two = unlockedAbilities[2];
+        three = unlockedAbilities[3];
     }
 
     public void SetDefaultBindings()

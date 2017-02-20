@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
 
     private Transform eyes;
 
+    private GameObject aoeArea;
+
     private SimpleGameManager gm;
 
 
@@ -83,6 +85,10 @@ public class PlayerController : MonoBehaviour
             {
                 HandleRayCastHit(hit);
             }
+        }
+        if (activeAbility.requiresAim)
+        {
+            HandleAbilityAim();
         }
 
         HandleAbilityInput();
@@ -233,14 +239,34 @@ public class PlayerController : MonoBehaviour
         //TODO: add debug/actual messages saying why ability failed
         if (ability.isReady() && resources.currentEnergy > ability.energyRequired)
         {
-            if (ability.requiresTarget && (friendClicked || enemyClicked))
-            {
-                activeAbility = ability;
-            }
             if (!ability.requiresTarget)
             {
                 ability.Execute(attributes, gameObject, gameObject);
             }
+            else if (ability.requiresAim)
+            {
+                enemyClicked = false;
+                friendClicked = false;
+                aoeArea = Instantiate(ability.aoeTarget) as GameObject;
+                activeAbility = ability;
+            }
+            else if (ability.requiresTarget && (friendClicked || enemyClicked))
+            {
+                activeAbility = ability;
+            }
+            
+        }
+
+    }
+
+    private void HandleAbilityAim()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            activeAbility.Execute(attributes, gameObject, aoeArea);
+            aoeArea.GetComponent<AOETargetController>().enabled = false;
+            Destroy(aoeArea, activeAbility.timeToCast);
+            activeAbility = abilities.Basic;
         }
 
     }
@@ -270,7 +296,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
        
-        if (!other.isTrigger && other.tag.Equals("Enemy"))
+        if (!other.isTrigger && other.tag.Equals("Enemy") && !other.GetComponent<EnemyHealth>().isDead)
         {
             watchedEnemies.Add(other.gameObject);
         }

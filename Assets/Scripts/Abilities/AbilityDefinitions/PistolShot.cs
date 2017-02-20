@@ -14,6 +14,8 @@ public class PistolShot : IAbility {
     public float coolDownTime { get; set; }
     public float lastUsedTime { get; set; }
     public bool requiresTarget { get; set; }
+    public bool requiresAim { get; set; }
+    public Object aoeTarget { get; set; }
 
     public PistolShot()
     {
@@ -27,6 +29,8 @@ public class PistolShot : IAbility {
         lastUsedTime = 0.0f;
         requiresTarget = true;
         energyRequired = 0.0f;
+        requiresAim = false;
+        aoeTarget = null;
 
     }
 

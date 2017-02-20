@@ -150,7 +150,7 @@ public class CoopAiController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.isTrigger && other.tag.Equals("Enemy"))
+        if (!other.isTrigger && other.tag.Equals("Enemy") && !other.GetComponent<EnemyHealth>().isDead)
         {
             watchedEnemies.Add(other.gameObject);
         }

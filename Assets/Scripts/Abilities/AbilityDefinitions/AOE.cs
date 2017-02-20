@@ -14,27 +14,42 @@ public class AOE : IAbility {
     public float coolDownTime { get; set; }
     public float lastUsedTime { get; set; }
     public bool requiresTarget { get; set; }
+    public bool requiresAim { get; set; }
+    public Object aoeTarget { get; set; }
     private float nextFire;
+    
 
     public AOE()
     {
         name = "Area of Effect";
         effectiveRange = 9.0f;
-        baseDamage = 100.0f;
+        baseDamage = 25.0f;
         fireRate = 0.0f;
         isbasicAttack = false;
         timeToCast = 0.0f;
-        coolDownTime = 5.0f;
+        coolDownTime = 1.0f;
         lastUsedTime = -Mathf.Infinity;
         requiresTarget = true;
-        energyRequired = 20.0f;
+        energyRequired = 10.0f;
+        requiresAim = true;
+        aoeTarget = Resources.Load("6x6CircleTarget");
     }
 
     public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        Debug.Log(name + " on " + target.name + " does " + baseDamage + " damage.");
+        float adjustedDamage = baseDamage + attributes.Strength * 2;
+        Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
+        AOETargetController aoeController = target.GetComponent<AOETargetController>();
+
+        foreach (GameObject enemy in aoeController.affectedEnemies)
+        {
+            enemy.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
+        }
+        origin.GetComponent<PlayerResources>().UseEnergy(energyRequired);
+        
     }
+
 
     public bool isReady()
     {

@@ -15,6 +15,8 @@ public class SelfHeal : IAbility
     public float coolDownTime { get; set; }
     public float lastUsedTime { get; set; }
     public bool requiresTarget { get; set; }
+    public bool requiresAim { get; set; }
+    public Object aoeTarget { get; set; }
 
     public SelfHeal()
     {
@@ -28,7 +30,8 @@ public class SelfHeal : IAbility
         lastUsedTime = -Mathf.Infinity;
         requiresTarget = false;
         energyRequired = 20.0f;
-
+        requiresAim = false;
+        aoeTarget = null;
     }
 
     public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
