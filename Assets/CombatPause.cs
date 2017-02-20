@@ -5,10 +5,12 @@ using UnityEngine;
 public class CombatPause : MonoBehaviour {
 
     Canvas PauseScreen;
+    public Canvas AbilitiesScreen;
 	// Use this for initialization
 	void Start () {
         PauseScreen = GetComponent<Canvas>();
         PauseScreen.enabled = false;
+        AbilitiesScreen = Instantiate(AbilitiesScreen) as Canvas;
 	}
 	
 	// Update is called once per frame
