@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LayerDefinitions;
 
 public class EnemyIdleState : IEnemyState {
 
@@ -47,7 +48,7 @@ public class EnemyIdleState : IEnemyState {
             RaycastHit hit;
             Vector3 enemyToTarget = new Vector3(player.transform.position.x - enemy.eyes.position.x, 0, player.transform.position.z - enemy.eyes.position.z);
             testDist = Vector3.Magnitude(enemyToTarget);
-            if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player") && testDist < minDist)
+            if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit, 100f, Layers.NonEnemy) && hit.collider.gameObject.CompareTag("Player") && testDist < minDist)
             {
                 enemy.ChangeTarget(hit.collider.gameObject);
                 minDist = testDist;

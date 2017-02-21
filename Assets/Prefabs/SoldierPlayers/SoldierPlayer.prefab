@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4462323113363570}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WeaponGrip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4153132764217186}
   - component: {fileID: 137100101319173444}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SK_Soldier_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 65740713504307486}
   - component: {fileID: 135671153560371404}
   - component: {fileID: 114884886569611064}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SoldierPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4953757853962526}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Weapon_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4257745834970784}
   - component: {fileID: 137776892369888332}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SK_Soldier_Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4305585179174776}
   - component: {fileID: 137314941082021726}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SK_Soldier_Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4612711924994732}
   - component: {fileID: 137812396339947058}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Weapon_Rifle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4255544246919476}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4180478474410910}
   - component: {fileID: 95251178231366318}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Weapon_Rifle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4603281028475294}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShootFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,8 +416,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b0a873e79400644a4b07dfa21f734c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatPause: {fileID: 114761013296560978, guid: e20a8687fa445574a81a9c77cb377a48,
-    type: 2}
   targetedEnemy: {fileID: 0}
   enemyClicked: 0
 --- !u!114 &114518638314874782

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LayerDefinitions;
 
 public class ChasingState : IEnemyState {
 
@@ -50,7 +51,7 @@ public class ChasingState : IEnemyState {
     {
         RaycastHit hit;
         Vector3 enemyToTarget = new Vector3(enemy.GetTargetPosition().x - enemy.eyes.position.x, 0, enemy.GetTargetPosition().z - enemy.eyes.position.z);
-        if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player"))
+        if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit, 100f, Layers.NonEnemy) && hit.collider.gameObject.CompareTag("Player"))
         {
             enemy.ChangeTarget(hit.collider.gameObject);
             if (Vector3.Distance(enemy.GetTargetPosition(), enemy.transform.position) <= (enemy.attack.attackRange - enemy.attack.attackRangeOffset))
@@ -65,7 +66,7 @@ public class ChasingState : IEnemyState {
             foreach (GameObject player in enemy.visiblePlayers)
             {
                 enemyToTarget = new Vector3(player.transform.position.x - enemy.eyes.position.x, 0, player.transform.position.z - enemy.eyes.position.z);
-                if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player"))
+                if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit, 100f, Layers.NonEnemy) && hit.collider.gameObject.CompareTag("Player"))
                 {
                     enemy.ChangeTarget(hit.collider.gameObject);
                     return;
