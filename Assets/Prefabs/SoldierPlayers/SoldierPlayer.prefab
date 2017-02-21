@@ -416,6 +416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b0a873e79400644a4b07dfa21f734c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combatPause: {fileID: 114761013296560978, guid: e20a8687fa445574a81a9c77cb377a48,
+    type: 2}
   targetedEnemy: {fileID: 0}
   enemyClicked: 0
 --- !u!114 &114518638314874782
@@ -452,9 +454,13 @@ MonoBehaviour:
   sightDist: 10
   targetedEnemy: {fileID: 0}
   eyes: {fileID: 0}
+  targetChoose: 0
   abilities: {fileID: 0}
   attributes: {fileID: 0}
   tm: {fileID: 0}
+  animController: {fileID: 0}
+  animSpeed: 0
+  walkSpeed: 0
 --- !u!114 &114880247594843412
 MonoBehaviour:
   m_ObjectHideFlags: 1
