@@ -19,19 +19,25 @@ public class CombatPause : MonoBehaviour {
         AbilitiesScreen.enabled = false;
         inCombatPause = false;
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        //unLockedAbitiesSlots = 
-        //for(int i = 0; i< AbilitiesScreen.transform.GetChild(2).transform.GetChild(0).childCount; i++)
-        //{
-        //    unLockedAbitiesSlots[i] = AbilitiesScreen.transform.GetChild(2).transform.GetChild(0).GetChild(i).gameObject;
-        //}
+        // unLockedAbitiesSlots =
+        Debug.Log(AbilitiesScreen.transform.GetChild(2).transform.GetChild(0).childCount);
+        Debug.Log(AbilitiesScreen.transform.GetChild(2).transform.GetChild(1).childCount);
 
-        //for (int i = 0; i < AbilitiesScreen.transform.GetChild(2).transform.GetChild(1).childCount; i++)
-        //{
-        //    setAbilitesSlots[i] = AbilitiesScreen.transform.GetChild(2).transform.GetChild(1).GetChild(i).gameObject;
-        //}
+        unLockedAbitiesSlots = new List<GameObject>();
+        setAbilitesSlots = new List<GameObject>();
 
-        //Debug.Log(unLockedAbitiesSlots);
-        //Debug.Log(setAbilitesSlots);
+        for (int i = 0; i < AbilitiesScreen.transform.GetChild(2).transform.GetChild(0).childCount; i++)
+        {
+            unLockedAbitiesSlots.Add(AbilitiesScreen.transform.GetChild(2).transform.GetChild(0).GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < AbilitiesScreen.transform.GetChild(2).transform.GetChild(1).childCount; i++)
+        {
+            setAbilitesSlots.Add(AbilitiesScreen.transform.GetChild(2).transform.GetChild(1).GetChild(i).gameObject);
+        }
+
+        Debug.Log(unLockedAbitiesSlots);
+        Debug.Log(setAbilitesSlots);
         //setAbilitiesMode = false
 
     }

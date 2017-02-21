@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AOE : IAbility {
 
@@ -17,10 +19,13 @@ public class AOE : IAbility {
     public bool requiresAim { get; set; }
     public Object aoeTarget { get; set; }
     private float nextFire;
-    
+    public int id { get; private set; }
+    public Image image { get; private set; }
 
     public AOE()
     {
+        image = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Grenade.prefab", typeof(Image));
+        id = 0;
         name = "Area of Effect";
         effectiveRange = 10.0f;
         baseDamage = 25.0f;

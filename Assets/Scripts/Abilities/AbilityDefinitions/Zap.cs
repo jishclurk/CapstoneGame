@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Zap : IAbility {
 
@@ -17,9 +19,13 @@ public class Zap : IAbility {
     public bool requiresAim { get; set; }
     public Object aoeTarget { get; set; }
     private float nextFire;
+    public int id { get; private set; }
+    public Image image { get; private set; }
 
     public Zap()
     {
+        image = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Zap.prefab", typeof(Image));
+        id = 4;
         name = "Zap";
         effectiveRange = 9.0f;
         baseDamage = 40.0f;

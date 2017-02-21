@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PistolShot : IAbility {
 
@@ -16,9 +18,13 @@ public class PistolShot : IAbility {
     public bool requiresTarget { get; set; }
     public bool requiresAim { get; set; }
     public Object aoeTarget { get; set; }
+    public int id { get; private set; }
+    public Image image { get; private set; }
 
     public PistolShot()
     {
+        image = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Pistol.prefab", typeof(Image));
+        id = 2;
         name = "Pistol Shot";
         effectiveRange = 9.0f;
         baseDamage = 5.0f;

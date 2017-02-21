@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SelfHeal : IAbility
 {
@@ -17,9 +19,13 @@ public class SelfHeal : IAbility
     public bool requiresTarget { get; set; }
     public bool requiresAim { get; set; }
     public Object aoeTarget { get; set; }
+    public int id { get; private set; }
+    public Image image { get; private set; }
 
     public SelfHeal()
     {
+        image = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Heal.prefab", typeof(Image));
+        id = 3;
         name = "Heal";
         effectiveRange = 5.0f;
         baseDamage = 20.0f;

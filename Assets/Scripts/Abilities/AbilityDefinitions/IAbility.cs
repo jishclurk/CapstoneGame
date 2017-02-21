@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public interface IAbility {
 
@@ -17,7 +18,8 @@ public interface IAbility {
     float lastUsedTime { get; set; }
     Object aoeTarget { get; set; }
 
-
+    Image image { get; }
+    int id { get; }
 
     void Execute(CharacterAttributes attributes, GameObject origin, GameObject target);
     bool isReady();

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EmptyAbility : IAbility {
 
@@ -16,9 +18,13 @@ public class EmptyAbility : IAbility {
     public bool requiresTarget { get; set; }
     public bool requiresAim { get; set; }
     public Object aoeTarget { get; set; }
+    public int id { get; private set; }
+    public Image image { get; private set; }
 
     public EmptyAbility()
     {
+        image = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Empty.prefab", typeof(Image));
+        id = 1;
         name = "Empty Ability";
         effectiveRange = 0.0f;
         baseDamage = 0.0f;
