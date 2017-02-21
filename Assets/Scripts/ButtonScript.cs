@@ -6,9 +6,11 @@ public class ButtonScript : MonoBehaviour {
 
     // Use this for initialization
    private AudioSource sound;
+	private bool pressed;
 
     void Start () {
         sound = GetComponent<AudioSource>();
+		pressed = false;
     }
 	
 	// Update is called once per frame
@@ -17,10 +19,16 @@ public class ButtonScript : MonoBehaviour {
 	}
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+		if (!other.isTrigger && other.CompareTag("Player"))
         {
             sound.Play();
-            GameObject.FindGameObjectWithTag("Door").SetActive(false);
+			Debug.Log ("Button Pressed");
+			pressed = !pressed;
+            //GameObject.FindGameObjectWithTag("Door").SetActive(false);
         }
     }
+
+	public bool Pressed(){
+		return pressed;
+	}
 }
