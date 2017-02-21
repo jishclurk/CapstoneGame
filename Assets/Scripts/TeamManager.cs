@@ -6,7 +6,7 @@ public class TeamManager : MonoBehaviour {
     public CombatPause combatPause;
 
     private GameObject[] gObjList;
-    private List<Player> playerList;
+    public List<Player> playerList;
     public Player activePlayer;
     //public Strategy activeStrat;
 
@@ -144,6 +144,7 @@ public class TeamManager : MonoBehaviour {
             playerList[i].attributes.Experience += experiencePoints;
         }
     }
+
 
     public SerializedPlayer[] currentState()
     {

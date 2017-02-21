@@ -9,19 +9,17 @@ public class CombatPause : MonoBehaviour {
     private bool inCombatPause;
     private List<GameObject> unLockedAbitiesSlots;
     private List<GameObject> setAbilitesSlots;
-   // private bool setAbilitiesMode;
     TeamManager tm;
-	// Use this for initialization
-	void Start () {
+    private GameObject attributesScreen;
+
+    // Use this for initialization
+    void Start() {
         PauseScreen = GetComponent<Canvas>();
         PauseScreen.enabled = false;
         AbilitiesScreen = Instantiate(AbilitiesScreen) as Canvas;
         AbilitiesScreen.enabled = false;
         inCombatPause = false;
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        // unLockedAbitiesSlots =
-        Debug.Log(AbilitiesScreen.transform.GetChild(2).transform.GetChild(0).childCount);
-        Debug.Log(AbilitiesScreen.transform.GetChild(2).transform.GetChild(1).childCount);
 
         unLockedAbitiesSlots = new List<GameObject>();
         setAbilitesSlots = new List<GameObject>();
@@ -36,10 +34,7 @@ public class CombatPause : MonoBehaviour {
             setAbilitesSlots.Add(AbilitiesScreen.transform.GetChild(2).transform.GetChild(1).GetChild(i).gameObject);
         }
 
-        Debug.Log(unLockedAbitiesSlots);
-        Debug.Log(setAbilitesSlots);
-        //setAbilitiesMode = false
-
+        attributesScreen = AbilitiesScreen.transform.GetChild(8).gameObject;
     }
 
     // Update is called once per frame
@@ -62,14 +57,15 @@ public class CombatPause : MonoBehaviour {
         }
 	}
 
-    private void loadUnlockedAbilities()
+    //loads 
+    private void loadCurrentPlayerInfo(int? player)
     {
+        Player active = tm.activePlayer;
         List<IAbility> activeAbilities = tm.activePlayer.abilities.unlockedAbilities;
         for (int i= 0; i< activeAbilities.Count; i++)
         {
 
         }
-        //GameObject UnlockedAbilitesBar = AbilitiesScreen.
     }
 
     public void Enable()
