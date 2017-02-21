@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TeamManager : MonoBehaviour {
+    public CombatPause combatPause;
 
     private GameObject[] gObjList;
     private List<Player> playerList;
@@ -15,10 +16,14 @@ public class TeamManager : MonoBehaviour {
 	public PlayerResources playerResources;
 
     public HashSet<GameObject> visibleEnemies;
+    private SimpleGameManager gm;
 
 
     // Use this for initialization
     void Start () {
+        combatPause = Instantiate(combatPause) as CombatPause;
+        gm = SimpleGameManager.Instance;
+
         gObjList = GameObject.FindGameObjectsWithTag("Player");
 
         playerList = new List<Player>();
@@ -85,6 +90,20 @@ public class TeamManager : MonoBehaviour {
     public bool IsTeamInCombat()
     {
         return visibleEnemies.Count > 0;
+    }
+
+    public void StartComabtPause()
+    {
+        if (gm.gameState.Equals(GameState.COMABT_PAUSE))
+        {
+            gm.OnStateChange += combatPause.Disable;
+            gm.SetGameState(GameState.PLAY);
+        }
+        else
+        {
+            gm.OnStateChange += combatPause.Enable;
+            gm.SetGameState(GameState.COMABT_PAUSE);
+        }
     }
 
     public void RemoveDeadEnemy(GameObject enemy)
