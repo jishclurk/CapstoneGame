@@ -135,9 +135,30 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 82766885606510124, guid: d75c9258cd76d7d41b64b45b1d99247b,
+        type: 2}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82766885606510124, guid: d75c9258cd76d7d41b64b45b1d99247b,
+        type: 2}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114763722557415842, guid: d75c9258cd76d7d41b64b45b1d99247b,
+        type: 2}
+      propertyPath: puzzleActivator
+      value: 
+      objectReference: {fileID: 206478368}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d75c9258cd76d7d41b64b45b1d99247b, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &206478368 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114645884870323860, guid: ad002517c30a54ad3ac30ac680bfefca,
+    type: 2}
+  m_PrefabInternal: {fileID: 1314076336}
+  m_Script: {fileID: 11500000, guid: 90895372d6f194773a83a93476c12e71, type: 3}
 --- !u!1001 &381818068
 Prefab:
   m_ObjectHideFlags: 0

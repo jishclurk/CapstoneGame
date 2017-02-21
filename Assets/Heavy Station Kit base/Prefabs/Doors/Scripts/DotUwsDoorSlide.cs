@@ -11,6 +11,7 @@ public class DotUwsDoorSlide : MonoBehaviour {
 	private AudioClip[] _sounds = new AudioClip[2];
 	private bool _sndLoaded = false;
 	private int _plaingSnd = -1; // 0-Open, 1-Close 
+	public CircuitPuzzle puzzleActivator;
 
 	void Start () {
 		foreach(Transform child in transform.parent.transform){
@@ -50,11 +51,15 @@ public class DotUwsDoorSlide : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other){
-		slide_door(other, 0); // Open door
+		if (puzzleActivator.Output()){
+			slide_door(other, 0); // Open door
+		}
 	}	
 
 	void OnTriggerExit(Collider other){
-		slide_door(other, 1); // Close door
+		if (puzzleActivator.Output()){
+			slide_door(other, 1); // Close door
+		}
 	}	
 
 }
