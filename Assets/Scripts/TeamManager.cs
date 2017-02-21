@@ -31,7 +31,7 @@ public class TeamManager : MonoBehaviour {
         for (int i = 0; i < gObjList.Length; i++)
         {
             Player player = gObjList[i].GetComponent<Player>();
-
+            player.id = i+1;
             playerList.Add(player);
             //Debug.Log(player);
             //Debug.Log(player.strategy);
@@ -55,6 +55,18 @@ public class TeamManager : MonoBehaviour {
         {
             cycleActivePlayer();
         }
+    }
+
+    public Player getPlayerFromId(int id)
+    {
+        foreach(Player player in playerList)
+        {
+            if(player.id == id)
+            {
+                return player;
+            }
+        }
+        return activePlayer; 
     }
 
     //eventually will take a parameter to change certain player

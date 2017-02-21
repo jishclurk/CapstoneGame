@@ -17,6 +17,7 @@ public class Player : MonoBehaviour {
     [HideInInspector]
     public HashSet<GameObject> visibleEnemies;
 
+    public int id;
 
     // Use this for initialization
     void Awake () {

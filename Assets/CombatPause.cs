@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatPause : MonoBehaviour {
 
@@ -52,20 +53,24 @@ public class CombatPause : MonoBehaviour {
                 {
                     PauseScreen.enabled = false;
                     AbilitiesScreen.enabled = true;
+                    loadCurrentPlayerInfo(-1);
                 }
             }
         }
 	}
 
-    //loads 
-    private void loadCurrentPlayerInfo(int? player)
+    //loads info from player with playerID, if id = -1, loads active player infor
+    public void loadCurrentPlayerInfo(int playerID)
     {
-        Player active = tm.activePlayer;
-        List<IAbility> activeAbilities = tm.activePlayer.abilities.unlockedAbilities;
-        for (int i= 0; i< activeAbilities.Count; i++)
-        {
 
+        Player active = tm.getPlayerFromId(playerID);
+
+        for (int i= 0; i< active.abilities.unlockedAbilities.Count; i++)
+        {
+            unLockedAbitiesSlots[i].GetComponent<Image>().sprite = active.abilities.unlockedAbilities[i].image.sprite;
         }
+
+
     }
 
     public void Enable()
