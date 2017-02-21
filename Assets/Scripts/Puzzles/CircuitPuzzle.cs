@@ -5,7 +5,7 @@ using UnityEngine;
 public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 
 
-	ICircuitPiece[] input;
+	List<ICircuitPiece> result;
 	MeshRenderer hub;
 	public Material hubActive;
 	public Material hubInactive;
@@ -15,8 +15,20 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 
 	// Use this for initialization
 	void Start () {
-		input = GetComponentsInChildren<ICircuitPiece> ();
-		Debug.Log ("circuit pieces count: "+input.Length);
+		ICircuitPiece[] input = this.transform.GetComponentsInChildren<ICircuitPiece>();
+		result = new List<ICircuitPiece>();
+		foreach (ICircuitPiece cp in input)
+		{
+			if (cp.GetTransform ().parent == this.transform) {
+
+				//Debug.Log ("circuit piece 1: "+cp.ToString()+"\n");
+				result.Add (cp);
+				//Debug.Log ("circuit piece 1: "+result[0].ToString()+"\n");
+			}
+
+		}
+		//input = GetComponentsInChildren<ICircuitPiece> ();
+		//Debug.Log ("circuit piece 1: "+result..ToString()+"\n" + "circuit piece 2:"+result[1].ToString());
 		hub = GetComponent<MeshRenderer> ();
 		connector = this.gameObject.transform.Find ("Out Connector").GetComponent<MeshRenderer> ();
 
@@ -24,12 +36,14 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Output ()) {
-			hub.material = connector.material = hubActive;
-			Debug.Log ("got here");
+		if (this.Output ()) {
+			hub.material = hubActive;
+			connector.material = hubActive;
+			//Debug.Log ("got here");
 		} 
 		else {
-			hub.material = connector.material = hubInactive;
+			hub.material = hubInactive;
+			connector.material = hubInactive;
 		}
 	}
 
@@ -54,29 +68,33 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 	
 	}
 
+	public Transform GetTransform(){
+		return this.transform;
+	}
+
 	bool Or(){
-				return input[1].Output() || input[2].Output();
+		return result[0].Output() || result[1].Output();
 		//return true;
 	}
 	bool And(){
-				return input[1].Output() && input[2].Output();
+				return result[0].Output() && result[1].Output();
 		//return false;
 	}
 
 	bool XOr(){
-		return input[1].Output() ^ input[2].Output();
+		return result[0].Output() != result[1].Output();
 	}
 
 	bool NAnd(){
-		return !(input[1].Output() && input[2].Output());
+		return !(result[0].Output() && result[1].Output());
 	}
 
 	bool XNor(){
-		return input[1].Output() == input[2].Output();
+		return result[0].Output() == result[1].Output();
 	}
 
 	bool NOr(){
-		return ! (input[1].Output() || input[2].Output());
+		return ! (result[0].Output() || result[1].Output());
 		//return true;
 	}
 

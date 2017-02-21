@@ -19,11 +19,11 @@ public class Generator : MonoBehaviour,ICircuitPiece {
 //		turnedOn = false;
 
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		//if (turnedOn) {
-			if (Output ()) {
+			if (this.Output ()) {
 				connector.material = genActive;
 			} else {
 				connector.material = genInactive;
@@ -37,5 +37,9 @@ public class Generator : MonoBehaviour,ICircuitPiece {
 
 	public bool Output(){
 		return input[1].Output ();
+	}
+
+	public Transform GetTransform(){
+		return this.transform;
 	}
 }

@@ -21,7 +21,7 @@ public class CircuitButton : MonoBehaviour, ICircuitPiece {
 //		} else {
 //			connector.material.Lerp(activeGreen,inactiveWhite,  1.0f);
 //		}
-		if (Output ()) {
+		if (this.Output ()) {
 			connector.material = activeGreen;
 		} else {
 			connector.material = inactiveWhite;
@@ -30,6 +30,10 @@ public class CircuitButton : MonoBehaviour, ICircuitPiece {
 
 	public bool Output(){
 
-		return button.Pressed ();
+		return this.button.Pressed ();
+	}
+
+	public Transform GetTransform(){
+		return this.transform;
 	}
 }
