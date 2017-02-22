@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LayerDefinitions;
 
 public class AOETargetController : MonoBehaviour
 {
@@ -20,10 +21,9 @@ public class AOETargetController : MonoBehaviour
     void Update()
     {
 
-        Debug.Log("AffectedEnemies: " + affectedEnemies.Count);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 200))
+        if (Physics.Raycast(ray, out hit, 200f, Layers.NonWall))
         {
             if (hit.collider.CompareTag("Floor"))
             {

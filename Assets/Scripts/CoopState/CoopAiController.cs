@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using LayerDefinitions;
 
 public class CoopAiController : MonoBehaviour {
 
@@ -117,7 +118,7 @@ public class CoopAiController : MonoBehaviour {
     {
         RaycastHit hit;
         Vector3 playerToTarget = target.position - eyes.position;
-        return Physics.Raycast(eyes.position, playerToTarget, out hit) && hit.collider.gameObject.CompareTag("Enemy");
+        return Physics.Raycast(eyes.position, playerToTarget, out hit, 100f, Layers.NonPlayer) && hit.collider.gameObject.CompareTag("Enemy");
     }
 
     //Reports if the aiPlayer has sight on at least one enemy

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using LayerDefinitions;
 
 public class PlayerController : MonoBehaviour
 {
@@ -77,7 +78,8 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Input.GetButtonDown("Fire2"))
         {
-            if (Physics.Raycast(ray, out hit))
+            //Physics.Raycast(eyes.position, playerToTarget, out hit, 100f, Layers.NonPlayer) && hit.collider.gameObject.CompareTag("Enemy");
+            if (Physics.Raycast(ray, out hit, 100f, Layers.NonWall))
             {
                 HandleRayCastHit(hit);
             }
@@ -236,7 +238,7 @@ public class PlayerController : MonoBehaviour
             {
                 enemyClicked = false;
                 friendClicked = false;
-                aoeArea = Instantiate(ability.aoeTarget) as GameObject;
+                aoeArea = Instantiate(ability.aoeTarget, transform.position, Quaternion.identity) as GameObject;
                 aoeArea.GetComponent<AOETargetController>().effectiveRange = ability.effectiveRange;
                 activeAbility = ability;
             }
@@ -265,7 +267,7 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 playerToTarget = target.position - eyes.position;
-        return Physics.Raycast(eyes.position, playerToTarget, out hit) && hit.collider.gameObject.CompareTag("Enemy");
+        return Physics.Raycast(eyes.position, playerToTarget, out hit, 100f, Layers.NonPlayer) && hit.collider.gameObject.CompareTag("Enemy");
 
     }
 

@@ -2091,7 +2091,7 @@ GameObject:
   - component: {fileID: 23418121855736370}
   m_Layer: 0
   m_Name: Support_4
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -2288,7 +2288,7 @@ GameObject:
   - component: {fileID: 4619447207443916}
   - component: {fileID: 33744001900002448}
   - component: {fileID: 64341628456364324}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Support_4_Collider(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3395,9 +3395,9 @@ GameObject:
   - component: {fileID: 4293152987687776}
   - component: {fileID: 33861632942613584}
   - component: {fileID: 23588495955584232}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Support_4 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -4244,7 +4244,7 @@ GameObject:
   - component: {fileID: 4985573635565256}
   - component: {fileID: 33271709210167582}
   - component: {fileID: 64809061950054480}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Support_4_Collider(3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4294,7 +4294,7 @@ GameObject:
   - component: {fileID: 4107592769898494}
   - component: {fileID: 33652680011861804}
   - component: {fileID: 64994084027607830}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Support_4_Collider(4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5063,7 +5063,7 @@ GameObject:
   - component: {fileID: 4975321536739750}
   - component: {fileID: 33671000363068472}
   - component: {fileID: 64812176528891256}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Support_4_Collider(2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16470,7 +16470,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -16494,7 +16494,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!95 &95849977850053518
 Animator:
   serializedVersion: 3
@@ -19821,3 +19821,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79d110f68db7ae4a86f95038f7176ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  puzzleActivator: {fileID: 0}
