@@ -31,8 +31,20 @@ public class TeamManager : MonoBehaviour {
         for (int i = 0; i < gObjList.Length; i++)
         {
             Player player = gObjList[i].GetComponent<Player>();
-            player.id = i+1;
-            playerList.Add(player);
+            //player.id = i+1;
+            Debug.Log("ID: " + player.id);
+
+            //Insertion sort band-aid
+            int index = 0;
+            for(int j = 0; j < playerList.Count; j++)
+            {
+                if (playerList[j].id < player.id)
+                {
+                    index = j;
+                }
+            }
+            playerList.Insert(index, player);
+
             //Debug.Log(player);
             //Debug.Log(player.strategy);
             if (player.strategy.isplayerControlled)
