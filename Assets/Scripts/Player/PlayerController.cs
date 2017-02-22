@@ -238,7 +238,15 @@ public class PlayerController : MonoBehaviour
             {
                 enemyClicked = false;
                 friendClicked = false;
-                aoeArea = Instantiate(ability.aoeTarget, transform.position, Quaternion.identity) as GameObject;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if(Physics.Raycast(ray, out hit, 100f, Layers.NonWall))
+                {
+                    aoeArea = Instantiate(ability.aoeTarget, hit.point, Quaternion.identity) as GameObject;
+                } else
+                {
+                    aoeArea = Instantiate(ability.aoeTarget, transform.position, Quaternion.identity) as GameObject;
+                }
                 aoeArea.GetComponent<AOETargetController>().effectiveRange = ability.effectiveRange;
                 activeAbility = ability;
             }
