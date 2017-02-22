@@ -34,16 +34,7 @@ public class TeamManager : MonoBehaviour {
             //player.id = i+1;
             Debug.Log("ID: " + player.id);
 
-            //Insertion sort band-aid
-            int index = 0;
-            for(int j = 0; j < playerList.Count; j++)
-            {
-                if (playerList[j].id < player.id)
-                {
-                    index = j;
-                }
-            }
-            playerList.Insert(index, player);
+            playerList.Add(player);
 
             //Debug.Log(player);
             //Debug.Log(player.strategy);
@@ -52,6 +43,8 @@ public class TeamManager : MonoBehaviour {
                 activePlayer = player;
             }
         }
+
+        playerList.Sort((x, y) => x.id - y.id);
 
         cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
         cameraScript.followPlayer = activePlayer.gameObject;

@@ -1854,7 +1854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1.5
-  attackDamage: 10
+  attackDamage: 3
   attackRange: 2
   attackRangeOffset: 0.2
 --- !u!135 &135438443644259322

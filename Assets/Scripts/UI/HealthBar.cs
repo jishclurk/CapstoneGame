@@ -13,7 +13,7 @@ public class HealthBar : MonoBehaviour {
     private PlayerResources resources;
 
 	// Use this for initialization
-	void Start() {
+	void Awake () {
 		tm = GameObject.FindWithTag ("TeamManager").GetComponent<TeamManager> ();
 		healthSlider = GetComponent<Image>();
         resources = tm.playerList[ID - 1].resources;

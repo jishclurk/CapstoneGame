@@ -92,8 +92,8 @@ public class EnemyStateControl : MonoBehaviour {
             StopTargetting();
             foreach (GameObject player in visiblePlayers)
                 mobKnowledge.RemoveVisiblePlayer(player);
-            DisableNavRotation();
-            DisableNavPosition();
+
+            navMeshAgent.enabled = false;
             this.enabled = false;
         }
 	}
@@ -166,7 +166,12 @@ public class EnemyStateControl : MonoBehaviour {
     public bool IsTargetDead()
     {
         if (chaseTargetResources != null)
+        {
+            if (chaseTargetResources.isDead)
+                mobKnowledge.ReportPlayerDead(chaseTarget);
             return chaseTargetResources.isDead;
+        }
+            
 
         return true;
     }
@@ -179,16 +184,6 @@ public class EnemyStateControl : MonoBehaviour {
     public void EnableNavRotation()
     {
         navMeshAgent.updateRotation = true;
-    }
-
-    public void DisableNavPosition()
-    {
-        navMeshAgent.updatePosition = false;
-    }
-
-    public void EnableNavPosition()
-    {
-        navMeshAgent.updatePosition = true;
     }
 
 }
