@@ -242,10 +242,10 @@ public class PlayerController : MonoBehaviour
                 RaycastHit hit;
                 if(Physics.Raycast(ray, out hit, 100f, Layers.NonWall))
                 {
-                    aoeArea = Instantiate(ability.aoeTarget, hit.point, Quaternion.identity) as GameObject;
+                    aoeArea = Instantiate(ability.aoeTarget, hit.point, Quaternion.Euler(-90, 0, 0)) as GameObject;
                 } else
                 {
-                    aoeArea = Instantiate(ability.aoeTarget, transform.position, Quaternion.identity) as GameObject;
+                    aoeArea = Instantiate(ability.aoeTarget, transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
                 }
                 aoeArea.GetComponent<AOETargetController>().effectiveRange = ability.effectiveRange;
                 activeAbility = ability;

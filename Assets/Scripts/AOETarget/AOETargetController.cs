@@ -10,7 +10,7 @@ public class AOETargetController : MonoBehaviour
     public float effectiveRange;
     public Player activePlayer;
 
-    private void Awake()
+    private void Start()
     {
         affectedEnemies = new HashSet<GameObject>();
         effectiveRange = Mathf.Infinity;
@@ -23,7 +23,7 @@ public class AOETargetController : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 200f, Layers.NonWall))
+        if (Physics.Raycast(ray, out hit, 200f, Layers.Floor))
         {
             if (hit.collider.CompareTag("Floor"))
             {

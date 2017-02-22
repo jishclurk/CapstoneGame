@@ -37,7 +37,7 @@ public class AOE : IAbility {
         requiresTarget = true;
         energyRequired = 10.0f;
         requiresAim = true;
-        aoeTarget = Resources.Load("6x6CircleTarget");
+        aoeTarget = Resources.Load("3x3RedAuraTarget");
     }
 
     public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
