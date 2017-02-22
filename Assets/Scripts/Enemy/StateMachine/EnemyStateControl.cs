@@ -30,9 +30,6 @@ public class EnemyStateControl : MonoBehaviour {
     public AttackingState attackingState;
 
     [HideInInspector]
-    public List<GameObject> visiblePlayers;
-
-    [HideInInspector]
     public EnemyAnimationController animator;
 
     [HideInInspector]
@@ -47,10 +44,13 @@ public class EnemyStateControl : MonoBehaviour {
     [HideInInspector]
     public TeamManager tm;
 
+    private EnemyMobKnowledge mobKnowledge;
     private EnemyHealth health;
     private GameObject chaseTarget;
     private PlayerResources chaseTargetResources;
-    
+    private List<GameObject> visiblePlayers;
+    private bool isTargetting;
+
 
     private void Awake()
     {
@@ -69,6 +69,11 @@ public class EnemyStateControl : MonoBehaviour {
         animator = GetComponent<EnemyAnimationController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
+        isTargetting = false;
+
+        if (transform.parent.CompareTag("EnemyMob"))
+            mobKnowledge = GetComponentInParent<EnemyMobKnowledge>();
+
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
     }
 
@@ -84,8 +89,12 @@ public class EnemyStateControl : MonoBehaviour {
             currentState.UpdateState();
         else
         {
+            StopTargetting();
+            foreach (GameObject player in visiblePlayers)
+                mobKnowledge.RemoveVisiblePlayer(player);
             DisableNavRotation();
             DisableNavPosition();
+            this.enabled = false;
         }
 	}
 
@@ -93,8 +102,9 @@ public class EnemyStateControl : MonoBehaviour {
     {
         if (other.CompareTag("Player") && !other.isTrigger)
         {
-            Debug.Log("Player Seen");
             visiblePlayers.Add(other.gameObject);
+            mobKnowledge.AddVisiblePlayer(other.gameObject);
+            FindTarget();
         }
     }
 
@@ -102,8 +112,8 @@ public class EnemyStateControl : MonoBehaviour {
     {
         if (other.CompareTag("Player") && !other.isTrigger)
         {
-            Debug.Log("Player Left");
             visiblePlayers.Remove(other.gameObject);
+            mobKnowledge.RemoveVisiblePlayer(other.gameObject);
         }
     }
 
@@ -115,10 +125,34 @@ public class EnemyStateControl : MonoBehaviour {
         }
     }
 
-    public void ChangeTarget(GameObject newTarget)
+    public void FindTarget()
     {
-        chaseTarget = newTarget;
-        chaseTargetResources = newTarget.GetComponent<PlayerResources>();
+        if (isTargetting)
+            StopTargetting();
+
+        chaseTarget = mobKnowledge.GetNewTarget();
+        if (chaseTarget != null)
+        {
+            chaseTargetResources = chaseTarget.GetComponent<PlayerResources>();
+            isTargetting = true;
+        }
+    }
+
+    public void StopTargetting()
+    {
+        if (chaseTarget != null && isTargetting)
+        {
+            mobKnowledge.RemoveTargettedPlayer(chaseTarget);
+            isTargetting = false;
+        }  
+    }
+
+    public List<GameObject> GetVisiblePlayers()
+    {
+        if (mobKnowledge != null)
+            return mobKnowledge.GetVisiblePlayers();
+
+        return visiblePlayers;
     }
 
     public Vector3 GetTargetPosition()
@@ -156,7 +190,5 @@ public class EnemyStateControl : MonoBehaviour {
     {
         navMeshAgent.updatePosition = true;
     }
-
-    
 
 }

@@ -20,7 +20,7 @@ public class TeamManager : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         combatPause = Instantiate(combatPause) as CombatPause;
         gm = SimpleGameManager.Instance;
 
@@ -59,9 +59,9 @@ public class TeamManager : MonoBehaviour {
 
     public Player getPlayerFromId(int id)
     {
-        foreach(Player player in playerList)
+        foreach (Player player in playerList)
         {
-            if(player.id == id)
+            if (player.id == id)
             {
                 return player;
             }

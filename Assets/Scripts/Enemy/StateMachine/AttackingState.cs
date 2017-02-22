@@ -38,6 +38,7 @@ public class AttackingState : IEnemyState {
     public void ToReturningState()
     {
         enemy.EnableNavRotation();
+        enemy.StopTargetting();
         enemy.currentState = enemy.returningState;
     }
 

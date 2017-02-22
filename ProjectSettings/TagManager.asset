@@ -12,6 +12,7 @@ TagManager:
   - TeamManager
   - Door
   - Floor
+  - EnemyMob
   layers:
   - Default
   - TransparentFX

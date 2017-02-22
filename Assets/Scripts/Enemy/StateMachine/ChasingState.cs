@@ -26,6 +26,7 @@ public class ChasingState : IEnemyState {
 
     public void ToReturningState()
     {
+        enemy.StopTargetting();
         enemy.currentState = enemy.returningState;
     }
 
@@ -53,7 +54,6 @@ public class ChasingState : IEnemyState {
         Vector3 enemyToTarget = new Vector3(enemy.GetTargetPosition().x - enemy.eyes.position.x, 0, enemy.GetTargetPosition().z - enemy.eyes.position.z);
         if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit, 100f, Layers.NonEnemy) && hit.collider.gameObject.CompareTag("Player"))
         {
-            enemy.ChangeTarget(hit.collider.gameObject);
             if (Vector3.Distance(enemy.GetTargetPosition(), enemy.transform.position) <= (enemy.attack.attackRange - enemy.attack.attackRangeOffset))
             {
                 ToAttackingState();
@@ -63,12 +63,12 @@ public class ChasingState : IEnemyState {
         else
         {
             // If chasing target is not in our vision, check if another player is
-            foreach (GameObject player in enemy.visiblePlayers)
+            foreach (GameObject player in enemy.GetVisiblePlayers())
             {
                 enemyToTarget = new Vector3(player.transform.position.x - enemy.eyes.position.x, 0, player.transform.position.z - enemy.eyes.position.z);
                 if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit, 100f, Layers.NonEnemy) && hit.collider.gameObject.CompareTag("Player"))
                 {
-                    enemy.ChangeTarget(hit.collider.gameObject);
+                    enemy.FindTarget();
                     return;
                 }
             }
