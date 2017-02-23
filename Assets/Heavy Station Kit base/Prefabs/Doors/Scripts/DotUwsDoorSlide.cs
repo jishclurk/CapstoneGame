@@ -30,7 +30,7 @@ public class DotUwsDoorSlide : MonoBehaviour {
 	
  	void slide_door(Collider other, int _id){ // 0 - Open, 1 - Close
 		string _anim = "Door_"+((_id == 0) ? "Open" : "Close");
-		if( ( _animator != null) && (other.gameObject.tag == "Player") ){
+		if( ( _animator != null) && (other.gameObject.tag == "Player") && (!other.isTrigger)){
 			AnimatorStateInfo _st = _animator.GetCurrentAnimatorStateInfo(0);
 			if( !_st.IsName(_anim) ){
 				float _time = _st.normalizedTime;

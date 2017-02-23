@@ -10,12 +10,15 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 	public Material hubActive;
 	public Material hubInactive;
 	MeshRenderer connector;
+	ParticleSystem ps;
 
 	public GateType gateType;
 
 	// Use this for initialization
 	void Start () {
 		ICircuitPiece[] input = this.transform.GetComponentsInChildren<ICircuitPiece>();
+		ps = this.transform.FindChild ("GreenPortal").GetComponent<ParticleSystem> ();
+		ps.Stop ();
 		result = new List<ICircuitPiece>();
 		foreach (ICircuitPiece cp in input)
 		{
@@ -39,11 +42,17 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 		if (this.Output ()) {
 			hub.material = hubActive;
 			connector.material = hubActive;
+			if (ps.isStopped) {
+				ps.Play ();
+			}
 			//Debug.Log ("got here");
 		} 
 		else {
 			hub.material = hubInactive;
 			connector.material = hubInactive;
+			if (ps.isPlaying) {
+				ps.Stop ();
+			}
 		}
 	}
 
