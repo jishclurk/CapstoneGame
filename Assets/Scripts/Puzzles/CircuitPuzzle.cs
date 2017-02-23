@@ -24,9 +24,9 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 		{
 			if (cp.GetTransform ().parent == this.transform) {
 
-				//Debug.Log ("circuit piece 1: "+cp.ToString()+"\n");
+				Debug.Log ("circuit piece 1: "+cp.ToString()+"\n");
 				result.Add (cp);
-				//Debug.Log ("circuit piece 1: "+result[0].ToString()+"\n");
+				Debug.Log ("circuit piece 1: "+result[0].ToString()+"\n");
 			}
 
 		}

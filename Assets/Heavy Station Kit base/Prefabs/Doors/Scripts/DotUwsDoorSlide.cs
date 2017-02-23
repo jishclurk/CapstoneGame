@@ -30,7 +30,7 @@ public class DotUwsDoorSlide : MonoBehaviour {
 	
  	void slide_door(Collider other, int _id){ // 0 - Open, 1 - Close
 		string _anim = "Door_"+((_id == 0) ? "Open" : "Close");
-		if( ( _animator != null) && (other.gameObject.tag == "Player") && (!other.isTrigger)){
+		if( ( _animator != null) && (other.gameObject.tag == "Player") ){
 			AnimatorStateInfo _st = _animator.GetCurrentAnimatorStateInfo(0);
 			if( !_st.IsName(_anim) ){
 				float _time = _st.normalizedTime;
@@ -51,14 +51,16 @@ public class DotUwsDoorSlide : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other){
-		if (puzzleActivator.Output()){
+		if (puzzleActivator == null || puzzleActivator.Output()){
 			slide_door(other, 0); // Open door
+		Debug.Log("Trying to open door");
 		}
 	}	
 
 	void OnTriggerExit(Collider other){
-		if (puzzleActivator.Output()){
+		if (puzzleActivator == null || puzzleActivator.Output()){
 			slide_door(other, 1); // Close door
+			Debug.Log("Closing open door");
 		}
 	}	
 
