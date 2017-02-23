@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
     private GameObject aoeArea;
 
+    private Transform gunBarrel;
+
 
 
     // Use this for initialization
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
         resources = player.resources;
         watchedEnemies = player.watchedEnemies;
         visibleEnemies = player.visibleEnemies;
+        gunBarrel = transform.FindDeepChild("ShootFX");
     }
 
     //things from other scripts go here
@@ -141,7 +144,7 @@ public class PlayerController : MonoBehaviour
             bool targetIsDead = targetedEnemy.GetComponent<EnemyHealth>().isDead;
             if (activeAbility.isReady() && !targetIsDead)
             {
-                activeAbility.Execute(attributes, gameObject, targetedEnemy.gameObject);
+                activeAbility.Execute(attributes, gameObject, targetedEnemy.gameObject, gunBarrel);
                 if (!activeAbility.isbasicAttack) {
                     activeAbility = abilities.Basic;
                 }
@@ -233,7 +236,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!ability.requiresTarget)
             {
-                ability.Execute(attributes, gameObject, gameObject);
+                ability.Execute(attributes, gameObject, gameObject, gameObject.transform);
             }
             else if (!activeAbility.requiresAim && ability.requiresAim)
             {
@@ -286,7 +289,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire1"))
         {
-            activeAbility.Execute(attributes, gameObject, aoeArea);
+            activeAbility.Execute(attributes, gameObject, aoeArea, gameObject.transform);
             aoeArea.GetComponent<AOETargetController>().enabled = false;
             Destroy(aoeArea, activeAbility.timeToCast);
             activeAbility = abilities.Basic;

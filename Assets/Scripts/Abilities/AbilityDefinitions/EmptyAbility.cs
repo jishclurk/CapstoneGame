@@ -40,7 +40,7 @@ public class EmptyAbility : IAbility {
 
     }
 
-    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
+    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target, Transform fxSpawn) //Likely to be replaced with Character or Entity?
     {
 
     }

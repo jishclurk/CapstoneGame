@@ -41,7 +41,7 @@ public class PlayerAbilities : MonoBehaviour {
     private void LoadUnlockedAbilities()
     {
         //some sort of reading from save file would happen here
-        unlockedAbilities.Add(new PistolShot());
+        unlockedAbilities.Add(new RifleShot());
         unlockedAbilities.Add(new Zap());
         unlockedAbilities.Add(new SelfHeal());
         unlockedAbilities.Add(new AOE());

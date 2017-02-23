@@ -40,7 +40,7 @@ public class AOE : IAbility {
         aoeTarget = Resources.Load("3x3RedAuraTarget");
     }
 
-    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
+    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target, Transform fxSpawn)
     {
         lastUsedTime = Time.time;
         float adjustedDamage = baseDamage + attributes.Strength * 2;

@@ -66,6 +66,9 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector]
     public FleeState fleeState;
 
+    [HideInInspector]
+    public Transform gunBarrel;
+
     private void Awake()
     {
         idleState = new IdleState(this);
@@ -90,6 +93,7 @@ public class CoopAiController : MonoBehaviour {
         attributes = player.attributes;
         watchedEnemies = player.watchedEnemies;
         visibleEnemies = player.visibleEnemies;
+        gunBarrel = transform.FindDeepChild("ShootFX");
     }
 
     // Use this for initialization

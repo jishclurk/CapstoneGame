@@ -21,7 +21,7 @@ public interface IAbility {
     Image image { get; }
     int id { get; }
 
-    void Execute(CharacterAttributes attributes, GameObject origin, GameObject target);
+    void Execute(CharacterAttributes attributes, GameObject origin, GameObject target, Transform fxSpawn);
     bool isReady();
 
 }

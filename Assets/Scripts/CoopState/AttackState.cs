@@ -159,7 +159,7 @@ public class AttackState : ICoopState
 
             if (aiPlayer.activeAbility.isReady())
             {
-                aiPlayer.activeAbility.Execute(aiPlayer.attributes, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
+                aiPlayer.activeAbility.Execute(aiPlayer.attributes, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject, aiPlayer.gunBarrel);
                 if (!aiPlayer.activeAbility.isbasicAttack)
                 {
                     aiPlayer.activeAbility = aiPlayer.abilities.Basic;

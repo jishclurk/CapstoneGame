@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PistolShot : IAbility {
+public class RifleShot : IAbility {
 
     public string name { get; set; }
     public float effectiveRange { get; set; }
@@ -20,15 +20,16 @@ public class PistolShot : IAbility {
     public Object aoeTarget { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
+    private Object projectile;
 
-    public PistolShot()
+    public RifleShot()
     {
         image = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Pistol.prefab", typeof(Image));
-        id = 2;
-        name = "Pistol Shot";
+        id = 8;
+        name = "Rifle Shot";
         effectiveRange = 9.0f;
         baseDamage = 5.0f;
-        fireRate = 0.8f;
+        fireRate = 0.4f;
         isbasicAttack = true;
         timeToCast = 0.0f;
         coolDownTime = 0.0f;
@@ -37,15 +38,26 @@ public class PistolShot : IAbility {
         energyRequired = 0.0f;
         requiresAim = false;
         aoeTarget = null;
+        projectile = Resources.Load("RifleShot/YellowPlasmaShot");
 
     }
 
-    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target, Transform fxSpawn) //Likely to be replaced with Character or Entity?
+    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target, Transform fxSpawn)
     {
         lastUsedTime = Time.time;
+
         float adjustedDamage = baseDamage + attributes.Strength * 0.1f;
         Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
+
+        Vector3 playerToTarget = target.transform.position - fxSpawn.position;
+        RaycastHit hit;
+        if (Physics.Raycast(fxSpawn.position, playerToTarget, out hit, 100f, LayerDefinitions.Layers.Enemy))
+        {
+            GameObject project = Object.Instantiate(projectile, fxSpawn.position, Quaternion.identity) as GameObject;
+            project.transform.LookAt(target.transform.position);
+        }
+
         //useEnergy not required
     }
 
