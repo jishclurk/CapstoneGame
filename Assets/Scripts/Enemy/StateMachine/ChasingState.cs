@@ -44,6 +44,7 @@ public class ChasingState : IEnemyState {
     {
         if (Vector3.Distance(enemy.transform.position, enemy.returnPosition) >= enemy.deaggroDistance)
         {
+            enemy.ReportTargetOutOfRange();
             ToReturningState();
         }
     }

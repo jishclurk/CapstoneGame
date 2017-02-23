@@ -80,11 +80,13 @@ public class EnemyMobKnowledge : MonoBehaviour {
         }
     }
 
-    public void ReportPlayerDead(GameObject player)
+    public void RemoveKnowledgeOfPlayer(GameObject player)
     {
         if (playerVisibilityMap.ContainsKey(player))
             playerVisibilityMap.Remove(player);
         if (playerAggroMap.ContainsKey(player))
             playerAggroMap.Remove(player);
     }
+
+
 }

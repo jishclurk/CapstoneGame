@@ -147,6 +147,12 @@ public class EnemyStateControl : MonoBehaviour {
         }  
     }
 
+    public void ReportTargetOutOfRange()
+    {
+        StopTargetting();
+        mobKnowledge.RemoveKnowledgeOfPlayer(chaseTarget);
+    }
+
     public List<GameObject> GetVisiblePlayers()
     {
         if (mobKnowledge != null)
@@ -168,10 +174,9 @@ public class EnemyStateControl : MonoBehaviour {
         if (chaseTargetResources != null)
         {
             if (chaseTargetResources.isDead)
-                mobKnowledge.ReportPlayerDead(chaseTarget);
+                mobKnowledge.RemoveKnowledgeOfPlayer(chaseTarget);
             return chaseTargetResources.isDead;
         }
-            
 
         return true;
     }
