@@ -23,7 +23,8 @@ public class PistolShot : IAbility {
 
     public PistolShot()
     {
-        image = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Pistol.prefab", typeof(Image));
+        Image imagePrefab = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Pistol.prefab", typeof(Image));
+        image = GameObject.Instantiate(imagePrefab) as Image;
         id = 2;
         name = "Pistol Shot";
         effectiveRange = 9.0f;

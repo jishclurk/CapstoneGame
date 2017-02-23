@@ -44,7 +44,7 @@ public class MainMenu : MonoBehaviour
         Menu.enabled = false;
         Loading.enabled = true;
         gm.NewGame();
-        StartCoroutine(LoadGame("LevelTest"));
+        StartCoroutine(LoadGame("Level1Final"));
         //GameManager.manager.StartNewGame();
     }
 

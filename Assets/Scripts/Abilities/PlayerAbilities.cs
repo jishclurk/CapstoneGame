@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class PlayerAbilities : MonoBehaviour {
+public class PlayerAbilities : MonoBehaviour
+{
 
     //binding from key to spot in the ability array
     public Dictionary<KeyCode, int> AbilityBindings;
@@ -15,7 +18,6 @@ public class PlayerAbilities : MonoBehaviour {
     public IAbility two { get; set; }
     public IAbility three { get; set; }
     public IAbility four { get; set; }
-    public IAbility five { get; set; }
     public IAbility Basic { get; set; }
     public List<IAbility> unlockedAbilities { get; set; }
 
@@ -27,35 +29,34 @@ public class PlayerAbilities : MonoBehaviour {
         two = new EmptyAbility();
         three = new EmptyAbility();
         four = new EmptyAbility();
-        five = new EmptyAbility();
-        Basic = new EmptyAbility();
+        Basic = new PistolShot();
 
         unlockedAbilities = new List<IAbility>();
         LoadUnlockedAbilities();
         LoadHotBar();
 
-        abilityArray = new IAbility[5] { one, two, three, four, five };
+        abilityArray = new IAbility[4] { one, two, three, four };
         SetDefaultBindings();
     }
 
     private void LoadUnlockedAbilities()
     {
         //some sort of reading from save file would happen here
-        unlockedAbilities.Add(new PistolShot());
+        //unlockedAbilities.Add(new PistolShot());
         unlockedAbilities.Add(new Zap());
         unlockedAbilities.Add(new SelfHeal());
-        unlockedAbilities.Add(new AOE());
+       // unlockedAbilities.Add(new AOE());
         unlockedAbilities.Add(new GrenadeThrow());
     }
 
     private void LoadHotBar()
     {
         //some sort of reading from save file would happen here
-        Basic = unlockedAbilities[0];
-        one = unlockedAbilities[1];
-        two = unlockedAbilities[2];
-        three = unlockedAbilities[3];
-        four = unlockedAbilities[4];
+      //  Basic = unlockedAbilities[0];
+        one = unlockedAbilities[0];
+        two = unlockedAbilities[1];
+        three = unlockedAbilities[2];
+        //four = unlockedAbilities[4];
     }
 
     public void SetDefaultBindings()
@@ -64,7 +65,6 @@ public class PlayerAbilities : MonoBehaviour {
         AbilityBindings[KeyCode.W] = 1;
         AbilityBindings[KeyCode.E] = 2;
         AbilityBindings[KeyCode.R] = 3;
-        AbilityBindings[KeyCode.T] = 4;
     }
 
     public void SetNewBinding(KeyCode key, int spot)
@@ -78,6 +78,5 @@ public class PlayerAbilities : MonoBehaviour {
     }
 
 
-
-
 }
+

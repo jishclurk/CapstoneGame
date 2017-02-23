@@ -23,7 +23,8 @@ public class EmptyAbility : IAbility {
 
     public EmptyAbility()
     {
-        image = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Empty.prefab", typeof(Image));
+        Image imagePrefab = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Empty.prefab", typeof(Image));
+        image = GameObject.Instantiate(imagePrefab) as Image;
         id = 1;
         name = "Empty Ability";
         effectiveRange = 0.0f;

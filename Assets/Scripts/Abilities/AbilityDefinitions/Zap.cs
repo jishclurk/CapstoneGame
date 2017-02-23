@@ -24,7 +24,8 @@ public class Zap : IAbility {
 
     public Zap()
     {
-        image = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Zap.prefab", typeof(Image));
+        Image imagePrefab = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Zap.prefab", typeof(Image));
+        image = GameObject.Instantiate(imagePrefab) as Image;
         id = 4;
         name = "Zap";
         effectiveRange = 9.0f;
