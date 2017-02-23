@@ -105596,6 +105596,46 @@ Prefab:
       propertyPath: m_Name
       value: Generator1
       objectReference: {fileID: 0}
+    - target: {fileID: 114473533166364174, guid: e611da211b0344bbbaee4b6037d32ad9,
+        type: 2}
+      propertyPath: gateType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114849743231461634, guid: e611da211b0344bbbaee4b6037d32ad9,
+        type: 2}
+      propertyPath: gateType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114642258998586204, guid: e611da211b0344bbbaee4b6037d32ad9,
+        type: 2}
+      propertyPath: gateType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114910272341638340, guid: e611da211b0344bbbaee4b6037d32ad9,
+        type: 2}
+      propertyPath: gateType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114387423941619368, guid: e611da211b0344bbbaee4b6037d32ad9,
+        type: 2}
+      propertyPath: gateType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114016037955933312, guid: e611da211b0344bbbaee4b6037d32ad9,
+        type: 2}
+      propertyPath: gateType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114087969128651586, guid: e611da211b0344bbbaee4b6037d32ad9,
+        type: 2}
+      propertyPath: gateType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114472150561036544, guid: e611da211b0344bbbaee4b6037d32ad9,
+        type: 2}
+      propertyPath: gateType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e611da211b0344bbbaee4b6037d32ad9, type: 2}
   m_IsPrefabParent: 0
