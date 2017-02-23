@@ -10,7 +10,7 @@ public class AOETargetController : MonoBehaviour
     public float effectiveRange;
     public Player activePlayer;
 
-    private void Start()
+    private void Awake()
     {
         affectedEnemies = new HashSet<GameObject>();
         effectiveRange = Mathf.Infinity;
@@ -42,7 +42,6 @@ public class AOETargetController : MonoBehaviour
         }
     }
 
-    //update shared watchedEnemies between co-op and ai
     private void OnTriggerEnter(Collider other)
     {
         if (!other.isTrigger && other.tag.Equals("Enemy") && !other.GetComponent<EnemyHealth>().isDead)

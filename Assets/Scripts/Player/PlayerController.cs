@@ -84,12 +84,6 @@ public class PlayerController : MonoBehaviour
                 HandleRayCastHit(hit);
             }
         }
-        if (activeAbility.requiresAim)
-        {
-            enemyClicked = false; //This line allows the player to still click on floor and move from above HandleRayCastHit, 
-                                    //but any targets clicked will not be recognized. Stops active ability from switching to basic and still having AOE circle. can be changed
-            HandleAbilityAim();
-        }
 
         HandleAbilityInput();
 
@@ -99,9 +93,13 @@ public class PlayerController : MonoBehaviour
             tm.StartComabtPause();
         }
 
-        if (enemyClicked)
+        if (enemyClicked && !activeAbility.requiresAim)
         {
             MoveAndShoot();
+        }
+        else if (activeAbility.requiresAim)
+        {
+            HandleAbilityAim();
         }
         else
         {
@@ -236,8 +234,8 @@ public class PlayerController : MonoBehaviour
             }
             else if (!activeAbility.requiresAim && ability.requiresAim)
             {
-                enemyClicked = false;
-                friendClicked = false;
+                //enemyClicked = false;
+                //friendClicked = false;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if(Physics.Raycast(ray, out hit, 100f, Layers.NonWall))
@@ -248,6 +246,7 @@ public class PlayerController : MonoBehaviour
                     aoeArea = Instantiate(ability.aoeTarget, transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
                 }
                 aoeArea.GetComponent<AOETargetController>().effectiveRange = ability.effectiveRange;
+                navMeshAgent.Resume();
                 activeAbility = ability;
             }
             else if (ability.requiresTarget && (friendClicked || enemyClicked))
@@ -261,6 +260,26 @@ public class PlayerController : MonoBehaviour
 
     private void HandleAbilityAim()
     {
+        if(targetedEnemy != null)
+        {
+            navMeshAgent.destination = targetedEnemy.position;
+            float remainingDistance = Vector3.Distance(targetedEnemy.position, transform.position);
+            if (remainingDistance >= activeAbility.effectiveRange)
+            {
+                navMeshAgent.Resume();
+                animSpeed = walkSpeed;
+            } else
+            {
+                animSpeed = 0.0f;
+                navMeshAgent.Stop();
+            }
+        } else
+        {
+            if (navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance)
+                animSpeed = walkSpeed;
+            else
+                animSpeed = 0.0f;
+        }
         if (Input.GetButtonDown("Fire1"))
         {
             activeAbility.Execute(attributes, gameObject, aoeArea);

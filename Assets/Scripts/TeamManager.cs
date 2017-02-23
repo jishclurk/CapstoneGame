@@ -80,13 +80,18 @@ public class TeamManager : MonoBehaviour {
         //find next available player's strategy and set as Player control
         int nextPlayer = (playerList.IndexOf(activePlayer) + 1) % playerList.Count;
         PlayerResources nextResources = playerList[nextPlayer].resources;
+        while (nextResources.isDead && nextPlayer != playerList.IndexOf(activePlayer))
+        {
+            nextPlayer = (nextPlayer + 1) % playerList.Count;
+            nextResources = playerList[nextPlayer].resources;
+        }
         if (!nextResources.isDead)
         {
             //set current player to AI control
             if (!activePlayer.resources.isDead)
             {
                 activePlayer.strategy.setAsCoopAI();
-                //TODO: change over enemyclicked to aiPlayer.targetedEnemy and updated WatchedPlayers.
+
             }
 
             //set next player as player Control
@@ -98,8 +103,9 @@ public class TeamManager : MonoBehaviour {
             cameraScript.followPlayer = activePlayer.gameObject;
         } else
         {
-            Debug.Log("Cannot switch to a dead player!");
+            Debug.Log("Cannot switch! All players are dead.");
         }
+    
 
     }
 
