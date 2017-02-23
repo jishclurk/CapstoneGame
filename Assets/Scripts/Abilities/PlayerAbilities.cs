@@ -45,17 +45,17 @@ public class PlayerAbilities : MonoBehaviour {
         unlockedAbilities.Add(new Zap());
         unlockedAbilities.Add(new SelfHeal());
         unlockedAbilities.Add(new AOE());
+        unlockedAbilities.Add(new GrenadeThrow());
     }
 
     private void LoadHotBar()
     {
         //some sort of reading from save file would happen here
-        Debug.Log("Abilities Created");
         Basic = unlockedAbilities[0];
-        Debug.Log(Basic);
         one = unlockedAbilities[1];
         two = unlockedAbilities[2];
         three = unlockedAbilities[3];
+        four = unlockedAbilities[4];
     }
 
     public void SetDefaultBindings()

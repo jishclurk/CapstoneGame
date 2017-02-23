@@ -21,8 +21,11 @@ GameObject:
   - component: {fileID: 4465946884531706}
   - component: {fileID: 198001016517686008}
   - component: {fileID: 199399277602951156}
+  - component: {fileID: 114629881826816656}
+  - component: {fileID: 135426368241289186}
+  - component: {fileID: 54969110500545318}
   m_Layer: 0
-  m_Name: New Prefab
+  m_Name: 3x3RedAuraTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +101,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1027019050928814}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 3.45, y: 3.1100001, z: -62.81}
   m_LocalScale: {x: 3, y: 3, z: 0}
   m_Children:
@@ -107,7 +110,7 @@ Transform:
   - {fileID: 4774049187466490}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -89.980194, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4658812589137526
 Transform:
   m_ObjectHideFlags: 1
@@ -134,6 +137,21 @@ Transform:
   m_Father: {fileID: 4465946884531706}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!54 &54969110500545318
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1027019050928814}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!108 &108597429770551856
 Light:
   m_ObjectHideFlags: 1
@@ -168,6 +186,19 @@ Light:
   m_BounceIntensity: 1.5
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114629881826816656
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1027019050928814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c76c4d5749d930449bb7d23947e476e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectiveRange: 0
+  activePlayer: {fileID: 0}
 --- !u!114 &114719933566507766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -181,6 +212,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateVector: {x: 0, y: 0, z: 90}
   rotateSpace: 0
+--- !u!135 &135426368241289186
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1027019050928814}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &198001016517686008
 ParticleSystem:
   m_ObjectHideFlags: 1

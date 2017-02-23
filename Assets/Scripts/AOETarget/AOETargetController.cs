@@ -45,7 +45,6 @@ public class AOETargetController : MonoBehaviour
     //update shared watchedEnemies between co-op and ai
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("entered?" + other.tag);
         if (!other.isTrigger && other.tag.Equals("Enemy") && !other.GetComponent<EnemyHealth>().isDead)
         {
             affectedEnemies.Add(other.gameObject);
