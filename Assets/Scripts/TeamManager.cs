@@ -60,6 +60,23 @@ public class TeamManager : MonoBehaviour {
         {
             cycleActivePlayer();
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            changeToActivePlayer(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            changeToActivePlayer(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            changeToActivePlayer(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            changeToActivePlayer(4);
+        }
+
     }
 
     public Player getPlayerFromId(int id)
@@ -72,6 +89,29 @@ public class TeamManager : MonoBehaviour {
             }
         }
         return activePlayer; 
+    }
+
+    public void changeToActivePlayer(int id)
+    {
+        if (!playerList[id-1].resources.isDead)
+        {//set current player to AI control
+            if (!activePlayer.resources.isDead)
+            {
+                activePlayer.strategy.setAsCoopAI();
+            }
+            //set next player as player Control
+            activePlayer = playerList[id-1];
+            activePlayer.strategy.setAsPlayer();
+
+            //update activePlayer and camera
+            playerResources = playerList[id-1].resources;
+            cameraScript.followPlayer = activePlayer.gameObject;
+        }
+        else
+        {
+            Debug.Log("Cannot switch! Player " + id + " is dead.");
+        }
+
     }
 
     //eventually will take a parameter to change certain player
