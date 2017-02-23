@@ -56,6 +56,8 @@ public class RifleShot : IAbility {
         {
             GameObject project = Object.Instantiate(projectile, fxSpawn.position, Quaternion.identity) as GameObject;
             project.transform.LookAt(target.transform.position);
+            project.GetComponent<Rigidbody>().AddForce(project.transform.forward * 1000);
+            project.GetComponent<ProjectileScriptCC>().impactNormal = hit.normal;
         }
 
         //useEnergy not required
