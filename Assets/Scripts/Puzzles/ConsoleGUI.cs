@@ -15,6 +15,7 @@ public class ConsoleGUI : MonoBehaviour, ICircuitPiece {
 	float cTime;
 	bool flick;
 	bool played;
+	bool solved;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +26,7 @@ public class ConsoleGUI : MonoBehaviour, ICircuitPiece {
 		flick = false;
 		sound = GetComponent<AudioSource>();
 		played = false;
+		solved = false;
 
 	}
 	
@@ -35,6 +37,7 @@ public class ConsoleGUI : MonoBehaviour, ICircuitPiece {
 				errorText [1].color = Color.cyan;
 				errorText [0].text = "ACCESS";
 				errorText [1].text = "GRANTED";
+				Lock ();
 				if (!played) {
 					sound.Play ();
 					played = true;
@@ -60,12 +63,16 @@ public class ConsoleGUI : MonoBehaviour, ICircuitPiece {
 	}
 
 	public bool Output(){
-		return pm.Output ();
+		return solved;
 	}
 
 	public Transform GetTransform(){
 
 		return transform;
 
+	}
+
+	public void Lock(){
+		solved = true;
 	}
 }

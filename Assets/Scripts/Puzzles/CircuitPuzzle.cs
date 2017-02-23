@@ -11,6 +11,7 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 	public Material hubInactive;
 	MeshRenderer connector;
 	ParticleSystem ps;
+	bool solved;
 
 	public GateType gateType;
 
@@ -34,26 +35,35 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 		//Debug.Log ("circuit piece 1: "+result..ToString()+"\n" + "circuit piece 2:"+result[1].ToString());
 		hub = GetComponent<MeshRenderer> ();
 		connector = this.gameObject.transform.Find ("Out Connector").GetComponent<MeshRenderer> ();
+		solved = false;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (this.Output ()) {
-			hub.material = hubActive;
-			connector.material = hubActive;
-			if (ps.isStopped) {
-				ps.Play ();
-			}
-			//Debug.Log ("got here");
-		} 
-		else {
-			hub.material = hubInactive;
-			connector.material = hubInactive;
-			if (ps.isPlaying) {
-				ps.Stop ();
+		if (!solved) {
+			if (this.Output ()) {
+				hub.material = hubActive;
+				connector.material = hubActive;
+				if (ps.isStopped) {
+					ps.Play ();
+				}
+				//Debug.Log ("got here");
+			} else {
+				hub.material = hubInactive;
+				connector.material = hubInactive;
+				if (ps.isPlaying) {
+					ps.Stop ();
+				}
 			}
 		}
+
+	}
+
+	public void Lock(){
+		solved = true;
+		result [0].Lock ();
+		result [1].Lock ();
 	}
 
 	public bool Output(){

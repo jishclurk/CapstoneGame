@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Add this to GoalManager to run a "kill the enemies" goal:    
-public class ReachTrigger : MonoBehaviour ,IGoal{
+public class TurnOnConsole : MonoBehaviour ,IGoal{
 
-	public CheckPoint checkpoint;
+	private CheckPoint checkpoint;
 	public AudioClip trumpetSound;
-
+	public ConsolePair console;
 
 
 	//PlayerHealth playerHealth;
@@ -36,10 +36,11 @@ public class ReachTrigger : MonoBehaviour ,IGoal{
 
 	void Awake() {
 		//playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+		//checkpoint = GameObject.Find("CheckPointTrigger").GetComponent<CheckPoint>();
 	}
 
 	public bool IsAchieved() {
-		return (checkpoint.checkpointReached);
+		return (console.ConsoleOn());
 		//return false;
 	}
 

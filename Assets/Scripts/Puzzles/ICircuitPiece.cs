@@ -5,5 +5,6 @@ using UnityEngine;
 public interface ICircuitPiece{
 
 	bool Output ();
+	void Lock ();
 	Transform GetTransform();
 }

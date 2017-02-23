@@ -8,6 +8,7 @@ public class CircuitButton : MonoBehaviour, ICircuitPiece {
 	MeshRenderer connector;
 	public Material activeGreen;
 	public Material inactiveWhite;
+	private bool solved;
 	// Use this for initialization
 	void Start () {
 		button = GetComponentInChildren<ButtonScript> ();
@@ -21,10 +22,12 @@ public class CircuitButton : MonoBehaviour, ICircuitPiece {
 //		} else {
 //			connector.material.Lerp(activeGreen,inactiveWhite,  1.0f);
 //		}
-		if (this.Output ()) {
-			connector.material = activeGreen;
-		} else {
-			connector.material = inactiveWhite;
+		if (!solved) {
+			if (this.Output ()) {
+				connector.material = activeGreen;
+			} else {
+				connector.material = inactiveWhite;
+			}
 		}
 	}
 
@@ -35,5 +38,10 @@ public class CircuitButton : MonoBehaviour, ICircuitPiece {
 
 	public Transform GetTransform(){
 		return this.transform;
+	}
+
+	public void Lock(){
+		solved = true;
+		button.Disable ();
 	}
 }

@@ -7,6 +7,7 @@ public class ButtonScript : MonoBehaviour {
     // Use this for initialization
    private AudioSource sound;
 	private bool pressed;
+	private bool disabled;
 
     void Start () {
         sound = GetComponent<AudioSource>();
@@ -19,16 +20,21 @@ public class ButtonScript : MonoBehaviour {
 	}
     void OnTriggerEnter(Collider other)
     {
-		if (!other.isTrigger && other.CompareTag("Player"))
-        {
-            sound.Play();
-			Debug.Log ("Button Pressed");
-			pressed = !pressed;
-            //GameObject.FindGameObjectWithTag("Door").SetActive(false);
-        }
+		if (!disabled) {
+			if (!other.isTrigger && other.CompareTag ("Player")) {
+				sound.Play ();
+				Debug.Log ("Button Pressed");
+				pressed = !pressed;
+				//GameObject.FindGameObjectWithTag("Door").SetActive(false);
+			}
+		}
     }
 
 	public bool Pressed(){
 		return pressed;
+	}
+
+	public void Disable(){
+		disabled = true;
 	}
 }

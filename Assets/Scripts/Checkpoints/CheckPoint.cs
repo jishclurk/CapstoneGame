@@ -47,7 +47,7 @@ public class CheckPoint : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log("TRIGGERED");
-        if (other.gameObject.tag.Equals("Player"))
+		if (other.gameObject.tag.Equals("Player") && (!other.isTrigger))
         {
             checkpointReached = true;
 

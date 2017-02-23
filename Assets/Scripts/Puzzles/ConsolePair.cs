@@ -7,6 +7,7 @@ public class ConsolePair : MonoBehaviour, ICircuitPiece {
 	Console[] consoles;
 	GameObject consoleGUIObject;
 	ConsoleGUI cG;
+	bool solved;
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +31,16 @@ public class ConsolePair : MonoBehaviour, ICircuitPiece {
 
 	}
 
+	public bool ConsoleOn(){
+		return consoles [0].Output () && consoles [1].Output ();
+
+	}
+
 	public Transform GetTransform(){
 		return transform;
+	}
+
+	public void Lock(){
+		solved =true;
 	}
 }
