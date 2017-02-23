@@ -143,7 +143,6 @@ public class PlayerController : MonoBehaviour
             {
                 activeAbility.Execute(attributes, gameObject, targetedEnemy.gameObject);
                 if (!activeAbility.isbasicAttack) {
-                    //selectingAbilityTarget = false;
                     activeAbility = abilities.Basic;
                 }
             }
@@ -163,13 +162,6 @@ public class PlayerController : MonoBehaviour
 
     private void HandleRayCastHit(RaycastHit hit)
     {
-        //Reset Current enemy target
-        if (targetedEnemy != null)
-        {
-            tm.RemoveEnemyIfNotTeamVisible(targetedEnemy.gameObject);
-            visibleEnemies.Remove(targetedEnemy.gameObject);
-            targetedEnemy = null;
-        }
 
         if (hit.collider.CompareTag("Enemy"))
         {
@@ -200,6 +192,17 @@ public class PlayerController : MonoBehaviour
             transform.LookAt(new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z));
             navMeshAgent.Resume();
         }
+
+        //Reset Current enemy target
+        if (enemyClicked)
+        {
+            //activate enemy highlight on targetedEnemy.gameObject
+        } else if (targetedEnemy != null) {
+            tm.RemoveEnemyIfNotTeamVisible(targetedEnemy.gameObject);
+            visibleEnemies.Remove(targetedEnemy.gameObject);
+            targetedEnemy = null;
+        }
+
     }
 
     private void HandleAbilityInput()
@@ -260,6 +263,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleAbilityAim()
     {
+        //walking animation stuff. 
         if(targetedEnemy != null)
         {
             navMeshAgent.destination = targetedEnemy.position;
