@@ -149,7 +149,6 @@ public class EnemyStateControl : MonoBehaviour {
 
     public void ReportTargetOutOfRange()
     {
-        StopTargetting();
         mobKnowledge.RemoveKnowledgeOfPlayer(chaseTarget);
     }
 

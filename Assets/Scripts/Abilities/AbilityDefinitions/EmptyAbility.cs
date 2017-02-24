@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,8 +23,8 @@ public class EmptyAbility : IAbility {
 
     public EmptyAbility()
     {
-        Image imagePrefab = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Empty.prefab", typeof(Image));
-        image = GameObject.Instantiate(imagePrefab) as Image;
+        //Image imagePrefab = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Empty.prefab", typeof(Image));
+        //image = GameObject.Instantiate(imagePrefab) as Image;
         id = 1;
         name = "Empty Ability";
         effectiveRange = 0.0f;
