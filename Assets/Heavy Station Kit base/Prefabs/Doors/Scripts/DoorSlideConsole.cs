@@ -11,6 +11,7 @@
 		private bool _sndLoaded = false;
 		private int _plaingSnd = -1; // 0-Open, 1-Close 
 		public ConsolePair puzzleActivator;
+	bool doorOpen;
 
 		void Start () {
 			foreach(Transform child in transform.parent.transform){
@@ -25,6 +26,7 @@
 			if (!_sndLoaded) {
 				Debug.LogWarning("Silence mode:  audioclips \"Open_Sound\" and / or \"Close_Sound\" not found in the \"Resources\" directory");
 			}
+			doorOpen = false;
 		}
 
 		void slide_door(Collider other, int _id){ // 0 - Open, 1 - Close
@@ -50,15 +52,18 @@
 		}
 
 		void OnTriggerEnter(Collider other){
-			if (puzzleActivator == null || puzzleActivator.Output()){
-				slide_door(other, 0); // Open door
-				Debug.Log("Trying to open door");
+			if (puzzleActivator == null || puzzleActivator.Output ()) {
+//				if (!doorOpen) {
+					slide_door (other, 0); // Open door
+					Debug.Log ("Trying to open door");
+//					doorOpen = true;
+//				}
 			}
 		}	
 
 		void OnTriggerExit(Collider other){
 			if (puzzleActivator == null || puzzleActivator.Output()){
-				slide_door(other, 1); // Close door
+				//slide_door(other, 1); // Close door
 				Debug.Log("Closing open door");
 			}
 		}	
