@@ -136,7 +136,9 @@ public class CombatPause : MonoBehaviour {
 
     private void LoadMainMenu()
     {
+        Disable();
         SceneManager.LoadScene("MainMenu");
+        
     }
 
     //public void HasChanged()
