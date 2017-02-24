@@ -13,7 +13,7 @@ public class EnergyBar : MonoBehaviour {
     private PlayerResources resources;
 
     // Use this for initialization
-    void Awake ()
+    void Start ()
     {
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         energySlider = GetComponent<Image>();
