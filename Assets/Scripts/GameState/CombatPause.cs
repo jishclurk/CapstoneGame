@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CombatPause : MonoBehaviour {
@@ -16,6 +17,7 @@ public class CombatPause : MonoBehaviour {
     TeamManager tm;
     private GameObject attributesScreen;
     private int displayedPlayer;
+    SimpleGameManager gm;
 
     // Use this for initialization
     void Start() {
@@ -42,6 +44,7 @@ public class CombatPause : MonoBehaviour {
         }
 
         attributesScreen = myAbilitiesScreen.transform.Find("Attributes").gameObject;
+        gm = SimpleGameManager.Instance;
     }
 
     // Update is called once per frame
@@ -123,6 +126,17 @@ public class CombatPause : MonoBehaviour {
         PauseScreen.enabled = false;
         Time.timeScale = 1;
         inCombatPause = false;
+    }
+
+    public void ExitToMain()
+    {
+        gm.OnStateChange += LoadMainMenu;
+        gm.SetGameState(GameState.MAIN_MENU);
+    }
+
+    private void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     //public void HasChanged()
