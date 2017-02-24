@@ -33,6 +33,7 @@ public class Generator : MonoBehaviour,ICircuitPiece {
 				if (this.Output ()) {
 					connector.material = genActive;
 					input [1].Lock ();
+					Lock ();
 
 				} else {
 					connector.material = genInactive;
