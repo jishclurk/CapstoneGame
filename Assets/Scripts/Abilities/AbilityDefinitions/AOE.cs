@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,8 +24,8 @@ public class AOE : IAbility {
 
     public AOE()
     {
-        Image imagePrefab = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Grenade.prefab", typeof(Image));
-        image = GameObject.Instantiate(imagePrefab) as Image;
+        //Image imagePrefab = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Grenade.prefab", typeof(Image));
+        //image = GameObject.Instantiate(imagePrefab) as Image;
         id = 0;
         name = "Area of Effect";
         effectiveRange = 10.0f;

@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,8 +24,8 @@ public class SelfHeal : IAbility
 
     public SelfHeal()
     {
-        Image imagePrefab = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Heal.prefab", typeof(Image));
-        image = GameObject.Instantiate(imagePrefab) as Image;
+        //Image imagePrefab = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Heal.prefab", typeof(Image));
+        //image = GameObject.Instantiate(imagePrefab) as Image;
         id = 3;
         name = "Heal";
         effectiveRange = 5.0f;

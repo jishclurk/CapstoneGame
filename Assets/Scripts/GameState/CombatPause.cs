@@ -49,7 +49,7 @@ public class CombatPause : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (inCombatPause && !tm.IsTeamInCombat())
+        /*if (inCombatPause && !tm.IsTeamInCombat())
         {
             if (Input.GetKeyDown(KeyCode.C))
             {
@@ -65,7 +65,7 @@ public class CombatPause : MonoBehaviour {
                     loadCurrentPlayerInfo(-1);
                 }
             }
-        }
+        }*/
 	}
 
     //loads info from player with playerID, if id = -1, loads active player infor
