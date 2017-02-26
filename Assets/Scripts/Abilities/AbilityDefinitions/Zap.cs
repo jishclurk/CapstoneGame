@@ -55,8 +55,8 @@ public class Zap : ISpecial, IAbility {
         return Time.time > lastUsedTime + coolDownTime;
     }
 
-    public Ability.Action GetAction()
+    public AbilityHelper.Action GetAction()
     {
-        return Ability.Action.InheritTarget;
+        return AbilityHelper.Action.InheritTarget;
     }
 }

@@ -25,11 +25,6 @@ public interface IAbility {
 
     void Execute(CharacterAttributes attributes, GameObject origin, GameObject target);
     bool isReady();
-    Ability.Action GetAction();
+    AbilityHelper.Action GetAction();
 
-}
-
-public class Ability
-{
-    public enum Action { Basic, NoTarget, InheritTarget, AimTarget, AimAOE , HoldToUse}
 }

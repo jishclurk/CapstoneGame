@@ -51,8 +51,8 @@ public class EmptyAbility : ISpecial, IAbility {
         return false;
     }
 
-    public Ability.Action GetAction()
+    public AbilityHelper.Action GetAction()
     {
-        return Ability.Action.Basic;
+        return AbilityHelper.Action.Basic;
     }
 }

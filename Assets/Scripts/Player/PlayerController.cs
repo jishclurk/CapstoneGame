@@ -94,11 +94,11 @@ public class PlayerController : MonoBehaviour
             tm.StartComabtPause();
         }
 
-        if(activeSpecialAbility != null && activeSpecialAbility.GetAction() == Ability.Action.AimAOE)
+        if(activeSpecialAbility != null && activeSpecialAbility.GetAction() == AbilityHelper.Action.AimAOE)
         {
             HandleAbilityAim();
         }
-        else if (activeSpecialAbility != null && activeSpecialAbility.GetAction() == Ability.Action.InheritTarget)
+        else if (activeSpecialAbility != null && activeSpecialAbility.GetAction() == AbilityHelper.Action.InheritTarget)
         {
             MoveAndShootSpecial();
         }
@@ -272,13 +272,16 @@ public class PlayerController : MonoBehaviour
         //TODO: add debug/actual messages saying why ability failed
         if (ability.isReady() && resources.currentEnergy > ability.energyRequired)
         {
-            if (ability.GetAction() == Ability.Action.NoTarget)
+            if (ability.GetAction() == AbilityHelper.Action.NoTarget)
             {
                 ability.Execute(attributes, gameObject, gameObject);
             }
-            else if (ability.GetAction() == Ability.Action.AimAOE)
+            else if (ability.GetAction() == AbilityHelper.Action.AimAOE)
             {
-                Debug.Log("EEEEEE");
+                if (aoeArea != null)
+                {
+                    Destroy(aoeArea);
+                }
 
                 //enemyClicked = false;
                 //friendClicked = false;
@@ -295,7 +298,7 @@ public class PlayerController : MonoBehaviour
                 navMeshAgent.Resume();
                 activeSpecialAbility = ability;
             }
-            else if (ability.GetAction() == Ability.Action.InheritTarget)
+            else if (ability.GetAction() == AbilityHelper.Action.InheritTarget)
             {
                 activeSpecialAbility = ability;
                 //now MoveAndShoot with special (or error!)
@@ -332,7 +335,7 @@ public class PlayerController : MonoBehaviour
         {
             activeSpecialAbility.Execute(attributes, gameObject, aoeArea);
             aoeArea.GetComponent<AOETargetController>().enabled = false;
-            Destroy(aoeArea, activeSpecialAbility.timeToCast);
+            Destroy(aoeArea, activeSpecialAbility.timeToCast + Time.deltaTime * 2); //destroy aoeTarget 2 frames after whatever
             activeSpecialAbility = null;
         }
 

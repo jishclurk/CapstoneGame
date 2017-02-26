@@ -62,8 +62,8 @@ public class AOE : ISpecial, IAbility {
         return Time.time > lastUsedTime + coolDownTime;
     }
 
-    public Ability.Action GetAction()
+    public AbilityHelper.Action GetAction()
     {
-        return Ability.Action.AimAOE;
+        return AbilityHelper.Action.AimAOE;
     }
 }

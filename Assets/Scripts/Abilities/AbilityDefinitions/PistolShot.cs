@@ -55,8 +55,8 @@ public class PistolShot : IBasic, IAbility {
         return Time.time > lastUsedTime + fireRate;
     }
 
-    public Ability.Action GetAction()
+    public AbilityHelper.Action GetAction()
     {
-        return Ability.Action.Basic;
+        return AbilityHelper.Action.Basic;
     }
 }
