@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelfHeal : IAbility
+public class SelfHeal : ISpecial, IAbility
 {
 
     public string name { get; set; }
@@ -53,5 +53,10 @@ public class SelfHeal : IAbility
     public bool isReady()
     {
         return Time.time > lastUsedTime + coolDownTime;
+    }
+
+    public Ability.Action GetAction()
+    {
+        return Ability.Action.NoTarget;
     }
 }

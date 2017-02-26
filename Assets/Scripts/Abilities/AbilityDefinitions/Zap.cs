@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Zap : IAbility {
+public class Zap : ISpecial, IAbility {
 
     public string name { get; set; }
     public float effectiveRange { get; set; }
@@ -53,5 +53,10 @@ public class Zap : IAbility {
     public bool isReady()
     {
         return Time.time > lastUsedTime + coolDownTime;
+    }
+
+    public Ability.Action GetAction()
+    {
+        return Ability.Action.InheritTarget;
     }
 }

@@ -107,7 +107,7 @@ public class CombatPause : MonoBehaviour {
        // Debug.Log(active.abilities.abilityArray.Length);
 
     
-    public void updateAbilities(int spot, IAbility ability)
+    public void updateAbilities(int spot, ISpecial ability)
     {
         tm.getPlayerFromId(displayedPlayer).abilities.abilityArray[spot] = ability;
     }

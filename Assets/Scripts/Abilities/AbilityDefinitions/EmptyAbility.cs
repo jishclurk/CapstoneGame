@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EmptyAbility : IAbility {
+public class EmptyAbility : ISpecial, IAbility {
 
     public string name { get; set; }
     public float effectiveRange { get; set; }
@@ -49,5 +49,10 @@ public class EmptyAbility : IAbility {
     public bool isReady()
     {
         return false;
+    }
+
+    public Ability.Action GetAction()
+    {
+        return Ability.Action.Basic;
     }
 }

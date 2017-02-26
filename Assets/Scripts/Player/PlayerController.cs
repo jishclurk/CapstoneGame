@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
     private float walkSpeed;
    
     private bool selectingAbilityTarget = false;
-    private IAbility activeAbility;
+    private IBasic activeBasicAbility;
+    private ISpecial activeSpecialAbility;
     private CharacterAttributes attributes;
     private PlayerAbilities abilities;
     
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
         //this is a mess. These are "shared" variables between co-op ai and player script
         Player player = GetComponent<Player>();
         abilities = player.abilities;
-        activeAbility = abilities.Basic;
+        activeBasicAbility = abilities.Basic;
         attributes = player.attributes;
         resources = player.resources;
         watchedEnemies = player.watchedEnemies;
@@ -93,13 +94,17 @@ public class PlayerController : MonoBehaviour
             tm.StartComabtPause();
         }
 
-        if (enemyClicked && !activeAbility.requiresAim)
-        {
-            MoveAndShoot();
-        }
-        else if (activeAbility.requiresAim)
+        if(activeSpecialAbility != null && activeSpecialAbility.GetAction() == Ability.Action.AimAOE)
         {
             HandleAbilityAim();
+        }
+        else if (activeSpecialAbility != null && activeSpecialAbility.GetAction() == Ability.Action.InheritTarget)
+        {
+            MoveAndShootSpecial();
+        }
+        else if (enemyClicked)
+        {
+            MoveAndShoot();
         }
         else
         {
@@ -127,7 +132,7 @@ public class PlayerController : MonoBehaviour
         }
         navMeshAgent.destination = targetedEnemy.position;
         float remainingDistance = Vector3.Distance(targetedEnemy.position, transform.position);
-        if (remainingDistance >= activeAbility.effectiveRange || !isTargetVisible(targetedEnemy))
+        if (remainingDistance >= activeBasicAbility.effectiveRange || !isTargetVisible(targetedEnemy))
         {
             navMeshAgent.Resume();
             animSpeed = walkSpeed;
@@ -139,12 +144,12 @@ public class PlayerController : MonoBehaviour
             animController.AnimateAim();
 
             bool targetIsDead = targetedEnemy.GetComponent<EnemyHealth>().isDead;
-            if (activeAbility.isReady() && !targetIsDead)
+            if (activeBasicAbility.isReady() && !targetIsDead)
             {
-                activeAbility.Execute(attributes, gameObject, targetedEnemy.gameObject);
-                if (!activeAbility.isbasicAttack) {
-                    activeAbility = abilities.Basic;
-                }
+                activeBasicAbility.Execute(attributes, gameObject, targetedEnemy.gameObject);
+                //if (!activeAbility.isbasicAttack) {
+                //    activeAbility = abilities.Basic;
+               // }
             }
 
             navMeshAgent.Stop(); //within range, stop moving
@@ -156,9 +161,45 @@ public class PlayerController : MonoBehaviour
             }
             animSpeed = 0.0f;
         }
-
-
     }
+
+    private void MoveAndShootSpecial()
+    {
+        if (targetedEnemy == null)
+        {
+            //this return happens if enemy dies
+            return; //avoid running code we don't need to.
+        }
+        navMeshAgent.destination = targetedEnemy.position;
+        float remainingDistance = Vector3.Distance(targetedEnemy.position, transform.position);
+        if (remainingDistance >= activeSpecialAbility.effectiveRange || !isTargetVisible(targetedEnemy))
+        {
+            navMeshAgent.Resume();
+            animSpeed = walkSpeed;
+        }
+        else
+        {
+            //Within range, look at enemy and shoot
+            transform.LookAt(targetedEnemy);
+            animController.AnimateAim();
+
+            bool targetIsDead = targetedEnemy.GetComponent<EnemyHealth>().isDead;
+            if (activeSpecialAbility.isReady() && !targetIsDead)
+            {
+                activeSpecialAbility.Execute(attributes, gameObject, targetedEnemy.gameObject);
+                activeSpecialAbility = null;
+            }
+            navMeshAgent.Stop(); //within range, stop moving
+            if (targetIsDead)
+            {
+                enemyClicked = false;
+                tm.RemoveDeadEnemy(targetedEnemy.gameObject);
+                navMeshAgent.destination = transform.position;
+            }
+            animSpeed = 0.0f;
+        }
+    }
+
 
     private void HandleRayCastHit(RaycastHit hit)
     {
@@ -226,17 +267,19 @@ public class PlayerController : MonoBehaviour
         //}
     }
     
-    private void useSpecialIfPossible(IAbility ability)
+    private void useSpecialIfPossible(ISpecial ability)
     {
         //TODO: add debug/actual messages saying why ability failed
         if (ability.isReady() && resources.currentEnergy > ability.energyRequired)
         {
-            if (!ability.requiresTarget)
+            if (ability.GetAction() == Ability.Action.NoTarget)
             {
                 ability.Execute(attributes, gameObject, gameObject);
             }
-            else if (!activeAbility.requiresAim && ability.requiresAim)
+            else if (ability.GetAction() == Ability.Action.AimAOE)
             {
+                Debug.Log("EEEEEE");
+
                 //enemyClicked = false;
                 //friendClicked = false;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -250,11 +293,12 @@ public class PlayerController : MonoBehaviour
                 }
                 aoeArea.GetComponent<AOETargetController>().effectiveRange = ability.effectiveRange;
                 navMeshAgent.Resume();
-                activeAbility = ability;
+                activeSpecialAbility = ability;
             }
-            else if (ability.requiresTarget && (friendClicked || enemyClicked))
+            else if (ability.GetAction() == Ability.Action.InheritTarget)
             {
-                activeAbility = ability;
+                activeSpecialAbility = ability;
+                //now MoveAndShoot with special (or error!)
             }
             
         }
@@ -268,7 +312,7 @@ public class PlayerController : MonoBehaviour
         {
             navMeshAgent.destination = targetedEnemy.position;
             float remainingDistance = Vector3.Distance(targetedEnemy.position, transform.position);
-            if (remainingDistance >= activeAbility.effectiveRange)
+            if (remainingDistance >= activeSpecialAbility.effectiveRange)
             {
                 navMeshAgent.Resume();
                 animSpeed = walkSpeed;
@@ -286,10 +330,10 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire1"))
         {
-            activeAbility.Execute(attributes, gameObject, aoeArea);
+            activeSpecialAbility.Execute(attributes, gameObject, aoeArea);
             aoeArea.GetComponent<AOETargetController>().enabled = false;
-            Destroy(aoeArea, activeAbility.timeToCast);
-            activeAbility = abilities.Basic;
+            Destroy(aoeArea, activeSpecialAbility.timeToCast);
+            activeSpecialAbility = null;
         }
 
     }
@@ -311,8 +355,13 @@ public class PlayerController : MonoBehaviour
         friendClicked = false;
         animSpeed = 0.0f;
         selectingAbilityTarget = false;
-        activeAbility = abilities.Basic;
-        Destroy(aoeArea);
+        activeBasicAbility = abilities.Basic;
+        activeSpecialAbility = null;
+        if(aoeArea != null)
+        {
+            Destroy(aoeArea);
+        }
+        
        
     }
 

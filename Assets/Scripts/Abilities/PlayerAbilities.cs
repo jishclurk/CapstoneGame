@@ -11,15 +11,15 @@ public class PlayerAbilities : MonoBehaviour
     public Dictionary<KeyCode, int> AbilityBindings;
 
     //array that corresponds with ability bar in HUB
-    public IAbility[] abilityArray;
+    public ISpecial[] abilityArray;
 
     //possibly eleminate these and just keep track of abilites in the array??
-    public IAbility one { get; set; }
-    public IAbility two { get; set; }
-    public IAbility three { get; set; }
-    public IAbility four { get; set; }
-    public IAbility Basic { get; set; }
-    public List<IAbility> unlockedAbilities { get; set; }
+    public ISpecial one { get; set; }
+    public ISpecial two { get; set; }
+    public ISpecial three { get; set; }
+    public ISpecial four { get; set; }
+    public IBasic Basic { get; set; }
+    public List<ISpecial> unlockedAbilities { get; set; }
 
     public void Awake()
     {
@@ -31,11 +31,11 @@ public class PlayerAbilities : MonoBehaviour
         four = new EmptyAbility();
         Basic = new PistolShot();
 
-        unlockedAbilities = new List<IAbility>();
+        unlockedAbilities = new List<ISpecial>();
         LoadUnlockedAbilities();
         LoadHotBar();
 
-        abilityArray = new IAbility[4] { one, two, three, four };
+        abilityArray = new ISpecial[4] { one, two, three, four };
         SetDefaultBindings();
     }
 
@@ -72,7 +72,7 @@ public class PlayerAbilities : MonoBehaviour
         AbilityBindings[key] = spot;
     }
 
-    public void SetNewAbility(IAbility ability, int spot)
+    public void SetNewAbility(ISpecial ability, int spot)
     {
         abilityArray[spot] = ability;
     }

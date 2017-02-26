@@ -145,7 +145,7 @@ public class AttackState : ICoopState
 
         aiPlayer.navMeshAgent.destination = aiPlayer.targetedEnemy.position;
         float remainingDistance = Vector3.Distance(aiPlayer.targetedEnemy.position, aiPlayer.transform.position);
-        if (remainingDistance >= aiPlayer.activeAbility.effectiveRange || !aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
+        if (remainingDistance >= aiPlayer.activeBasicAbility.effectiveRange || !aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
         {
             aiPlayer.navMeshAgent.Resume();
             animSpeed = aiPlayer.walkSpeed;
@@ -157,13 +157,9 @@ public class AttackState : ICoopState
             aiPlayer.animController.AnimateAim();
             //Vector3 dirToShoot = targetedEnemy.transform.position - transform.position; //unused, would be for raycasting
 
-            if (aiPlayer.activeAbility.isReady())
+            if (aiPlayer.activeBasicAbility.isReady())
             {
-                aiPlayer.activeAbility.Execute(aiPlayer.attributes, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
-                if (!aiPlayer.activeAbility.isbasicAttack)
-                {
-                    aiPlayer.activeAbility = aiPlayer.abilities.Basic;
-                }
+                aiPlayer.activeBasicAbility.Execute(aiPlayer.attributes, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
 
                 //check if enemy died
                 EnemyHealth enemyHP = aiPlayer.targetedEnemy.GetComponent<EnemyHealth>();

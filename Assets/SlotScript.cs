@@ -35,7 +35,7 @@ public class SlotScript : MonoBehaviour, IDropHandler {
         if (!item)
         {
             DragHandler.itemBeingDraged.transform.SetParent(transform);
-            tm.combatPause.updateAbilities(spot, ability);
+            tm.combatPause.updateAbilities(spot, (ISpecial) ability); //needs to separately handle basic ability change?
             //ExecuteEvents.ExecuteHierarchy<IHasChanged>(gameObject, null, (x, y) => x.HasChanged());
         }
     }

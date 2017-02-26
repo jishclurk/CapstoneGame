@@ -31,7 +31,9 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector]
     public HashSet<GameObject> visibleEnemies;
     [HideInInspector]
-    public IAbility activeAbility;
+    public IBasic activeBasicAbility;
+    [HideInInspector]
+    public ISpecial activeSpecialAbility;
     [HideInInspector]
     public Transform targetedEnemy;
     [HideInInspector]
@@ -86,7 +88,7 @@ public class CoopAiController : MonoBehaviour {
         //this is a mess. These are "shared" variables between co-op ai and player script
         Player player = GetComponent<Player>();
         abilities = player.abilities;
-        activeAbility = abilities.Basic;
+        activeBasicAbility = abilities.Basic;
         attributes = player.attributes;
         watchedEnemies = player.watchedEnemies;
         visibleEnemies = player.visibleEnemies;
@@ -144,7 +146,8 @@ public class CoopAiController : MonoBehaviour {
         currentState = idleState;
         if (abilities != null)
         {
-            activeAbility = abilities.Basic;
+            activeBasicAbility = abilities.Basic;
+            activeSpecialAbility = null;
         }
 
     }
