@@ -6,6 +6,7 @@ public class FleeState : ICoopState
 {
 
     private readonly CoopAiController aiPlayer;
+    private float animSpeed;
 
     public FleeState(CoopAiController coopAi)
     {
@@ -16,7 +17,7 @@ public class FleeState : ICoopState
     {
         FollowActivePlayer();
         //aiPlayer.CheckForCombat();
-        aiPlayer.animController.AnimateMovement(aiPlayer.walkSpeed);
+        aiPlayer.animController.AnimateMovement(animSpeed);
     }
 
 
@@ -59,11 +60,19 @@ public class FleeState : ICoopState
         if (remainingDistance >= aiPlayer.followDist)
         {
             aiPlayer.navMeshAgent.Resume();
+            animSpeed = aiPlayer.walkSpeed;
         }
         else
         {
             aiPlayer.navMeshAgent.Stop();
-            ToIdleState();
+            animSpeed = 0.0f;
+            if(aiPlayer.tm.activePlayer.visibleEnemies.Count > 0)
+            {
+                ToAttackState();
+            }
+            if (aiPlayer.visibleEnemies.Count == 0) { //jitter fix
+                ToIdleState();
+            }            
 
            
         }
