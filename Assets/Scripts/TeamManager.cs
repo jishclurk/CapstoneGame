@@ -56,6 +56,10 @@ public class TeamManager : MonoBehaviour {
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StartComabtPause();
+        }
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             cycleActivePlayer();

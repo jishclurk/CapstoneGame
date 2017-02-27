@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,8 +22,7 @@ public class PistolShot : IBasic, IAbility {
 
     public PistolShot()
     {
-        //Image imagePrefab = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Pistol.prefab", typeof(Image));
-        //image = GameObject.Instantiate(imagePrefab) as Image;
+        image = GameObject.Instantiate(Resources.Load("Abilities/Pistol", typeof(Image))) as Image;
         id = 2;
         name = "Pistol Shot";
         effectiveRange = 9.0f;

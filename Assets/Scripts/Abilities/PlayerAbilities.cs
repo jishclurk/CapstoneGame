@@ -36,6 +36,7 @@ public class PlayerAbilities : MonoBehaviour
         LoadHotBar();
 
         abilityArray = new ISpecial[4] { one, two, three, four };
+        Debug.Log(abilityArray);
         SetDefaultBindings();
     }
 

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,8 +27,7 @@ public class GrenadeThrow : ISpecial, IAbility {
 
     public GrenadeThrow()
     {
-        //Image imagePrefab = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Grenade.prefab", typeof(Image));
-       //image = GameObject.Instantiate(imagePrefab) as Image;
+        image = GameObject.Instantiate(Resources.Load("Abilities/Grenade", typeof(Image))) as Image;
         id = 0;
         name = "Grenade Throw";
         effectiveRange = 10.0f;

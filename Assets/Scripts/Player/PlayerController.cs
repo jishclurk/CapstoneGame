@@ -89,10 +89,7 @@ public class PlayerController : MonoBehaviour
         HandleAbilityInput();
 
         //enter combat pause
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            tm.StartComabtPause();
-        }
+
 
         if(activeSpecialAbility != null && activeSpecialAbility.GetAction() == AbilityHelper.Action.AimAOE)
         {

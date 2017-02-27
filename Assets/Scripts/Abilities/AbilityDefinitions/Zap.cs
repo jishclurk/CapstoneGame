@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,8 +23,7 @@ public class Zap : ISpecial, IAbility {
 
     public Zap()
     {
-        //Image imagePrefab = (Image)AssetDatabase.LoadAssetAtPath("Assets/Images/Abilities/Zap.prefab", typeof(Image));
-        //image = GameObject.Instantiate(imagePrefab) as Image;
+        image = GameObject.Instantiate(Resources.Load("Abilities/Zap", typeof(Image))) as Image;
         id = 4;
         name = "Zap";
         effectiveRange = 9.0f;
