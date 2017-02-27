@@ -23,6 +23,7 @@ public class AbilityHelper : MonoBehaviour {
             enemy.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
         }
         Object exp = Instantiate(explosion, target.transform.position, Quaternion.identity);
+        Destroy(target);
         Destroy(exp, 1.0f);
 
     }

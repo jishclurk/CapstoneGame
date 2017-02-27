@@ -332,7 +332,7 @@ public class PlayerController : MonoBehaviour
         {
             activeSpecialAbility.Execute(attributes, gameObject, aoeArea);
             aoeArea.GetComponent<AOETargetController>().enabled = false;
-            Destroy(aoeArea, activeSpecialAbility.timeToCast + Time.deltaTime * 2); //destroy aoeTarget 2 frames after whatever
+            aoeArea = null; //if switch player, aoeArea will be null so it will still exist if cast
             activeSpecialAbility = null;
         }
 
