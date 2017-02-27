@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
         //Player click input
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButton("Fire2"))
         {
             //Physics.Raycast(eyes.position, playerToTarget, out hit, 100f, Layers.NonPlayer) && hit.collider.gameObject.CompareTag("Enemy");
             if (Physics.Raycast(ray, out hit, 100f, Layers.NonWall))
@@ -278,6 +278,8 @@ public class PlayerController : MonoBehaviour
                 if (aoeArea != null)
                 {
                     Destroy(aoeArea);
+                    aoeArea = null;
+                    return;
                 }
 
                 //enemyClicked = false;

@@ -22,6 +22,7 @@ public class GrenadeThrow : ISpecial, IAbility {
     public Image image { get; private set; }
 
     private Object explosion;
+    private Object grenade;
     private GameObject abilityObj;
     
 
@@ -43,11 +44,12 @@ public class GrenadeThrow : ISpecial, IAbility {
         aoeTarget = Resources.Load("GrenadeThrow/3x3GreenAuraTarget");
         explosion = Resources.Load("GrenadeThrow/explosion");
         abilityObj = GameObject.FindWithTag("AbilityHelper");
+        grenade = Resources.Load("GrenadeThrow/nade");
     }
 
     public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
-    {
-        abilityObj.GetComponent<AbilityHelper>().GrenadeThrowRoutine(attributes, origin, target, baseDamage, explosion, timeToCast);
+    {  
+        abilityObj.GetComponent<AbilityHelper>().GrenadeThrowRoutine(attributes, origin, target, baseDamage, explosion, timeToCast, grenade);
         /*float adjustedDamage = baseDamage + attributes.Strength * 2;
         Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
         AOETargetController aoeController = target.GetComponent<AOETargetController>();
