@@ -6,12 +6,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CombatPause : MonoBehaviour {
+public class TacticalPause : MonoBehaviour {
 
     Canvas PauseScreen;
     public Canvas AbilitiesScreen;
     private Canvas myAbilitiesScreen;
-    private bool inCombatPause;
+    private bool inTacticalPause;
     private List<GameObject> unLockedAbitiesSlots;
     private List<GameObject> setAbilitesSlots;
     TeamManager tm;
@@ -25,7 +25,7 @@ public class CombatPause : MonoBehaviour {
         PauseScreen.enabled = false;
         myAbilitiesScreen = Instantiate(AbilitiesScreen) as Canvas;
         myAbilitiesScreen.enabled = false;
-        inCombatPause = false;
+        inTacticalPause = false;
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
 
         unLockedAbitiesSlots = new List<GameObject>();
@@ -49,7 +49,7 @@ public class CombatPause : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (inCombatPause && !tm.IsTeamInCombat())
+        if (inTacticalPause && !tm.IsTeamInCombat())
         {
             if (Input.GetKeyDown(KeyCode.C))
             {
@@ -109,7 +109,9 @@ public class CombatPause : MonoBehaviour {
     
     public void updateAbilities(int spot, ISpecial ability)
     {
+        Debug.Log(tm.getPlayerFromId(displayedPlayer).abilities.abilityArray);
         tm.getPlayerFromId(displayedPlayer).abilities.abilityArray[spot] = ability;
+        Debug.Log(tm.getPlayerFromId(displayedPlayer).abilities.abilityArray);
     }
 
     public void Enable()
@@ -117,7 +119,7 @@ public class CombatPause : MonoBehaviour {
         //combatPause = t
         PauseScreen.enabled = true;
         Time.timeScale = 0;
-        inCombatPause = true;
+        inTacticalPause = true;
     }
 
     public void Disable()
@@ -125,7 +127,7 @@ public class CombatPause : MonoBehaviour {
         myAbilitiesScreen.enabled = false;
         PauseScreen.enabled = false;
         Time.timeScale = 1;
-        inCombatPause = false;
+        inTacticalPause = false;
     }
 
     public void ExitToMain()

@@ -33,7 +33,7 @@ public class PlayerAbilities : MonoBehaviour
 
         unlockedAbilities = new List<ISpecial>();
         LoadUnlockedAbilities();
-        LoadHotBar();
+       // LoadHotBar();
 
         abilityArray = new ISpecial[4] { one, two, three, four };
         Debug.Log(abilityArray);
