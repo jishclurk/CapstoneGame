@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class SlotScript : MonoBehaviour, IDropHandler {
 
-    public IAbility ability { get; set; }
+    public ISpecial ability { get; set; }
 
     public int spot;
 
@@ -34,8 +34,11 @@ public class SlotScript : MonoBehaviour, IDropHandler {
     {
         if (!item)
         {
+           // Debug.Log(ability);
+            Debug.Log(spot);
             DragHandler.itemBeingDraged.transform.SetParent(transform);
-            tm.combatPause.updateAbilities(spot, (ISpecial) ability); //needs to separately handle basic ability change?
+            ability = DragHandler.abilityBeingDraged;
+            tm.tacticalPause.updateAbilities(spot, ability); //needs to separately handle basic ability change?
             //ExecuteEvents.ExecuteHierarchy<IHasChanged>(gameObject, null, (x, y) => x.HasChanged());
         }
     }

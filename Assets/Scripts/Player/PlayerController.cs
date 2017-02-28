@@ -250,6 +250,8 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(key))
             {
+                Debug.Log(abilities.AbilityBindings[key]);
+                Debug.Log(abilities.abilityArray[abilities.AbilityBindings[key]]);
                 useSpecialIfPossible(abilities.abilityArray[abilities.AbilityBindings[key]]);
             }
         }

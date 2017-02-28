@@ -8,13 +8,16 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public static GameObject itemBeingDraged;
     Vector3 startPosition;
+    public static ISpecial abilityBeingDraged;
     Transform startParent;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+       // ISpecial ability = transform.parent.gameObject.GetComponent<SlotScript>().ability;
         startParent = transform.parent;
         itemBeingDraged = gameObject;
         startPosition = transform.position;
+        abilityBeingDraged = transform.parent.gameObject.GetComponent<SlotScript>().ability;
         GetComponent<CanvasGroup>().blocksRaycasts = false;
 
     }
@@ -33,6 +36,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         {
             transform.position = startPosition;
         }
+       // transform.parent.gameObject.GetComponent<SlotScript>().ability = ability;
         
     }
 

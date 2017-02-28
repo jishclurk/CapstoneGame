@@ -14,10 +14,10 @@ public class PlayerAbilities : MonoBehaviour
     public ISpecial[] abilityArray;
 
     //possibly eleminate these and just keep track of abilites in the array??
-    public ISpecial one { get; set; }
-    public ISpecial two { get; set; }
-    public ISpecial three { get; set; }
-    public ISpecial four { get; set; }
+    //public ISpecial one { get; set; }
+    //public ISpecial two { get; set; }
+    //public ISpecial three { get; set; }
+    //public ISpecial four { get; set; }
     public IBasic Basic { get; set; }
     public List<ISpecial> unlockedAbilities { get; set; }
 
@@ -25,17 +25,21 @@ public class PlayerAbilities : MonoBehaviour
     {
         AbilityBindings = new Dictionary<KeyCode, int>();
 
-        one = new EmptyAbility();
-        two = new EmptyAbility();
-        three = new EmptyAbility();
-        four = new EmptyAbility();
+        //one = new EmptyAbility();
+        //two = new EmptyAbility();
+        //three = new EmptyAbility();
+        //four = new EmptyAbility();
         Basic = new PistolShot();
 
         unlockedAbilities = new List<ISpecial>();
         LoadUnlockedAbilities();
-       // LoadHotBar();
+        // LoadHotBar();
 
-        abilityArray = new ISpecial[4] { one, two, three, four };
+        abilityArray = new ISpecial[4];// { one, two, three, four };
+        for (int i = 0; i < abilityArray.Length; i++)
+        {
+            abilityArray[i] = new EmptyAbility();
+        }
         Debug.Log(abilityArray);
         SetDefaultBindings();
     }
@@ -48,16 +52,6 @@ public class PlayerAbilities : MonoBehaviour
         unlockedAbilities.Add(new SelfHeal());
        // unlockedAbilities.Add(new AOE());
         unlockedAbilities.Add(new GrenadeThrow());
-    }
-
-    private void LoadHotBar()
-    {
-        //some sort of reading from save file would happen here
-      //  Basic = unlockedAbilities[0];
-        one = unlockedAbilities[0];
-        two = unlockedAbilities[1];
-        three = unlockedAbilities[2];
-        //four = unlockedAbilities[4];
     }
 
     public void SetDefaultBindings()

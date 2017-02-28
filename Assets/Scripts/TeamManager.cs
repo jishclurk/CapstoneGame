@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TeamManager : MonoBehaviour {
-    public TacticalPause combatPause;
+    public TacticalPause tacticalPause;
 
     private GameObject[] gObjList;
     public List<Player> playerList;
@@ -21,7 +21,7 @@ public class TeamManager : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        combatPause = Instantiate(combatPause) as TacticalPause;
+        tacticalPause = Instantiate(tacticalPause) as TacticalPause;
         gm = SimpleGameManager.Instance;
 
         gObjList = GameObject.FindGameObjectsWithTag("Player");
@@ -163,12 +163,12 @@ public class TeamManager : MonoBehaviour {
     {
         if (gm.gameState.Equals(GameState.COMABT_PAUSE))
         {
-            gm.OnStateChange += combatPause.Disable;
+            gm.OnStateChange += tacticalPause.Disable;
             gm.SetGameState(GameState.PLAY);
         }
         else
         {
-            gm.OnStateChange += combatPause.Enable;
+            gm.OnStateChange += tacticalPause.Enable;
             gm.SetGameState(GameState.COMABT_PAUSE);
         }
     }

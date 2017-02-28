@@ -96,8 +96,14 @@ public class TacticalPause : MonoBehaviour {
             if (!setAbilities.Contains(active.abilities.unlockedAbilities[i].GetType()))
             {
                 active.abilities.unlockedAbilities[i].image.transform.SetParent(unLockedAbitiesSlots[i].transform);
+                Debug.Log(active.abilities.unlockedAbilities[i]);
+                Debug.Log(i);
+                Debug.Log(unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability);
+                Debug.Log(unLockedAbitiesSlots[i].GetComponent<SlotScript>().spot);
                 unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability = active.abilities.unlockedAbilities[i];
-                unLockedAbitiesSlots[i].GetComponent<SlotScript>().spot = i;
+               // unLockedAbitiesSlots[i].GetComponent<SlotScript>().spot = i;
+                Debug.Log(unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability);
+                Debug.Log(unLockedAbitiesSlots[i].GetComponent<SlotScript>().spot);
             }
 
 
@@ -109,9 +115,16 @@ public class TacticalPause : MonoBehaviour {
     
     public void updateAbilities(int spot, ISpecial ability)
     {
-        Debug.Log(tm.getPlayerFromId(displayedPlayer).abilities.abilityArray);
-        tm.getPlayerFromId(displayedPlayer).abilities.abilityArray[spot] = ability;
-        Debug.Log(tm.getPlayerFromId(displayedPlayer).abilities.abilityArray);
+        Debug.Log(spot);
+        Debug.Log(ability);
+        Debug.Log(displayedPlayer);
+        Debug.Log(tm.getPlayerFromId(displayedPlayer));
+        tm.getPlayerFromId(displayedPlayer).abilities.SetNewAbility(ability, spot);
+        ISpecial[] array = tm.getPlayerFromId(displayedPlayer).abilities.abilityArray;
+        foreach(ISpecial x in array)
+        {
+            Debug.Log(x);
+        }
     }
 
     public void Enable()
