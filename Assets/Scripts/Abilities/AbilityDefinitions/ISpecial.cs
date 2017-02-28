@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface ISpecial : IAbility {
 
-    float effectiveRange { get; }
     float baseDamage { get;  }
     float energyRequired { get;  }
     float coolDownTime { get; }

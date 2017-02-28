@@ -55,6 +55,6 @@ public class SelfHeal : ISpecial, IAbility
 
     public AbilityHelper.Action GetAction()
     {
-        return AbilityHelper.Action.NoTarget;
+        return AbilityHelper.Action.Instant;
     }
 }

@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class AbilityHelper : MonoBehaviour {
 
-    public enum Action { Basic, NoTarget, InheritTarget, AimTarget, AimAOE, HoldToUse }
+    public enum Action { Basic, Instant, Target, AOE }
 
     public void GrenadeThrowRoutine(CharacterAttributes attributes, GameObject origin, GameObject target, float baseDamage, Object explosion, float timeToCast, Object grenade)
     {
-        Debug.Log("goal target: " + target.transform.position);
         Vector3 nadeOrigin = new Vector3(origin.transform.position.x, origin.transform.position.y + 0.8f, origin.transform.position.z + 0.1f);
         GameObject nade = Instantiate(grenade, nadeOrigin, Quaternion.identity) as GameObject;
 
@@ -47,6 +46,7 @@ public class AbilityHelper : MonoBehaviour {
 		
 	}
 
+    //Move object in x, z plane
     IEnumerator MoveObject(Transform grenade, Transform target, float overTime)
     {
         float startTime = Time.time;
@@ -57,8 +57,6 @@ public class AbilityHelper : MonoBehaviour {
             Vector3 newPosition = grenade.position;
             newPosition.z = Mathf.Lerp(initialZ, target.position.z, (Time.time - startTime) / overTime);
             newPosition.x = Mathf.Lerp(initialX, target.position.x, (Time.time - startTime) / overTime);
-            Debug.Log("attempt target: " + target.transform.position);
-            Debug.Log("current target: " + grenade.position);
             grenade.position = newPosition;
 
             yield return null;
