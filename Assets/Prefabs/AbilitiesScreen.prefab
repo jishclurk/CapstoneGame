@@ -1435,6 +1435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 3
+  isSetSlot: 1
 --- !u!114 &114085229934569218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1876,6 +1877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 1
+  isSetSlot: 1
 --- !u!114 &114232429409076570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2045,6 +2047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 4
+  isSetSlot: 0
 --- !u!114 &114297661301277406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2084,6 +2087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 4
+  isSetSlot: 0
 --- !u!114 &114349807804184856
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2123,6 +2127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 0
+  isSetSlot: 1
 --- !u!114 &114399427094988178
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2309,6 +2314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 4
+  isSetSlot: 0
 --- !u!114 &114430192931455996
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2381,6 +2387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 4
+  isSetSlot: 0
 --- !u!114 &114449354469512216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2553,6 +2560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 4
+  isSetSlot: 0
 --- !u!114 &114497839368189408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2687,6 +2695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 5
+  isSetSlot: 0
 --- !u!114 &114530045258928468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2765,6 +2774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 4
+  isSetSlot: 0
 --- !u!114 &114599193240079558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3220,6 +3230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 2
+  isSetSlot: 1
 --- !u!114 &114779543213444650
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -13,22 +13,16 @@ public class PlayerAbilities : MonoBehaviour
     //array that corresponds with ability bar in HUB
     public ISpecial[] abilityArray;
 
-    //possibly eleminate these and just keep track of abilites in the array??
-    //public ISpecial one { get; set; }
-    //public ISpecial two { get; set; }
-    //public ISpecial three { get; set; }
-    //public ISpecial four { get; set; }
+    //Basic gun ability
     public IBasic Basic { get; set; }
+
+    //List of all available abilities
     public List<ISpecial> unlockedAbilities { get; set; }
 
     public void Awake()
     {
         AbilityBindings = new Dictionary<KeyCode, int>();
 
-        //one = new EmptyAbility();
-        //two = new EmptyAbility();
-        //three = new EmptyAbility();
-        //four = new EmptyAbility();
         Basic = new PistolShot();
 
         unlockedAbilities = new List<ISpecial>();

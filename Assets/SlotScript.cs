@@ -10,6 +10,8 @@ public class SlotScript : MonoBehaviour, IDropHandler {
 
     public int spot;
 
+    public bool isSetSlot;
+
     private TeamManager tm;
 
     private void Start()
@@ -36,9 +38,18 @@ public class SlotScript : MonoBehaviour, IDropHandler {
         {
            // Debug.Log(ability);
             Debug.Log(spot);
-            DragHandler.itemBeingDraged.transform.SetParent(transform);
             ability = DragHandler.abilityBeingDraged;
-            tm.tacticalPause.updateAbilities(spot, ability); //needs to separately handle basic ability change?
+            if (isSetSlot)
+            {
+                DragHandler.itemBeingDraged.transform.SetParent(transform);
+                tm.tacticalPause.updateAbilities(spot, ability); //needs to separately handle basic ability change?
+            }else
+            {
+                spot = DragHandler.itemBeingDraged.transform.parent.GetComponent<SlotScript>().spot;
+                DragHandler.itemBeingDraged.transform.SetParent(transform);
+                tm.tacticalPause.updateAbilities(spot, new EmptyAbility());
+            }
+
             //ExecuteEvents.ExecuteHierarchy<IHasChanged>(gameObject, null, (x, y) => x.HasChanged());
         }
     }
