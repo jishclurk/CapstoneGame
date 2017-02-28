@@ -18,6 +18,20 @@ public class TacticalPause : MonoBehaviour {
     private GameObject attributesScreen;
     private int displayedPlayer;
     SimpleGameManager gm;
+    private GameObject AvailablePoints;
+    private GameObject Strength;
+    private GameObject Intelligence;
+    private GameObject Stamina;
+    private Button confirmPoints;
+    private Button strengthUp;
+    private Button strengthDown;
+    private Button StaminaUp;
+    private Button StaminaDown;
+    private Button IntelUp;
+    private Button IntelDown;
+    private int strengthFloor;
+    private int staminaFloor;
+    private int intelFloor;
 
     // Use this for initialization
     void Start() {
@@ -44,6 +58,17 @@ public class TacticalPause : MonoBehaviour {
         }
 
         attributesScreen = myAbilitiesScreen.transform.Find("Attributes").gameObject;
+        AvailablePoints = attributesScreen.transform.Find("Available Points:").gameObject;
+        Strength = attributesScreen.transform.Find("Strength").gameObject;
+        Intelligence = attributesScreen.transform.Find("Intelligence").gameObject;
+        Stamina = attributesScreen.transform.Find("Stamina").gameObject;
+        confirmPoints = attributesScreen.transform.Find("Confirm").gameObject.GetComponent<Button>();
+        strengthUp = Strength.transform.Find("+").gameObject.GetComponent<Button>();
+        strengthDown = Strength.transform.Find("-").gameObject.GetComponent<Button>(); ;
+        StaminaUp = Stamina.transform.Find("+").gameObject.GetComponent<Button>(); ;
+        StaminaDown = Stamina.transform.Find("-").gameObject.GetComponent<Button>(); ;
+        IntelUp = Intelligence.transform.Find("+").gameObject.GetComponent<Button>(); ;
+        IntelDown = Intelligence.transform.Find("-").gameObject.GetComponent<Button>(); ;
         gm = SimpleGameManager.Instance;
     }
 
@@ -146,6 +171,7 @@ public class TacticalPause : MonoBehaviour {
 
 
         }
+
     }
       //  Debug.Log(setAbilitesSlots.Count);
        // Debug.Log(active.abilities.abilityArray.Length);
