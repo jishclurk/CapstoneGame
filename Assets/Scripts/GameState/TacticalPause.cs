@@ -11,6 +11,7 @@ public class TacticalPause : MonoBehaviour {
     Canvas PauseScreen;
     public Canvas AbilitiesScreen;
     private Canvas myAbilitiesScreen;
+
     private bool inTacticalPause;
     private List<GameObject> unLockedAbitiesSlots;
     private List<GameObject> setAbilitesSlots;

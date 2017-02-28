@@ -21,7 +21,7 @@ public class TeamManager : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        tacticalPause = Instantiate(tacticalPause) as TacticalPause;
+        tacticalPause = GameObject.Find("TacticalPause").GetComponent<TacticalPause>();
         gm = SimpleGameManager.Instance;
 
         gObjList = GameObject.FindGameObjectsWithTag("Player");
