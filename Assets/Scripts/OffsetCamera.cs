@@ -15,6 +15,7 @@ public class OffsetCamera : MonoBehaviour
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         followPlayer = tm.activePlayer.gameObject;
         offset = transform.position - followPlayer.transform.position;
+        Debug.Log("offset:" + offset);
     }
 
     void LateUpdate()
