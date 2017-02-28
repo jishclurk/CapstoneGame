@@ -66,6 +66,17 @@ public class PlayerAbilities : MonoBehaviour
         abilityArray[spot] = ability;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            abilityArray[0] = new Zap();
+            abilityArray[1] = new SelfHeal();
+            abilityArray[2] = new GrenadeThrow();
+            abilityArray[3] = new EmptyAbility();
+        }
+    }
+
 
 }
 

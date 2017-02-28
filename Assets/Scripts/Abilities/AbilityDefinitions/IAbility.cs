@@ -8,6 +8,7 @@ public interface IAbility {
     string name { get; set; }
     Image image { get; }
     int id { get; }
+    float effectiveRange { get; }
 
     //float effectiveRange { get; }
     //float baseDamage { get;  }
@@ -21,7 +22,7 @@ public interface IAbility {
     //float lastUsedTime { get; set; }
     //Object aoeTarget { get; set; }
 
-   
+
 
     void Execute(CharacterAttributes attributes, GameObject origin, GameObject target);
     bool isReady();

@@ -62,6 +62,6 @@ public class AOE : ISpecial, IAbility {
 
     public AbilityHelper.Action GetAction()
     {
-        return AbilityHelper.Action.AimAOE;
+        return AbilityHelper.Action.AOE;
     }
 }

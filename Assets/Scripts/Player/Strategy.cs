@@ -36,7 +36,6 @@ public class Strategy : MonoBehaviour {
         //set values based on previous ai control
         if (aiScript.targetedEnemy != null)
         {
-            playerScript.enemyClicked = true;
             playerScript.targetedEnemy = aiScript.targetedEnemy;
         }
        

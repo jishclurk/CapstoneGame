@@ -55,6 +55,6 @@ public class Zap : ISpecial, IAbility {
 
     public AbilityHelper.Action GetAction()
     {
-        return AbilityHelper.Action.InheritTarget;
+        return AbilityHelper.Action.Target;
     }
 }
