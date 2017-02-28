@@ -115574,6 +115574,12 @@ Prefab:
       propertyPath: playerResources
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114967963865493260, guid: b1ccb582a86a46942bcef765428f62a0,
+        type: 2}
+      propertyPath: tacticalPause
+      value: 
+      objectReference: {fileID: 114761013296560978, guid: e20a8687fa445574a81a9c77cb377a48,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1ccb582a86a46942bcef765428f62a0, type: 2}
   m_IsPrefabParent: 0
