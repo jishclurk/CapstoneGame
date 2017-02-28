@@ -62,17 +62,51 @@ public class TacticalPause : MonoBehaviour {
                 {
                     PauseScreen.enabled = false;
                     myAbilitiesScreen.enabled = true;
-                    loadCurrentPlayerInfo(-1);
+                    loadCurrentPlayerInfo(tm.getPlayerFromId(-1));
                 }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                if (displayedPlayer < 4)
+                {
+                    displayedPlayer++;
+                }else
+                {
+                    displayedPlayer = 1;
+                }
+                loadCurrentPlayerInfo(tm.getPlayerFromId(displayedPlayer));
             }
         }
 	}
 
-    //loads info from player with playerID, if id = -1, loads active player infor
-    public void loadCurrentPlayerInfo(int playerID)
+    private void clearSlots()
     {
+        foreach(GameObject slot in unLockedAbitiesSlots)
+        {
+            if (slot.transform.childCount > 0)
+            {
+                //slot.transform.GetChild(0).gameObject.SetActive(false);
+                Destroy(slot.transform.GetChild(0).gameObject);
+            }
+        }
 
-        Player active = tm.getPlayerFromId(playerID);
+        foreach (GameObject slot in setAbilitesSlots)
+        {
+            if (slot.transform.childCount > 0)
+            {
+                //slot.transform.GetChild(0).gameObject.SetActive(false);
+                Destroy(slot.transform.GetChild(0).gameObject);
+            }
+        }
+    }
+
+    //loads info from player with playerID, if id = -1, loads active player infor
+    public void loadCurrentPlayerInfo(Player active)
+    {
+        clearSlots();
+       // Debug.Log(playerID);
+        //Player active = tm.getPlayerFromId(playerID);
         displayedPlayer = active.id;
         HashSet<Type> setAbilities = new HashSet<Type>();
         Debug.Log(active);
@@ -82,7 +116,9 @@ public class TacticalPause : MonoBehaviour {
         {
             if (!active.abilities.abilityArray[i].GetType().Equals(typeof(EmptyAbility)))
             {
-                active.abilities.abilityArray[i].image.transform.SetParent(setAbilitesSlots[i].transform);
+                Image image = GameObject.Instantiate(active.abilities.abilityArray[i].image) as Image;
+                image.transform.SetParent(setAbilitesSlots[i].transform);
+                //active.abilities.abilityArray[i].image.transform.SetParent(setAbilitesSlots[i].transform);
                 setAbilities.Add(active.abilities.abilityArray[i].GetType());
             }
         }
@@ -95,7 +131,9 @@ public class TacticalPause : MonoBehaviour {
             Debug.Log(i);
             if (!setAbilities.Contains(active.abilities.unlockedAbilities[i].GetType()))
             {
-                active.abilities.unlockedAbilities[i].image.transform.SetParent(unLockedAbitiesSlots[i].transform);
+                Image image = GameObject.Instantiate(active.abilities.unlockedAbilities[i].image) as Image;
+                image.transform.SetParent(unLockedAbitiesSlots[i].transform);
+                //active.abilities.unlockedAbilities[i].image.transform.SetParent(unLockedAbitiesSlots[i].transform);
                 Debug.Log(active.abilities.unlockedAbilities[i]);
                 Debug.Log(i);
                 Debug.Log(unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability);

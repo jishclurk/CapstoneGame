@@ -1647,9 +1647,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114761013296560978, guid: e20a8687fa445574a81a9c77cb377a48,
-          type: 2}
-        m_MethodName: loadCurrentPlayerInfo
+      - m_Target: {fileID: 0}
+        m_MethodName: loadPlayerOnTactiaclPause
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2874,9 +2873,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114761013296560978, guid: e20a8687fa445574a81a9c77cb377a48,
-          type: 2}
-        m_MethodName: loadCurrentPlayerInfo
+      - m_Target: {fileID: 0}
+        m_MethodName: loadPlayerOnTactiaclPause
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3111,9 +3109,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114761013296560978, guid: e20a8687fa445574a81a9c77cb377a48,
-          type: 2}
-        m_MethodName: loadCurrentPlayerInfo
+      - m_Target: {fileID: 0}
+        m_MethodName: loadPlayerOnTactiaclPause
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3765,9 +3762,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114761013296560978, guid: e20a8687fa445574a81a9c77cb377a48,
-          type: 2}
-        m_MethodName: loadCurrentPlayerInfo
+      - m_Target: {fileID: 0}
+        m_MethodName: loadPlayerOnTactiaclPause
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

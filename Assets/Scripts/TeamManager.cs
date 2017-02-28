@@ -118,6 +118,12 @@ public class TeamManager : MonoBehaviour {
 
     }
 
+    //find a way to not do this shit
+    public void loadPlayerOnTactiaclPause(int id)
+    {
+        tacticalPause.loadCurrentPlayerInfo(getPlayerFromId(id));
+    }
+
     //eventually will take a parameter to change certain player
     public void cycleActivePlayer()
     {
