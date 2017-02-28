@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public interface IAbility {
 
     string name { get; set; }
-    Image image { get; }
+    string description { get; set; }
     int id { get; }
+    Image image { get; }
     float effectiveRange { get; }
 
     //float effectiveRange { get; }

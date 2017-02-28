@@ -6,18 +6,14 @@ using UnityEngine.UI;
 public class AOE : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string description { get; set; }
     public float effectiveRange { get; set; }
     public float baseDamage { get; set; }
-    public float fireRate { get; set; }
-    public bool isbasicAttack { get; set; }
     public float energyRequired { get; set; }
     public float timeToCast { get; set; }
     public float coolDownTime { get; set; }
-    public float lastUsedTime { get; set; }
-    public bool requiresTarget { get; set; }
-    public bool requiresAim { get; set; }
+    private float lastUsedTime { get; set; }
     public Object aoeTarget { get; set; }
-    private float nextFire;
     public int id { get; private set; }
     public Image image { get; private set; }
 
@@ -28,14 +24,10 @@ public class AOE : ISpecial, IAbility {
         name = "Area of Effect";
         effectiveRange = 10.0f;
         baseDamage = 25.0f;
-        fireRate = 0.0f;
-        isbasicAttack = false;
         timeToCast = 0.0f;
         coolDownTime = 1.0f;
         lastUsedTime = -Mathf.Infinity;
-        requiresTarget = true;
         energyRequired = 10.0f;
-        requiresAim = true;
         aoeTarget = Resources.Load("3x3RedAuraTarget");
     }
 
@@ -58,6 +50,11 @@ public class AOE : ISpecial, IAbility {
     public bool isReady()
     {
         return Time.time > lastUsedTime + coolDownTime;
+    }
+
+    public float RemainingTime()
+    {
+        return lastUsedTime + coolDownTime - Time.time;
     }
 
     public AbilityHelper.Action GetAction()

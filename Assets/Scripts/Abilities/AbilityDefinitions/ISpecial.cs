@@ -10,4 +10,6 @@ public interface ISpecial : IAbility {
     float timeToCast { get; }
     Object aoeTarget { get; set; }
 
+    float RemainingTime();
+
 }
