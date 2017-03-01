@@ -29,7 +29,7 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
     int experience;
     int experienceNeededForNextLevel;
     int experienceMultiplier;
-    public int bonusPoints;
+    public int StatPoints;
     int strength;
     int intelligence;
     int stamina;
@@ -40,7 +40,7 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         experience = 0;
         experienceNeededForNextLevel = 10;
         experienceMultiplier = 10;
-        bonusPoints = 5;
+        StatPoints = 5;
         strength = 1;
         intelligence = 1;
         stamina = 1;
@@ -51,7 +51,7 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         level += 1;
         experience -= experienceNeededForNextLevel;
         experienceNeededForNextLevel = level * experienceMultiplier;
-        bonusPoints += 3;
+        StatPoints += 3;
         // strength += 1;
         // intelligence += 1;
         // stamina += 1;

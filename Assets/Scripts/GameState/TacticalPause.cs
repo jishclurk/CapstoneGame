@@ -172,7 +172,7 @@ public class TacticalPause : MonoBehaviour {
         floorIntell = displayedPlayer.attributes.Intelligence;
         floorStamina = displayedPlayer.attributes.Stamina;
         floorStrength = displayedPlayer.attributes.Strength;
-        pointsLeft = displayedPlayer.attributes.bonusPoints;
+        pointsLeft = displayedPlayer.attributes.StatPoints;
         strength = floorStrength;
         intell = floorIntell;
         stamina = floorStamina;
@@ -242,7 +242,7 @@ public class TacticalPause : MonoBehaviour {
     //Updates displayed players attributes with displayed attribute values
     public void ConfirmAttributeValues()
     {
-        displayedPlayer.attributes.bonusPoints = pointsLeft;
+        displayedPlayer.attributes.StatPoints = pointsLeft;
         displayedPlayer.attributes.Strength = strength;
         displayedPlayer.attributes.Intelligence = intell;
         displayedPlayer.attributes.Stamina = stamina;

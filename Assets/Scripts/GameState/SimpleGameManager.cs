@@ -68,6 +68,8 @@ public class SimpleGameManager {
         {
             level++;
             checkpoint = 0;
+            lastSavedState.level = level;
+            lastSavedState.checkPoint = checkpoint;
             LoadLevel(level);
         }
         else
@@ -94,20 +96,12 @@ public class SimpleGameManager {
 	}
 
 	public void NewGame(){
+        //create last saved start as start state 
 		name = null;
 		hasBeenSaved = false;
 		checkpoint = 1;
 		level = 1;
 	}
 
-    //public void Pause()
-    //{
-    //    Time.timeScale = 0;
-    //}
-    
-    //public void UnPause()
-    //{
-    //    Time.time = 1;
-    //}
 
 }

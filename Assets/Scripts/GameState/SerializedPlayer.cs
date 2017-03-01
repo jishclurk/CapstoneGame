@@ -9,14 +9,13 @@ public class SerializedPlayer {
     [XmlElement("In Control")]
     public bool isInControl;
 
-    public List<int> Abilities;
-
     public int level;
     public int experience;
-   // public int experienceNeededForNextLevel;
+    public int statPoints;
     public int strength;
     public int intelligence;
     public int stamina;
+    public int id;
 
     public SerializedPlayer()
     {
