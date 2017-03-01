@@ -43,13 +43,13 @@ public class Zap : ISpecial, IAbility {
         description = "A quick Zap from your gun.";
     }
 
-    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
+    public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + attributes.Intelligence*2;
+        float adjustedDamage = baseDamage + player.attributes.Intelligence*2;
         Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage); //At some point we may want to look at tag of origin/targe to access appropriate scripts
-        origin.GetComponent<PlayerResources>().UseEnergy(energyRequired);
+        player.resources.UseEnergy(energyRequired);
     }
 
     public bool isReady()

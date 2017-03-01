@@ -159,7 +159,7 @@ public class AttackState : ICoopState
 
             if (aiPlayer.activeBasicAbility.isReady())
             {
-                aiPlayer.activeBasicAbility.Execute(aiPlayer.attributes, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
+                aiPlayer.activeBasicAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
 
                 //check if enemy died
                 EnemyHealth enemyHP = aiPlayer.targetedEnemy.GetComponent<EnemyHealth>();

@@ -248,13 +248,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1614173676919700}
-  m_LocalRotation: {x: -0.667368, y: -0.23370886, z: 0.6673681, w: -0.23370907}
-  m_LocalPosition: {x: -0.7327454, y: 1.1510876, z: 0.20555691}
+  m_LocalRotation: {x: 0.59042853, y: 0.59042853, z: 0.38909408, w: 0.38909408}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.025983948, y: 1.1203446, z: 0.025983911}
   m_Children: []
   m_Father: {fileID: 4702478983626922}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: -38.6, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 113.23, z: 90}
 --- !u!4 &4594724548755428
 Transform:
   m_ObjectHideFlags: 1
@@ -275,7 +275,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1938376682735460}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.27000046, z: -0.001}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7363371, y: 0.9343313, z: 0.4468879}
   m_Children: []
   m_Father: {fileID: 4702478983626922}
@@ -287,8 +287,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1247698710529522}
-  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5000001, w: 0.49999994}
-  m_LocalPosition: {x: -23.19, y: 3.86, z: -60.76}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -60.76}
   m_LocalScale: {x: 3.8485408, y: 3.8485398, z: 3.8485413}
   m_Children:
   - {fileID: 4594724548755428}
@@ -622,8 +622,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 867a62b51b28342f78e9743be2664695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  genActive: {fileID: 2100000, guid: e518c3beaac9a4e75b87a07de8a5dd46, type: 2}
-  genInactive: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!114 &114351183743815662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -635,8 +633,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90895372d6f194773a83a93476c12e71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hubActive: {fileID: 2100000, guid: e518c3beaac9a4e75b87a07de8a5dd46, type: 2}
-  hubInactive: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   gateType: 3
 --- !u!114 &114958664729844094
 MonoBehaviour:

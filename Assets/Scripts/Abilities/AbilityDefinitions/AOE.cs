@@ -35,10 +35,10 @@ public class AOE : ISpecial, IAbility {
         aoeTarget = Resources.Load("3x3RedAuraTarget");
     }
 
-    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
+    public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + attributes.Strength * 2;
+        float adjustedDamage = baseDamage + player.attributes.Strength * 2;
         Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
         AOETargetController aoeController = target.GetComponent<AOETargetController>();
 
@@ -46,7 +46,7 @@ public class AOE : ISpecial, IAbility {
         {
             enemy.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
         }
-        origin.GetComponent<PlayerResources>().UseEnergy(energyRequired);
+        player.resources.UseEnergy(energyRequired);
         
     }
 

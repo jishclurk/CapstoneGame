@@ -46,9 +46,9 @@ public class GrenadeThrow : ISpecial, IAbility {
         grenade = Resources.Load("GrenadeThrow/nade");
     }
 
-    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
+    public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {  
-        abilityObj.GetComponent<AbilityHelper>().GrenadeThrowRoutine(attributes, origin, target, baseDamage, explosion, timeToCast, grenade);
+        abilityObj.GetComponent<AbilityHelper>().GrenadeThrowRoutine(player.attributes, origin, target, baseDamage, explosion, timeToCast, grenade);
         /*float adjustedDamage = baseDamage + attributes.Strength * 2;
         Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
         AOETargetController aoeController = target.GetComponent<AOETargetController>();
