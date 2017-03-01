@@ -223,19 +223,15 @@ public class TacticalPause : MonoBehaviour {
     //updates the displayed strength
     public void ChangeStrength(int change)
     {
-        Debug.Log("button pressed");
 
         if (pointsLeft > 0)
         {
-            Debug.Log("strength = " + strength);
             if (change > 0 || strength > floorStrength)
             {
                 strength += change;
                 pointsLeft -= change;
-                Debug.Log("strength2 = " + strength);
 
             }
-            Debug.Log("strength3 = " + strength);
 
             XPText.text = xpString + pointsLeft.ToString();
             StrengthText.text = strengthString + strength.ToString();
@@ -250,6 +246,8 @@ public class TacticalPause : MonoBehaviour {
         displayedPlayer.attributes.Strength = strength;
         displayedPlayer.attributes.Intelligence = intell;
         displayedPlayer.attributes.Stamina = stamina;
+        displayedPlayer.abilities.UpdateUnlockedAbilities(displayedPlayer.attributes);
+        loadCurrentPlayerInfo(displayedPlayer);
     }
     //puts ability into the displayed players ability array at spot
     public void updateAbilities(int spot, ISpecial ability)

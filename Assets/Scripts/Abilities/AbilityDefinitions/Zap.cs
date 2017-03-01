@@ -27,6 +27,9 @@ public class Zap : ISpecial, IAbility {
 
     public Zap()
     {
+        StrengthRequired = 0;
+        StaminaRequired = 3;
+        IntelligenceRequired = 0;
         image = GameObject.Instantiate(Resources.Load("Abilities/Zap", typeof(Image))) as Image;
         id = 4;
         name = "Zap";

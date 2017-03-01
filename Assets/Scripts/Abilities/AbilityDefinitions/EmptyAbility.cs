@@ -23,6 +23,9 @@ public class EmptyAbility : ISpecial, IAbility {
 
     public EmptyAbility()
     {
+        StrengthRequired = 0;
+        StaminaRequired = 0;
+        IntelligenceRequired = 0;
         image = GameObject.Instantiate(Resources.Load("Abilities/Empty", typeof(Image))) as Image;
         id = 1;
         name = "Empty Ability";

@@ -30,14 +30,15 @@ public class PlayerAbilities : MonoBehaviour
 
     public void Awake()
     {
-        potentialSpecials = new List<ISpecial>() { new EmptyAbility(), new GrenadeThrow(), new SelfHeal(), new Zap() };
-        potentialBasics = new List<IBasic>() { new PistolShot() };
+        potentialSpecials = new List<ISpecial>() {new GrenadeThrow(), new SelfHeal(), new Zap() };
+        potentialBasics = new List<IBasic>();
+        unlockedBasics.Add(new PistolShot());
         AbilityBindings = new Dictionary<KeyCode, int>();
 
-        Basic = new PistolShot();
+        Basic = unlockedBasics[0];
 
         unlockedSpecialAbilities = new List<ISpecial>();
-        LoadUnlockedAbilities();
+        //LoadUnlockedAbilities();
         // LoadHotBar();
 
         abilityArray = new ISpecial[4];// { one, two, three, four };
@@ -87,27 +88,36 @@ public class PlayerAbilities : MonoBehaviour
 
     public void UpdateUnlockedAbilities(CharacterAttributes attributes)
     {
-        //for(int i = potentialBasics.Count -1; i<=0; i--)
-        //{
-        //    IBasic potential = potentialBasics[i];
-        //    if(attributes.Strength>= potential.StrengthRequired && attributes.Stamina>= potential.StaminaRequired && attributes.Intelligence>= potential.StaminaRequired)
-        //    {
-        //        potentialBasics.Remove(potential);
-        //        unlockedBasics.Add(potential);
-        //    }
-            
-        //}
+        foreach(ISpecial x in unlockedSpecialAbilities)
+        {
+            Debug.Log(x);
+        }
+        for (int i = potentialBasics.Count - 1; i >= 0; i--)
+        {
+            IBasic potential = potentialBasics[i];
+            if (attributes.Strength >= potential.StrengthRequired && attributes.Stamina >= potential.StaminaRequired && attributes.Intelligence >= potential.StaminaRequired)
+            {
+                potentialBasics.Remove(potential);
+                unlockedBasics.Add(potential);
+            }
 
-        //for (int i = potentialSpecials.Count - 1; i <= 0; i--)
-        //{
-        //    ISpecial potential = potentialSpecials[i];
-        //    if (attributes.Strength >= potential.StrengthRequired && attributes.Stamina >= potential.StaminaRequired && attributes.Intelligence >= potential.StaminaRequired)
-        //    {
-        //        potentialSpecials.Remove(potential);
-        //        unlockedSpecialAbilities.Add(potential);
-        //    }
+        }
 
-        //}
+        for (int i = potentialSpecials.Count - 1; i>= 0; i--)
+        {
+            ISpecial potential = potentialSpecials[i];
+            if (attributes.Strength >= potential.StrengthRequired && attributes.Stamina >= potential.StaminaRequired && attributes.Intelligence >= potential.IntelligenceRequired)
+            {
+                potentialSpecials.Remove(potential);
+                unlockedSpecialAbilities.Add(potential);
+            }
+
+        }
+
+        foreach (ISpecial x in unlockedSpecialAbilities)
+        {
+            Debug.Log(x);
+        }
     }
 
 

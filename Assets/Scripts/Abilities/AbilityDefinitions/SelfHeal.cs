@@ -29,6 +29,9 @@ public class SelfHeal : ISpecial, IAbility
 
     public SelfHeal()
     {
+        StrengthRequired = 0;
+        StaminaRequired = 0;
+        IntelligenceRequired = 3;
         image = GameObject.Instantiate(Resources.Load("Abilities/Heal", typeof(Image))) as Image;
         id = 3;
         name = "Heal";

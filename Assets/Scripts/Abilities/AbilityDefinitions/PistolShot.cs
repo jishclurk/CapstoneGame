@@ -25,6 +25,9 @@ public class PistolShot : IBasic, IAbility {
 
     public PistolShot()
     {
+        StrengthRequired = 0;
+        StaminaRequired = 0;
+        IntelligenceRequired = 0;
         image = GameObject.Instantiate(Resources.Load("Abilities/Pistol", typeof(Image))) as Image;
         id = 2;
         name = "Pistol Shot";

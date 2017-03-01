@@ -28,6 +28,9 @@ public class GrenadeThrow : ISpecial, IAbility {
 
     public GrenadeThrow()
     {
+        StrengthRequired = 3;
+        StaminaRequired = 0;
+        IntelligenceRequired = 0;
         image = GameObject.Instantiate(Resources.Load("Abilities/Grenade", typeof(Image))) as Image;
         id = 0;
         name = "Grenade Throw";
