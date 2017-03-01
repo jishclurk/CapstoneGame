@@ -51,7 +51,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bef1ce5e89b7ec4fb8dd97e2f28c2c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tacticalPause: {fileID: 114761013296560978, guid: e20a8687fa445574a81a9c77cb377a48,
+    type: 2}
+  prefabList:
+  - {fileID: 1731589135771186, guid: a67dbb575a7355a429968a76d1658e08, type: 2}
+  - {fileID: 1169785609970016, guid: 314a8c60a4cc4e041b65a5049b9635f9, type: 2}
+  - {fileID: 1249808551138818, guid: b441921568cf6134aad5da6eef913da5, type: 2}
+  - {fileID: 1255961465432460, guid: cb15bb0bf0decce4c8d9f1e578ac9e3e, type: 2}
+  playerList: []
   activePlayer: {fileID: 0}
-  activeStrat: {fileID: 0}
-  teamInCombat: 0
   playerResources: {fileID: 0}
