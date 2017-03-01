@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private bool selectingAbilityTarget = false;
     private IBasic activeBasicAbility;
     private ISpecial activeSpecialAbility;
+    private Player player;
     private CharacterAttributes attributes;
     private PlayerAbilities abilities;
     
@@ -56,7 +57,7 @@ public class PlayerController : MonoBehaviour
         walkSpeed = 1.0f;
 
         //this is a mess. These are "shared" variables between co-op ai and player script
-        Player player = GetComponent<Player>();
+        player = GetComponent<Player>();
         abilities = player.abilities;
         activeBasicAbility = abilities.Basic;
         attributes = player.attributes;
@@ -217,7 +218,7 @@ public class PlayerController : MonoBehaviour
         {
             if (ability.GetAction() == AbilityHelper.Action.Instant)
             {
-                ability.Execute(attributes, gameObject, gameObject);
+                ability.Execute(player, gameObject, gameObject);
             }
             else if (ability.GetAction() == AbilityHelper.Action.AOE)
             {
@@ -264,7 +265,7 @@ public class PlayerController : MonoBehaviour
             bool targetIsDead = targetedEnemy.GetComponent<EnemyHealth>().isDead;
             if (activeBasicAbility.isReady() && !targetIsDead)
             {
-                activeBasicAbility.Execute(attributes, gameObject, targetedEnemy.gameObject);
+                activeBasicAbility.Execute(player, gameObject, targetedEnemy.gameObject);
             }
             if (targetIsDead)
             {
@@ -323,7 +324,7 @@ public class PlayerController : MonoBehaviour
             bool targetIsDead = target.GetComponent<EnemyHealth>().isDead;
             if (activeSpecialAbility.isReady() && !targetIsDead)
             {
-                activeSpecialAbility.Execute(attributes, gameObject, target.gameObject);
+                activeSpecialAbility.Execute(player, gameObject, target.gameObject);
                 activeSpecialAbility = null;
                 specialTargetedEnemy = null;
             }
@@ -345,7 +346,7 @@ public class PlayerController : MonoBehaviour
         //raycasting is handled by script attached to aoeArea
         if (Input.GetButtonDown("Fire1"))
         {
-            activeSpecialAbility.Execute(attributes, gameObject, aoeArea);
+            activeSpecialAbility.Execute(player, gameObject, aoeArea);
             aoeArea.GetComponent<AOETargetController>().enabled = false;
             aoeArea = null; //if switch player, aoeArea will be null so it will still exist if cast
             activeSpecialAbility = null;

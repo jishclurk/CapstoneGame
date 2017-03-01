@@ -45,13 +45,13 @@ public class SelfHeal : ISpecial, IAbility
         description = "Heal up";
     }
 
-    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
+    public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + attributes.Intelligence;
+        float adjustedDamage = baseDamage + player.attributes.Intelligence;
         Debug.Log(name + " on " + target.name + " heals " + adjustedDamage + ".");
         target.GetComponent<PlayerResources>().Heal(adjustedDamage);
-        origin.GetComponent<PlayerResources>().UseEnergy(energyRequired);
+        player.resources.UseEnergy(energyRequired);
     }
 
     public bool isReady()

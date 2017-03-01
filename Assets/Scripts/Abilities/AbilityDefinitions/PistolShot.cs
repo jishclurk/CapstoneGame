@@ -38,10 +38,10 @@ public class PistolShot : IBasic, IAbility {
 
     }
 
-    public void Execute(CharacterAttributes attributes, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
+    public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + attributes.Strength * 0.1f;
+        float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
         Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
         //useEnergy not required
