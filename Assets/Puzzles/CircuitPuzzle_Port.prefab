@@ -161,13 +161,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1729161809273062}
-  m_LocalRotation: {x: 0.18301271, y: 0.18301268, z: 0.6830127, w: 0.68301266}
-  m_LocalPosition: {x: -3.2189984, y: -0.0922543, z: 1.8689957}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -3.2189984, y: -0.0922543, z: 0}
   m_LocalScale: {x: 0.7096225, y: 3.4749706, z: 0.09999999}
   m_Children: []
   m_Father: {fileID: 4837486794250510}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!4 &4763348069214524
 Transform:
   m_ObjectHideFlags: 1
@@ -286,8 +286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90895372d6f194773a83a93476c12e71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hubActive: {fileID: 2100000, guid: e518c3beaac9a4e75b87a07de8a5dd46, type: 2}
-  hubInactive: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   gateType: 3
 --- !u!136 &136065231201154476
 CapsuleCollider:

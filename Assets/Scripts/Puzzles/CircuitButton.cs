@@ -6,13 +6,22 @@ public class CircuitButton : MonoBehaviour, ICircuitPiece {
 
 	ButtonScript button;
 	MeshRenderer connector;
-	public Material activeGreen;
-	public Material inactiveWhite;
+	Material activeGreen;
+	Material inactiveWhite;
 	private bool solved;
+	float cTime;
+	bool flick;
+	float t = 1.0f;
+	float minimum = -0.75f;
+	float maximum = 0.75f;
 	// Use this for initialization
+
+
 	void Start () {
-		button = GetComponentInChildren<ButtonScript> ();
 		connector = this.gameObject.transform.Find ("Out Connector").GetComponent<MeshRenderer> ();
+		button = GetComponentInChildren<ButtonScript> ();
+		activeGreen = Resources.Load ("Materials/Green_Beam") as Material;
+		inactiveWhite = Resources.Load("Materials/White_Beam") as Material;
 	}
 
 	// Update is called once per frame
@@ -28,8 +37,20 @@ public class CircuitButton : MonoBehaviour, ICircuitPiece {
 			} else {
 				connector.material = inactiveWhite;
 			}
+
+			connector.material.mainTextureOffset = new Vector2(0.0f, Mathf.Lerp(minimum,maximum,t));
+			// .. and increate the t interpolater
+			t += 0.75f * Time.deltaTime;
+
+//			// now check if the interpolator has reached 1.0
+//			// and swap maximum and minimum so game object moves
+//			// in the opposite direction.
+			if (t > 1.0f){
+				t = 0.0f;
+			}
 		}
 	}
+		
 
 	public bool Output(){
 
@@ -44,4 +65,10 @@ public class CircuitButton : MonoBehaviour, ICircuitPiece {
 		solved = true;
 		button.Disable ();
 	}
+		
+}
+
+public enum AngleType{
+	NORTH, SOUTH, EAST, WEST
+
 }

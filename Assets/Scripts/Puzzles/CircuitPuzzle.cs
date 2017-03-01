@@ -7,11 +7,14 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 
 	List<ICircuitPiece> result;
 	MeshRenderer hub;
-	public Material hubActive;
-	public Material hubInactive;
+	private Material hubActive;
+	private Material hubInactive;
 	MeshRenderer connector;
 	ParticleSystem ps;
 	bool solved;
+	float t = 1.0f;
+	float minimum = 0.75f;
+	float maximum = -0.75f;
 
 	public GateType gateType;
 
@@ -25,9 +28,9 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 		{
 			if (cp.GetTransform ().parent == this.transform) {
 
-				Debug.Log ("circuit piece 1: "+cp.ToString()+"\n");
+				//Debug.Log ("circuit piece 1: "+cp.ToString()+"\n");
 				result.Add (cp);
-				Debug.Log ("circuit piece 1: "+result[0].ToString()+"\n");
+				//Debug.Log ("circuit piece 1: "+result[0].ToString()+"\n");
 			}
 
 		}
@@ -36,6 +39,10 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 		hub = GetComponent<MeshRenderer> ();
 		connector = this.gameObject.transform.Find ("Out Connector").GetComponent<MeshRenderer> ();
 		solved = false;
+
+		hubActive = Resources.Load ("Materials/Green_Beam") as Material;
+		AssignColor ();
+		//hubInactive = Resources.Load ("Materials/White_Beam") as Material;
 
 	}
 	
@@ -55,6 +62,13 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 				if (ps.isPlaying) {
 					ps.Stop ();
 				}
+			}
+
+			connector.material.mainTextureOffset = new Vector2(0.0f, Mathf.Lerp(minimum,maximum,t));
+			// .. and increate the t interpolater
+			t += 0.75f* Time.deltaTime;
+			if (t > 1.0f){
+				t = 0.0f;
 			}
 		}
 
@@ -85,6 +99,26 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 			return false;
 		}
 	
+	}
+
+	void AssignColor(){
+		if (gateType == GateType.OR) {
+			hubInactive= Resources.Load ("Materials/LightBlue_Beam") as Material;
+		} else if (gateType == GateType.AND) {
+			hubInactive= Resources.Load ("Materials/Yellow_Beam") as Material;
+		} else if (gateType == GateType.XOR) {
+			hubInactive= Resources.Load ("Materials/Orange_Beam") as Material;
+		} else if (gateType == GateType.NAND) {
+			hubInactive= Resources.Load ("Materials/Blue_Beam") as Material;
+		} else if (gateType == GateType.NOR) {
+			hubInactive= Resources.Load ("Materials/Red_Beam") as Material;
+		} else if (gateType == GateType.XNOR) {
+			hubInactive= Resources.Load ("Materials/Magenta_Beam") as Material;
+		} 
+		else{
+			hubInactive= Resources.Load ("Materials/Black_Beam") as Material;
+		}
+
 	}
 
 	public Transform GetTransform(){

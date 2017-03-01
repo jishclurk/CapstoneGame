@@ -7,11 +7,14 @@ public class Generator : MonoBehaviour,ICircuitPiece {
 	private ICircuitPiece[] input;
 	MeshRenderer connector;
 	Light genSpot;
-	public Material genActive;
-	public Material genInactive;
+	Material genActive;
+	Material genInactive;
 	bool turnedOn;
 	Gen_Collide trigger;
 	private bool solved;
+	float t = 1.0f;
+	float minimum = -0.75f;
+	float maximum = 0.75f;
 
 
 	// Use this for initialization
@@ -22,6 +25,8 @@ public class Generator : MonoBehaviour,ICircuitPiece {
 		turnedOn = false;
 		trigger = this.gameObject.transform.Find ("ColliderEq_2").GetComponent<Gen_Collide> ();
 		solved = false;
+		genActive = Resources.Load ("Materials/Green_Beam") as Material;
+		genInactive = Resources.Load("Materials/White_Beam") as Material;
 	}
 
 	// Update is called once per frame
@@ -44,6 +49,12 @@ public class Generator : MonoBehaviour,ICircuitPiece {
 			}
 		}
 
+		connector.material.mainTextureOffset = new Vector2(0.0f, Mathf.Lerp(minimum,maximum,t));
+		// .. and increate the t interpolater
+		t += 0.75f * Time.deltaTime;
+		if (t > 1.0f){
+			t = 0.0f;
+		}
 		//} else {
 
 

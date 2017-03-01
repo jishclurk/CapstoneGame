@@ -8,8 +8,10 @@ public class ButtonScript : MonoBehaviour {
    private AudioSource sound;
 	private bool pressed;
 	private bool disabled;
+	TeamManager tm;
 
     void Start () {
+		tm = FindObjectOfType<TeamManager> ();
         sound = GetComponent<AudioSource>();
 		pressed = false;
     }
@@ -21,7 +23,7 @@ public class ButtonScript : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
 		if (!disabled) {
-			if (!other.isTrigger && other.CompareTag ("Player")) {
+			if (!other.isTrigger && (other.gameObject == tm.activePlayer.gameObject)) {
 				sound.Play ();
 				Debug.Log ("Button Pressed");
 				pressed = !pressed;
