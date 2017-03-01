@@ -174,11 +174,21 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(abilities.abilityArray[abilities.AbilityBindings[key]]);
                 if (activeSpecialAbility == null)
                 {
+
                     useSpecialIfPossible(abilities.abilityArray[abilities.AbilityBindings[key]]);
                 }
                 else
                 {
-                    cancelSpecialIfPossible(abilities.abilityArray[abilities.AbilityBindings[key]]);
+                    
+                    if (!activeSpecialAbility.Equals(abilities.abilityArray[abilities.AbilityBindings[key]]))
+                    {
+                        cancelSpecialIfPossible(activeSpecialAbility);
+                        useSpecialIfPossible(abilities.abilityArray[abilities.AbilityBindings[key]]);
+                    } else
+                    {
+                        cancelSpecialIfPossible(activeSpecialAbility);
+                    }
+                    
                 }
             }
         }
