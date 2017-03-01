@@ -16,6 +16,9 @@ public class Player : MonoBehaviour {
     public HashSet<GameObject> watchedEnemies;
     [HideInInspector]
     public HashSet<GameObject> visibleEnemies;
+    [HideInInspector]
+    public Transform gunbarrel;
+
 
     public int id;
 
@@ -28,6 +31,7 @@ public class Player : MonoBehaviour {
 
         watchedEnemies = new HashSet<GameObject>();
         visibleEnemies = new HashSet<GameObject>();
+        gunbarrel = transform.FindDeepChild("ShootFX");
 	}
 	
 	// Update is called once per frame
