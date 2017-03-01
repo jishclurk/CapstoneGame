@@ -8,9 +8,10 @@ public class Strategy : MonoBehaviour {
 
     private PlayerController playerScript;
     private CoopAiController aiScript;
+    private TeamManager tm;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         playerScript = GetComponent<PlayerController>();
         aiScript = GetComponent<CoopAiController>();
         if (isplayerControlled)
@@ -21,8 +22,8 @@ public class Strategy : MonoBehaviour {
         {
             setAsCoopAI();
         }
-        
-	}
+        tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -59,6 +60,15 @@ public class Strategy : MonoBehaviour {
 
     public void setAsDead()
     {
+        HashSet<GameObject> watchedEnemies = gameObject.GetComponent<Player>().watchedEnemies;
+        HashSet<GameObject> visibleEnemies = gameObject.GetComponent<Player>().visibleEnemies;
+        visibleEnemies.Clear();
+        foreach (GameObject enemy in watchedEnemies)
+        {
+            tm.RemoveEnemyIfNotTeamVisible(enemy);
+        }
+        watchedEnemies.Clear();
+
         isplayerControlled = false;
         aiScript.enabled = false;
         playerScript.enabled = false;
