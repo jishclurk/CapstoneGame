@@ -64,16 +64,29 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 				}
 			}
 
-			connector.material.mainTextureOffset = new Vector2(0.0f, Mathf.Lerp(minimum,maximum,t));
-			// .. and increate the t interpolater
-			t += 0.75f* Time.deltaTime;
-			if (t > 1.0f){
-				t = 0.0f;
-			}
+			lerpConnector ();
+
+
+		} else {
+			hub.material = hubActive;
+			connector.material = hubActive;
+			lerpConnector ();
 		}
 
 	}
 
+
+	void lerpConnector(){
+		connector.material.mainTextureOffset = new Vector2 (0.0f, Mathf.Lerp (minimum, maximum, t));
+		// .. and increate the t interpolater
+		t += 0.75f * Time.deltaTime;
+		if (t > 1.0f) {
+			t = 0.0f;
+		}
+		if (ps.isStopped) {
+			ps.Play ();
+		}
+	}
 	public void Lock(){
 		solved = true;
 		result [0].Lock ();

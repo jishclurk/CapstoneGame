@@ -31,24 +31,26 @@ public class CircuitButton : MonoBehaviour, ICircuitPiece {
 //		} else {
 //			connector.material.Lerp(activeGreen,inactiveWhite,  1.0f);
 //		}
-		if (!solved) {
+//		if (!solved) {
 			if (this.Output ()) {
 				connector.material = activeGreen;
 			} else {
 				connector.material = inactiveWhite;
 			}
 
-			connector.material.mainTextureOffset = new Vector2(0.0f, Mathf.Lerp(minimum,maximum,t));
+
+//		} else {
+			connector.material.mainTextureOffset = new Vector2 (0.0f, Mathf.Lerp (minimum, maximum, t));
 			// .. and increate the t interpolater
 			t += 0.75f * Time.deltaTime;
 
-//			// now check if the interpolator has reached 1.0
-//			// and swap maximum and minimum so game object moves
-//			// in the opposite direction.
-			if (t > 1.0f){
+			//			// now check if the interpolator has reached 1.0
+			//			// and swap maximum and minimum so game object moves
+			//			// in the opposite direction.
+			if (t > 1.0f) {
 				t = 0.0f;
 			}
-		}
+//		}
 	}
 		
 
@@ -62,7 +64,7 @@ public class CircuitButton : MonoBehaviour, ICircuitPiece {
 	}
 
 	public void Lock(){
-		solved = true;
+		//solved = true;
 		button.Disable ();
 	}
 		
