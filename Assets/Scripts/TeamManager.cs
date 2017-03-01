@@ -5,7 +5,7 @@ using UnityEngine;
 public class TeamManager : MonoBehaviour {
     public TacticalPause tacticalPause;
 
-    private GameObject[] gObjList;
+    public GameObject[] prefabList = new GameObject[4];
     public List<Player> playerList;
     public Player activePlayer;
     //public Strategy activeStrat;
@@ -21,16 +21,21 @@ public class TeamManager : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
+        for(int i = 0; i<prefabList.Length; i++)
+        {
+            prefabList[i] = Instantiate(prefabList[i]);
+        }
+
         tacticalPause = GameObject.Find("TacticalPause").GetComponent<TacticalPause>();
         gm = SimpleGameManager.Instance;
 
-        gObjList = GameObject.FindGameObjectsWithTag("Player");
+       // prefabList = GameObject.FindGameObjectsWithTag("Player");
 
         playerList = new List<Player>();
         //assign active player to user controller player
-        for (int i = 0; i < gObjList.Length; i++)
+        for (int i = 0; i < prefabList.Length; i++)
         {
-            Player player = gObjList[i].GetComponent<Player>();
+            Player player = prefabList[i].GetComponent<Player>();
             //player.id = i+1;
             Debug.Log("ID: " + player.id);
 
@@ -212,7 +217,7 @@ public class TeamManager : MonoBehaviour {
 
     public void AwardExperience(int experiencePoints)
     {
-        for (int i = 0; i < gObjList.Length; i++)
+        for (int i = 0; i < prefabList.Length; i++)
         {
             playerList[i].attributes.Experience += experiencePoints;
         }
@@ -221,43 +226,49 @@ public class TeamManager : MonoBehaviour {
 
     public SerializedPlayer[] currentState()
     {
-        SerializedPlayer[] players = new SerializedPlayer[gObjList.Length];
-       /* for (int i = 0; i < gObjList.Length; i++)
+        SerializedPlayer[] players = new SerializedPlayer[playerList.Count];
+        for (int i = 0; i < playerList.Count; i++)
         {
+            CharacterAttributes current = playerList[i].attributes;
             SerializedPlayer player = new SerializedPlayer();
-            player.level = characterAttributesArray[i].Level;
-            player.experience = characterAttributesArray[i].Experience;
-           // player.experienceNeededForNextLevel = characterAttributesArray[i].;
-            player.strength = characterAttributesArray[i].Strength;
-            player.intelligence = characterAttributesArray[i].Intelligence;
-            player.stamina = characterAttributesArray[i].Stamina;
-            player.isInControl = playerList[i].isplayerControlled;
+            player.level =current.Level;
+            player.experience = current.Experience;
+            player.strength = current.Strength;
+            player.intelligence = current.Intelligence;
+            player.stamina = current.Stamina;
+            player.isInControl = playerList[i].Equals(activePlayer);
+            player.id = playerList[i].id;
+            player.statPoints = current.StatPoints;
             players[i] = player;
         }
-        */
+        
         return players;
     }
 
     public void LoadSavedState(SerializedPlayer[] state)
     {
-
-
-        /*
-        for (int i = 0; i<gObjList.Length; i++)
+        for (int i = 0; i<playerList.Count; i++)
         {
-            characterAttributesArray[i].Level = state[i].level;
-            characterAttributesArray[i].Experience = state[i].experience;
-            characterAttributesArray[i].Strength = state[i].strength;
-            characterAttributesArray[i].Intelligence = state[i].intelligence;
-            characterAttributesArray[i].Stamina = state[i].stamina;
+            SerializedPlayer playerState = state[i];
+            Player currentPlayer = getPlayerFromId(playerState.id);
+            CharacterAttributes current = currentPlayer.attributes;
+            current.Level = playerState.level;
+            current.Experience = playerState.experience;
+            current.StatPoints = playerState.statPoints;
+            current.Strength = playerState.strength;
+            current.Intelligence = playerState.intelligence;
+            current.Stamina = playerState.statPoints;
 
-            if (state[i].isInControl)
+            if (playerState.isInControl)
             {
-                activeStrat = playerList[i];
-                activePlayer = playerList[i].gameObject;
+                activePlayer = currentPlayer;
+                currentPlayer.strategy.isplayerControlled = true;
+                playerResources = activePlayer.GetComponent<PlayerResources>();
+                cameraScript = Camera.main.GetComponent<OffsetCamera>(); 
+                cameraScript.followPlayer = activePlayer.gameObject;
             }
 
         }
-        */
+        
     }
 }

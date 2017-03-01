@@ -14,6 +14,7 @@ public class CheckPoint : MonoBehaviour
     private Button no;
     private Button exit;
     private InputField name;
+    private TeamManager tm;
 
     public bool checkpointReached;
     private Collider col;
@@ -41,28 +42,24 @@ public class CheckPoint : MonoBehaviour
         col.enabled = true;
 
         gm = SimpleGameManager.Instance;
+        tm = GameObject.Find("TeamManager").gameObject.GetComponent<TeamManager>();
 
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("TRIGGERED");
 		if (other.gameObject.tag.Equals("Player") && (!other.isTrigger))
         {
             checkpointReached = true;
 
             gm.OnStateChange += Pause;
-            Debug.Log("here");
             gm.SetGameState(GameState.PAUSE);
-            //gm.checkpoint++;
             DisableCollider();
-            Debug.Log("878787");
             yes.onClick.AddListener(Save);
             no.onClick.AddListener(closeCheckpointScreen);
             exit.onClick.AddListener(ToMain);
 
             CheckPointSceen.enabled = true;
-            Debug.Log("asdfasdf");
         }
     }
 
@@ -92,38 +89,48 @@ public class CheckPoint : MonoBehaviour
         if (gm.hasBeenSaved)
         {
 
-            //SaveLoad.Save
+            SaveGame();
         }
         else
         {
             Debug.Log(name);
             SaveAsScreen.enabled = true;
-            name.onEndEdit.AddListener(delegate { setNameAndSave(name); });
+            name.onEndEdit.AddListener(delegate { setName(name); });
         }
     }
 
+    private void setName(InputField name)
+    {
+        gm.name = name.text;
+        SaveGame();
+    }
+
     //Sets game name as input in InputFeild, saves the game 
-    private void setNameAndSave(InputField gameName)
+    private void SaveGame()
     {
         Debug.Log("set name and save");
-        gm.name = gameName.text;
+        //gm.name = gameName.text;
         SaveAsScreen.enabled = false;
+
         SavedState toSave = new SavedState();
         toSave.setFromGameManager();
-        SaveLoad.Save(toSave, gameName.text);
+        toSave.players = tm.currentState();
+
+        SaveLoad.Save(toSave, gm.name);
         Debug.Log("saved");
         progressGame();
         //
     }
 
+    //Freezes game
     public void Pause()
     {
         Time.timeScale = 0;
     }
 
+    //Closes the checkpoint scrren and starts the game
     public void closeCheckpointScreen()
     {
-        Debug.Log("000000");
         CheckPointSceen.enabled = false;
         progressGame();
     }
@@ -136,8 +143,6 @@ public class CheckPoint : MonoBehaviour
 
     private void progressGame()
     {
-        Debug.Log("33333");
-
         gm.OnStateChange += gm.NextCheckPointOrLevel;
         gm.SetGameState(GameState.PLAY);
     }
