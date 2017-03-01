@@ -6,46 +6,78 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//Supports ability to pause game, change players abilities and attribute values if not in combat
 public class TacticalPause : MonoBehaviour {
 
     Canvas PauseScreen;
-    public Canvas AbilitiesScreen;
-    private Canvas myAbilitiesScreen;
+    public GameObject AbilitiesScreen;
 
     private bool inTacticalPause;
     private List<GameObject> unLockedAbitiesSlots;
     private List<GameObject> setAbilitesSlots;
     TeamManager tm;
     private GameObject attributesScreen;
-    private int displayedPlayer;
+    private Player displayedPlayer;
     SimpleGameManager gm;
+
+    //attribute variables
+    private int floorStrength;
+    private int strength;
+    private int floorStamina;
+    private int stamina;
+    private int floorIntell;
+    private int intell;
+    private int pointsLeft;
+
+    private Text XPText;
+    private Text StrengthText;
+    private Text IntellText;
+    private Text StaminaText;
+
+    private string xpString;
+    private string strengthString;
+    private string intellString;
+    private string staminaString;
 
     // Use this for initialization
     void Start() {
         PauseScreen = GetComponent<Canvas>();
         PauseScreen.enabled = false;
-        myAbilitiesScreen = Instantiate(AbilitiesScreen) as Canvas;
-        myAbilitiesScreen.enabled = false;
+        AbilitiesScreen = transform.GetChild(1).gameObject;
+        AbilitiesScreen.SetActive(false);
+        attributesScreen = AbilitiesScreen.transform.Find("Attributes").gameObject;
+
+        XPText = attributesScreen.transform.GetChild(0).GetComponent<Text>();
+        StrengthText = attributesScreen.transform.GetChild(1).GetComponent<Text>();
+        IntellText = attributesScreen.transform.GetChild(2).GetComponent<Text>();
+        StaminaText = attributesScreen.transform.GetChild(3).GetComponent<Text>();
+
+        xpString = XPText.text;
+        strengthString = StrengthText.text;
+        intellString = IntellText.text;
+        staminaString = StaminaText.text;
+
         inTacticalPause = false;
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
+        gm = SimpleGameManager.Instance;
 
         unLockedAbitiesSlots = new List<GameObject>();
         setAbilitesSlots = new List<GameObject>();
 
-        Transform unlockedAbilities = myAbilitiesScreen.transform.Find("AbilitiesPanel/UnlockedAbilities");
+        //get list of unlockedAbility slots
+        Transform unlockedAbilities = AbilitiesScreen.transform.Find("AbilitiesPanel/UnlockedAbilities");
         for (int i = 0; i < unlockedAbilities.childCount; i++)
         {
             unLockedAbitiesSlots.Add(unlockedAbilities.GetChild(i).gameObject);
         }
 
-        Transform setAbilities = myAbilitiesScreen.transform.Find("AbilitiesPanel/SetAbilities ");
+        //get list of set ability slots
+        Transform setAbilities = AbilitiesScreen.transform.Find("AbilitiesPanel/SetAbilities ");
         for (int i = 0; i < setAbilities.childCount; i++)
         {
             setAbilitesSlots.Add(setAbilities.GetChild(i).gameObject);
         }
 
-        attributesScreen = myAbilitiesScreen.transform.Find("Attributes").gameObject;
-        gm = SimpleGameManager.Instance;
     }
 
     // Update is called once per frame
@@ -54,40 +86,43 @@ public class TacticalPause : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.C))
             {
-                if (myAbilitiesScreen.enabled)
+                if (AbilitiesScreen.activeInHierarchy)
                 {
                     PauseScreen.enabled = true;
-                    myAbilitiesScreen.enabled = false;
+                    AbilitiesScreen.SetActive(false);
                 }
                 else
                 {
-                    PauseScreen.enabled = false;
-                    myAbilitiesScreen.enabled = true;
-                    loadCurrentPlayerInfo(tm.getPlayerFromId(-1));
+                    //PauseScreen.enabled = false;
+                    AbilitiesScreen.SetActive(true);
+                    displayedPlayer = tm.activePlayer;
+                    loadCurrentPlayerInfo(tm.activePlayer);
                 }
             }
 
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                if (displayedPlayer < 4)
+                int displayedPlayerId = displayedPlayer.id;
+                if (displayedPlayerId < 4)
                 {
-                    displayedPlayer++;
+                    displayedPlayerId++;
                 }else
                 {
-                    displayedPlayer = 1;
+                    displayedPlayerId = 1;
                 }
-                loadCurrentPlayerInfo(tm.getPlayerFromId(displayedPlayer));
+                displayedPlayer = tm.getPlayerFromId(displayedPlayerId);
+                loadCurrentPlayerInfo(displayedPlayer);
             }
         }
 	}
 
+    // clears all slots
     private void clearSlots()
     {
         foreach(GameObject slot in unLockedAbitiesSlots)
         {
             if (slot.transform.childCount > 0)
             {
-                //slot.transform.GetChild(0).gameObject.SetActive(false);
                 Destroy(slot.transform.GetChild(0).gameObject);
             }
         }
@@ -96,79 +131,142 @@ public class TacticalPause : MonoBehaviour {
         {
             if (slot.transform.childCount > 0)
             {
-                //slot.transform.GetChild(0).gameObject.SetActive(false);
                 Destroy(slot.transform.GetChild(0).gameObject);
             }
         }
     }
 
-    //loads info from player with playerID, if id = -1, loads active player infor
+    //Loads the available abilities and set abilities of active
     public void loadCurrentPlayerInfo(Player active)
     {
         clearSlots();
-       // Debug.Log(playerID);
-        //Player active = tm.getPlayerFromId(playerID);
-        displayedPlayer = active.id;
         HashSet<Type> setAbilities = new HashSet<Type>();
-        Debug.Log(active);
-        Debug.Log(active.abilities);
-        Debug.Log(active.abilities.abilityArray);
         for (int i = 0; i < 4; i++)
         {
             if (!active.abilities.abilityArray[i].GetType().Equals(typeof(EmptyAbility)))
             {
                 Image image = GameObject.Instantiate(active.abilities.abilityArray[i].image) as Image;
                 image.transform.SetParent(setAbilitesSlots[i].transform);
-                //active.abilities.abilityArray[i].image.transform.SetParent(setAbilitesSlots[i].transform);
                 setAbilities.Add(active.abilities.abilityArray[i].GetType());
             }
         }
         Debug.Log(setAbilities);
 
-        //Debug.Log(unLockedAbitiesSlots.Count);
-        //Debug.Log(active.abilities.unlockedAbilities.Count);
-        for (int i = 0; i < active.abilities.unlockedAbilities.Count; i++)
+        for (int i = 0; i < active.abilities.unlockedSpecialAbilities.Count; i++)
         {
             Debug.Log(i);
-            if (!setAbilities.Contains(active.abilities.unlockedAbilities[i].GetType()))
+            if (!setAbilities.Contains(active.abilities.unlockedSpecialAbilities[i].GetType()))
             {
-                Image image = GameObject.Instantiate(active.abilities.unlockedAbilities[i].image) as Image;
+                Image image = GameObject.Instantiate(active.abilities.unlockedSpecialAbilities[i].image) as Image;
                 image.transform.SetParent(unLockedAbitiesSlots[i].transform);
-                //active.abilities.unlockedAbilities[i].image.transform.SetParent(unLockedAbitiesSlots[i].transform);
-                Debug.Log(active.abilities.unlockedAbilities[i]);
-                Debug.Log(i);
-                Debug.Log(unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability);
-                Debug.Log(unLockedAbitiesSlots[i].GetComponent<SlotScript>().spot);
-                unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability = active.abilities.unlockedAbilities[i];
-               // unLockedAbitiesSlots[i].GetComponent<SlotScript>().spot = i;
-                Debug.Log(unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability);
-                Debug.Log(unLockedAbitiesSlots[i].GetComponent<SlotScript>().spot);
+                unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability = active.abilities.unlockedSpecialAbilities[i];
+            }
+        }
+
+        loadAttributesInfo();
+    }
+
+    //Loads attribute values of displayed player onto the screeen
+    private void loadAttributesInfo()
+    {
+        floorIntell = displayedPlayer.attributes.Intelligence;
+        floorStamina = displayedPlayer.attributes.Stamina;
+        floorStrength = displayedPlayer.attributes.Strength;
+        pointsLeft = displayedPlayer.attributes.bonusPoints;
+        strength = floorStrength;
+        intell = floorIntell;
+        stamina = floorStamina;
+
+        XPText.text = xpString + pointsLeft.ToString();
+        StrengthText.text = strengthString + floorStrength.ToString();
+        IntellText.text = intellString + floorIntell.ToString();
+        StaminaText.text = staminaString + floorStamina.ToString();
+
+    }
+
+    //updates the displayed stamina
+    public void ChangeStamina(int change)
+    {
+        Debug.Log("button pressed");
+        if (pointsLeft > 0)
+        {
+            if (change > 0 || stamina > floorStamina)
+            {
+                stamina += change;
+            pointsLeft -= change;
             }
 
-
+            XPText.text = xpString + pointsLeft.ToString();
+            StaminaText.text = staminaString + stamina.ToString();
         }
-    }
-      //  Debug.Log(setAbilitesSlots.Count);
-       // Debug.Log(active.abilities.abilityArray.Length);
 
-    
+    }
+
+    //updates the displayed intell
+    public void ChangeIntell(int change)
+    {
+        Debug.Log("button pressed");
+
+        if (pointsLeft > 0)
+        {
+            if (change > 0 || intell > floorIntell)
+            {
+                intell += change;
+            pointsLeft -= change;
+            }
+            XPText.text = xpString + pointsLeft.ToString();
+            IntellText.text = intellString + intell.ToString();
+        }
+
+    }
+
+    //updates the displayed strength
+    public void ChangeStrength(int change)
+    {
+        Debug.Log("button pressed");
+
+        if (pointsLeft > 0)
+        {
+            Debug.Log("strength = " + strength);
+            if (change > 0 || strength > floorStrength)
+            {
+                strength += change;
+                pointsLeft -= change;
+                Debug.Log("strength2 = " + strength);
+
+            }
+            Debug.Log("strength3 = " + strength);
+
+            XPText.text = xpString + pointsLeft.ToString();
+            StrengthText.text = strengthString + strength.ToString();
+        }
+
+    }
+
+    //Updates displayed players attributes with displayed attribute values
+    public void ConfirmAttributeValues()
+    {
+        displayedPlayer.attributes.bonusPoints = pointsLeft;
+        displayedPlayer.attributes.Strength = strength;
+        displayedPlayer.attributes.Intelligence = intell;
+        displayedPlayer.attributes.Stamina = stamina;
+    }
+    //puts ability into the displayed players ability array at spot
     public void updateAbilities(int spot, ISpecial ability)
     {
-        Debug.Log(spot);
-        Debug.Log(ability);
-        Debug.Log(displayedPlayer);
-        Debug.Log(tm.getPlayerFromId(displayedPlayer));
-        tm.getPlayerFromId(displayedPlayer).abilities.SetNewAbility(ability, spot);
-        ISpecial[] array = tm.getPlayerFromId(displayedPlayer).abilities.abilityArray;
+        displayedPlayer.abilities.SetNewAbility(ability, spot);
+        ISpecial[] array = displayedPlayer.abilities.abilityArray;
+
+        //prints players ability array for debugging 
         foreach(ISpecial x in array)
         {
             Debug.Log(x);
         }
     }
 
+    //Stops game, turns of pause screen
     public void Enable()
     {
-        //combatPause = t
         PauseScreen.enabled = true;
         Time.timeScale = 0;
         inTacticalPause = true;
@@ -176,7 +274,7 @@ public class TacticalPause : MonoBehaviour {
 
     public void Disable()
     {
-        myAbilitiesScreen.enabled = false;
+        AbilitiesScreen.SetActive(false)    ;
         PauseScreen.enabled = false;
         Time.timeScale = 1;
         inTacticalPause = false;
@@ -195,18 +293,7 @@ public class TacticalPause : MonoBehaviour {
         
     }
 
-    //public void HasChanged()
-    //{
-    //    Debug.Log("asdfasdf");
-    //    throw new NotImplementedException();
-    //}
+    
 }
 
-//namespace UnityEngine.EventSystems
-//{
-//    public interface IHasChanged : IEventSystemHandler
-//    {
-//        void HasChanged();
-//    }
-//}
 

@@ -10,6 +10,10 @@ public interface IAbility {
     int id { get; }
     float effectiveRange { get; }
 
+    int StrengthRequired { get; }
+    int StaminaRequired { get; }
+    int IntelligenceRequired { get; }
+
     //float effectiveRange { get; }
     //float baseDamage { get;  }
     //float fireRate { get;  }

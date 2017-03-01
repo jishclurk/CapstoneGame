@@ -20,6 +20,12 @@ public class PistolShot : IBasic, IAbility {
     public int id { get; private set; }
     public Image image { get; private set; }
 
+    public int StrengthRequired { get; private set; }
+    public int StaminaRequired { get; private set; }
+    public int IntelligenceRequired { get; private set; }
+
+
+
     public PistolShot()
     {
         image = GameObject.Instantiate(Resources.Load("Abilities/Pistol", typeof(Image))) as Image;

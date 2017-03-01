@@ -29,18 +29,18 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
     int experience;
     int experienceNeededForNextLevel;
     int experienceMultiplier;
-    int bonusPoints;
+    public int bonusPoints;
     int strength;
     int intelligence;
     int stamina;
 
-    public CharacterAttributes()
+    public void Awake()
     {
         level = 1;
         experience = 0;
         experienceNeededForNextLevel = 10;
         experienceMultiplier = 10;
-        bonusPoints = 0;
+        bonusPoints = 5;
         strength = 1;
         intelligence = 1;
         stamina = 1;

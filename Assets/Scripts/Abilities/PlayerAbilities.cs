@@ -16,16 +16,27 @@ public class PlayerAbilities : MonoBehaviour
     //Basic gun ability
     public IBasic Basic { get; set; }
 
+    //List of unlocked basic abilities
+    public List<IBasic> unlockedBasics = new List<IBasic>();
+
     //List of all available abilities
-    public List<ISpecial> unlockedAbilities { get; set; }
+    public List<ISpecial> unlockedSpecialAbilities { get; set; }
+
+    //List of all potenital basic abilities
+    private List<IBasic> potentialBasics; 
+
+    //List of all potentail specail abilities
+    private List<ISpecial> potentialSpecials; 
 
     public void Awake()
     {
+        potentialSpecials = new List<ISpecial>() { new EmptyAbility(), new GrenadeThrow(), new SelfHeal(), new Zap() };
+        potentialBasics = new List<IBasic>() { new PistolShot() };
         AbilityBindings = new Dictionary<KeyCode, int>();
 
         Basic = new PistolShot();
 
-        unlockedAbilities = new List<ISpecial>();
+        unlockedSpecialAbilities = new List<ISpecial>();
         LoadUnlockedAbilities();
         // LoadHotBar();
 
@@ -40,12 +51,9 @@ public class PlayerAbilities : MonoBehaviour
 
     private void LoadUnlockedAbilities()
     {
-        //some sort of reading from save file would happen here
-        //unlockedAbilities.Add(new PistolShot());
-        unlockedAbilities.Add(new Zap());
-        unlockedAbilities.Add(new SelfHeal());
-       // unlockedAbilities.Add(new AOE());
-        unlockedAbilities.Add(new GrenadeThrow());
+        unlockedSpecialAbilities.Add(new Zap());
+        unlockedSpecialAbilities.Add(new SelfHeal());
+        unlockedSpecialAbilities.Add(new GrenadeThrow());
     }
 
     public void SetDefaultBindings()
@@ -75,6 +83,31 @@ public class PlayerAbilities : MonoBehaviour
             abilityArray[2] = new GrenadeThrow();
             abilityArray[3] = new EmptyAbility();
         }
+    }
+
+    public void UpdateUnlockedAbilities(CharacterAttributes attributes)
+    {
+        //for(int i = potentialBasics.Count -1; i<=0; i--)
+        //{
+        //    IBasic potential = potentialBasics[i];
+        //    if(attributes.Strength>= potential.StrengthRequired && attributes.Stamina>= potential.StaminaRequired && attributes.Intelligence>= potential.StaminaRequired)
+        //    {
+        //        potentialBasics.Remove(potential);
+        //        unlockedBasics.Add(potential);
+        //    }
+            
+        //}
+
+        //for (int i = potentialSpecials.Count - 1; i <= 0; i--)
+        //{
+        //    ISpecial potential = potentialSpecials[i];
+        //    if (attributes.Strength >= potential.StrengthRequired && attributes.Stamina >= potential.StaminaRequired && attributes.Intelligence >= potential.StaminaRequired)
+        //    {
+        //        potentialSpecials.Remove(potential);
+        //        unlockedSpecialAbilities.Add(potential);
+        //    }
+
+        //}
     }
 
 

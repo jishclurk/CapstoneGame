@@ -21,6 +21,10 @@ public class AOE : ISpecial, IAbility {
     public int id { get; private set; }
     public Image image { get; private set; }
 
+    public int StrengthRequired { get; private set; }
+    public int StaminaRequired { get; private set; }
+    public int IntelligenceRequired { get; private set; }
+
     public AOE()
     {
         image = GameObject.Instantiate(Resources.Load("Abilities/Grenade", typeof(Image))) as Image;

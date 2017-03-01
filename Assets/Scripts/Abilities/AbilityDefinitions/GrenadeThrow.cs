@@ -24,7 +24,10 @@ public class GrenadeThrow : ISpecial, IAbility {
     private Object explosion;
     private Object grenade;
     private GameObject abilityObj;
-    
+
+    public int StrengthRequired { get; private set; }
+    public int StaminaRequired { get; private set; }
+    public int IntelligenceRequired { get; private set; }
 
     public GrenadeThrow()
     {
