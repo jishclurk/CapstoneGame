@@ -14,7 +14,8 @@ public interface IAbility {
     int StaminaRequired { get; }
     int IntelligenceRequired { get; }
 
-    void Execute(CharacterAttributes attributes, GameObject origin, GameObject target);
+
+    void Execute(Player player, GameObject origin, GameObject target);
     bool isReady();
     AbilityHelper.Action GetAction();
 
