@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 13500000}
   - component: {fileID: 2300000}
   - component: {fileID: 5400000}
-  - component: {fileID: 114359748149078286}
+  - component: {fileID: 114091588710721128}
   m_Layer: 0
   m_Name: RifleProjectile
   m_TagString: Untagged
@@ -133,7 +133,7 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
---- !u!114 &114359748149078286
+--- !u!114 &114091588710721128
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7495e2b1f9d7e104c82de62f1ef9d90e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8995768f62a192341bc80414aeddd50b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   impactParticle: {fileID: 122632, guid: 17af9b9c91c8a054a9201bcf176d7101, type: 2}
