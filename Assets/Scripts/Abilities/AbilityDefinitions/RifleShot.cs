@@ -30,8 +30,8 @@ public class RifleShot : IBasic, IAbility {
         id = 8;
         name = "Rifle Shot";
         effectiveRange = 9.0f;
-        baseDamage = 3.5f;
-        fireRate = 0.3f;
+        baseDamage = 3.0f;
+        fireRate = 0.2f;
         lastUsedTime = 0.0f;
 
     }
@@ -45,7 +45,7 @@ public class RifleShot : IBasic, IAbility {
 
         Vector3 playerToTarget = target.transform.position - player.gunbarrel.position;
         GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
-        project.GetComponent<RifleProjectileScript>().destination = new Vector3(target.transform.position.x, player.gunbarrel.transform.position.y, target.transform.position.z);
+        project.GetComponent<RifleProjectileScript>().destination = new Vector3(target.transform.position.x, (player.gunbarrel.position.y + target.transform.position.y)/2, target.transform.position.z);
 
         //useEnergy not required
     }

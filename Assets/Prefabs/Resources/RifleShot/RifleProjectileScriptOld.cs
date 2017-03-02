@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RifleProjectileScript : MonoBehaviour
+public class RifleProjectileScriptOld : MonoBehaviour
 {
     public GameObject impactParticle;
     public Vector3 destination;
@@ -20,32 +20,6 @@ public class RifleProjectileScript : MonoBehaviour
         Vector3 normalizedTrajectory = Vector3.Normalize(destination - transform.position);
         GetComponent<Rigidbody>().velocity = normalizedTrajectory * 50.0f;
     }
-
-    /*
-    void Update()
-    {
-
-        if(!hasCollided && Vector3.Distance(destination, transform.position) < 0.2f)
-        {
-            hasCollided = true;
-            //transform.DetachChildren();
-            impactParticle = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, impactNormal)) as GameObject;
-            //Debug.DrawRay(hit.contacts[0].point, hit.contacts[0].normal * 1, Color.yellow);
-
-            //yield WaitForSeconds (0.05);
-            foreach (GameObject trail in trailParticles)
-            {
-                GameObject curTrail = transform.Find(projectileParticle.name + "/" + trail.name).gameObject;
-                curTrail.transform.parent = null;
-                Destroy(curTrail, 3f);
-            }
-            Destroy(projectileParticle, 3f);
-            Destroy(impactParticle, 5f);
-            Destroy(gameObject);
-            //projectileParticle.Stop();
-        }
-    }
-    */
 
     void OnTriggerEnter(Collider other)
     {

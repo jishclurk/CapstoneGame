@@ -43,10 +43,8 @@ public class AttackState : ICoopState
             MoveAndShoot();
         }
         WatchActiveplayerForFlee();
-        if (animSpeed > 0.0f)
-            aiPlayer.animController.AnimateMovement(animSpeed);
-        else
-            aiPlayer.animController.AnimateIdle();
+
+        HandleDestinationAnimation(aiPlayer.targetedEnemy, aiPlayer.activeBasicAbility);
 
     }
 
@@ -143,22 +141,15 @@ public class AttackState : ICoopState
             return; //avoid running code we don't need to.
         }
 
-        aiPlayer.navMeshAgent.destination = aiPlayer.targetedEnemy.position;
         float remainingDistance = Vector3.Distance(aiPlayer.targetedEnemy.position, aiPlayer.transform.position);
-        if (remainingDistance >= aiPlayer.activeBasicAbility.effectiveRange || !aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
-        {
-            aiPlayer.navMeshAgent.Resume();
-            animSpeed = aiPlayer.walkSpeed;
-        }
-        else
+        if (remainingDistance <= aiPlayer.activeBasicAbility.effectiveRange && aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
         {
             //Within range, look at enemy and shoot
             aiPlayer.transform.LookAt(aiPlayer.targetedEnemy);
-            aiPlayer.animController.AnimateAim();
-            //Vector3 dirToShoot = targetedEnemy.transform.position - transform.position; //unused, would be for raycasting
 
             if (aiPlayer.activeBasicAbility.isReady())
             {
+                aiPlayer.animController.AnimateShoot();
                 aiPlayer.activeBasicAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
 
                 //check if enemy died
@@ -186,6 +177,7 @@ public class AttackState : ICoopState
 
 
 
+
     private void WatchActiveplayerForFlee()
     {
         if(aiPlayer.tm.activePlayer.watchedEnemies.Count == 0)
@@ -194,4 +186,34 @@ public class AttackState : ICoopState
             ToFleeState();
         }
     }
+
+
+    private void HandleDestinationAnimation(Transform target, IAbility ability)
+    {
+        if (target != null)
+        {
+            aiPlayer.navMeshAgent.destination = target.position;
+            float remainingDistance = Vector3.Distance(target.position, aiPlayer.transform.position);
+            if (remainingDistance >= ability.effectiveRange)
+            {
+                aiPlayer.animController.AnimateAimChasing();
+                aiPlayer.navMeshAgent.Resume();
+            }
+            else
+            {
+                aiPlayer.animController.AnimateAimStanding();
+                aiPlayer.navMeshAgent.Stop();
+            }
+        }
+        else
+        {
+            if (aiPlayer.navMeshAgent.remainingDistance > aiPlayer.navMeshAgent.stoppingDistance)
+                aiPlayer.animController.AnimateMovement(animSpeed);
+            else
+                aiPlayer.animController.AnimateIdle();
+                
+        }
+
+    }
+
 }

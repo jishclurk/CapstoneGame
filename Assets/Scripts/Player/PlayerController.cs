@@ -260,11 +260,12 @@ public class PlayerController : MonoBehaviour
         {
             //Within range, look at enemy and shoot
             transform.LookAt(targetedEnemy);
-            animController.AnimateAim();
+            //animController.AnimateAimStanding();
 
             bool targetIsDead = targetedEnemy.GetComponent<EnemyHealth>().isDead;
             if (activeBasicAbility.isReady() && !targetIsDead)
             {
+                animController.AnimateShoot();
                 activeBasicAbility.Execute(player, gameObject, targetedEnemy.gameObject);
             }
             if (targetIsDead)
@@ -319,7 +320,7 @@ public class PlayerController : MonoBehaviour
         {
             //Within range, look at enemy and shoot
             transform.LookAt(target);
-            animController.AnimateAim();
+            //animController.AnimateAimStanding();
 
             bool targetIsDead = target.GetComponent<EnemyHealth>().isDead;
             if (activeSpecialAbility.isReady() && !targetIsDead)
@@ -362,26 +363,23 @@ public class PlayerController : MonoBehaviour
             float remainingDistance = Vector3.Distance(target.position, transform.position);
             if (remainingDistance >= ability.effectiveRange)
             {
+                animController.AnimateAimChasing();
                 navMeshAgent.Resume();
-                animSpeed = walkSpeed;
             }
             else
             {
-                animSpeed = 0.0f;
+                animController.AnimateAimStanding();
                 navMeshAgent.Stop();
             }
         }
         else
         {
             if (navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance)
-                animSpeed = walkSpeed;
+                animController.AnimateMovement(animSpeed);
             else
-                animSpeed = 0.0f;
+                animController.AnimateIdle();
         }
-        if (animSpeed > 0.0f)
-            animController.AnimateMovement(animSpeed);
-        else
-            animController.AnimateIdle();
+
     }
 
     //OTHER//

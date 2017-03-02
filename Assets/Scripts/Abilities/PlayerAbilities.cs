@@ -36,7 +36,7 @@ public class PlayerAbilities : MonoBehaviour
         AbilityBindings = new Dictionary<KeyCode, int>();
 
         Basic = unlockedBasics[0];
-        //Basic = new RifleShot();
+        Basic = new RifleShot();
 
         unlockedSpecialAbilities = new List<ISpecial>();
         //LoadUnlockedAbilities();

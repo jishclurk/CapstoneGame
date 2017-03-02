@@ -21,6 +21,7 @@ public class PlayerAnimationController : MonoBehaviour {
     {
         if (!deathAnimated)
         {
+            animator.SetFloat("Y", 0.0f);
             animator.SetBool("Dead", true);
             deathAnimated = true;
         }
@@ -30,6 +31,7 @@ public class PlayerAnimationController : MonoBehaviour {
     {
         if (!deathAnimated)
         {
+            animator.SetFloat("Y", 0.0f);
             animator.SetBool("OnGround", true);
             animator.SetFloat("Speed", speed);
             animator.SetBool("Aiming", false);
@@ -40,18 +42,42 @@ public class PlayerAnimationController : MonoBehaviour {
     {
         if (!deathAnimated)
         {
+            animator.SetFloat("Y", 0.0f);
             animator.SetBool("OnGround", true);
             animator.SetFloat("Speed", 0.0f);
         }
     }
 
-    public void AnimateAim()
+    public void AnimateAimChasing()
+    {
+        if (!deathAnimated)
+        {
+            animator.SetFloat("Y", 1.0f);
+            animator.SetBool("OnGround", true);
+            animator.SetFloat("Speed", 0.0f);
+            animator.SetBool("Aiming", true);
+        }
+    }
+
+    public void AnimateAimStanding()
+    {
+        if (!deathAnimated)
+        {
+            animator.SetFloat("Y", 0.0f);
+            animator.SetBool("OnGround", true);
+            animator.SetFloat("Speed", 0.0f);
+            animator.SetBool("Aiming", true);
+        }
+    }
+
+    public void AnimateShoot()
     {
         if (!deathAnimated)
         {
             animator.SetBool("OnGround", true);
             animator.SetFloat("Speed", 0.0f);
             animator.SetBool("Aiming", true);
+            animator.SetTrigger("Shoot");
         }
     }
 
