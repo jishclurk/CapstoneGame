@@ -9,7 +9,7 @@ public static class Utils  {
 
     public static Dictionary<int, IAbility> AbilityIDs = new Dictionary<int, IAbility>
     {
-        {0, new AOE()}, {1,  new EmptyAbility()}, {2, new PistolShot()}, {3, new SelfHeal() }, {4, new Zap() }
+        {0, new AOE()}, {1,  new EmptyAbility()}, {2, new PistolShot()}, {3, new MedKit() }, {4, new Zap() }
     };
 
 }
