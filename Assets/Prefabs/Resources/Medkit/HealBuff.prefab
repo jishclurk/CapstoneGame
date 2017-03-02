@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 19889964}
   - component: {fileID: 19966606}
   m_Layer: 0
-  m_Name: GreenBuff
+  m_Name: HealBuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
