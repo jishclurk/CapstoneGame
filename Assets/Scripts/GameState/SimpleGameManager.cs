@@ -8,100 +8,174 @@ public enum GameState { INTRO, MAIN_MENU, PLAY, PAUSE, COMABT_PAUSE }
 public delegate void OnStateChangeHandler();
 
 //handles game state transitions and saving the game
-public class SimpleGameManager {
+public class SimpleGameManager : MonoBehaviour
+{
     private Dictionary<int, int> checkPointsPerLevel = new Dictionary<int, int>() { { 1, 1 } };
 
-	protected SimpleGameManager() {}
+    protected SimpleGameManager() { }
 
-	//singleton 
-	private static SimpleGameManager instance = null;
+    //singleton 
+    private static SimpleGameManager instance = null;
 
-	//function called on state change
-	public event OnStateChangeHandler OnStateChange;
-	
+    //function called on state change
+    public event OnStateChangeHandler OnStateChange;
+
     //current game state 
-	public  GameState gameState { get; private set; }
-	
+    public GameState gameState { get; private set; }
+
     //false if it's new game that hasn't been saved yet
-	public bool hasBeenSaved {get;set;}
-	
+    public bool hasBeenSaved { get; set; }
+
     //name game is saved under
-	public string name { get; set; }
+    public string name { get; set; }
 
-    public int level = 0;
+    public bool newLevel { get; set; }
 
-	public int checkpoint{ get; set; } //current checkpoint that a player is working towards
+    public int level;
 
-	//last saved State
-	private SavedState lastSavedState;
+    public bool newGame;
 
-	public static SimpleGameManager Instance{
-		get {
-			if (SimpleGameManager.instance == null){
-				//DontDestroyOnLoad(SimpleGameManager.instance);
-				SimpleGameManager.instance = new SimpleGameManager();
-			}
-			return SimpleGameManager.instance;
-		}
+    // public int checkpoint; //current checkpoint that a player is working towards
 
-	}
+    private CheckpointManager cpManager;
+
+    //last saved State
+    public SavedState lastSavedState;
+
+    //autosaved state from last cp 
+    private SavedState autosave;
+
+    private bool isAutosave;
+
+    void Awake()
+    {
+        newGame = false;
+        isAutosave = false;
+        DontDestroyOnLoad(this);
+        Debug.Log("HERE 111111111111");
+        level = 0;
+        //checkpoint = 0;
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        Debug.Log("on level was loaded 888888888");
+        if (gameState != GameState.MAIN_MENU)
+        {
+            cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
+            if (newGame)
+            {
+
+                NewGame();
+            }
+            else
+            {
+                SetSavedState(lastSavedState);
+
+            }
+
+        }
+
+    }
+
+    private void Start()
+    {
+        Debug.Log("HERE 0000000000000000000000");
+    }
+
+    public static SimpleGameManager Instance
+    {
+        get
+        {
+            if (SimpleGameManager.instance == null)
+            {
+                //DontDestroyOnLoad(SimpleGameManager.instance);
+                Debug.Log("gm instance is null");
+                SimpleGameManager.instance = new SimpleGameManager();
+            }
+            return SimpleGameManager.instance;
+        }
+
+    }
+
 
     //State is changed and function set to OnStateChange is called
-	public void SetGameState(GameState state){
+    public void SetGameState(GameState state)
+    {
         Debug.Log("changing state");
-		this.gameState = state;
-		OnStateChange();
-        foreach(var function in OnStateChange.GetInvocationList())
+        Debug.Log("name = " + name);
+        Debug.Log("level = " + level);
+        // Debug.Log("checkpoint = " + checkpoint);
+
+
+        this.gameState = state;
+        OnStateChange();
+        foreach (var function in OnStateChange.GetInvocationList())
         {
             OnStateChange -= (function as OnStateChangeHandler);
         }
-	}
+    }
 
-	public void OnApplicationQuit(){
-		SimpleGameManager.instance = null;
-	}
+    //shuts down game
+    public void OnApplicationQuit()
+    {
+        SimpleGameManager.instance = null;
+    }
 
-	public void NextCheckPointOrLevel(){
-        Debug.Log("Next checkpoint or level");
-        Time.timeScale = 1;
-        if(checkPointsPerLevel[level] == checkpoint)
-        {
-            level++;
-            checkpoint = 0;
-            lastSavedState.level = level;
-            lastSavedState.checkPoint = checkpoint;
-            LoadLevel(level);
-        }
-        else
-        {
-            checkpoint ++;
-        }
-      
-	}
+    public void nextLevel()
+    {
+        Debug.Log("next level");
+        //save with level ++
+        //load level
+    }
+    //Loads Level level
+    public static void LoadLevel(int level)
+    {
+        SceneManager.LoadScene("Level" + level.ToString());
+    }
 
-	public static void LoadLevel(int level){
-		SceneManager.LoadScene ("Level" + level.ToString());
-	}
+    //after the level of saved in loaded, sets the state of the game
+    public void SetSavedState(SavedState saved)
+    {
+        name = saved.name;
+        level = saved.level;
+        lastSavedState = saved;
+        GameObject.Find("TeamManager").GetComponent<TeamManager>().LoadSavedState(saved.players);
+        cpManager.setState(saved.checkPoint);
+        //move to checkpoint
+        //set objectives
 
-	public void LoadSavedGame(SavedState saved){
-		name = saved.name;
-		level = saved.level;
-		checkpoint = saved.checkPoint;
-		lastSavedState = saved;
-		LoadLevel (level);
-		//set team manager
-		//move to checkpoint
-		//set objectives
+    }
 
-	}
-
-	public void NewGame(){
+    //sets up new game
+    public void NewGame()
+    {
         //create last saved start as start state 
-		name = null;
-		hasBeenSaved = false;
-		checkpoint = 1;
-		level = 1;
-	}
+        Debug.Log("new game");
+        name = null;
+        hasBeenSaved = false;
+        level = 1;
+        lastSavedState = new SavedState();
+        lastSavedState.level = level;
+        lastSavedState.checkPoint = 0;
+        lastSavedState.players = GameObject.Find("TeamManager").GetComponent<TeamManager>().currentState();
+    }
 
+    public void onDeath()
+    {
+        //ask for state you wanna load, save slots or auto save
+        //set lastSavedState as the savedState selected
+        //loadLevel
+    }
+
+    public int getCheckpoint()
+    {
+        return cpManager.completed;
+    }
 
 }

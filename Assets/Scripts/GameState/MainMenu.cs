@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
     private Text LoadingProgress;
     private Image LoadingBar;
     SimpleGameManager gm;
+    private int levelToLoad;
 
     public void Start()
     {
@@ -33,18 +34,22 @@ public class MainMenu : MonoBehaviour
     public void LoadNewGame()
     {
         Debug.Log("setting state change to Load level 1");
-        gm.OnStateChange += LoadLevel1;
+        levelToLoad = 1;
+        gm.newGame = true;
+        gm.OnStateChange += LoadLevel;
         Play();
     }
 
 
-    public void LoadLevel1()
+    public void LoadLevel()
     {
         Debug.Log("loading level 1");
         Menu.enabled = false;
         Loading.enabled = true;
-        gm.NewGame();
-        StartCoroutine(LoadGame("Level1Final"));
+
+        StartCoroutine(LoadGame("Level" + levelToLoad.ToString()));
+        Debug.Log("finished loading 1");
+
         //GameManager.manager.StartNewGame();
     }
 
@@ -60,9 +65,9 @@ public class MainMenu : MonoBehaviour
         while (!asyncLoad.isDone)
         {
             percentComplete = asyncLoad.progress;
-            Debug.Log(percentComplete);
             yield return null;
         }
+
     }
 
     //Brings up Load Menu
@@ -76,18 +81,19 @@ public class MainMenu : MonoBehaviour
 
     }
 
+    //
     public void LoadSavedGame(string name)
     {
-
         List<string> gameNames = SaveLoad.savedGames();
         Debug.Log(gameNames);
         if (gameNames.Contains(name))
         {
-            //gm.OnStateChange += gm.LoadSavedGame (SaveLoad.Load (name));
-
+            SavedState gameToLoad = SaveLoad.Load(name);
+            gm.lastSavedState = gameToLoad;
+            levelToLoad = gameToLoad.level;
+            gm.OnStateChange += LoadLevel;
+            Play();
         }
-        Play();
-
     }
 
     public void ExitGame()

@@ -100,6 +100,15 @@ public class TeamManager : MonoBehaviour {
         return activePlayer; 
     }
 
+    public void setPlayers(CheckPoint checkpoint)
+    {
+        playerList[0].gameObject.transform.position = checkpoint.player1;
+        playerList[1].gameObject.transform.position = checkpoint.player2;
+        playerList[2].gameObject.transform.position = checkpoint.player3;
+        playerList[3].gameObject.transform.position = checkpoint.player4;
+
+    }
+
     public void changeToActivePlayer(int id)
     {
         if (!playerList[id-1].resources.isDead)
