@@ -203,7 +203,7 @@ MeshCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1432914258480702}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Convex: 1
@@ -221,7 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95ee59d56486144798786b8f6305043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStartLevelCheckpoint: 0
   player1: {x: 0, y: 0, z: 0}
   player2: {x: 0, y: 0, z: 0}
   player3: {x: 0, y: 0, z: 0}
@@ -242,7 +241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95ee59d56486144798786b8f6305043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStartLevelCheckpoint: 0
   player1: {x: 0, y: 0, z: 0}
   player2: {x: 0, y: 0, z: 0}
   player3: {x: 0, y: 0, z: 0}
@@ -260,6 +258,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1846707982866234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d941a1ab05d5e49ab3362159f7f01e, type: 3}
+  m_Script: {fileID: 11500000, guid: 98577df71a8bac44e81f408cb9a0e46f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpoints: []
+  completed: 0

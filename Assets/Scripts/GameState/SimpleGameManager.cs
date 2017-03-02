@@ -62,10 +62,10 @@ public class SimpleGameManager: MonoBehaviour {
 
     private void OnLevelWasLoaded(int level)
     {
-        cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
         Debug.Log("on level was loaded 888888888");
         if(gameState != GameState.MAIN_MENU)
         {
+            cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
             if (newGame)
             {
 
