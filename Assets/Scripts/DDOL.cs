@@ -12,10 +12,10 @@ public class DDOL : MonoBehaviour {
 
     private void Start()
     {
-        if(SimpleGameManager.Instance.level == 0)
-        {
-            SimpleGameManager.Instance.NewGame();
-        }
+        //if(SimpleGameManager.Instance.level == 0)
+        //{
+        //    SimpleGameManager.Instance.NewGame();
+        //}
     }
 
 	

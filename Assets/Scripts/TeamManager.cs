@@ -55,7 +55,7 @@ public class TeamManager : MonoBehaviour {
         cameraScript.followPlayer = activePlayer.gameObject;
         visibleEnemies = new HashSet<GameObject>();
         playerResources = activePlayer.GetComponent<PlayerResources>();
-
+        Debug.Log("team set");
     }
 
 
@@ -85,6 +85,15 @@ public class TeamManager : MonoBehaviour {
         {
             changeToActivePlayer(4);
         }
+
+    }
+
+    public void setPlayers(CheckPoint checkpoint)
+    {
+        playerList[0].gameObject.transform.position = checkpoint.player1;
+        playerList[1].gameObject.transform.position = checkpoint.player2;
+        playerList[2].gameObject.transform.position = checkpoint.player3;
+        playerList[3].gameObject.transform.position = checkpoint.player4;
 
     }
 

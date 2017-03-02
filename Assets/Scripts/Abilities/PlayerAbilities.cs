@@ -47,7 +47,7 @@ public class PlayerAbilities : MonoBehaviour
         {
             abilityArray[i] = new EmptyAbility();
         }
-        Debug.Log(abilityArray);
+       // Debug.Log(abilityArray);
         SetDefaultBindings();
     }
 

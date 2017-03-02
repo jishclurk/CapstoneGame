@@ -7,6 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class CheckPoint : MonoBehaviour
 {
+    //where players are placed if the game is loaded at this checkpoint
+    public Vector3 player1; 
+    public Vector3 player2;
+    public Vector3 player3;
+    public Vector3 player4;
 
     public Canvas CheckPointSceen;
     public Canvas SaveAsScreen;
@@ -19,10 +24,15 @@ public class CheckPoint : MonoBehaviour
     public bool checkpointReached;
     private Collider col;
     private SimpleGameManager gm;
+    private CheckpointManager manager;
+
+    private bool playerHasHit;
 
 
     public void Start()
     {
+        playerHasHit = false;
+
         CheckPointSceen = Instantiate(CheckPointSceen) as Canvas;
         CheckPointSceen = CheckPointSceen.GetComponent<Canvas>();
 
@@ -44,22 +54,27 @@ public class CheckPoint : MonoBehaviour
         gm = SimpleGameManager.Instance;
         tm = GameObject.Find("TeamManager").gameObject.GetComponent<TeamManager>();
 
+        manager = transform.parent.gameObject.GetComponent<CheckpointManager>();
+
     }
 
     public void OnTriggerEnter(Collider other)
     {
-		if (other.gameObject.tag.Equals("Player") && (!other.isTrigger))
+		if (other.gameObject.tag.Equals("Player") && (!other.isTrigger) && !playerHasHit)
         {
+            playerHasHit = true;
+        Debug.Log("TRIGGERED CHECKPOINT");
             checkpointReached = true;
+                gm.OnStateChange += Pause;
+                gm.SetGameState(GameState.PAUSE);
+                DisableCollider();
+                yes.onClick.AddListener(Save);
+                no.onClick.AddListener(closeCheckpointScreen);
+                exit.onClick.AddListener(ToMain);
 
-            gm.OnStateChange += Pause;
-            gm.SetGameState(GameState.PAUSE);
-            DisableCollider();
-            yes.onClick.AddListener(Save);
-            no.onClick.AddListener(closeCheckpointScreen);
-            exit.onClick.AddListener(ToMain);
+                CheckPointSceen.enabled = true;
 
-            CheckPointSceen.enabled = true;
+             manager.UpdateCheckpoints();
         }
     }
 
@@ -128,6 +143,11 @@ public class CheckPoint : MonoBehaviour
         Time.timeScale = 0;
     }
 
+    public void UnPause()
+    {
+        Time.timeScale = 1;
+    }
+
     //Closes the checkpoint scrren and starts the game
     public void closeCheckpointScreen()
     {
@@ -143,7 +163,7 @@ public class CheckPoint : MonoBehaviour
 
     private void progressGame()
     {
-        gm.OnStateChange += gm.NextCheckPointOrLevel;
+        gm.OnStateChange += UnPause;
         gm.SetGameState(GameState.PLAY);
     }
 }
