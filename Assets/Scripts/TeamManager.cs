@@ -52,7 +52,7 @@ public class TeamManager : MonoBehaviour {
         playerList.Sort((x, y) => x.id - y.id);
 
         cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
-        cameraScript.followPlayer = activePlayer.gameObject;
+        cameraScript.activePlayerCharacter = activePlayer.gameObject;
         visibleEnemies = new HashSet<GameObject>();
         playerResources = activePlayer.GetComponent<PlayerResources>();
 
@@ -114,7 +114,7 @@ public class TeamManager : MonoBehaviour {
 
             //update activePlayer and camera
             playerResources = playerList[id-1].resources;
-            cameraScript.followPlayer = activePlayer.gameObject;
+            cameraScript.activePlayerCharacter = activePlayer.gameObject;
         }
         else
         {
@@ -155,7 +155,7 @@ public class TeamManager : MonoBehaviour {
 
             //update activePlayer and camera
             playerResources = nextResources;
-            cameraScript.followPlayer = activePlayer.gameObject;
+            cameraScript.activePlayerCharacter = activePlayer.gameObject;
         } else
         {
             Debug.Log("Cannot switch! All players are dead.");
@@ -265,7 +265,7 @@ public class TeamManager : MonoBehaviour {
                 currentPlayer.strategy.isplayerControlled = true;
                 playerResources = activePlayer.GetComponent<PlayerResources>();
                 cameraScript = Camera.main.GetComponent<OffsetCamera>(); 
-                cameraScript.followPlayer = activePlayer.gameObject;
+                cameraScript.activePlayerCharacter = activePlayer.gameObject;
             }
 
         }
