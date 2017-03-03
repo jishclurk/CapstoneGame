@@ -7,7 +7,7 @@ using LayerDefinitions;
 public class PlayerController : MonoBehaviour
 {
 
-    private Animator anim;
+    //private Animator anim;
     private NavMeshAgent navMeshAgent;
 
     //public things that need to be changed on strategy switch
@@ -27,12 +27,12 @@ public class PlayerController : MonoBehaviour
     private PlayerAnimationController animController;
     private float animSpeed;
     private float walkSpeed;
+    private float chaseEpsilon;
+    private float navSpeedDefault;
    
-    private bool selectingAbilityTarget = false;
     private IBasic activeBasicAbility;
     private ISpecial activeSpecialAbility;
     private Player player;
-    private CharacterAttributes attributes;
     private PlayerAbilities abilities;
     
     private PlayerResources resources;
@@ -50,20 +50,22 @@ public class PlayerController : MonoBehaviour
     //things local to player go here
     private void Awake()
     {
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
         animController = GetComponent<PlayerAnimationController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         eyes = transform.FindChild("Eyes");
         walkSpeed = 1.0f;
+        chaseEpsilon = 2.0f;
+        navSpeedDefault = navMeshAgent.speed;
 
         //this is a mess. These are "shared" variables between co-op ai and player script
         player = GetComponent<Player>();
         abilities = player.abilities;
         activeBasicAbility = abilities.Basic;
-        attributes = player.attributes;
         resources = player.resources;
         watchedEnemies = player.watchedEnemies;
         visibleEnemies = player.visibleEnemies;
+
     }
 
     //things from other scripts go here
@@ -364,11 +366,18 @@ public class PlayerController : MonoBehaviour
             if (remainingDistance >= ability.effectiveRange)
             {
                 animController.AnimateAimChasing();
+                navMeshAgent.speed = navSpeedDefault;
+                navMeshAgent.Resume();
+            } else if (remainingDistance >= ability.effectiveRange - chaseEpsilon)
+            {
+                animController.AnimateAimChasing();
+                navMeshAgent.speed = target.GetComponent<NavMeshAgent>().speed;
                 navMeshAgent.Resume();
             }
             else
             {
                 animController.AnimateAimStanding();
+                navMeshAgent.speed = navSpeedDefault;
                 navMeshAgent.Stop();
             }
         }
@@ -399,7 +408,6 @@ public class PlayerController : MonoBehaviour
         targetedFriend = null;
         friendClicked = false;
         animSpeed = 0.0f;
-        selectingAbilityTarget = false;
         specialTargetedEnemy = null;
         activeBasicAbility = abilities.Basic;
         activeSpecialAbility = null;
