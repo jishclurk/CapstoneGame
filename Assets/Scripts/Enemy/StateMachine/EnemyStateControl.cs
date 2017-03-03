@@ -63,6 +63,7 @@ public class EnemyStateControl : MonoBehaviour {
         returnPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
         eyes = transform.FindChild("Eyes");
+        Debug.Log(eyes);
         health = GetComponent<EnemyHealth>();
         attack = GetComponent<EnemyAttack>();
         sounds = GetComponent<EnemySoundController>();
