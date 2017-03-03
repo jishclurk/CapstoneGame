@@ -40,7 +40,7 @@ public class GrenadeThrow : ISpecial, IAbility {
         coolDownTime = 5.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 25.0f;
-        aoeTarget = Resources.Load("GrenadeThrow/3x3GreenAuraTarget");
+        aoeTarget = Resources.Load("GrenadeThrow/3x3RedAuraTarget");
         explosion = Resources.Load("GrenadeThrow/explosion");
         abilityObj = GameObject.FindWithTag("AbilityHelper");
         grenade = Resources.Load("GrenadeThrow/nade");

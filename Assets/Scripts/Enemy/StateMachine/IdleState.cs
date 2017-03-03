@@ -45,6 +45,7 @@ public class EnemyIdleState : IEnemyState {
         {
             RaycastHit hit;
             Vector3 enemyToTarget = new Vector3(player.transform.position.x - enemy.eyes.position.x, 0, player.transform.position.z - enemy.eyes.position.z);
+            Debug.DrawRay(enemy.eyes.position, enemyToTarget);
             if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit, 100f, Layers.NonEnemy) && hit.collider.gameObject.CompareTag("Player"))
             {
                 enemy.FindTarget();

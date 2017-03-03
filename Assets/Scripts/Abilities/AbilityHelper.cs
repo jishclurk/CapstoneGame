@@ -6,6 +6,8 @@ public class AbilityHelper : MonoBehaviour {
 
     public enum Action { Basic, Instant, Target, AOE }
 
+    // GRENADE THROW //
+
     public void GrenadeThrowRoutine(CharacterAttributes attributes, GameObject origin, GameObject target, float baseDamage, Object explosion, float timeToCast, Object grenade)
     {
         Vector3 nadeOrigin = new Vector3(origin.transform.position.x, origin.transform.position.y + 0.8f, origin.transform.position.z + 0.1f);
@@ -34,8 +36,26 @@ public class AbilityHelper : MonoBehaviour {
         Object exp = Instantiate(explosion, target.transform.position, Quaternion.identity);
         Destroy(target);
         Destroy(exp, 1.0f);
+    }
+
+    // BIO GRENADE //
+
+    public void BioGrenadeRoutine(CharacterAttributes attributes, GameObject origin, GameObject target, float baseHeal, float healRate, float healLength, float timeToCast, Object bubble)
+    {
+        Vector3 bubbleOrigin = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
+        GameObject shield = Instantiate(bubble, bubbleOrigin, Quaternion.identity) as GameObject;
+        HealBubbleScript hb = shield.GetComponent<HealBubbleScript>();
+        hb.healHP = baseHeal;
+        hb.healRate = healRate;
+        hb.healLength = healLength;
+        hb.target = target;
+        Destroy(shield, healLength);
+        Destroy(target, healLength);
 
     }
+
+
+
     // Use this for initialization
     void Start () {
 		
@@ -61,5 +81,13 @@ public class AbilityHelper : MonoBehaviour {
 
             yield return null;
         }
+    }
+
+    //
+    IEnumerator regenField(Transform grenade, Transform target, float overTime)
+    {
+
+        yield return null;
+
     }
 }
