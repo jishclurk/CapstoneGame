@@ -30,7 +30,7 @@ public class PlayerAbilities : MonoBehaviour
 
     public void Awake()
     {
-        potentialSpecials = new List<ISpecial>() {new GrenadeThrow(), new MedKit(), new Zap() };
+        potentialSpecials = new List<ISpecial>() {new GrenadeThrow(), new MedKit(), new Zap(), new BioGrenade() };
         potentialBasics = new List<IBasic>();
         unlockedBasics.Add(new PistolShot());
         AbilityBindings = new Dictionary<KeyCode, int>();
@@ -83,7 +83,7 @@ public class PlayerAbilities : MonoBehaviour
             abilityArray[0] = new Zap();
             abilityArray[1] = new MedKit();
             abilityArray[2] = new GrenadeThrow();
-            abilityArray[3] = new EmptyAbility();
+            abilityArray[3] = new BioGrenade();
         }
     }
 

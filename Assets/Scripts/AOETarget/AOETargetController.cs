@@ -7,6 +7,7 @@ public class AOETargetController : MonoBehaviour
 {
 
     public HashSet<GameObject> affectedEnemies;
+    public HashSet<GameObject> affectedPlayers;
     public float effectiveRange;
     public Player activePlayer;
     private Vector3 location;
@@ -14,6 +15,7 @@ public class AOETargetController : MonoBehaviour
     private void Awake()
     {
         affectedEnemies = new HashSet<GameObject>();
+        affectedPlayers = new HashSet<GameObject>();
         effectiveRange = Mathf.Infinity;
         activePlayer = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>().activePlayer;
     }
@@ -51,7 +53,11 @@ public class AOETargetController : MonoBehaviour
         if (!other.isTrigger && other.tag.Equals("Enemy") && !other.GetComponent<EnemyHealth>().isDead)
         {
             affectedEnemies.Add(other.gameObject);
+        } else if (!other.isTrigger && other.tag.Equals("Player") && !other.GetComponent<PlayerResources>().isDead)
+        {
+            affectedPlayers.Add(other.gameObject);
         }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -59,6 +65,10 @@ public class AOETargetController : MonoBehaviour
         if (!other.isTrigger && other.tag.Equals("Enemy"))
         {
             affectedEnemies.Remove(other.gameObject);
+        } else if (!other.isTrigger && other.tag.Equals("Player"))
+        {
+            affectedPlayers.Remove(other.gameObject);
         }
+
     }
 }
