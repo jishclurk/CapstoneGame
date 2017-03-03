@@ -9,6 +9,7 @@ public class AOETargetController : MonoBehaviour
     public HashSet<GameObject> affectedEnemies;
     public float effectiveRange;
     public Player activePlayer;
+    private Vector3 location;
 
     private void Awake()
     {
@@ -23,17 +24,20 @@ public class AOETargetController : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+        
         if (Physics.Raycast(ray, out hit, 200f, Layers.Floor))
         {
             if (hit.collider.CompareTag("Floor"))
             {
                 if (Vector3.Distance(activePlayer.transform.position, hit.point) < effectiveRange)
                 {
-                    transform.position = hit.point;
+                    location = new Vector3(hit.point.x, hit.point.y + 0.3f, hit.point.z);
+                    transform.position = location;
                 }
                 else
                 {
-                    Vector3 playerToPoint = hit.point - activePlayer.transform.position;
+                    location = new Vector3(hit.point.x, hit.point.y + 0.3f, hit.point.z);
+                    Vector3 playerToPoint = location - activePlayer.transform.position;
                     Vector3 adjustedPosition = activePlayer.transform.position + (Vector3.Normalize(playerToPoint) * effectiveRange);
                     transform.position = adjustedPosition;
                 }
