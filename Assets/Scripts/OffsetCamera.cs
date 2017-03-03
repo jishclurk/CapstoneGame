@@ -12,6 +12,7 @@ public class OffsetCamera : MonoBehaviour
     private float radius;
     private float offsetYValue;
     private Vector3 fixedEulerAngles;
+    private float cameraSpeed;
 
 
     //Simple script from Roll a Ball
@@ -25,13 +26,14 @@ public class OffsetCamera : MonoBehaviour
         radius = Mathf.Sqrt(offset.x * offset.x + offset.z * offset.z);
         offsetYValue = offset.y;
         fixedEulerAngles = transform.eulerAngles;
+        cameraSpeed = 0.2f;
     }
 
     void LateUpdate()
     {
         if (Input.GetKey(KeyCode.Minus) && offsetYValue > 6f)
         {
-            offsetYValue -= 0.2f;
+            offsetYValue -= cameraSpeed;
             if (offsetYValue > 12f)
             {
                 offsetYValue = 12f;
@@ -41,9 +43,16 @@ public class OffsetCamera : MonoBehaviour
                 offsetYValue = 6f;
             }
             offset = new Vector3(offset.x, offsetYValue, offset.z);
+            float xRotation = transform.eulerAngles.x - cameraSpeed;
+            if (xRotation < 40f)
+            {
+                xRotation = 40f;
+            }
+            transform.eulerAngles = new Vector3(xRotation, transform.eulerAngles.y, transform.eulerAngles.z);
         }
         if (Input.GetKey(KeyCode.Equals) && offsetYValue < 12f)
         {
+            offsetYValue += 0.2f;
             if (offsetYValue > 12f)
             {
                 offsetYValue = 12f;
@@ -52,13 +61,27 @@ public class OffsetCamera : MonoBehaviour
             {
                 offsetYValue = 6f;
             }
-            offsetYValue += 0.2f;
             offset = new Vector3(offset.x, offsetYValue, offset.z);
+            float xRotation = transform.eulerAngles.x + cameraSpeed;
+            if (xRotation > 50f)
+            {
+                xRotation = 50f;
+            }
+            transform.eulerAngles = new Vector3(xRotation, transform.eulerAngles.y, transform.eulerAngles.z);
         }
         
         if (Input.GetAxis("Mouse ScrollWheel") != 0 && offsetYValue >= 6f && offsetYValue <= 12f)
         {
             offsetYValue -= Input.GetAxis("Mouse ScrollWheel");
+            if (offsetYValue > 12f)
+            {
+                offsetYValue = 12f;
+            }
+            else if (offsetYValue < 6f)
+            {
+                offsetYValue = 6f;
+            }
+            offset = new Vector3(offset.x, offsetYValue, offset.z);
             float xRotation = transform.eulerAngles.x - Input.GetAxis("Mouse ScrollWheel");
             if(xRotation < 40f)
             {
@@ -68,16 +91,7 @@ public class OffsetCamera : MonoBehaviour
             {
                 xRotation = 50f;
             }
-            if (offsetYValue > 12f)
-            {
-                offsetYValue = 12f;
-            }
-            else if (offsetYValue < 6f)
-            {
-                offsetYValue = 6f;
-            }
             transform.eulerAngles = new Vector3(xRotation, transform.eulerAngles.y, transform.eulerAngles.z);
-            offset = new Vector3(offset.x, offsetYValue, offset.z);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
