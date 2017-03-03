@@ -43,7 +43,7 @@ public class MainMenu : MonoBehaviour
 
     public void LoadLevel()
     {
-        Debug.Log("loading level 1");
+        //Debug.Log("loading level 1");
         Menu.enabled = false;
         Loading.enabled = true;
 
@@ -56,6 +56,12 @@ public class MainMenu : MonoBehaviour
     private void Play()
     {
         gm.SetGameState(GameState.PLAY);
+    }
+
+    public void LoadTest()
+    {
+        Debug.Log("test");
+        LoadSavedGame("test");
     }
 
     //Loads game 
@@ -85,15 +91,20 @@ public class MainMenu : MonoBehaviour
     public void LoadSavedGame(string name)
     {
         List<string> gameNames = SaveLoad.savedGames();
-        Debug.Log(gameNames);
-        if (gameNames.Contains(name))
+        foreach(string gameName in gameNames)
         {
+            Debug.Log(gameName);
+        }
+        //Debug.Log(gameNames);
+        //if (gameNames.Contains(name))
+       // {
             SavedState gameToLoad = SaveLoad.Load(name);
+        Debug.Log(gameToLoad);
             gm.lastSavedState = gameToLoad;
             levelToLoad = gameToLoad.level;
             gm.OnStateChange += LoadLevel;
             Play();
-        }
+       // }
     }
 
     public void ExitGame()

@@ -11,7 +11,7 @@ public class CheckpointManager : MonoBehaviour {
     public int completed; //
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         checkpoints = new List<CheckPoint>();
         gm = SimpleGameManager.Instance;
         completed = 0;
@@ -19,6 +19,7 @@ public class CheckpointManager : MonoBehaviour {
         {
             checkpoints.Add(child.gameObject.GetComponent<CheckPoint>());
         }
+        Debug.Log("cpmanager got checkpoints");
     }
 
     public void UpdateCheckpoints()
@@ -31,10 +32,17 @@ public class CheckpointManager : MonoBehaviour {
         }
     }
 
-    public void setState(int completed)
+    public void setState(int savedCompleted)
     {
-        this.completed = completed;
-        GameObject.Find("TeamManager").GetComponent<TeamManager>().setPlayers(checkpoints[completed]);
+        Debug.Log(savedCompleted);
+        Debug.Log(completed);
+        foreach(CheckPoint cp in checkpoints)
+        {
+            Debug.Log(cp);
+        }
+        Debug.Log("moving players to checkpoint " + savedCompleted.ToString());
+        this.completed = savedCompleted;
+        GameObject.Find("TeamManager").GetComponent<TeamManager>().setPlayers(checkpoints[savedCompleted-1]);
     }
 	
 	// Update is called once per frame

@@ -70,11 +70,13 @@ public class SimpleGameManager : MonoBehaviour
             cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
             if (newGame)
             {
-
+                Debug.Log("gm is loading new game");
                 NewGame();
             }
             else
             {
+                newGame = false;
+                Debug.Log("gm is loading saved state");
                 SetSavedState(lastSavedState);
 
             }
