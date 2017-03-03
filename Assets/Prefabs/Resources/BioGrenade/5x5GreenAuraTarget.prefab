@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 135164129298171898}
   - component: {fileID: 54924891469090728}
   m_Layer: 0
-  m_Name: 3x3GreenAuraTarget
+  m_Name: 5x5GreenAuraTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +103,7 @@ Transform:
   m_GameObject: {fileID: 1232914660124452}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071067}
   m_LocalPosition: {x: 4.250369, y: 8.777729, z: -92.29627}
-  m_LocalScale: {x: 3, y: 3, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 0}
   m_Children:
   - {fileID: 4909371917264766}
   - {fileID: 4289293872774730}
