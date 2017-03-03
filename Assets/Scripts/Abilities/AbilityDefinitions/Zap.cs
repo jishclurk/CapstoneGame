@@ -19,11 +19,10 @@ public class Zap : ISpecial, IAbility {
 
     private float lastUsedTime { get; set; }
 
-
-
     public int StrengthRequired { get; private set; }
     public int StaminaRequired { get; private set; }
     public int IntelligenceRequired { get; private set; }
+    private Object bullet;
 
     public Zap()
     {
@@ -41,14 +40,19 @@ public class Zap : ISpecial, IAbility {
         energyRequired = 30.0f;
         aoeTarget = null;
         description = "A quick Zap from your gun.";
+        bullet = Resources.Load("Zap/ZapObj");
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.Intelligence*2;
+        float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
         Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
-        target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage); //At some point we may want to look at tag of origin/targe to access appropriate scripts
+        target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
+
+        Vector3 playerToTarget = target.transform.position - player.gunbarrel.position;
+        GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
+        project.GetComponent<ZapProjectileScript>().destination = new Vector3(target.transform.position.x, (player.gunbarrel.position.y + target.transform.position.y) / 2, target.transform.position.z);
         player.resources.UseEnergy(energyRequired);
     }
 
