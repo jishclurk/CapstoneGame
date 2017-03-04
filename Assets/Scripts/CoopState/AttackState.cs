@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 using UnityEngine;
 
 public class AttackState : ICoopState
@@ -198,10 +199,18 @@ public class AttackState : ICoopState
             {
                 aiPlayer.animController.AnimateAimChasing();
                 aiPlayer.navMeshAgent.Resume();
+                aiPlayer.navMeshAgent.speed = aiPlayer.navSpeedDefault;
+            }
+            else if (remainingDistance >= ability.effectiveRange - aiPlayer.chaseEpsilon) 
+            {
+                aiPlayer.animController.AnimateAimChasing();
+                aiPlayer.navMeshAgent.speed = target.GetComponent<NavMeshAgent>().speed;
+                aiPlayer.navMeshAgent.Resume();
             }
             else
             {
                 aiPlayer.animController.AnimateAimStanding();
+                aiPlayer.navMeshAgent.speed = aiPlayer.navSpeedDefault;
                 aiPlayer.navMeshAgent.Stop();
             }
         }

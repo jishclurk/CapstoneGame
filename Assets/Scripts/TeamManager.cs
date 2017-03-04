@@ -208,10 +208,6 @@ public class TeamManager : MonoBehaviour {
         bool toRemove = true;
         foreach(Player p in playerList)
         {
-            /*RaycastHit hit; //this is bad code! Only an enemy from visibleEnemies if it cannot be seen by any player. Currently do not have access to eyes. 
-            Transform eyes = p.transform.FindChild("Eyes");
-            Vector3 playerToTarget = enemy.transform.position - eyes.position;
-            bool sightline = Physics.Raycast(eyes.position, playerToTarget, out hit) && hit.collider.gameObject.CompareTag("Enemy");*/
             if (p.visibleEnemies.Contains(enemy))
             {
                 toRemove = false;

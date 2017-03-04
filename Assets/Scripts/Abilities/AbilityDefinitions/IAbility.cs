@@ -18,5 +18,6 @@ public interface IAbility {
     void Execute(Player player, GameObject origin, GameObject target);
     bool isReady();
     AbilityHelper.Action GetAction();
+    AbilityHelper.CoopAction GetCoopAction();
 
 }

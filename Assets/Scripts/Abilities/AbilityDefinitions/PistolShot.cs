@@ -56,4 +56,9 @@ public class PistolShot : IBasic, IAbility {
     {
         return AbilityHelper.Action.Basic;
     }
+
+    public AbilityHelper.CoopAction GetCoopAction()
+    {
+        return AbilityHelper.CoopAction.Basic;
+    }
 }

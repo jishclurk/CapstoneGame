@@ -70,4 +70,9 @@ public class Zap : ISpecial, IAbility {
     {
         return AbilityHelper.Action.Target;
     }
+
+    public AbilityHelper.CoopAction GetCoopAction()
+    {
+        return AbilityHelper.CoopAction.TargetHurt;
+    }
 }

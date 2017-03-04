@@ -70,4 +70,9 @@ public class MedKit : ISpecial, IAbility
     {
         return AbilityHelper.Action.Instant;
     }
+
+    public AbilityHelper.CoopAction GetCoopAction()
+    {
+        return AbilityHelper.CoopAction.InstantHeal;
+    }
 }

@@ -57,4 +57,10 @@ public class EmptyAbility : ISpecial, IAbility {
     {
         return AbilityHelper.Action.Basic;
     }
+
+    public AbilityHelper.CoopAction GetCoopAction()
+    {
+        return AbilityHelper.CoopAction.Basic;
+    }
+
 }

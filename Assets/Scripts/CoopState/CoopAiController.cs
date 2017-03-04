@@ -17,9 +17,17 @@ public class CoopAiController : MonoBehaviour {
 
     //move state variables
     [HideInInspector]
+    public float defaultFollowDist = 3.8f;
+    [HideInInspector]
     public float followDist = 3.8f;
     [HideInInspector]
-    public float followEpsilon = 2.0f; //Determines how far player has to move for ai to start to follow again
+    public float randomDist = 0.8f; //followDist is + or - this value
+    [HideInInspector]
+    public float followEpsilon = 2.0f; //Determines how far player has to move for ai to start to follow again.
+    [HideInInspector]
+    public float chaseEpsilon = 2.0f;
+    [HideInInspector]
+    public float navSpeedDefault;
 
     //attack state variables
     [HideInInspector]
@@ -82,6 +90,7 @@ public class CoopAiController : MonoBehaviour {
         animController = GetComponent<PlayerAnimationController>();
         walkSpeed = 1.0f;
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navSpeedDefault = navMeshAgent.speed;
 
         eyes = transform.FindChild("Eyes");
         sightCollider = GetComponent<SphereCollider>();

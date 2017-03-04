@@ -22,6 +22,7 @@ public class IdleState : ICoopState
 
     public void ToMoveState()
     {
+        aiPlayer.followDist = Random.Range(aiPlayer.defaultFollowDist - aiPlayer.randomDist, aiPlayer.defaultFollowDist+ aiPlayer.randomDist);
         aiPlayer.currentState = aiPlayer.moveState;
     }
 
@@ -54,7 +55,7 @@ public class IdleState : ICoopState
             //this return happens if player dies
             return; //avoid running code we don't need to.
         }
-       
+
         float remainingDistance = Vector3.Distance(userPlayer.transform.position, aiPlayer.transform.position);
         if (remainingDistance >= aiPlayer.followDist + aiPlayer.followEpsilon)
         {

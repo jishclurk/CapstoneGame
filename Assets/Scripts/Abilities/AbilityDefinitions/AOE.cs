@@ -65,4 +65,9 @@ public class AOE : ISpecial, IAbility {
     {
         return AbilityHelper.Action.AOE;
     }
+
+    public AbilityHelper.CoopAction GetCoopAction()
+    {
+        return AbilityHelper.CoopAction.AOEHurt;
+    }
 }
