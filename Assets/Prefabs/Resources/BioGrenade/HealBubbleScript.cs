@@ -35,7 +35,7 @@ public class HealBubbleScript : MonoBehaviour {
             transform.localScale = Vector3.Lerp(originalScale, destinationScale, currentTime / time);
             currentTime += Time.deltaTime;
             yield return null;
-        } while (currentTime <= time);
+        } while (transform.localScale.magnitude < destinationScale.magnitude);
 
     }
 
