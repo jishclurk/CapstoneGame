@@ -87,7 +87,6 @@ public class CoopAiController : MonoBehaviour {
         fleeState = new FleeState(this);
 
         anim = GetComponent<Animator>();
-        animController = GetComponent<PlayerAnimationController>();
         walkSpeed = 1.0f;
         navMeshAgent = GetComponent<NavMeshAgent>();
         navSpeedDefault = navMeshAgent.speed;
@@ -98,6 +97,7 @@ public class CoopAiController : MonoBehaviour {
 
         //this is a mess. These are "shared" variables between co-op ai and player script
         player = GetComponent<Player>();
+        animController = player.animController;
         abilities = player.abilities;
         activeBasicAbility = abilities.Basic;
         attributes = player.attributes;

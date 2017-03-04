@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         //anim = GetComponent<Animator>();
-        animController = GetComponent<PlayerAnimationController>();
+        
         navMeshAgent = GetComponent<NavMeshAgent>();
         eyes = transform.FindChild("Eyes");
         walkSpeed = 1.0f;
@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
 
         //this is a mess. These are "shared" variables between co-op ai and player script
         player = GetComponent<Player>();
+        animController = player.animController;
         abilities = player.abilities;
         activeBasicAbility = abilities.Basic;
         resources = player.resources;

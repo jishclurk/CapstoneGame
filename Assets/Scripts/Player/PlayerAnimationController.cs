@@ -81,6 +81,31 @@ public class PlayerAnimationController : MonoBehaviour {
         }
     }
 
+    public void AnimateUse(float duration)
+    {
+        if (!deathAnimated)
+        {
+            animator.SetBool("OnGround", true);
+            animator.SetFloat("Speed", 0.0f);
+            animator.SetBool("Aiming", true);
+            animator.SetTrigger("Use");
+            StartCoroutine(StopUse(duration));
+        }
+    }
+
+    private IEnumerator StopUse(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        if (!deathAnimated)
+        {
+            animator.SetBool("OnGround", true);
+            animator.SetFloat("Speed", 0.0f);
+            animator.SetBool("Aiming", true);
+            animator.SetTrigger("StopUse");
+        }
+
+    }
+
     private void FootStep()
     {
         //here is where we can put footstep related things if we want

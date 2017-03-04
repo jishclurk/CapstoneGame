@@ -12,7 +12,11 @@ public class Player : MonoBehaviour {
     public Strategy strategy;
     [HideInInspector]
     public PlayerAbilities abilities;
+
     [HideInInspector]
+    public PlayerAnimationController animController;
+    [HideInInspector]
+
     public HashSet<GameObject> watchedEnemies;
     [HideInInspector]
     public HashSet<GameObject> visibleEnemies;
@@ -28,6 +32,8 @@ public class Player : MonoBehaviour {
         abilities = GetComponent<PlayerAbilities>();
         resources = GetComponent<PlayerResources>();
         strategy = GetComponent<Strategy>();
+
+        animController = GetComponent<PlayerAnimationController>();
 
         watchedEnemies = new HashSet<GameObject>();
         visibleEnemies = new HashSet<GameObject>();
