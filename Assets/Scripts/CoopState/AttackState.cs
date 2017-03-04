@@ -142,12 +142,62 @@ public class AttackState : ICoopState
             return; //avoid running code we don't need to.
         }
 
+
+
         float remainingDistance = Vector3.Distance(aiPlayer.targetedEnemy.position, aiPlayer.transform.position);
-        if (remainingDistance <= aiPlayer.activeBasicAbility.effectiveRange && aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
+
+        //
+        // @NickCurto, here is what I was thinking for the AICoop to cast to a special ability.
+        // Obviously, this isn't going to work for all abilities, but I wanted to start with something.
+        // This may only work for offensive special abilities, but we can expand on this for other abilities.
+        //
+        /* 
+        bool specialAbilityReady = false;
+        int i;
+        for (i = 0; i < aiPlayer.abilities.abilityArray.Length && !specialAbilityReady; i++)
+        {
+            if (aiPlayer.abilities.abilityArray[i].isReady() && !aiPlayer.abilities.abilityArray[i].name.Equals("Empty Ability"))
+            {
+                specialAbilityReady = true;
+                Debug.Log("Evaluating ability " + i);
+                
+            }
+        }
+        specialAbilityReady = false;
+        if (remainingDistance <= aiPlayer.abilities.abilityArray[i].effectiveRange && aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
+        {
+            aiPlayer.transform.LookAt(aiPlayer.targetedEnemy);
+
+            aiPlayer.abilities.abilityArray[i].Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
+            
+            //check if enemy died
+            EnemyHealth enemyHP = aiPlayer.targetedEnemy.GetComponent<EnemyHealth>();
+            if (enemyHP != null)
+            {
+                if (enemyHP.isDead)
+                {
+                    //on kill, remove from both team manager visible enemies and all local watchedenemies
+                    aiPlayer.tm.RemoveDeadEnemy(aiPlayer.targetedEnemy.gameObject);
+                    aiPlayer.targetedEnemy = null;
+                    if (!aiPlayer.tm.IsTeamInCombat())
+                    {
+                        ToIdleState();
+                    }
+                }
+            }
+            reEvalutateTarget = true;
+            aiPlayer.navMeshAgent.Stop(); //within range, stop moving
+            animSpeed = 0.0f;
+        }
+        //
+        // End of special ability execution.
+        //
+        else */if (remainingDistance <= aiPlayer.activeBasicAbility.effectiveRange && aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
         {
             //Within range, look at enemy and shoot
             aiPlayer.transform.LookAt(aiPlayer.targetedEnemy);
 
+            
             if (aiPlayer.activeBasicAbility.isReady())
             {
                 aiPlayer.animController.AnimateShoot();
