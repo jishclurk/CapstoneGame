@@ -34,9 +34,9 @@ public class MedKit : ISpecial, IAbility
         id = 3;
         name = "Heal";
         effectiveRange = 5.0f;
-        baseDamage = 20.0f;
+        baseDamage = 25.0f;
         timeToCast = 0.0f;
-        coolDownTime = 4.0f;
+        coolDownTime = 8.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 20.0f;
         aoeTarget = null;

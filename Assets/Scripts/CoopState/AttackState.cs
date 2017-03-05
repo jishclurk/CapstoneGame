@@ -42,9 +42,31 @@ public class AttackState : ICoopState
         {
             aiPlayer.CheckLocalVision(); //Update visible enemies
             MoveAndShoot();
-        }
-        WatchActiveplayerForFlee();
+            EvaluateSpecial();
+            if (aiPlayer.activeSpecialAbility != null)
+            {
+                Debug.Log("USING: aiPlayer.activeSpecialAbility");
+                //Use Special based on its action
+                switch (aiPlayer.activeSpecialAbility.GetCoopAction())
+                {
+                    case AbilityHelper.CoopAction.TargetHurt:
+                        UseOffensiveTargetSpecial();
+                        break;
+                    case AbilityHelper.CoopAction.AOEHurt:
+                        UseOffensiveTargetSpecial();
+                        break;
+                    case AbilityHelper.CoopAction.InstantHeal:
+                        aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.gameObject);
+                        break;
+                    default:
+                        aiPlayer.activeSpecialAbility = null;
+                        break;
+                }
 
+            }
+        }
+
+        WatchActiveplayerForFlee();
         HandleDestinationAnimation(aiPlayer.targetedEnemy, aiPlayer.activeBasicAbility);
 
     }
@@ -134,7 +156,56 @@ public class AttackState : ICoopState
 
     }
 
-    private void MoveAndShoot()
+    //sets aiPlayer.activeSpecialAbility
+    private void EvaluateSpecial()
+    {
+        aiPlayer.activeSpecialAbility = null;
+        bool specialAbilityReady = false;
+        int i;
+        for (i = 0; i < aiPlayer.abilities.abilityArray.Length && !specialAbilityReady; i++)
+        {
+            ISpecial potentialAbility = aiPlayer.abilities.abilityArray[i];
+            //maybe to "dumbify" ai make it some ratio of time since ready to full cooldown?
+            //note: empty ability always returns false on isReady
+            if (potentialAbility.isReady() && potentialAbility.energyRequired < aiPlayer.player.resources.currentEnergy)
+            {
+
+                //Decide whether to use ability or continue searching (sorry this got kinda complicated!), might want a separate method?
+                switch (potentialAbility.GetCoopAction())
+                {
+                   
+                    case AbilityHelper.CoopAction.TargetHurt:
+                        if (aiPlayer.targetedEnemy != null)
+                        { 
+                            aiPlayer.activeSpecialAbility = potentialAbility;
+                        }
+                        break;
+                    case AbilityHelper.CoopAction.AOEHurt:
+                        //aiPlayer.activeSpecialAbility = potentialAbility;
+                        //UseOffensiveSpecialTarget does not quite work for AOE. Needs to instantiate the AOE cicle in order to know what enemies to hit. NC will work on it soon
+                        break;
+                    case AbilityHelper.CoopAction.InstantHeal:
+                        if(aiPlayer.player.resources.maxHealth - aiPlayer.player.resources.currentHealth >= potentialAbility.baseDamage)
+                        { //using abilities in IDLE state ???? probably not. Up to player at that point.
+                            aiPlayer.activeSpecialAbility = potentialAbility;
+                        }
+                        break;
+                    default:
+                        aiPlayer.activeSpecialAbility = null;
+                        break;
+                }
+                if(aiPlayer.activeSpecialAbility != null)
+                {
+                    specialAbilityReady = true;
+                }
+                
+                //Debug.Log("Evaluating ability " + i);
+
+            }
+        }
+    }
+
+    private void UseOffensiveTargetSpecial()
     {
         if (aiPlayer.targetedEnemy == null)
         {
@@ -142,34 +213,14 @@ public class AttackState : ICoopState
             return; //avoid running code we don't need to.
         }
 
-
-
         float remainingDistance = Vector3.Distance(aiPlayer.targetedEnemy.position, aiPlayer.transform.position);
-
-        //
-        // @NickCurto, here is what I was thinking for the AICoop to cast to a special ability.
-        // Obviously, this isn't going to work for all abilities, but I wanted to start with something.
-        // This may only work for offensive special abilities, but we can expand on this for other abilities.
-        //
-        /* 
-        bool specialAbilityReady = false;
-        int i;
-        for (i = 0; i < aiPlayer.abilities.abilityArray.Length && !specialAbilityReady; i++)
-        {
-            if (aiPlayer.abilities.abilityArray[i].isReady() && !aiPlayer.abilities.abilityArray[i].name.Equals("Empty Ability"))
-            {
-                specialAbilityReady = true;
-                Debug.Log("Evaluating ability " + i);
-                
-            }
-        }
-        specialAbilityReady = false;
-        if (remainingDistance <= aiPlayer.abilities.abilityArray[i].effectiveRange && aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
+        if (remainingDistance <= aiPlayer.activeSpecialAbility.effectiveRange && aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
         {
             aiPlayer.transform.LookAt(aiPlayer.targetedEnemy);
 
-            aiPlayer.abilities.abilityArray[i].Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
-            
+            aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
+            aiPlayer.activeSpecialAbility = null;
+
             //check if enemy died
             EnemyHealth enemyHP = aiPlayer.targetedEnemy.GetComponent<EnemyHealth>();
             if (enemyHP != null)
@@ -189,10 +240,21 @@ public class AttackState : ICoopState
             aiPlayer.navMeshAgent.Stop(); //within range, stop moving
             animSpeed = 0.0f;
         }
-        //
-        // End of special ability execution.
-        //
-        else */if (remainingDistance <= aiPlayer.activeBasicAbility.effectiveRange && aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
+
+    }
+
+    private void MoveAndShoot()
+    {
+        if (aiPlayer.targetedEnemy == null)
+        {
+            //this return happens if enemy dies
+            return; //avoid running code we don't need to.
+        }
+
+
+
+        float remainingDistance = Vector3.Distance(aiPlayer.targetedEnemy.position, aiPlayer.transform.position);
+        if (remainingDistance <= aiPlayer.activeBasicAbility.effectiveRange && aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
         {
             //Within range, look at enemy and shoot
             aiPlayer.transform.LookAt(aiPlayer.targetedEnemy);

@@ -35,7 +35,7 @@ public class Zap : ISpecial, IAbility {
         effectiveRange = 9.0f;
         baseDamage = 40.0f;
         timeToCast = 0.0f;
-        coolDownTime = 5.0f;
+        coolDownTime = 10.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 30.0f;
         aoeTarget = null;
