@@ -86,18 +86,7 @@ public class TacticalPause : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.C))
             {
-                if (AbilitiesScreen.activeInHierarchy)
-                {
-                    PauseScreen.enabled = true;
-                    AbilitiesScreen.SetActive(false);
-                }
-                else
-                {
-                    //PauseScreen.enabled = false;
-                    AbilitiesScreen.SetActive(true);
-                    displayedPlayer = tm.activePlayer;
-                    loadCurrentPlayerInfo(tm.activePlayer);
-                }
+                toggleAbilityMenu();
             }
 
             if (Input.GetKeyDown(KeyCode.Tab))
@@ -133,6 +122,22 @@ public class TacticalPause : MonoBehaviour {
             {
                 Destroy(slot.transform.GetChild(0).gameObject);
             }
+        }
+    }
+
+    public void toggleAbilityMenu()
+    {
+        if (AbilitiesScreen.activeInHierarchy)
+        {
+            PauseScreen.enabled = true;
+            AbilitiesScreen.SetActive(false);
+        }
+        else
+        {
+            //PauseScreen.enabled = false;
+            AbilitiesScreen.SetActive(true);
+            displayedPlayer = tm.activePlayer;
+            loadCurrentPlayerInfo(tm.activePlayer);
         }
     }
 
@@ -272,7 +277,7 @@ public class TacticalPause : MonoBehaviour {
 
     public void Disable()
     {
-        AbilitiesScreen.SetActive(false)    ;
+        AbilitiesScreen.SetActive(false);
         PauseScreen.enabled = false;
         Time.timeScale = 1;
         inTacticalPause = false;
