@@ -4,22 +4,52 @@ using UnityEngine;
 
 public class EnemyHoverHighlight : MonoBehaviour {
 
-    public GameObject highlight;
+    public GameObject hoverHighlight;
+    public GameObject selectedHighlight;
+    
+    private TeamManager tm;
+    private EnemyHealth health;
+    private bool hovering;
 
-	void Start () {
-        if (highlight != null)
-            highlight.gameObject.SetActive(false);
-	}
+	void Awake () {
+        tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
+        health = GetComponent<EnemyHealth>();
+        hovering = false;
+
+        if (hoverHighlight != null)
+            hoverHighlight.gameObject.SetActive(false);
+        if (selectedHighlight != null)
+            selectedHighlight.gameObject.SetActive(false);
+    }
 	
+    void Update()
+    {
+        if (selectedHighlight != null && !hovering && tm.activePlayer.strategy.playerScript.targetedEnemy == transform && !health.isDead)
+            selectedHighlight.gameObject.SetActive(true);
+        else if (selectedHighlight != null)
+        {
+            selectedHighlight.gameObject.SetActive(false);
+        }
+    }
+
 	void OnMouseEnter()
     {
-        if (highlight != null)
-            highlight.gameObject.SetActive(true);
+        if (hoverHighlight != null)
+        {
+            hovering = true;
+            hoverHighlight.gameObject.SetActive(true);
+            if (selectedHighlight != null)
+                selectedHighlight.gameObject.SetActive(false);
+        }
+            
     }
 
     void OnMouseExit()
     {
-        if (highlight != null)
-            highlight.gameObject.SetActive(false);
+        if (hoverHighlight != null)
+        {
+            hovering = false;
+            hoverHighlight.gameObject.SetActive(false);
+        }
     }
 }

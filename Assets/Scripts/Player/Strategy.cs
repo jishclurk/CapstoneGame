@@ -6,8 +6,8 @@ public class Strategy : MonoBehaviour {
 
     public bool isplayerControlled; //who starts as AI controlled or not will be set in inspector for now.
 
-    private PlayerController playerScript;
-    private CoopAiController aiScript;
+    public PlayerController playerScript;
+    public CoopAiController aiScript;
     private TeamManager tm;
 
     // Use this for initialization
