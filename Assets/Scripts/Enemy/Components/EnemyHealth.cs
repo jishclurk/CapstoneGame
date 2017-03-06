@@ -96,10 +96,13 @@ public class EnemyHealth : MonoBehaviour {
     {
         GameObject newDmg = Instantiate(damageText);
         newDmg.transform.SetParent(healthBarCanvas.transform);
-        newDmg.transform.localPosition = damageTextTrans.localPosition;
+        
         newDmg.transform.localRotation = damageTextTrans.localRotation;
-        newDmg.transform.localScale = damageTextTrans.localScale;
-        newDmg.GetComponent<Text>().text = ((int) damage).ToString();
+        newDmg.transform.localScale = damageTextTrans.localScale * (0.5f + Mathf.Clamp((2 * damage) / maxHealth, 0, 1.25f));
+        newDmg.transform.localPosition = damageTextTrans.localPosition + (15 * newDmg.transform.localScale);
+        Text txt = newDmg.GetComponent<Text>();
+        txt.color = new Color(1, Mathf.Clamp((255 - (2 * damage * (maxHealth / 255))), 0, 255) / 255, 0, 1);
+        txt.text = ((int)damage).ToString();
         newDmg.SetActive(true);
     }
 }

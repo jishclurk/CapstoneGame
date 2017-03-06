@@ -5,8 +5,11 @@ using System.Linq;
 
 public class EnemyMobKnowledge : MonoBehaviour {
 
-    private Dictionary<GameObject, int> playerVisibilityMap;
+    public enum MobStrategy { Even, Random }
 
+    public MobStrategy strategy;
+
+    private Dictionary<GameObject, int> playerVisibilityMap;
     private Dictionary<GameObject, int> playerAggroMap;
 
 	// Use this for initialization

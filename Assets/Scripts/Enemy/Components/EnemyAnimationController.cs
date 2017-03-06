@@ -13,6 +13,7 @@ public class EnemyAnimationController : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         animator = GetComponent<Animator>();
+        animator.SetInteger("rand", Random.Range(0, 101));
         currentAnim = AnimState.Idle;
     }
 
@@ -35,6 +36,7 @@ public class EnemyAnimationController : MonoBehaviour {
         if (currentAnim != AnimState.Idle)
         {
             animator.SetTrigger("idle");
+            animator.SetInteger("rand", Random.Range(0, 101));
             currentAnim = AnimState.Idle;
         }
     }
@@ -43,6 +45,7 @@ public class EnemyAnimationController : MonoBehaviour {
     {
         if (currentAnim != AnimState.Attacking)
         {
+            animator.SetInteger("rand", Random.Range(0, 101));
             animator.SetTrigger("attacking");
             currentAnim = AnimState.Attacking;
         }
