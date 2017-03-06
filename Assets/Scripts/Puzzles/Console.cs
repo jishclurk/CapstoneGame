@@ -29,7 +29,7 @@ public class Console : MonoBehaviour, ICircuitPiece {
 		turnedOn = trigger.triggered;
 		if (!solved) {
 			if (turnedOn) {
-				if (activator.Output ()) {
+				if (activator == null || activator.Output ()) {
 					if (ps.isStopped) {
 						ps.Play ();
 					}
