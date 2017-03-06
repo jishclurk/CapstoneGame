@@ -6,6 +6,7 @@ public class ZapProjectileScript : MonoBehaviour {
 
     public GameObject impactParticle;
     public Vector3 destination;
+    public GameObject targetedEnemy;
     public GameObject projectileParticle;
     public GameObject[] trailParticles;
     [HideInInspector]
@@ -50,7 +51,7 @@ public class ZapProjectileScript : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (!hasCollided && other.CompareTag("Enemy") && !other.isTrigger)
+        if (!hasCollided && other.gameObject == targetedEnemy && !other.isTrigger)
         {
             hasCollided = true;
             //transform.DetachChildren();
