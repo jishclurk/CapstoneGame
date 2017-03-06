@@ -37,9 +37,9 @@ public class PuzzleManager : MonoBehaviour {
 
 
 
-		foreach (GameObject piece in GameObject.FindGameObjectsWithTag("Piece")) {
+		foreach (LoopPiece piece in gameObject.GetComponentsInChildren<LoopPiece>()) {
 
-			puzzle.pieces [(int)piece.transform.localPosition.x, (int)piece.transform.localPosition.y] = piece.GetComponent<LoopPiece> ();
+			puzzle.pieces [(int)piece.transform.localPosition.x, (int)piece.transform.localPosition.y] = piece;
 
 		}
 
@@ -158,9 +158,10 @@ public class PuzzleManager : MonoBehaviour {
 	{
 		Vector2 aux = Vector2.zero;
 
-		GameObject[] pieces = GameObject.FindGameObjectsWithTag ("Piece");
+		LoopPiece[] pieces = gameObject.GetComponentsInChildren<LoopPiece>();
+		//GameObject[] pieces = gameObject.FindGameObjectsWithTag ("Piece");
 
-		foreach (GameObject p in pieces) {
+		foreach (LoopPiece p in pieces) {
 			if (p.transform.localPosition.x > aux.x)
 				aux.x = p.transform.localPosition.x;
 
