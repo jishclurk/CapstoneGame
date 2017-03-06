@@ -52,6 +52,13 @@ public class CoopAiController : MonoBehaviour {
     public enum TargetPref { Closest, Lowest, Active};
     public TargetPref targetChoose;
 
+    //ability prefs
+    //attack prefs
+    [HideInInspector]
+    public enum AbilityPref { Agressive, Offensive, Defensive, Balanced, None };
+    public AbilityPref abilityChoose;
+
+
     [HideInInspector]
     public PlayerAbilities abilities;
     [HideInInspector]
@@ -60,6 +67,8 @@ public class CoopAiController : MonoBehaviour {
     public CharacterAttributes attributes;
     [HideInInspector]
     public TeamManager tm; //is this bad practice? Used to find which players are ai controlled or not
+    [HideInInspector]
+    public AbilityHelper ah;
 
     //Animation
     [HideInInspector]
@@ -93,7 +102,8 @@ public class CoopAiController : MonoBehaviour {
 
         eyes = transform.FindChild("Eyes");
         sightCollider = GetComponent<SphereCollider>();
-        tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>() ;
+        tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
+        ah = GameObject.FindWithTag("AbilityHelper").GetComponent<AbilityHelper>();
 
         //this is a mess. These are "shared" variables between co-op ai and player script
         player = GetComponent<Player>();

@@ -17,7 +17,7 @@ public class AbilityHelper : MonoBehaviour {
         nade.transform.LookAt(target.transform);
         nade.GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 4.9f, 0.0f);
         nade.GetComponent<Rigidbody>().angularVelocity = new Vector3(8.0f, 2.0f, 7.0f);
-        StartCoroutine(MoveObject(nade.transform, target.transform, 1.0f));
+        StartCoroutine(MoveObject(nade.transform, target.transform, 0.95f));
         Destroy(nade, 1.0f);
         
         StartCoroutine(Explode(attributes, origin, target, baseDamage, explosion, timeToCast));
@@ -35,7 +35,7 @@ public class AbilityHelper : MonoBehaviour {
             enemy.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
         }
         Object exp = Instantiate(explosion, target.transform.position, Quaternion.identity);
-        Destroy(target);
+        Destroy(target, 0.05f);
         Destroy(exp, 1.0f);
     }
 
@@ -53,6 +53,20 @@ public class AbilityHelper : MonoBehaviour {
         Destroy(shield, healLength);
         Destroy(target, healLength);
 
+    }
+
+
+    //CO-OP HELPER METHODS//
+    public void CoopExecuteAOE(Player player, GameObject origin, GameObject aoeTarget, ISpecial ability)
+    {
+        StartCoroutine(ExecuteAOE(player, origin, aoeTarget, ability));
+
+    }
+    private IEnumerator ExecuteAOE(Player player, GameObject origin, GameObject aoeTarget, ISpecial ability)
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        ability.Execute(player, origin, aoeTarget);
     }
 
 
@@ -89,6 +103,5 @@ public class AbilityHelper : MonoBehaviour {
     {
 
         yield return null;
-
     }
 }

@@ -9,12 +9,32 @@ public class AttackState : ICoopState
     private readonly CoopAiController aiPlayer;
     private float animSpeed;
     private bool reEvalutateTarget;
+    private GameObject aoeArea;
+    private float timeBetweenCasts;
+    private float lastAbilityCast;
 
     public AttackState(CoopAiController statePatternPlayer)
     {
         animSpeed = 0.0f;
         aiPlayer = statePatternPlayer;
         reEvalutateTarget = true;
+        switch (aiPlayer.abilityChoose) {
+            case CoopAiController.AbilityPref.Agressive:
+                timeBetweenCasts = 1.0f;
+                break;
+            case CoopAiController.AbilityPref.Balanced:
+                timeBetweenCasts = 5.0f;
+                break;
+            case CoopAiController.AbilityPref.None:
+                timeBetweenCasts = Mathf.Infinity;
+                break;
+            default:
+                timeBetweenCasts = 1.0f;
+                break;
+        }
+
+        
+        lastAbilityCast = -Mathf.Infinity;
     }
 
     public void UpdateState()
@@ -42,10 +62,17 @@ public class AttackState : ICoopState
         {
             aiPlayer.CheckLocalVision(); //Update visible enemies
             MoveAndShoot();
-            EvaluateSpecial();
-            if (aiPlayer.activeSpecialAbility != null)
+            if(aiPlayer.activeSpecialAbility == null)
             {
-                Debug.Log("USING: aiPlayer.activeSpecialAbility");
+                if(Time.time > lastAbilityCast + timeBetweenCasts)
+                {
+                    EvaluateSpecial();
+                }
+            }
+            else
+            {
+                lastAbilityCast = Time.time;
+                Debug.Log("USING: " + aiPlayer.activeSpecialAbility);
                 //Use Special based on its action
                 switch (aiPlayer.activeSpecialAbility.GetCoopAction())
                 {
@@ -62,6 +89,7 @@ public class AttackState : ICoopState
                         aiPlayer.activeSpecialAbility = null;
                         break;
                 }
+                aiPlayer.activeSpecialAbility = null;
 
             }
         }
@@ -159,7 +187,6 @@ public class AttackState : ICoopState
     //sets aiPlayer.activeSpecialAbility
     private void EvaluateSpecial()
     {
-        aiPlayer.activeSpecialAbility = null;
         bool specialAbilityReady = false;
         int i;
         for (i = 0; i < aiPlayer.abilities.abilityArray.Length && !specialAbilityReady; i++)
@@ -181,7 +208,10 @@ public class AttackState : ICoopState
                         }
                         break;
                     case AbilityHelper.CoopAction.AOEHurt:
-                        //aiPlayer.activeSpecialAbility = potentialAbility;
+                        if (aiPlayer.targetedEnemy != null)
+                        {
+                            aiPlayer.activeSpecialAbility = potentialAbility;
+                        }
                         //UseOffensiveSpecialTarget does not quite work for AOE. Needs to instantiate the AOE cicle in order to know what enemies to hit. NC will work on it soon
                         break;
                     case AbilityHelper.CoopAction.InstantHeal:
@@ -218,8 +248,15 @@ public class AttackState : ICoopState
         {
             aiPlayer.transform.LookAt(aiPlayer.targetedEnemy);
 
-            aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
-            aiPlayer.activeSpecialAbility = null;
+            if(aiPlayer.activeSpecialAbility.GetCoopAction() == AbilityHelper.CoopAction.AOEHurt)
+            {
+                aoeArea = GameObject.Instantiate(aiPlayer.activeSpecialAbility.aoeTarget, aiPlayer.targetedEnemy.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
+                aoeArea.GetComponent<AOETargetController>().isPlayerCalled = false;
+                aiPlayer.ah.CoopExecuteAOE(aiPlayer.player, aiPlayer.gameObject, aoeArea, aiPlayer.activeSpecialAbility);
+            } else
+            {
+                aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
+            }
 
             //check if enemy died
             EnemyHealth enemyHP = aiPlayer.targetedEnemy.GetComponent<EnemyHealth>();
