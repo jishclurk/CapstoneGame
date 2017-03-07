@@ -63,7 +63,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1618457621467516
 GameObject:
@@ -106,10 +106,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1618457621467516}
-  m_LocalRotation: {x: 0.000000014901161, y: 0.000000014901161, z: -0.000000059604638,
-    w: 1}
-  m_LocalPosition: {x: -15.587001, y: 3.0548162, z: -61.838997}
-  m_LocalScale: {x: 28.634624, y: 28.634634, z: 28.634632}
+  m_LocalRotation: {x: 0.000000119209275, y: -1, z: 0.00000004470348, w: 0.000000014901161}
+  m_LocalPosition: {x: 0.03, y: -2, z: -3.65}
+  m_LocalScale: {x: 28.634624, y: 203.19771, z: 28.634632}
   m_Children:
   - {fileID: 4306838948331384}
   - {fileID: 4838681739282488}
@@ -463,8 +462,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c0118a747ecf41029e8ea37a57390c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGreen: {fileID: 2100000, guid: e518c3beaac9a4e75b87a07de8a5dd46, type: 2}
-  inactiveWhite: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!136 &136662481235230874
 CapsuleCollider:
   m_ObjectHideFlags: 1
