@@ -14,7 +14,7 @@ public class ChasingState : IEnemyState {
 
     public void UpdateState()
     {
-        CheckSpawnDistance();
+        //CheckSpawnDistance();
         Look();
         Chase();
     }

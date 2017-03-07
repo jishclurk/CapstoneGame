@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyStateControl : MonoBehaviour {
 
-    public float chasingDuration = 4f;
     public float deaggroDistance = 20f;
 
     [HideInInspector]

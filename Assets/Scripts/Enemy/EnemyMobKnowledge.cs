@@ -53,26 +53,38 @@ public class EnemyMobKnowledge : MonoBehaviour {
 
     public GameObject GetNewTarget()
     {
-        int minAggro = playerAggroMap.Values.Min();
-        GameObject newTarget = null;
-        foreach (GameObject player in playerVisibilityMap.Keys)
+        if (strategy == MobStrategy.Random)
         {
-            if (playerAggroMap.ContainsKey(player) && playerAggroMap[player] == minAggro)
-            {
-                playerAggroMap[player] += 1;
-                return player;
-            }
-            else if (!playerAggroMap.ContainsKey(player))
-            {
-                playerAggroMap.Add(player, 1);
-                return player;
-            }
+            GameObject newTarget = playerVisibilityMap.ElementAt(Random.Range(0, playerVisibilityMap.Count)).Key;
+            if (!playerAggroMap.ContainsKey(newTarget))
+                playerAggroMap.Add(newTarget, 1);
             else
-                newTarget = player;
+                playerAggroMap[newTarget] += 1;
+            return newTarget;
         }
+        else // Even strategy (spread out). Default.
+        {
+            int minAggro = playerAggroMap.Values.Min();
+            GameObject newTarget = null;
+            foreach (GameObject player in playerVisibilityMap.Keys)
+            {
+                if (playerAggroMap.ContainsKey(player) && playerAggroMap[player] == minAggro)
+                {
+                    playerAggroMap[player] += 1;
+                    return player;
+                }
+                else if (!playerAggroMap.ContainsKey(player))
+                {
+                    playerAggroMap.Add(player, 1);
+                    return player;
+                }
+                else
+                    newTarget = player;
+            }
 
-        playerAggroMap[newTarget] += 1;
-        return newTarget;
+            playerAggroMap[newTarget] += 1;
+            return newTarget;
+        }
     }
 
     public void RemoveTargettedPlayer(GameObject player)
