@@ -30,8 +30,8 @@ public class PlayerController : MonoBehaviour
     private float chaseEpsilon;
     private float navSpeedDefault;
    
-    private IBasic activeBasicAbility;
-    private ISpecial activeSpecialAbility;
+    public IBasic activeBasicAbility; //accessed by cursor script
+    public ISpecial activeSpecialAbility;
     private Player player;
     private PlayerAbilities abilities;
     
@@ -178,7 +178,6 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(abilities.abilityArray[abilities.AbilityBindings[key]]);
                 if (activeSpecialAbility == null)
                 {
-
                     useSpecialIfPossible(abilities.abilityArray[abilities.AbilityBindings[key]]);
                 }
                 else
@@ -206,7 +205,6 @@ public class PlayerController : MonoBehaviour
             {
                 Destroy(aoeArea);
                 aoeArea = null;
-                return;
             }
         }
 
