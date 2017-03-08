@@ -26,7 +26,7 @@ public class RifleShot : IBasic, IAbility {
         StrengthRequired = 0;
         StaminaRequired = 0;
         IntelligenceRequired = 0;
-        image = GameObject.Instantiate(Resources.Load("Abilities/Pistol", typeof(Image))) as Image;
+        image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
         id = 8;
         name = "Rifle Shot";
         effectiveRange = 9.0f;

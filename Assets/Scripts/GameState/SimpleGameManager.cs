@@ -149,6 +149,7 @@ public class SimpleGameManager : MonoBehaviour
         lastSavedState = saved;
         GameObject.Find("TeamManager").GetComponent<TeamManager>().LoadSavedState(saved.players);
         cpManager.setState(saved.checkPoint);
+        GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>().loadState(saved.objectives);
         //move to checkpoint
         //set objectives
 

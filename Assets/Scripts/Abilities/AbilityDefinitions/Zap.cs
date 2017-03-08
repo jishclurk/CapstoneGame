@@ -29,7 +29,7 @@ public class Zap : ISpecial, IAbility {
         StrengthRequired = 0;
         StaminaRequired = 3;
         IntelligenceRequired = 0;
-        image = GameObject.Instantiate(Resources.Load("Abilities/Zap", typeof(Image))) as Image;
+        image = Resources.Load("Abilities/Zap", typeof(Image)) as Image;
         id = 4;
         name = "Zap";
         effectiveRange = 9.0f;
