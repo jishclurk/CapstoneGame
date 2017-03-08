@@ -9,7 +9,6 @@ public class OffsetCamera : MonoBehaviour
     private TeamManager tm;
     private Vector3 offset;
     private bool followPlayer;
-    private bool useLookAt;
     private float radius;
     private float offsetYValue;
     private Vector3 fixedEulerAngles;
@@ -20,33 +19,42 @@ public class OffsetCamera : MonoBehaviour
     private float yPositionMax;
     private float xRotationMin;
     private float xRotationMax;
+    private float[] xzRotationArray;
+    private int xzRotationArrayIndex;
 
     //Simple script from Roll a Ball
     void Start()
     {
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         activePlayerCharacter = tm.activePlayer.gameObject;
-        float xOffset = -5f;
-        float yOffset = 9f;
-        float zOffset = -5f;
-        offset = new Vector3(xOffset, yOffset, zOffset);
+        float offsetXValue = 5f;
+        offsetYValue = 9f;
+        float offsetZValue = 5f;
+        xzRotationArray = new float[8];
+        xzRotationArray[0] = offsetXValue;
+        xzRotationArray[1] = offsetZValue;
+        xzRotationArray[2] = -offsetXValue;
+        xzRotationArray[3] = offsetZValue;
+        xzRotationArray[4] = -offsetXValue;
+        xzRotationArray[5] = -offsetZValue;
+        xzRotationArray[6] = offsetXValue;
+        xzRotationArray[7] = -offsetZValue;
+        xzRotationArrayIndex = 4;
+        offset = new Vector3(xzRotationArray[xzRotationArrayIndex], offsetYValue, xzRotationArray[xzRotationArrayIndex + 1]);
         transform.position = activePlayerCharacter.transform.position + offset;
+        SmoothLookAt();
         Debug.Log("offset:" + offset);
         followPlayer = false;
-        Debug.Log("useLootAt is " + useLookAt);
-        useLookAt = false;
         radius = Mathf.Sqrt(offset.x * offset.x + offset.z * offset.z);
-        offsetYValue = offset.y;
-        transform.eulerAngles = new Vector3(45f, 45f, 0f);
         fixedEulerAngles = transform.eulerAngles;
         cameraVerticalSpeed = 0.2f;
         cameraRotationSpeed = cameraVerticalSpeed * 10 / 6; // 10/6 is the ratio of the xRotation range over the yPosition range
         mouseScrollSpeed = 10f; 
-        yPositionMin = yOffset - 3f;
-        yPositionMax = yOffset + 3f;
+        yPositionMin = offsetYValue - 3f;
+        yPositionMax = offsetYValue + 3f;
         xRotationMin = 40f;
         xRotationMax = 50f;
-}
+    }
 
     void LateUpdate()
     {
@@ -62,20 +70,17 @@ public class OffsetCamera : MonoBehaviour
                 followPlayer = true;
             }
         }
-        if(Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            if(useLookAt)
+            xzRotationArrayIndex += 2;
+            if(xzRotationArrayIndex > 7)
             {
-                useLookAt = false;
-                transform.eulerAngles = fixedEulerAngles;
-                Debug.Log("useLootAt is " + useLookAt);
+                xzRotationArrayIndex = 0;
             }
-            else
-            {
-                useLookAt = true; Debug.Log("useLootAt is " + useLookAt);
-            }
+            offset = new Vector3(xzRotationArray[xzRotationArrayIndex], offset.y, xzRotationArray[xzRotationArrayIndex + 1]);
+            SmoothLookAt();
         }
-        if (Input.GetKey(KeyCode.Minus) && offsetYValue > yPositionMin)
+        if (Input.GetKey(KeyCode.Equals) && offsetYValue > yPositionMin)
         {
             offsetYValue -= cameraVerticalSpeed;
             if (offsetYValue < yPositionMin)
@@ -83,21 +88,8 @@ public class OffsetCamera : MonoBehaviour
                 offsetYValue = yPositionMin;
             }
             offset = new Vector3(offset.x, offsetYValue, offset.z);
-            if (useLookAt)
-            {
-                transform.LookAt(activePlayerCharacter.transform);
-            }
-            else
-            {
-                float xRotation = transform.eulerAngles.x - cameraRotationSpeed;
-                if (xRotation < xRotationMin)
-                {
-                    xRotation = xRotationMin;
-                }
-                transform.eulerAngles = new Vector3(xRotation, transform.eulerAngles.y, transform.eulerAngles.z);
-            }
         }
-        if (Input.GetKey(KeyCode.Equals) && offsetYValue < yPositionMax)
+        if (Input.GetKey(KeyCode.Minus) && offsetYValue < yPositionMax)
         {
             offsetYValue += cameraVerticalSpeed;
             if (offsetYValue > yPositionMax)
@@ -105,21 +97,7 @@ public class OffsetCamera : MonoBehaviour
                 offsetYValue = yPositionMax;
             }
             offset = new Vector3(offset.x, offsetYValue, offset.z);
-            if (useLookAt)
-            {
-                transform.LookAt(activePlayerCharacter.transform);
-            }
-            else
-            {
-                float xRotation = transform.eulerAngles.x + cameraRotationSpeed;
-                if (xRotation > xRotationMax)
-                {
-                    xRotation = xRotationMax;
-                }
-                transform.eulerAngles = new Vector3(xRotation, transform.eulerAngles.y, transform.eulerAngles.z);
-            }
         }
-
         if (Input.GetAxis("Mouse ScrollWheel") != 0 && offsetYValue >= yPositionMin && offsetYValue <= yPositionMax)
         {
             offsetYValue -= Input.GetAxis("Mouse ScrollWheel") * cameraVerticalSpeed * mouseScrollSpeed;
@@ -132,31 +110,12 @@ public class OffsetCamera : MonoBehaviour
                 offsetYValue = yPositionMax;
             }
             offset = new Vector3(offset.x, offsetYValue, offset.z);
-            if (useLookAt)
-            {
-                transform.LookAt(activePlayerCharacter.transform);
-            }
-            else
-            {
-                float xRotation = transform.eulerAngles.x - Input.GetAxis("Mouse ScrollWheel") * cameraRotationSpeed * mouseScrollSpeed;
-                if (xRotation < xRotationMin)
-                {
-                    xRotation = xRotationMin;
-                }
-                else if (xRotation > xRotationMax)
-                {
-                    xRotation = xRotationMax;
-                }
-                transform.eulerAngles = new Vector3(xRotation, transform.eulerAngles.y, transform.eulerAngles.z);
-            }
         }
-        
         if (followPlayer)
         {
             float angle = Mathf.Deg2Rad * activePlayerCharacter.transform.eulerAngles.y - Mathf.PI;
             Vector3 newPosition = new Vector3(activePlayerCharacter.transform.position.x + (radius * Mathf.Sin(angle)), offsetYValue, activePlayerCharacter.transform.position.z + (radius * Mathf.Cos(angle)));
             transform.position = Vector3.Lerp(transform.position, newPosition, 0.2f);
-            transform.LookAt(activePlayerCharacter.transform);
         }
         else
         {
@@ -169,5 +128,12 @@ public class OffsetCamera : MonoBehaviour
                 transform.position = activePlayerCharacter.transform.position + offset;
             }
         }
+        SmoothLookAt();
+    }
+
+    private void SmoothLookAt()
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(activePlayerCharacter.transform.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.2f);
     }
 }
