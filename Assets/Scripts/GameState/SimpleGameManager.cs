@@ -26,16 +26,9 @@ public class SimpleGameManager : MonoBehaviour
     //false if it's new game that hasn't been saved yet
     public bool hasBeenSaved { get; set; }
 
-    //name game is saved under
-    public string name { get; set; }
-
-    public bool newLevel { get; set; }
-
     public int level;
 
     public bool newGame;
-
-    // public int checkpoint; //current checkpoint that a player is working towards
 
     private CheckpointManager cpManager;
 
@@ -45,12 +38,10 @@ public class SimpleGameManager : MonoBehaviour
     //autosaved state from last cp 
     private SavedState autosave;
 
-    private bool isAutosave;
 
     void Awake()
     {
         newGame = false;
-        isAutosave = false;
         DontDestroyOnLoad(this);
         Debug.Log("HERE 111111111111");
         level = 0;
@@ -110,10 +101,6 @@ public class SimpleGameManager : MonoBehaviour
     public void SetGameState(GameState state)
     {
         Debug.Log("changing state");
-        Debug.Log("name = " + name);
-        Debug.Log("level = " + level);
-        // Debug.Log("checkpoint = " + checkpoint);
-
 
         this.gameState = state;
         OnStateChange();
@@ -132,6 +119,7 @@ public class SimpleGameManager : MonoBehaviour
     public void nextLevel()
     {
         Debug.Log("next level");
+
         //save with level ++
         //load level
     }
@@ -144,7 +132,7 @@ public class SimpleGameManager : MonoBehaviour
     //after the level of saved in loaded, sets the state of the game
     public void SetSavedState(SavedState saved)
     {
-        name = saved.name;
+       // names = saved.name;
         level = saved.level;
         lastSavedState = saved;
         GameObject.Find("TeamManager").GetComponent<TeamManager>().LoadSavedState(saved.players);
@@ -160,7 +148,7 @@ public class SimpleGameManager : MonoBehaviour
     {
         //create last saved start as start state 
         Debug.Log("new game");
-        name = null;
+        //name = null;
         hasBeenSaved = false;
         level = 1;
         lastSavedState = new SavedState();
@@ -174,6 +162,11 @@ public class SimpleGameManager : MonoBehaviour
         //ask for state you wanna load, save slots or auto save
         //set lastSavedState as the savedState selected
         //loadLevel
+    }
+
+    public void AutoSave()
+    {
+        //  TO DO
     }
 
     public int getCheckpoint()

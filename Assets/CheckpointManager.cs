@@ -10,24 +10,30 @@ public class CheckpointManager : MonoBehaviour {
 
     public int completed; //
 
+    public bool levelCompleted;
+
 	// Use this for initialization
 	void Awake () {
         checkpoints = new List<CheckPoint>();
         gm = SimpleGameManager.Instance;
         completed = 0;
+        levelCompleted = false;
         foreach (Transform child in transform)
         {
             checkpoints.Add(child.gameObject.GetComponent<CheckPoint>());
         }
         Debug.Log("cpmanager got checkpoints");
+        Debug.Log("checkpoints=" + checkpoints.Count);
     }
 
     public void UpdateCheckpoints()
     {
+        Debug.Log("Completed a checkpoint");
         completed++;
-        if(completed == checkpoints.Count-1)
+        if(completed == checkpoints.Count)
         {
-            gm.nextLevel();
+            levelCompleted = true;
+           // gm.nextLevel();
             Debug.Log("checkpoints complete");
         }
     }

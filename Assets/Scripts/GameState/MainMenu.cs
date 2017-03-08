@@ -87,24 +87,22 @@ public class MainMenu : MonoBehaviour
 
     }
 
+    public void CloseLoadMenu()
+    {
+        LoadMenu.enabled = false;
+        Menu.enabled = true;
+    }
+
     //
     public void LoadSavedGame(string name)
     {
-        List<string> gameNames = SaveLoad.savedGames();
-        foreach(string gameName in gameNames)
-        {
-            Debug.Log(gameName);
-        }
-        //Debug.Log(gameNames);
-        //if (gameNames.Contains(name))
-       // {
-            SavedState gameToLoad = SaveLoad.Load(name);
+        LoadMenu.enabled = false;
+        SavedState gameToLoad = SaveLoad.Load(name);
         Debug.Log(gameToLoad);
             gm.lastSavedState = gameToLoad;
             levelToLoad = gameToLoad.level;
             gm.OnStateChange += LoadLevel;
             Play();
-       // }
     }
 
     public void ExitGame()

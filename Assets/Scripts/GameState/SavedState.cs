@@ -32,7 +32,6 @@ public class SavedState
     public void setFromGameManager()
     {
         SimpleGameManager gm = SimpleGameManager.Instance;
-        this.name = gm.name;
         this.level = gm.level;
         this.checkPoint = gm.getCheckpoint();
     }
