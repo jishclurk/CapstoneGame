@@ -26,15 +26,18 @@ public class OffsetCamera : MonoBehaviour
     {
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         activePlayerCharacter = tm.activePlayer.gameObject;
-        offset = transform.position - activePlayerCharacter.transform.position;
-        float yOffset = activePlayerCharacter.transform.position.y + 9f;
-        offset = new Vector3(offset.x, yOffset, offset.z);
+        float xOffset = -5f;
+        float yOffset = 9f;
+        float zOffset = -5f;
+        offset = new Vector3(xOffset, yOffset, zOffset);
+        transform.position = activePlayerCharacter.transform.position + offset;
         Debug.Log("offset:" + offset);
         followPlayer = false;
         Debug.Log("useLootAt is " + useLookAt);
         useLookAt = false;
         radius = Mathf.Sqrt(offset.x * offset.x + offset.z * offset.z);
         offsetYValue = offset.y;
+        transform.eulerAngles = new Vector3(45f, 45f, 0f);
         fixedEulerAngles = transform.eulerAngles;
         cameraVerticalSpeed = 0.2f;
         cameraRotationSpeed = cameraVerticalSpeed * 10 / 6; // 10/6 is the ratio of the xRotation range over the yPosition range
