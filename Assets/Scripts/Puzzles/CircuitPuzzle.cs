@@ -50,15 +50,15 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 	void Update () {
 		if (!solved) {
 			if (this.Output ()) {
-				hub.material = hubActive;
-				connector.material = hubActive;
+				hub.sharedMaterial = hubActive;
+				connector.sharedMaterial = hubActive;
 				if (ps.isStopped) {
 					ps.Play ();
 				}
 				//Debug.Log ("got here");
 			} else {
-				hub.material = hubInactive;
-				connector.material = hubInactive;
+				hub.sharedMaterial = hubInactive;
+				connector.sharedMaterial = hubInactive;
 				if (ps.isPlaying) {
 					ps.Stop ();
 				}
@@ -68,8 +68,8 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 
 
 		} else {
-			hub.material = hubActive;
-			connector.material = hubActive;
+			hub.sharedMaterial = hubActive;
+			connector.sharedMaterial = hubActive;
 			lerpConnector ();
 		}
 
@@ -77,7 +77,7 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 
 
 	void lerpConnector(){
-		connector.material.mainTextureOffset = new Vector2 (0.0f, Mathf.Lerp (minimum, maximum, t));
+		connector.sharedMaterial.mainTextureOffset = new Vector2 (0.0f, Mathf.Lerp (minimum, maximum, t));
 		// .. and increate the t interpolater
 		t += 0.75f * Time.deltaTime;
 		if (t > 1.0f) {

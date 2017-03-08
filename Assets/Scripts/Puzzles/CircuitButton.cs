@@ -33,14 +33,14 @@ public class CircuitButton : MonoBehaviour, ICircuitPiece {
 //		}
 //		if (!solved) {
 			if (this.Output ()) {
-				connector.material = activeGreen;
+				connector.sharedMaterial = activeGreen;
 			} else {
-				connector.material = inactiveWhite;
+			connector.sharedMaterial = inactiveWhite;
 			}
 
 
 //		} else {
-			connector.material.mainTextureOffset = new Vector2 (0.0f, Mathf.Lerp (minimum, maximum, t));
+		connector.sharedMaterial.mainTextureOffset = new Vector2 (0.0f, Mathf.Lerp (minimum, maximum, t));
 			// .. and increate the t interpolater
 			t += 0.75f * Time.deltaTime;
 

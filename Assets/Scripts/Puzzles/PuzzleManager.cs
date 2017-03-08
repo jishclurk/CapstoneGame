@@ -44,10 +44,10 @@ public class PuzzleManager : MonoBehaviour {
 		}
 
 
-		foreach (LoopPiece item in puzzle.pieces) {
-
-			Debug.Log(item.gameObject);
-		}
+//		foreach (LoopPiece item in puzzle.pieces) {
+//
+//			Debug.Log(item.gameObject);
+//		}
 
 
 
