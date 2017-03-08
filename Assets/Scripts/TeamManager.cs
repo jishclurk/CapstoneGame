@@ -106,7 +106,8 @@ public class TeamManager : MonoBehaviour {
         playerList[1].gameObject.transform.position = checkpoint.player2;
         playerList[2].gameObject.transform.position = checkpoint.player3;
         playerList[3].gameObject.transform.position = checkpoint.player4;
-
+        //cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
+        cameraScript.activePlayerCharacter = activePlayer.gameObject;
     }
 
     public void changeToActivePlayer(int id)
@@ -262,11 +263,12 @@ public class TeamManager : MonoBehaviour {
             current.StatPoints = playerState.statPoints;
             current.Strength = playerState.strength;
             current.Intelligence = playerState.intelligence;
-            current.Stamina = playerState.statPoints;
+            current.Stamina = playerState.stamina;
+            currentPlayer.abilities.UpdateUnlockedAbilities(current);
 
             if (playerState.isInControl)
             {
-                activePlayer = currentPlayer;
+                activePlayer = currentPlayer; 
                 currentPlayer.strategy.isplayerControlled = true;
                 playerResources = activePlayer.GetComponent<PlayerResources>();
                 cameraScript = Camera.main.GetComponent<OffsetCamera>(); 
