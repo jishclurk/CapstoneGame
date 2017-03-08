@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 223354557463085662}
   - component: {fileID: 114492644991015860}
   - component: {fileID: 114273856107690750}
+  - component: {fileID: 114070143245506726}
   m_Layer: 5
   m_Name: Checkpoint Screen
   m_TagString: Untagged
@@ -158,6 +159,17 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114070143245506726
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1914902448508554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98700ff8031f8f049beda70a471702a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114108658197559818
 MonoBehaviour:
   m_ObjectHideFlags: 1
