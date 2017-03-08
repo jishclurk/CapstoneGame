@@ -165,6 +165,7 @@ public class CoopAiController : MonoBehaviour {
     {
         targetedEnemy = null;
         currentState = idleState;
+        navMeshAgent.speed = navSpeedDefault;
         if (abilities != null)
         {
             activeBasicAbility = abilities.Basic;

@@ -111,6 +111,7 @@ public class AttackState : ICoopState
 
     public void ToIdleState()
     {
+        aiPlayer.navMeshAgent.speed = aiPlayer.navSpeedDefault;
         aiPlayer.currentState = aiPlayer.idleState;
     }
 
@@ -121,6 +122,7 @@ public class AttackState : ICoopState
 
     public void ToFleeState()
     {
+        aiPlayer.navMeshAgent.speed = aiPlayer.navSpeedDefault;
         aiPlayer.currentState = aiPlayer.fleeState;
     }
 
