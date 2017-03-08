@@ -23,7 +23,7 @@ public class AOE : ISpecial, IAbility {
 
     public AOE()
     {
-        image = GameObject.Instantiate(Resources.Load("Abilities/Grenade", typeof(Image))) as Image;
+        image = Resources.Load("Abilities/Grenade", typeof(Image)) as Image;
         id = 0;
         name = "Area of Effect";
         effectiveRange = 10.0f;
