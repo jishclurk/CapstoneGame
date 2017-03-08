@@ -53,8 +53,8 @@ public class Generator : MonoBehaviour,ICircuitPiece {
 			turnedOn = trigger.triggered;
 			if (turnedOn) {
 				if (this.Output ()) {
-					connector.material = genActive;
-					genMesh.material = fixed1;
+					connector.sharedMaterial = genActive;
+					genMesh.sharedMaterial = fixed1;
 					if (ps1.isPlaying) {
 						ps1.Stop ();
 						//ps2.Stop ();
@@ -63,7 +63,7 @@ public class Generator : MonoBehaviour,ICircuitPiece {
 					LockMyself ();
 
 				} else {
-					connector.material = genInactive;
+					connector.sharedMaterial = genInactive;
 				}
 				genSpot.intensity = 100;
 			} else {
@@ -76,7 +76,7 @@ public class Generator : MonoBehaviour,ICircuitPiece {
 			}
 		} 
 
-		connector.material.mainTextureOffset = new Vector2(0.0f, Mathf.Lerp(minimum,maximum,t));
+		connector.sharedMaterial.mainTextureOffset = new Vector2(0.0f, Mathf.Lerp(minimum,maximum,t));
 		// .. and increate the t interpolater
 		t += 0.75f * Time.deltaTime;
 		if (t > 1.0f){
@@ -103,9 +103,9 @@ public class Generator : MonoBehaviour,ICircuitPiece {
 	void flicker(){
 			if (cTime < flickerTime) {
 				if (flick) {
-				genMesh.material = broken1;
+				genMesh.sharedMaterial = broken1;
 				} else {
-				genMesh.material = broken2;
+				genMesh.sharedMaterial = broken2;
 				}
 
 			} else {

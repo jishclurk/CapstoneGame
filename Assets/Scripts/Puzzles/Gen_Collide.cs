@@ -36,10 +36,11 @@ public class Gen_Collide : MonoBehaviour {
 			popUpObject.gameObject.SetActive (true);
 			active = true;
 
-		} else {
-			popUpObject.gameObject.SetActive (false);
-			active = false;
-		}
+		} 
+//		else {
+//			popUpObject.gameObject.SetActive (false);
+//			active = false;
+//		}
 	}
 
 	void OnTriggerExit(Collider other){
