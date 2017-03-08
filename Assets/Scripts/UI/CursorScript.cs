@@ -9,6 +9,10 @@ public class CursorScript : MonoBehaviour {
     public Texture2D shootTexture;
     public Texture2D abilityTexture;
 
+    public Texture2D navTextureSmall;
+    public Texture2D shootTextureSmall;
+    public Texture2D abilityTextureSmall;
+
     private Texture2D navCursor;
     private Texture2D shootCursor;
     private Texture2D abilityCursor;
@@ -19,9 +23,18 @@ public class CursorScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        navCursor = Instantiate(navTexture) as Texture2D;
-        shootCursor = Instantiate(shootTexture) as Texture2D;
-        abilityCursor = Instantiate(abilityTexture) as Texture2D;
+        if(Screen.height < 899f)
+        {
+            navCursor = Instantiate(navTextureSmall) as Texture2D;
+            shootCursor = Instantiate(shootTextureSmall) as Texture2D;
+            abilityCursor = Instantiate(abilityTextureSmall) as Texture2D;
+        } else
+        {
+            navCursor = Instantiate(navTexture) as Texture2D;
+            shootCursor = Instantiate(shootTexture) as Texture2D;
+            abilityCursor = Instantiate(abilityTexture) as Texture2D;
+        }
+
         Cursor.SetCursor(navCursor, Vector2.zero, cursorMode);
     }
 	
@@ -32,20 +45,22 @@ public class CursorScript : MonoBehaviour {
 
         if(tm.activePlayer.strategy.playerScript.activeSpecialAbility != null)
         {
-            Cursor.SetCursor(abilityCursor, new Vector2(abilityTexture.height / 2, abilityTexture.width / 2), cursorMode);
+            Cursor.SetCursor(abilityCursor, new Vector2(abilityCursor.height / 2, abilityCursor.width / 2), cursorMode);
         }
-        else if (Physics.Raycast(ray, out hit, 100f, Layers.NonWall))
+        else if (Physics.Raycast(ray, out hit, 100f, Layers.Enemy))
         {
             if (hit.collider.CompareTag("Enemy"))
             {
-                Cursor.SetCursor(shootCursor, new Vector2(shootTexture.height/2, shootTexture.width/2), cursorMode);
+                Cursor.SetCursor(shootCursor, new Vector2(shootCursor.height/2, shootCursor.width/2), cursorMode);
             }
-            else
+            /*else
             {
                 Cursor.SetCursor(navCursor, Vector2.zero, cursorMode);
-            }
-
-
+            }*/
+        }
+        else
+        {
+            Cursor.SetCursor(navCursor, Vector2.zero, cursorMode);
         }
 
 
