@@ -19,6 +19,7 @@ public class CheckPoint : MonoBehaviour
     private Button exit;
     private InputField name;
     private TeamManager tm;
+    private ObjectiveManager objmanager;
 
     public bool checkpointReached;
     private Collider col;
@@ -54,6 +55,7 @@ public class CheckPoint : MonoBehaviour
         tm = GameObject.Find("TeamManager").gameObject.GetComponent<TeamManager>();
 
         manager = transform.parent.gameObject.GetComponent<CheckpointManager>();
+        objmanager = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>();
 
     }
 
@@ -129,6 +131,7 @@ public class CheckPoint : MonoBehaviour
         SavedState toSave = new SavedState();
         toSave.setFromGameManager();
         toSave.players = tm.currentState();
+        toSave.objectives = objmanager.currentState();
 
         SaveLoad.Save(toSave, gm.name);
         Debug.Log("saved");
