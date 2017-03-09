@@ -46,7 +46,7 @@
     </Player>
   </Players>
   <Objectives>
-    <objectives>false</objectives>
+    <objectives>true</objectives>
     <objectives>false</objectives>
     <objectives>false</objectives>
     <objectives>false</objectives>

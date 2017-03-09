@@ -102,6 +102,7 @@ public class TeamManager : MonoBehaviour {
         return activePlayer; 
     }
 
+    //Moves players to the positions at the checkpoint
     public void setPlayers(CheckPoint checkpoint)
     {
         playerList[0].gameObject.GetComponent<NavMeshAgent>().Warp(checkpoint.player1.transform.position);
@@ -109,12 +110,6 @@ public class TeamManager : MonoBehaviour {
         playerList[2].gameObject.GetComponent<NavMeshAgent>().Warp(checkpoint.player3.transform.position);
         playerList[3].gameObject.GetComponent<NavMeshAgent>().Warp(checkpoint.player4.transform.position);
 
-        //transform.position = checkpoint.player1.transform.position;
-        //playerList[1].gameObject.transform.position = checkpoint.player2.transform.position;
-        //playerList[2].gameObject.transform.position = checkpoint.player3.transform.position;
-        //playerList[3].gameObject.transform.position = checkpoint.player4.transform.position;
-        //cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
-        //cameraScript.activePlayerCharacter = activePlayer.gameObject;
     }
 
     public void changeToActivePlayer(int id)

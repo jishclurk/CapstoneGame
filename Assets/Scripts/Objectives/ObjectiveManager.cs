@@ -49,10 +49,16 @@ public class ObjectiveManager : MonoBehaviour {
 
     public void loadState(bool[] state)
     {
+        Debug.Log(state);
+        foreach(GoalManager goal in objectives)
+        {
+            Debug.Log(goal);
+        }
         if(state.Length == objectives.Count)
         {
             for (int i = 0; i< objectives.Count; i++)
             {
+                Debug.Log(state[i]);
                 objectives[i].setActive(state[i]);
             }
         }
