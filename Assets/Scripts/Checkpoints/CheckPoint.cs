@@ -41,7 +41,7 @@ public class CheckPoint : MonoBehaviour
         SaveAsScreen.enabled = false;
         CheckPointPopUp.enabled = false;
 
-        nameInputField = SaveAsScreen.transform.GetChild(6).GetComponent<InputField>();
+        nameInputField = SaveAsScreen.transform.GetChild(5).GetComponent<InputField>();
         nameInputField.onEndEdit.AddListener(delegate { SaveGame(nameInputField.text); });
 
 
@@ -149,7 +149,7 @@ public class CheckPoint : MonoBehaviour
             toSave.checkPoint = 0;
         }
         SaveLoad.Save(toSave,name);
-        SaveAsScreen.GetComponentInChildren<SaveListController>().UpdateButtons(name);
+        checkpointManager.UpdateButtons(name);
         Debug.Log("saved");
         progressGame();
         //

@@ -65,5 +65,13 @@ public class CheckpointManager : MonoBehaviour {
         Debug.Log("GET CHECKPOINT DIDN'T WORK");
         return -1;
     }
+
+    public void UpdateButtons(string name)
+    {
+        foreach(GameObject terminal in transform)
+        {
+            terminal.GetComponentInChildren<SaveListController>().UpdateButtons(name);
+        }
+    }
 	
 }
