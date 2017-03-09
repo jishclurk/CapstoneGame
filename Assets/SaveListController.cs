@@ -12,7 +12,8 @@ public class SaveListController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        CheckPoint cp = transform.parent.gameObject.GetComponent<CheckPoint>();
+        CheckPoint cp = transform.parent.parent.gameObject.GetComponent<CheckPoint>();
+        Debug.Log(cp);
         foreach (string name in SaveLoad.savedGames())
         {
             GameObject listItem = Instantiate(ListItemPrefab) as GameObject;
@@ -26,4 +27,5 @@ public class SaveListController : MonoBehaviour
             button.onClick.AddListener(delegate { cp.SaveGame(croppedName); });
         }
     }
+
 }
