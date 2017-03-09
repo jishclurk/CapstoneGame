@@ -60,6 +60,7 @@ public class SimpleGameManager : MonoBehaviour
             {
                 Debug.Log("gm is loading new game");
                 NewGame();
+                newGame = false;
             }
             else
             {
@@ -119,7 +120,7 @@ public class SimpleGameManager : MonoBehaviour
         Debug.Log("advance to level " + level);
         autosave.checkPoint = 0;
         autosave.level++;
-        LoadLevel(level);
+     //   LoadLevel(level);
     }
     //Loads Level level
     public static void LoadLevel(int level)
