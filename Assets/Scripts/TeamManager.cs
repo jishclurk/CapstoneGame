@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TeamManager : MonoBehaviour {
     public TacticalPause tacticalPause;
@@ -21,6 +22,7 @@ public class TeamManager : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
+        
         for(int i = 0; i<prefabList.Length; i++)
         {
             prefabList[i] = Instantiate(prefabList[i]);
@@ -102,12 +104,17 @@ public class TeamManager : MonoBehaviour {
 
     public void setPlayers(CheckPoint checkpoint)
     {
-        playerList[0].gameObject.transform.position = checkpoint.player1.transform.position;
-        playerList[1].gameObject.transform.position = checkpoint.player2.transform.position;
-        playerList[2].gameObject.transform.position = checkpoint.player3.transform.position;
-        playerList[3].gameObject.transform.position = checkpoint.player4.transform.position;
+        playerList[0].gameObject.GetComponent<NavMeshAgent>().Warp(checkpoint.player1.transform.position);
+        playerList[1].gameObject.GetComponent<NavMeshAgent>().Warp(checkpoint.player2.transform.position);
+        playerList[2].gameObject.GetComponent<NavMeshAgent>().Warp(checkpoint.player3.transform.position);
+        playerList[3].gameObject.GetComponent<NavMeshAgent>().Warp(checkpoint.player4.transform.position);
+
+        //transform.position = checkpoint.player1.transform.position;
+        //playerList[1].gameObject.transform.position = checkpoint.player2.transform.position;
+        //playerList[2].gameObject.transform.position = checkpoint.player3.transform.position;
+        //playerList[3].gameObject.transform.position = checkpoint.player4.transform.position;
         //cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
-        cameraScript.activePlayerCharacter = activePlayer.gameObject;
+        //cameraScript.activePlayerCharacter = activePlayer.gameObject;
     }
 
     public void changeToActivePlayer(int id)
