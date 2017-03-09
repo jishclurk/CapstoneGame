@@ -48,7 +48,7 @@ public class TurnOnConsole : MonoBehaviour ,IGoal{
 		//ScoreSingleton.score += 50;
 		//audio.Play(trumpetSound);
 		//checkpoint.openCheckPointScreen();
-		console.Solve ();
+		//console.Solve ();
 		console.Lock();
 	
 	}

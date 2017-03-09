@@ -128,6 +128,12 @@ public class Generator : MonoBehaviour,ICircuitPiece {
 	}
 
 	public void Solve(){
+		connector.sharedMaterial = genActive;
+		genMesh.sharedMaterial = fixed1;
+		if (ps1.isPlaying) {
+			ps1.Stop ();
+			//ps2.Stop ();
+		}
 		turnedOn = true;
 		LockMyself ();
 		input [1].Solve ();
