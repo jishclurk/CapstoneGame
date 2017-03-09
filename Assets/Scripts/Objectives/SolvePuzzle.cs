@@ -44,7 +44,10 @@ public class SolvePuzzle: MonoBehaviour ,IGoal{
 	}
 
 	public void Complete() {
+		//cp.Sol
+		cp.Solve();
 		cp.Lock ();
+
 		//ScoreSingleton.score += 50;
 		//audio.Play(trumpetSound);
 		//checkpoint.openCheckPointScreen();

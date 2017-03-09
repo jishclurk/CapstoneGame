@@ -75,4 +75,7 @@ public class ConsoleGUI : MonoBehaviour, ICircuitPiece {
 	public void Lock(){
 		solved = true;
 	}
+	public void Solve(){
+		solved = true;
+	}
 }

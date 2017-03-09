@@ -48,6 +48,7 @@ public class TurnOnGenerator : MonoBehaviour ,IGoal{
 		//ScoreSingleton.score += 50;
 		//audio.Play(trumpetSound);
 		//checkpoint.openCheckPointScreen();
+		gen.Solve();
 	}
 
 	public void DestroyGoal() {

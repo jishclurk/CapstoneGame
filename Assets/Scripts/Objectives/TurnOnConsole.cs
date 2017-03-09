@@ -48,6 +48,9 @@ public class TurnOnConsole : MonoBehaviour ,IGoal{
 		//ScoreSingleton.score += 50;
 		//audio.Play(trumpetSound);
 		//checkpoint.openCheckPointScreen();
+		console.Solve ();
+		console.Lock();
+	
 	}
 
 	public void DestroyGoal() {

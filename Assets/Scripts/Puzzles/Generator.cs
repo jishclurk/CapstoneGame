@@ -119,12 +119,18 @@ public class Generator : MonoBehaviour,ICircuitPiece {
 
 	}
 
-	void LockMyself(){
+	public void LockMyself(){
 		solved = true;
 	}
 
 	public Transform GetTransform(){
 		return this.transform;
+	}
+
+	public void Solve(){
+		turnedOn = true;
+		LockMyself ();
+		input [1].Solve ();
 	}
 
 

@@ -6,7 +6,7 @@ public class ButtonScript : MonoBehaviour {
 
     // Use this for initialization
    private AudioSource sound;
-	private bool pressed;
+	public bool pressed;
 	private bool disabled;
 	TeamManager tm;
 
@@ -25,7 +25,7 @@ public class ButtonScript : MonoBehaviour {
 		if (!disabled) {
 			if (!other.isTrigger && (other.gameObject == tm.activePlayer.gameObject)) {
 				sound.Play ();
-				Debug.Log ("Button Pressed");
+				//Debug.Log ("Button Pressed");
 				pressed = !pressed;
 				//GameObject.FindGameObjectWithTag("Door").SetActive(false);
 			}

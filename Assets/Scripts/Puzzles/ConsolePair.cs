@@ -42,5 +42,13 @@ public class ConsolePair : MonoBehaviour, ICircuitPiece {
 
 	public void Lock(){
 		solved =true;
+		consoles [0].Lock ();
+		consoles [1].Lock ();
+	}
+
+	public void Solve(){
+		consoles [0].Solve ();
+		consoles [1].Solve ();
+		cG.Solve ();
 	}
 }

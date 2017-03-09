@@ -34,19 +34,24 @@ public class GoalManager : MonoBehaviour {
 		achievedGoals = 0;
 		if (loadCompleted) {
 			achievedGoals = goals.Count;
-		}
-		for (int i = 0; i < goals.Count; i++) {
-			//goalList += "\n" + goals [i].GoalText;
-			//if (goals [i].IsAchieved ()) {
-			//					goals [i].Complete ();
-			//					goals [i].DestroyGoal ();
-			//					goals.RemoveAt (i);
-			//}
-			if (!goals [i].IsAchieved ()) {
-				goalListString += "\n" + goals [i].GoalText;
-			} else {
+			for (int i = 0; i < goals.Count; i++) {
 				goals [i].Complete ();
-				achievedGoals++;
+			}
+
+		} else {
+			for (int i = 0; i < goals.Count; i++) {
+				//goalList += "\n" + goals [i].GoalText;
+				//if (goals [i].IsAchieved ()) {
+				//					goals [i].Complete ();
+				//					goals [i].DestroyGoal ();
+				//					goals.RemoveAt (i);
+				//}
+				if (!goals [i].IsAchieved ()) {
+					goalListString += "\n" + goals [i].GoalText;
+				} else {
+					goals [i].Complete ();
+					achievedGoals++;
+				}
 			}
 		}
 		if (goals.Count == achievedGoals) {
@@ -65,6 +70,7 @@ public class GoalManager : MonoBehaviour {
 
 	public void CompleteGoals(bool complete){
 		loadCompleted = complete;
+
 
 	}
 

@@ -67,6 +67,10 @@ public class CircuitButton : MonoBehaviour, ICircuitPiece {
 		//solved = true;
 		button.Disable ();
 	}
+
+	public void Solve(){
+		button.pressed = true;
+	}
 		
 }
 

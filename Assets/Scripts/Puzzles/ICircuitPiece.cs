@@ -7,4 +7,5 @@ public interface ICircuitPiece{
 	bool Output ();
 	void Lock ();
 	Transform GetTransform();
+	void Solve();
 }

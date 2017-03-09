@@ -11,6 +11,7 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 	private Material hubInactive;
 	MeshRenderer connector;
 	ParticleSystem ps;
+	bool loadSolved;
 	bool solved;
 	float t = 1.0f;
 	float minimum = 0.75f;
@@ -42,6 +43,7 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 
 		hubActive = Resources.Load ("Materials/Green_Beam") as Material;
 		AssignColor ();
+		loadSolved = false;
 		//hubInactive = Resources.Load ("Materials/White_Beam") as Material;
 
 	}
@@ -93,24 +95,40 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 		result [1].Lock ();
 	}
 
-	public bool Output(){
-
+	public void Solve(){
 		if (gateType == GateType.OR) {
-			return Or ();
+			SolveOr ();
 		} else if (gateType == GateType.AND) {
-			return And ();
+			SolveAnd ();
 		} else if (gateType == GateType.XOR) {
-			return XOr ();
+			SolveXOr ();
 		} else if (gateType == GateType.NAND) {
-			return NAnd ();
+			SolveNAnd ();
 		} else if (gateType == GateType.NOR) {
-			return NOr ();
+			SolveOrNOr ();
 		} else if (gateType == GateType.XNOR) {
-			return XNor ();
+			SolveOrXNor ();
 		} 
-		else{
-			return false;
-		}
+
+	}
+
+	public bool Output(){
+			if (gateType == GateType.OR) {
+				return Or ();
+			} else if (gateType == GateType.AND) {
+				return And ();
+			} else if (gateType == GateType.XOR) {
+				return XOr ();
+			} else if (gateType == GateType.NAND) {
+				return NAnd ();
+			} else if (gateType == GateType.NOR) {
+				return NOr ();
+			} else if (gateType == GateType.XNOR) {
+				return XNor ();
+			} else {
+				return false;
+			}
+		
 	
 	}
 
@@ -161,6 +179,49 @@ public class CircuitPuzzle : MonoBehaviour, ICircuitPiece {
 
 	bool NOr(){
 		return ! (result[0].Output() || result[1].Output());
+		//return true;
+	}
+
+	void SolveOr(){
+		if (!(result [0].Output () || result [1].Output ())) {
+			result [0].Output ();
+		}
+		result [0].Lock ();
+		result [1].Lock ();
+		//return true;
+	}
+	void SolveAnd(){
+		if (!(result [0].Output () && result[1].Output())) {
+			result [0].Solve ();
+			result [1].Solve ();
+		}
+		result [0].Lock ();
+		result [1].Lock ();
+		//return result[0].Output() && result[1].Output();
+		//return false;
+	}
+
+	void SolveXOr(){
+		if (result [0].Output () == result[1].Output()) {
+			result [0].Solve ();
+		}
+
+
+		result [0].Lock ();
+		result [1].Lock ();
+		//return result[0].Output() != result[1].Output();
+	}
+
+	void SolveNAnd(){
+		//return !(result[0].Output() && result[1].Output());
+	}
+
+	void SolveOrXNor(){
+		//return result[0].Output() == result[1].Output();
+	}
+
+	void SolveOrNOr(){
+		//return ! (result[0].Output() || result[1].Output());
 		//return true;
 	}
 
