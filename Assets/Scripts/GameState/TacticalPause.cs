@@ -192,36 +192,27 @@ public class TacticalPause : MonoBehaviour {
     //updates the displayed stamina
     public void ChangeStamina(int change)
     {
-        Debug.Log("button pressed");
-        if (pointsLeft > 0)
-        {
-            if (change > 0 || stamina > floorStamina)
-            {
-                stamina += change;
-            pointsLeft -= change;
-            }
 
-            XPText.text = xpString + pointsLeft.ToString();
-            StaminaText.text = staminaString + stamina.ToString();
+        if ((change < 0 && stamina > floorStamina) || (change > 0 && pointsLeft > 0))
+        {
+            stamina += change;
+            pointsLeft -= change;
         }
+        XPText.text = xpString + pointsLeft.ToString();
+        StaminaText.text = staminaString + stamina.ToString();
 
     }
 
     //updates the displayed intell
     public void ChangeIntell(int change)
     {
-        Debug.Log("button pressed");
-
-        if (pointsLeft > 0)
+        if ((change < 0 && intell > floorIntell) || (change>0 && pointsLeft>0))
         {
-            if (change > 0 || intell > floorIntell)
-            {
-                intell += change;
+            intell += change;
             pointsLeft -= change;
-            }
-            XPText.text = xpString + pointsLeft.ToString();
-            IntellText.text = intellString + intell.ToString();
         }
+        XPText.text = xpString + pointsLeft.ToString();
+        IntellText.text = intellString + intell.ToString();
 
     }
 
@@ -229,19 +220,13 @@ public class TacticalPause : MonoBehaviour {
     public void ChangeStrength(int change)
     {
 
-        if (pointsLeft > 0)
+        if ((change < 0 && strength > floorStrength) || (change > 0 && pointsLeft > 0))
         {
-            if (change > 0 || strength > floorStrength)
-            {
-                strength += change;
-                pointsLeft -= change;
-
-            }
-
-            XPText.text = xpString + pointsLeft.ToString();
-            StrengthText.text = strengthString + strength.ToString();
+            strength += change;
+            pointsLeft -= change;
         }
-
+        XPText.text = xpString + pointsLeft.ToString();
+        StrengthText.text = strengthString + strength.ToString();
     }
 
     //Updates displayed players attributes with displayed attribute values
