@@ -96,6 +96,7 @@ public class MainMenu : MonoBehaviour
     //
     public void LoadSavedGame(string name)
     {
+        gm.newGame = false;
         LoadMenu.enabled = false;
         SavedState gameToLoad = SaveLoad.Load(name);
         Debug.Log(gameToLoad);

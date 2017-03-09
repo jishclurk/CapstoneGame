@@ -49,7 +49,7 @@ public class CheckpointManager : MonoBehaviour {
     public void FinallCheckPointReached()
     {
         levelCompleted = true;
-        gm.nextLevel();
+        //gm.nextLevel();
     }
 
     public int GetCheckPoint(CheckPoint child)
