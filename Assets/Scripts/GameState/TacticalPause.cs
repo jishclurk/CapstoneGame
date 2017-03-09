@@ -171,6 +171,14 @@ public class TacticalPause : MonoBehaviour {
         loadAttributesInfo();
     }
 
+    //Loads the available abilities and set abilities of active
+    public void loadPlayerInfoByID(int ID)
+    {
+        Player player = tm.getPlayerFromId(ID);
+        displayedPlayer = player;
+        loadCurrentPlayerInfo(player);
+    }
+
     //Loads attribute values of displayed player onto the screeen
     private void loadAttributesInfo()
     {
