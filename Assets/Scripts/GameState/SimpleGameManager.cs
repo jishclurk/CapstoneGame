@@ -164,9 +164,9 @@ public class SimpleGameManager : MonoBehaviour
         //  TO DO
     }
 
-    public int getCheckpoint()
-    {
-        return cpManager.completed;
-    }
+    //public int getCheckpoint()
+    //{
+    //    return cpManager.completed;
+    //}
 
 }

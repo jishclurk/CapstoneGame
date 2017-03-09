@@ -26,6 +26,7 @@ public class CheckPoint : MonoBehaviour
     public bool checkpointReached;
     private bool inTrigger;
     private bool firstEnter;
+    public bool finalCheckpoint;
 
 
     public void Start()
@@ -59,9 +60,13 @@ public class CheckPoint : MonoBehaviour
             if (firstEnter)
             {
                 gm.AutoSave();
-                checkpointManager.UpdateCheckpoints();
+                //checkpointManager.UpdateCheckpoints();
                 firstEnter = false;
                 checkpointReached = true;
+                if (finalCheckpoint)
+                {
+                    checkpointManager.FinallCheckPointReached();
+                }
             }
             inTrigger = true;
             CheckPointPopUp.enabled = true;
@@ -121,10 +126,8 @@ public class CheckPoint : MonoBehaviour
     //Pulls up save screen
     public void LanchSaveScreen()
     {
-        Debug.Log("in save");
             gm.OnStateChange += Pause;
             gm.SetGameState(GameState.PAUSE);
-            Debug.Log(nameInputField);
             SaveAsScreen.enabled = true;
             nameInputField.onEndEdit.AddListener(delegate { SaveGame(nameInputField.text); });
     }
@@ -139,6 +142,7 @@ public class CheckPoint : MonoBehaviour
         toSave.name = name;
         toSave.players = tm.currentState();
         toSave.objectives = objmanager.currentState();
+        toSave.checkPoint = checkpointManager.GetCheckPoint(this);
         if (checkpointManager.levelCompleted) {
             toSave.level++;
             toSave.checkPoint = 0;
