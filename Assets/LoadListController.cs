@@ -13,7 +13,10 @@ public class LoadListController : MonoBehaviour
     void Start()
     {
         MainMenu mainMenuScript = GameObject.Find("StartMenu").GetComponent<MainMenu>();
-
+        foreach(string name in SaveLoad.savedGames())
+        {
+            Debug.Log(name);
+        }
         foreach (string name in SaveLoad.savedGames())
         {
             Debug.Log(name);
