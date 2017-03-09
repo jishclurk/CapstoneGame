@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MinimapCameraController : MonoBehaviour {
 
-    private GameObject followPlayer;
+    private GameObject activePlayerCharacter;
     private TeamManager tm;
     private Vector3 offset;
 
@@ -14,11 +14,14 @@ public class MinimapCameraController : MonoBehaviour {
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         if (tm)
         {
-            followPlayer = tm.activePlayer.gameObject;
-            if (followPlayer)
+            activePlayerCharacter = tm.activePlayer.gameObject;
+            if (activePlayerCharacter)
             {
-                offset = transform.position - followPlayer.transform.position;
-                // Debug.Log("offset:" + offset);
+                float offsetXValue = 0f;
+                float offsetYValue = 30f;
+                float offsetZValue = 0f;
+                offset = new Vector3(offsetXValue, offsetYValue, offsetZValue);
+                transform.position = activePlayerCharacter.transform.position + offset;
             }
             else
             {
@@ -28,19 +31,17 @@ public class MinimapCameraController : MonoBehaviour {
         else {
             Debug.Log("ERROR: Minimap Camera cannot locate Team Manager!");
         }
-        
     }
 
     void LateUpdate()
     {
-        if (transform.position != followPlayer.transform.position + offset)
+        if (transform.position != activePlayerCharacter.transform.position + offset)
         {
-            transform.position = Vector3.Lerp(transform.position, followPlayer.transform.position + offset, 0.2f);
+            transform.position = Vector3.Lerp(transform.position, activePlayerCharacter.transform.position + offset, 0.2f);
         }
         else
         {
-            transform.position = followPlayer.transform.position + offset;
+            transform.position = activePlayerCharacter.transform.position + offset;
         }
     }
-
 }
