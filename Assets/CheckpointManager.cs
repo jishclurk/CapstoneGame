@@ -68,8 +68,9 @@ public class CheckpointManager : MonoBehaviour {
 
     public void UpdateButtons(string name)
     {
-        foreach(GameObject terminal in transform)
+        foreach(Transform child in transform)
         {
+            GameObject terminal = child.gameObject;
             terminal.GetComponentInChildren<SaveListController>().UpdateButtons(name);
         }
     }
