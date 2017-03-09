@@ -42,7 +42,7 @@ public class CheckPoint : MonoBehaviour
         CheckPointPopUp.enabled = false;
 
         nameInputField = SaveAsScreen.transform.GetChild(5).GetComponent<InputField>();
-        nameInputField.onEndEdit.AddListener(delegate { SaveGame(nameInputField.text); });
+        nameInputField.onEndEdit.AddListener(delegate { SaveGame(nameInputField.text, true); });
 
 
         gm = SimpleGameManager.Instance;
@@ -135,7 +135,7 @@ public class CheckPoint : MonoBehaviour
     }
 
     //Sets game name as input in InputFeild, saves the game 
-    public void SaveGame(string name)
+    public void SaveGame(string name, bool newGame)
     {
         Debug.Log("in save game");
         SaveAsScreen.enabled = false;
@@ -150,7 +150,11 @@ public class CheckPoint : MonoBehaviour
             toSave.checkPoint = 0;
         }
         SaveLoad.Save(toSave,name);
-        checkpointManager.UpdateButtons(name);
+        if (newGame)
+        {
+
+            checkpointManager.UpdateButtons(name);
+        }
         Debug.Log("saved");
         progressGame();
         //
