@@ -60,6 +60,7 @@ public class GoalManager : MonoBehaviour {
     public void setActive(bool active)
     {
         this.active = active;
+ 
     }
 
 	public bool isComplete(){

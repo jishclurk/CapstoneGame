@@ -15,6 +15,7 @@ public class ObjectiveManager : MonoBehaviour {
 	public TeamManager tm;
 
 	void Awake() {
+        Debug.Log("obj manager starting");
 		objectives = new List<GoalManager>(GetComponentsInChildren<GoalManager> ());
 		foreach (GoalManager gm in objectives){
 			gm.tm = this.tm;
@@ -61,6 +62,10 @@ public class ObjectiveManager : MonoBehaviour {
                 Debug.Log(state[i]);
                 objectives[i].setActive(state[i]);
             }
+        }
+        foreach (GoalManager goal in objectives)
+        {
+            Debug.Log(goal.isComplete());
         }
     }
 

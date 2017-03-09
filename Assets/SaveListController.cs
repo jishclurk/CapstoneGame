@@ -13,7 +13,6 @@ public class SaveListController : MonoBehaviour
     void Start()
     {
         CheckPoint cp = transform.parent.parent.gameObject.GetComponent<CheckPoint>();
-        Debug.Log(cp);
         foreach (string name in SaveLoad.savedGames())
         {
             GameObject listItem = Instantiate(ListItemPrefab) as GameObject;
@@ -26,6 +25,19 @@ public class SaveListController : MonoBehaviour
             Button button = listItem.GetComponent<Button>();
             button.onClick.AddListener(delegate { cp.SaveGame(croppedName); });
         }
+    }
+
+    public void UpdateButtons(string name)
+    {
+        Debug.Log("in updatebuttons");
+        CheckPoint cp = transform.parent.parent.gameObject.GetComponent<CheckPoint>();
+        GameObject listItem = Instantiate(ListItemPrefab) as GameObject;
+        listItem.transform.parent = ContentPanel.transform;
+        listItem.transform.localScale = Vector3.one;
+        listItem.GetComponent<Text>().text = name;
+        Button button = listItem.GetComponent<Button>();
+        button.onClick.AddListener(delegate { cp.SaveGame(name); });
+
     }
 
 }

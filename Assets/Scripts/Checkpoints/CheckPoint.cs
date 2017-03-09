@@ -42,6 +42,8 @@ public class CheckPoint : MonoBehaviour
         CheckPointPopUp.enabled = false;
 
         nameInputField = SaveAsScreen.transform.GetChild(6).GetComponent<InputField>();
+        nameInputField.onEndEdit.AddListener(delegate { SaveGame(nameInputField.text); });
+
 
         gm = SimpleGameManager.Instance;
         //Debug.Log(gm.level);
@@ -70,7 +72,7 @@ public class CheckPoint : MonoBehaviour
             }
             inTrigger = true;
             CheckPointPopUp.enabled = true;
-            if (checkpointManager.levelCompleted)
+            if (finalCheckpoint)
             {
                 CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [S] to save and continue/n Press [N] to continue";
 
@@ -129,13 +131,12 @@ public class CheckPoint : MonoBehaviour
             gm.OnStateChange += Pause;
             gm.SetGameState(GameState.PAUSE);
             SaveAsScreen.enabled = true;
-            nameInputField.onEndEdit.AddListener(delegate { SaveGame(nameInputField.text); });
     }
 
     //Sets game name as input in InputFeild, saves the game 
     public void SaveGame(string name)
     {
-
+        Debug.Log("in save game");
         SaveAsScreen.enabled = false;
         SavedState toSave = new SavedState();
         toSave.setFromGameManager();
@@ -148,6 +149,7 @@ public class CheckPoint : MonoBehaviour
             toSave.checkPoint = 0;
         }
         SaveLoad.Save(toSave,name);
+        SaveAsScreen.GetComponentInChildren<SaveListController>().UpdateButtons(name);
         Debug.Log("saved");
         progressGame();
         //
