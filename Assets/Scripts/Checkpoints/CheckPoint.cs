@@ -12,18 +12,19 @@ public class CheckPoint : MonoBehaviour
     public Vector3 player3;
     public Vector3 player4;
 
+
     private Canvas CheckPointPopUp;
     private Canvas SaveAsScreen;
     private Canvas LevelComplete;
     private InputField nameInputField;
+
+    //managers
     private TeamManager tm;
     private ObjectiveManager objmanager;
+    private CheckpointManager checkpointManager;
+    private SimpleGameManager gm;
 
     public bool checkpointReached;
-    private Collider col;
-    private SimpleGameManager gm;
-    private CheckpointManager checkpointManager;
-
     private bool inTrigger;
     private bool firstEnter;
 
@@ -34,8 +35,8 @@ public class CheckPoint : MonoBehaviour
         firstEnter = true;
         checkpointReached = false;
 
-        CheckPointPopUp = transform.GetChild(1).gameObject.GetComponent<Canvas>();
-        SaveAsScreen = transform.GetChild(2).gameObject.GetComponent<Canvas>();
+        CheckPointPopUp = transform.GetChild(0).gameObject.GetComponent<Canvas>();
+        SaveAsScreen = transform.GetChild(1).gameObject.GetComponent<Canvas>();
 
         SaveAsScreen.enabled = false;
         CheckPointPopUp.enabled = false;
@@ -43,6 +44,7 @@ public class CheckPoint : MonoBehaviour
         nameInputField = SaveAsScreen.transform.GetChild(6).GetComponent<InputField>();
 
         gm = SimpleGameManager.Instance;
+        Debug.Log(gm.level);
         tm = GameObject.Find("TeamManager").gameObject.GetComponent<TeamManager>();
         checkpointManager = transform.parent.gameObject.GetComponent<CheckpointManager>();
         objmanager = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>();
@@ -60,13 +62,13 @@ public class CheckPoint : MonoBehaviour
                 gm.AutoSave();
                 checkpointManager.UpdateCheckpoints();
                 firstEnter = false;
+                checkpointReached = true;
             }
             inTrigger = true;
-            checkpointReached = true;
             CheckPointPopUp.enabled = true;
             if (checkpointManager.levelCompleted)
             {
-                CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [N] to continue";
+                CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [S] to save and continue/n Press [N] to continue";
 
             }
            
@@ -82,6 +84,15 @@ public class CheckPoint : MonoBehaviour
                 LanchSaveScreen();
                 CheckPointPopUp.enabled = false;
             }
+            if (checkpointManager.levelCompleted)
+            {
+                if (Input.GetKeyDown(KeyCode.N))
+                {
+                    Debug.Log(gm.level);
+                    gm.nextLevel();
+                }
+            }
+
         }
     }
 
@@ -119,21 +130,20 @@ public class CheckPoint : MonoBehaviour
             nameInputField.onEndEdit.AddListener(delegate { SaveGame(nameInputField.text); });
     }
 
-    //private void setName(InputField name)
-    //{
-    //   // gm.name = name.text;
-    //    SaveGame(name.text);
-    //}
-
     //Sets game name as input in InputFeild, saves the game 
     public void SaveGame(string name)
     {
+
         SaveAsScreen.enabled = false;
         SavedState toSave = new SavedState();
         toSave.setFromGameManager();
         toSave.name = name;
         toSave.players = tm.currentState();
         toSave.objectives = objmanager.currentState();
+        if (checkpointManager.levelCompleted) {
+            toSave.level++;
+            toSave.checkPoint = 0;
+        }
         SaveLoad.Save(toSave,name);
         Debug.Log("saved");
         progressGame();
@@ -151,22 +161,26 @@ public class CheckPoint : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    //Closes the checkpoint scrren and starts the game
-    public void closeCheckpointScreen()
-    {
-       // CheckPointSceen.enabled = false;
-        progressGame();
-    }
+    ////Closes the checkpoint scrren and starts the game
+    //public void closeCheckpointScreen()
+    //{
+    //   // CheckPointSceen.enabled = false;
+    //    progressGame();
+    //}
 
-    public void openCheckPointScreen()
-    {
-        SaveAsScreen.enabled = false;
-       // CheckPointSceen.enabled = true;
-    }
+    //public void openCheckPointScreen()
+    //{
+    //    SaveAsScreen.enabled = false;
+    //   // CheckPointSceen.enabled = true;
+    //}
 
     private void progressGame()
     {
         gm.OnStateChange += UnPause;
         gm.SetGameState(GameState.PLAY);
+        if (checkpointManager.levelCompleted)
+        {
+            gm.nextLevel();
+        }
     }
 }

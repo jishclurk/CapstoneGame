@@ -99,7 +99,7 @@ public class MainMenu : MonoBehaviour
         LoadMenu.enabled = false;
         SavedState gameToLoad = SaveLoad.Load(name);
         Debug.Log(gameToLoad);
-            gm.lastSavedState = gameToLoad;
+            gm.autosave = gameToLoad;
             levelToLoad = gameToLoad.level;
             gm.OnStateChange += LoadLevel;
             Play();

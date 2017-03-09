@@ -8,7 +8,8 @@ public class CheckpointManager : MonoBehaviour {
 
     private SimpleGameManager gm;
 
-    public int completed; //
+    //number of checkpoints reaches this level
+    public int completed; 
 
     public bool levelCompleted;
 

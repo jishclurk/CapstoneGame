@@ -32,11 +32,8 @@ public class SimpleGameManager : MonoBehaviour
 
     private CheckpointManager cpManager;
 
-    //last saved State
-    public SavedState lastSavedState;
-
     //autosaved state from last cp 
-    private SavedState autosave;
+    public SavedState autosave;
 
 
     void Awake()
@@ -68,7 +65,7 @@ public class SimpleGameManager : MonoBehaviour
             {
                 newGame = false;
                 Debug.Log("gm is loading saved state");
-                SetSavedState(lastSavedState);
+              //  SetSavedState(lastSavedState);
 
             }
 
@@ -118,10 +115,11 @@ public class SimpleGameManager : MonoBehaviour
 
     public void nextLevel()
     {
-        Debug.Log("next level");
-
-        //save with level ++
-        //load level
+        level++;
+        Debug.Log("advance to level " + level);
+        autosave.checkPoint = 0;
+        autosave.level++;
+        LoadLevel(level);
     }
     //Loads Level level
     public static void LoadLevel(int level)
@@ -132,14 +130,10 @@ public class SimpleGameManager : MonoBehaviour
     //after the level of saved in loaded, sets the state of the game
     public void SetSavedState(SavedState saved)
     {
-       // names = saved.name;
         level = saved.level;
-        lastSavedState = saved;
         GameObject.Find("TeamManager").GetComponent<TeamManager>().LoadSavedState(saved.players);
         cpManager.setState(saved.checkPoint);
         GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>().loadState(saved.objectives);
-        //move to checkpoint
-        //set objectives
 
     }
 
@@ -151,10 +145,11 @@ public class SimpleGameManager : MonoBehaviour
         //name = null;
         hasBeenSaved = false;
         level = 1;
-        lastSavedState = new SavedState();
-        lastSavedState.level = level;
-        lastSavedState.checkPoint = 0;
-        lastSavedState.players = GameObject.Find("TeamManager").GetComponent<TeamManager>().currentState();
+        autosave = new SavedState();
+        autosave.level = level;
+        autosave.checkPoint = 0;
+        autosave.players = GameObject.Find("TeamManager").GetComponent<TeamManager>().currentState();
+        autosave.objectives = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>().currentState();
     }
 
     public void onDeath()

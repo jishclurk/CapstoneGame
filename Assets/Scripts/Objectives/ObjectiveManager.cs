@@ -58,7 +58,7 @@ public class ObjectiveManager : MonoBehaviour {
         }
     }
 
-    //returns the index of the 
+    //returns the state of the objectives
     public bool[] currentState()
     {
         bool[] state = new bool[objectives.Count];
