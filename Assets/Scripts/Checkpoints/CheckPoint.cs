@@ -81,7 +81,7 @@ public class CheckPoint : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.S))
             {
                 LanchSaveScreen();
-                CheckPointPopUp.enabled = false;
+               // CheckPointPopUp.enabled = false;
             }
             if (checkpointManager.levelCompleted)
             {
@@ -173,8 +173,9 @@ public class CheckPoint : MonoBehaviour
     //   // CheckPointSceen.enabled = true;
     //}
 
-    private void progressGame()
+    public void progressGame()
     {
+        SaveAsScreen.enabled = false;
         gm.OnStateChange += UnPause;
         gm.SetGameState(GameState.PLAY);
         if (checkpointManager.levelCompleted)

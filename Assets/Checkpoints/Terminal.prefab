@@ -1723,8 +1723,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ToMain
+      - m_Target: {fileID: 114673749994198166}
+        m_MethodName: progressGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2117,10 +2117,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95ee59d56486144798786b8f6305043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1: {fileID: 0}
-  player2: {fileID: 0}
-  player3: {fileID: 0}
-  player4: {fileID: 0}
+  player1: {fileID: 1077764246724618}
+  player2: {fileID: 1699214302384892}
+  player3: {fileID: 1091623560869078}
+  player4: {fileID: 1165439376923414}
   checkpointReached: 0
 --- !u!114 &114680026903254850
 MonoBehaviour:
