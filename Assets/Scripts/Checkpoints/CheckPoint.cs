@@ -122,6 +122,7 @@ public class CheckPoint : MonoBehaviour
 
     private void loadMainMenu()
     {
+        UnPause();
         SceneManager.LoadScene("MainMenu");
     }
 
