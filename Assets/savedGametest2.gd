@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <GameState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <name>test</name>
+  <name>test2</name>
   <Level>1</Level>
   <Check_x0020_Point>0</Check_x0020_Point>
   <Players>
@@ -46,7 +46,7 @@
     </Player>
   </Players>
   <Objectives>
-    <objectives>true</objectives>
+    <objectives>false</objectives>
     <objectives>false</objectives>
     <objectives>false</objectives>
     <objectives>false</objectives>

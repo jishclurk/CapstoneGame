@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <GameState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <name>test</name>
+  <name>test4</name>
   <Level>1</Level>
   <Check_x0020_Point>0</Check_x0020_Point>
   <Players>
     <Player>
-      <In_x0020_Control>true</In_x0020_Control>
+      <In_x0020_Control>false</In_x0020_Control>
       <level>1</level>
       <experience>0</experience>
       <statPoints>5</statPoints>
@@ -35,7 +35,7 @@
       <id>3</id>
     </Player>
     <Player>
-      <In_x0020_Control>false</In_x0020_Control>
+      <In_x0020_Control>true</In_x0020_Control>
       <level>1</level>
       <experience>0</experience>
       <statPoints>5</statPoints>
@@ -46,7 +46,7 @@
     </Player>
   </Players>
   <Objectives>
-    <objectives>true</objectives>
+    <objectives>false</objectives>
     <objectives>false</objectives>
     <objectives>false</objectives>
     <objectives>false</objectives>
