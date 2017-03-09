@@ -65,7 +65,7 @@ public class SimpleGameManager : MonoBehaviour
             {
                 newGame = false;
                 Debug.Log("gm is loading saved state");
-              //  SetSavedState(lastSavedState);
+                SetSavedState(autosave);
 
             }
 

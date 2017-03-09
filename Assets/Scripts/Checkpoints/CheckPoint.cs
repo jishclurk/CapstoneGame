@@ -7,11 +7,10 @@ using UnityEngine.SceneManagement;
 public class CheckPoint : MonoBehaviour
 {
     //where players are placed if the game is loaded at this checkpoint
-    public Vector3 player1;
-    public Vector3 player2;
-    public Vector3 player3;
-    public Vector3 player4;
-
+    public GameObject player1;
+    public GameObject player2;
+    public GameObject player3;
+    public GameObject player4;
 
     private Canvas CheckPointPopUp;
     private Canvas SaveAsScreen;
@@ -44,7 +43,7 @@ public class CheckPoint : MonoBehaviour
         nameInputField = SaveAsScreen.transform.GetChild(6).GetComponent<InputField>();
 
         gm = SimpleGameManager.Instance;
-        Debug.Log(gm.level);
+        //Debug.Log(gm.level);
         tm = GameObject.Find("TeamManager").gameObject.GetComponent<TeamManager>();
         checkpointManager = transform.parent.gameObject.GetComponent<CheckpointManager>();
         objmanager = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>();

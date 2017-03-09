@@ -102,10 +102,10 @@ public class TeamManager : MonoBehaviour {
 
     public void setPlayers(CheckPoint checkpoint)
     {
-        playerList[0].gameObject.transform.position = checkpoint.player1;
-        playerList[1].gameObject.transform.position = checkpoint.player2;
-        playerList[2].gameObject.transform.position = checkpoint.player3;
-        playerList[3].gameObject.transform.position = checkpoint.player4;
+        playerList[0].gameObject.transform.position = checkpoint.player1.transform.position;
+        playerList[1].gameObject.transform.position = checkpoint.player2.transform.position;
+        playerList[2].gameObject.transform.position = checkpoint.player3.transform.position;
+        playerList[3].gameObject.transform.position = checkpoint.player4.transform.position;
         //cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
         cameraScript.activePlayerCharacter = activePlayer.gameObject;
     }
