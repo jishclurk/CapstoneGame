@@ -65,5 +65,6 @@ public class Console : MonoBehaviour, ICircuitPiece {
 
 	public void Lock(){
 		solved = true;
+		complete = true;
 	}
 }
