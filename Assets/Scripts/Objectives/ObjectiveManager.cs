@@ -60,7 +60,7 @@ public class ObjectiveManager : MonoBehaviour {
             for (int i = 0; i< objectives.Count; i++)
             {
                 Debug.Log(state[i]);
-                objectives[i].setActive(state[i]);
+				objectives[i].CompleteGoals(state[i]);
             }
         }
         foreach (GoalManager goal in objectives)

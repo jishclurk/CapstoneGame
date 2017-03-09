@@ -37,10 +37,11 @@ public static class SaveLoad
     {
         string[] nameArray = Directory.GetFiles(Application.dataPath, "savedGame*.gd");
         List<string> names = new List<string>(nameArray);
-        for (int i = 0; i < names.Count; i++)
-        {
-            names[i] = names[i].Substring(names[i].IndexOf("/savedGame") + 10);
-        }
+//        for (int i = 0; i < names.Count; i++)
+//        {
+//          //  names[i] = names[i].Substring(names[i].IndexOf("/savedGame") + 10);
+//			names[i] = names[i].Substring(names[i].IndexOf("") + 10);
+//        }
 
         return names;
     }

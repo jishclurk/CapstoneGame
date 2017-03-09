@@ -11,6 +11,8 @@ public class GoalManager : MonoBehaviour {
 
 	private bool active = false;
 
+	private bool loadCompleted;
+
 	string goalListString;
 
 	int achievedGoals;
@@ -24,11 +26,15 @@ public class GoalManager : MonoBehaviour {
 			goal.TeamM = this.tm;
 		}
 		achievedGoals = 0;
+		loadCompleted = false;
 	}
 
 	void Update() {
 		goalListString = "\nGoals:";
 		achievedGoals = 0;
+		if (loadCompleted) {
+			achievedGoals = goals.Count;
+		}
 		for (int i = 0; i < goals.Count; i++) {
 			//goalList += "\n" + goals [i].GoalText;
 			//if (goals [i].IsAchieved ()) {
@@ -55,6 +61,11 @@ public class GoalManager : MonoBehaviour {
 	public string goalList(){
 
 		return this.goalListString;
+	}
+
+	public void CompleteGoals(bool complete){
+		loadCompleted = complete;
+
 	}
 
     public void setActive(bool active)
