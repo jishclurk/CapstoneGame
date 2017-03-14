@@ -392,16 +392,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   navMeshAgent: {fileID: 0}
+  defaultFollowDist: 3.8
   followDist: 3.8
+  randomDist: 0.8
   followEpsilon: 2
+  chaseEpsilon: 2
+  navSpeedDefault: 0
   sightCollider: {fileID: 0}
   sightDist: 10
   targetedEnemy: {fileID: 0}
   eyes: {fileID: 0}
   targetChoose: 1
+  abilityChoose: 0
   abilities: {fileID: 0}
+  player: {fileID: 0}
   attributes: {fileID: 0}
   tm: {fileID: 0}
+  ah: {fileID: 0}
   animController: {fileID: 0}
   animSpeed: 0
   walkSpeed: 0
@@ -442,6 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0261d015f70fe42449d334eb5b002b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StatPoints: 0
 --- !u!114 &114670723543056682
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -457,6 +465,8 @@ MonoBehaviour:
   resources: {fileID: 0}
   strategy: {fileID: 0}
   abilities: {fileID: 0}
+  animController: {fileID: 0}
+  gunbarrel: {fileID: 0}
   id: 3
 --- !u!114 &114746991821906508
 MonoBehaviour:
@@ -470,6 +480,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isplayerControlled: 0
+  playerScript: {fileID: 0}
+  aiScript: {fileID: 0}
 --- !u!114 &114825207036124304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -482,7 +494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetedEnemy: {fileID: 0}
-  enemyClicked: 0
+  changeTargetOnSpecial: 0
 --- !u!114 &114989348916197514
 MonoBehaviour:
   m_ObjectHideFlags: 1

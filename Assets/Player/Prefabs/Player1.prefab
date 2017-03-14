@@ -504,6 +504,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isplayerControlled: 1
+  playerScript: {fileID: 0}
+  aiScript: {fileID: 0}
 --- !u!135 &135403203572723240
 SphereCollider:
   m_ObjectHideFlags: 1

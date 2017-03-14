@@ -491,6 +491,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isplayerControlled: 0
+  playerScript: {fileID: 0}
+  aiScript: {fileID: 0}
 --- !u!114 &114886921985524214
 MonoBehaviour:
   m_ObjectHideFlags: 1
