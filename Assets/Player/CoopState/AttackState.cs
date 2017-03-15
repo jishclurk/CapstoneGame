@@ -85,6 +85,9 @@ public class AttackState : ICoopState
                     case AbilityHelper.CoopAction.InstantHeal:
                         aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.gameObject);
                         break;
+                    case AbilityHelper.CoopAction.AOEHeal:
+                        UseDefensiveTargetSpecial();
+                        break;
                     default:
                         aiPlayer.activeSpecialAbility = null;
                         break;
@@ -200,32 +203,16 @@ public class AttackState : ICoopState
             {
 
                 //Decide whether to use ability or continue searching (sorry this got kinda complicated!), might want a separate method?
-                switch (potentialAbility.GetCoopAction())
+
+                if (potentialAbility.EvaluateCoopUse(aiPlayer.player, aiPlayer.targetedEnemy, aiPlayer.tm))
                 {
-                   
-                    case AbilityHelper.CoopAction.TargetHurt:
-                        if (aiPlayer.targetedEnemy != null)
-                        { 
-                            aiPlayer.activeSpecialAbility = potentialAbility;
-                        }
-                        break;
-                    case AbilityHelper.CoopAction.AOEHurt:
-                        if (aiPlayer.targetedEnemy != null)
-                        {
-                            aiPlayer.activeSpecialAbility = potentialAbility;
-                        }
-                        //UseOffensiveSpecialTarget does not quite work for AOE. Needs to instantiate the AOE cicle in order to know what enemies to hit. NC will work on it soon
-                        break;
-                    case AbilityHelper.CoopAction.InstantHeal:
-                        if(aiPlayer.player.resources.maxHealth - aiPlayer.player.resources.currentHealth >= potentialAbility.baseDamage)
-                        { //using abilities in IDLE state ???? probably not. Up to player at that point.
-                            aiPlayer.activeSpecialAbility = potentialAbility;
-                        }
-                        break;
-                    default:
-                        aiPlayer.activeSpecialAbility = null;
-                        break;
+                    aiPlayer.activeSpecialAbility = potentialAbility;
                 }
+                else
+                {
+                    aiPlayer.activeSpecialAbility = null;
+                }
+
                 if(aiPlayer.activeSpecialAbility != null)
                 {
                     specialAbilityReady = true;
@@ -279,7 +266,60 @@ public class AttackState : ICoopState
             aiPlayer.navMeshAgent.Stop(); //within range, stop moving
             animSpeed = 0.0f;
         }
+    }
 
+
+    private void UseDefensiveTargetSpecial()
+    {
+        if (aiPlayer.activeSpecialAbility.GetCoopAction() == AbilityHelper.CoopAction.AOEHeal)
+        {
+            aoeArea = GameObject.Instantiate(aiPlayer.activeSpecialAbility.aoeTarget, aiPlayer.transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
+            aoeArea.GetComponent<AOETargetController>().isPlayerCalled = false;
+            aiPlayer.ah.CoopExecuteAOE(aiPlayer.player, aiPlayer.gameObject, aoeArea, aiPlayer.activeSpecialAbility);
+        }
+
+        /*if (aiPlayer.targetedEnemy == null)
+        {
+            //this return happens if enemy dies
+            return; //avoid running code we don't need to.
+        }
+
+        float remainingDistance = Vector3.Distance(aiPlayer.targetedEnemy.position, aiPlayer.transform.position);
+        if (remainingDistance <= aiPlayer.activeSpecialAbility.effectiveRange && aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
+        {
+            aiPlayer.transform.LookAt(aiPlayer.targetedEnemy);
+
+            if (aiPlayer.activeSpecialAbility.GetCoopAction() == AbilityHelper.CoopAction.AOEHurt)
+            {
+                aoeArea = GameObject.Instantiate(aiPlayer.activeSpecialAbility.aoeTarget, aiPlayer.targetedEnemy.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
+                aoeArea.GetComponent<AOETargetController>().isPlayerCalled = false;
+                aiPlayer.ah.CoopExecuteAOE(aiPlayer.player, aiPlayer.gameObject, aoeArea, aiPlayer.activeSpecialAbility);
+            }
+            else
+            {
+                aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
+            }
+
+            //check if enemy died
+            EnemyHealth enemyHP = aiPlayer.targetedEnemy.GetComponent<EnemyHealth>();
+            if (enemyHP != null)
+            {
+                if (enemyHP.isDead)
+                {
+                    //on kill, remove from both team manager visible enemies and all local watchedenemies
+                    aiPlayer.tm.RemoveDeadEnemy(aiPlayer.targetedEnemy.gameObject);
+                    aiPlayer.targetedEnemy = null;
+                    if (!aiPlayer.tm.IsTeamInCombat())
+                    {
+                        ToIdleState();
+                    }
+                }
+            }
+            reEvalutateTarget = true;
+            aiPlayer.navMeshAgent.Stop(); //within range, stop moving
+            animSpeed = 0.0f;
+        }
+        */
     }
 
     private void MoveAndShoot()

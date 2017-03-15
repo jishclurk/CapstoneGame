@@ -47,7 +47,6 @@ public class Zap : ISpecial, IAbility {
     {
         lastUsedTime = Time.time;
         float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
-        Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
 
         Vector3 playerToTarget = target.transform.position - player.gunbarrel.position;
@@ -60,6 +59,17 @@ public class Zap : ISpecial, IAbility {
     public bool isReady()
     {
         return Time.time > lastUsedTime + coolDownTime;
+    }
+
+    public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
+    {
+        bool use = false;
+        if(targetedEnemy != null)
+        {
+            EnemyHealth eh = targetedEnemy.GetComponent<EnemyHealth>();
+            use = eh.maxHealth - eh.currentHealth > baseDamage/2;
+        }
+        return use;
     }
 
     public float RemainingTime()

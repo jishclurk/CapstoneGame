@@ -65,6 +65,19 @@ public class BioGrenade : ISpecial, IAbility {
         return Time.time > lastUsedTime + coolDownTime;
     }
 
+    public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
+    {
+        int count = 0;
+        foreach(Player p in tm.playerList)
+        {
+            if(p.resources.maxHealth - p.resources.currentHealth >= (baseDamage*(healLength/healRate)*0.8)) //if at least 2 players could use 80% of max healing ability
+            {
+                count++;
+            }
+        }
+        return count >= 2;
+    }
+
     public float RemainingTime()
     {
         return lastUsedTime + coolDownTime - Time.time;

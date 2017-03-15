@@ -11,5 +11,6 @@ public interface ISpecial : IAbility {
     Object aoeTarget { get; set; }
 
     float RemainingTime();
+    bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm);
 
 }

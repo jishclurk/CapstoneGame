@@ -48,12 +48,16 @@ public class MedKit : ISpecial, IAbility
     {
         lastUsedTime = Time.time;
         float adjustedDamage = baseDamage + player.attributes.Intelligence;
-        Debug.Log(name + " on " + target.name + " heals " + adjustedDamage + ".");
         target.GetComponent<PlayerResources>().Heal(adjustedDamage);
         GameObject gb = Object.Instantiate(regenField, origin.transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
         gb.GetComponent<StayWithPlayer>().player = origin.transform;
         player.resources.UseEnergy(energyRequired);
         GameObject.Destroy(gb, 1.0f);
+    }
+
+    public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
+    {
+        return player.resources.maxHealth - player.resources.currentHealth >= baseDamage;
     }
 
     public bool isReady()

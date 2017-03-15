@@ -74,6 +74,12 @@ public class GrenadeThrow : ISpecial, IAbility {
         return Time.time > lastUsedTime + coolDownTime;
     }
 
+    public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
+    {
+        
+        return targetedEnemy != null;
+    }
+
     public float RemainingTime()
     {
         return lastUsedTime + coolDownTime - Time.time;
@@ -83,6 +89,7 @@ public class GrenadeThrow : ISpecial, IAbility {
     {
         return AbilityHelper.Action.AOE;
     }
+
 
     public AbilityHelper.CoopAction GetCoopAction()
     {
