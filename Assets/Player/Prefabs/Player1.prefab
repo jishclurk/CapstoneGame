@@ -403,7 +403,7 @@ MonoBehaviour:
   targetedEnemy: {fileID: 0}
   eyes: {fileID: 0}
   targetChoose: 0
-  abilityChoose: 0
+  abilityChoose: 4
   abilities: {fileID: 0}
   player: {fileID: 0}
   attributes: {fileID: 0}
