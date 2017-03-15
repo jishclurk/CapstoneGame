@@ -106,6 +106,14 @@ public class PlayerController : MonoBehaviour
             else
                 ShootSpecialOnTarget(specialTargetedEnemy);
         }
+        else if (activeSpecialAbility != null && activeSpecialAbility.GetAction() == AbilityHelper.Action.Equip)
+        {
+            Debug.Log(activeSpecialAbility);
+            if(activeSpecialAbility.RemainingTime() < activeSpecialAbility.coolDownTime - activeSpecialAbility.timeToCast)
+            {
+                activeSpecialAbility = null;
+            }
+        }
         else if (targetedEnemy != null)
         {
             ShootGun();
@@ -217,9 +225,10 @@ public class PlayerController : MonoBehaviour
         //TODO: add debug/actual messages saying why ability failed
         if (ability.isReady() && resources.currentEnergy > ability.energyRequired)
         {
-            if (ability.GetAction() == AbilityHelper.Action.Instant)
+            if (ability.GetAction() == AbilityHelper.Action.Equip)
             {
                 ability.Execute(player, gameObject, gameObject);
+                activeSpecialAbility = ability;
             }
             else if (ability.GetAction() == AbilityHelper.Action.AOE)
             {

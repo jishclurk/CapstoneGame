@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AbilityHelper : MonoBehaviour {
 
-    public enum Action { Basic, Instant, Target, AOE }
-    public enum CoopAction { Basic, InstantHeal, InstantHurt, TargetHeal, TargetHurt, AOEHeal, AOEHurt }
+    public enum Action { Basic, Equip, Target, AOE }
+    public enum CoopAction { Basic, InstantHeal, Equip, TargetHeal, TargetHurt, AOEHeal, AOEHurt }
 
     // GRENADE THROW //
 
@@ -52,6 +52,19 @@ public class AbilityHelper : MonoBehaviour {
         hb.target = target;
         Destroy(shield, healLength);
         Destroy(target, healLength);
+
+    }
+
+    // FLAME THROWER //
+
+    public void FlameThrowerRoutine(Player player, GameObject origin, GameObject target, Object flame, float baseDamage, float effectiveRange)
+    {
+        GameObject worldFlame = Instantiate(flame, player.gunbarrel.position, Quaternion.identity) as GameObject;
+        worldFlame.transform.parent = player.transform;
+        FlameThrowScript ft = worldFlame.GetComponent<FlameThrowScript>();
+        ft.castedPlayer = player;
+        ft.effectiveRange = effectiveRange;
+        Destroy(worldFlame, 5.0f);
 
     }
 

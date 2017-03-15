@@ -81,7 +81,7 @@ public class PlayerAbilities : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             abilityArray[0] = new Zap();
-            abilityArray[1] = new MedKit();
+            abilityArray[1] = new Flamethrower();
             abilityArray[2] = new GrenadeThrow();
             abilityArray[3] = new BioGrenade();
         }
