@@ -470,7 +470,7 @@ MonoBehaviour:
   targetedEnemy: {fileID: 0}
   eyes: {fileID: 0}
   targetChoose: 0
-  abilityChoose: 4
+  abilityChoose: 0
   abilities: {fileID: 0}
   player: {fileID: 0}
   attributes: {fileID: 0}
@@ -506,6 +506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetedEnemy: {fileID: 0}
   changeTargetOnSpecial: 0
+  tm: {fileID: 0}
 --- !u!135 &135607457137037396
 SphereCollider:
   m_ObjectHideFlags: 1

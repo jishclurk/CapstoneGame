@@ -23,14 +23,14 @@ public class FlameThrowScript : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         ps.Stop();
         lite.enabled = false;
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    }
+
+    // Update is called once per frame
+    void Update() {
         transform.position = castedPlayer.gunbarrel.position;
         transform.rotation = castedPlayer.transform.rotation;
         if (castedPlayer == tm.activePlayer)
@@ -53,12 +53,25 @@ public class FlameThrowScript : MonoBehaviour {
                         castedPlayer.transform.LookAt(new Vector3(hit.point.x, castedPlayer.transform.position.y, hit.point.z));
                         Vector3 playerToPoint = Vector3.Normalize(hit.point - castedPlayer.transform.position) * effectiveRange;
 
+                        HashSet<EnemyHealth> ehSet = new HashSet<EnemyHealth>();
                         foreach (GameObject enemy in castedPlayer.watchedEnemies)
                         {
-                            Vector3 playerToTarget = enemy.transform.position - castedPlayer.transform.position;
+                            ehSet.Add(enemy.GetComponent<EnemyHealth>());
+                        }
+                        foreach (EnemyHealth eh in ehSet)
+                        {
+                            Vector3 playerToTarget = eh.transform.position - castedPlayer.transform.position;
                             if (playerToTarget.magnitude <= effectiveRange && Mathf.Abs(Vector3.Angle(playerToPoint, playerToTarget)) < 30.0f)
                             {
-                                enemy.GetComponent<EnemyHealth>().TakeDamage(1);
+                                if (eh != null)
+                                {
+                                    eh.TakeDamage(1);
+                                    if (eh.isDead)
+                                    {
+                                        //on kill, remove from both team manager visible enemies and all local watchedenemies
+                                        castedPlayer.strategy.playerScript.tm.RemoveDeadEnemy(eh.gameObject);
+                                    }
+                                }
                             }
 
                         }
@@ -78,24 +91,39 @@ public class FlameThrowScript : MonoBehaviour {
         else
         {
             //ai controlled code
-            if(castedPlayer.strategy.aiScript.targetedEnemy != null)
+            if (castedPlayer.strategy.aiScript.targetedEnemy != null)
             {
                 if (!ps.isPlaying)
                 {
                     ps.Play();
                     lite.enabled = true;
                 }
-                
+
                 Vector3 playerToPoint = Vector3.Normalize(castedPlayer.strategy.aiScript.targetedEnemy.position - castedPlayer.transform.position) * effectiveRange;
+                HashSet<EnemyHealth> ehSet = new HashSet<EnemyHealth>();
                 foreach (GameObject enemy in castedPlayer.watchedEnemies)
                 {
-                    Vector3 playerToTarget = enemy.transform.position - castedPlayer.transform.position;
+                    ehSet.Add(enemy.GetComponent<EnemyHealth>());
+                }
+                foreach(EnemyHealth eh in ehSet) { 
+                    Vector3 playerToTarget = eh.transform.position - castedPlayer.transform.position;
                     if (playerToTarget.magnitude <= effectiveRange && Mathf.Abs(Vector3.Angle(playerToPoint, playerToTarget)) < 30.0f)
                     {
-                        enemy.GetComponent<EnemyHealth>().TakeDamage(1);
+                        if (eh != null)
+                        {
+                            eh.TakeDamage(1);
+                            if (eh.isDead)
+                            {
+                                //on kill, remove from both team manager visible enemies and all local watchedenemies
+                                castedPlayer.strategy.aiScript.tm.RemoveDeadEnemy(eh.gameObject);
+                                castedPlayer.strategy.aiScript.targetedEnemy = null;
+                            }
+                        }
                     }
 
                 }
+                castedPlayer.strategy.aiScript.targetedEnemy = null;
+                //castedPlayer.strategy.aiScript.attackState.reEvalutateTarget = true;
             } else
             {
                 if (ps.isPlaying)
@@ -104,10 +132,9 @@ public class FlameThrowScript : MonoBehaviour {
                     lite.enabled = false;
                 }
             }
-            
-
-
-
         }
     }
+
+
+
 }

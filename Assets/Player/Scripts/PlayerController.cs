@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     private PlayerResources resources;
     private HashSet<GameObject> watchedEnemies;
     private HashSet<GameObject> visibleEnemies;
-    private TeamManager tm;
+    public TeamManager tm;
 
     private Transform eyes;
 
@@ -108,7 +108,6 @@ public class PlayerController : MonoBehaviour
         }
         else if (activeSpecialAbility != null && activeSpecialAbility.GetAction() == AbilityHelper.Action.Equip)
         {
-            Debug.Log(activeSpecialAbility);
             if(activeSpecialAbility.RemainingTime() < activeSpecialAbility.coolDownTime - activeSpecialAbility.timeToCast)
             {
                 activeSpecialAbility = null;

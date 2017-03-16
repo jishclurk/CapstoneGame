@@ -54,14 +54,14 @@ public class Flamethrower : ISpecial, IAbility {
     {
         lastUsedTime = Time.time;
         ah.FlameThrowerRoutine(player, origin, target, flame, baseDamage, effectiveRange);
-        
-        //useEnergy not required
+
+        player.resources.UseEnergy(energyRequired);
     }
 
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
     {
 
-        return targetedEnemy != null;
+        return targetedEnemy != null && Vector3.Distance(targetedEnemy.position, player.transform.position) < effectiveRange;
     }
 
     public float RemainingTime()
@@ -81,6 +81,6 @@ public class Flamethrower : ISpecial, IAbility {
 
     public AbilityHelper.CoopAction GetCoopAction()
     {
-        return AbilityHelper.CoopAction.TargetHurt;
+        return AbilityHelper.CoopAction.Equip;
     }
 }

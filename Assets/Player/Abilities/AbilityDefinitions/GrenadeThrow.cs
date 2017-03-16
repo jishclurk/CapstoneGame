@@ -63,9 +63,9 @@ public class GrenadeThrow : ISpecial, IAbility {
         Object.Destroy(exp, 1.0f);*/
 
         lastUsedTime = Time.time;
-        
-        origin.GetComponent<PlayerResources>().UseEnergy(energyRequired);
-        
+
+        player.resources.UseEnergy(energyRequired);
+
     }
 
 

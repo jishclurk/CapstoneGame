@@ -8,10 +8,11 @@ public class AttackState : ICoopState
 
     private readonly CoopAiController aiPlayer;
     private float animSpeed;
-    private bool reEvalutateTarget;
+    public bool reEvalutateTarget;
     private GameObject aoeArea;
     private float timeBetweenCasts;
     private float lastAbilityCast;
+    private float lastAbilityDelay;
 
     public AttackState(CoopAiController statePatternPlayer)
     {
@@ -33,7 +34,7 @@ public class AttackState : ICoopState
                 break;
         }
 
-        
+        lastAbilityDelay = 0.0f;
         lastAbilityCast = -Mathf.Infinity;
     }
 
@@ -58,13 +59,12 @@ public class AttackState : ICoopState
             }
             reEvalutateTarget = false;
             
-        } else
-        {
-            aiPlayer.CheckLocalVision(); //Update visible enemies
+        }
+        if(aiPlayer.targetedEnemy != null){
             MoveAndShoot();
-            if(aiPlayer.activeSpecialAbility == null)
+            if (aiPlayer.activeSpecialAbility == null)
             {
-                if(Time.time > lastAbilityCast + timeBetweenCasts)
+                if(Time.time > lastAbilityCast + timeBetweenCasts + lastAbilityDelay)
                 {
                     EvaluateSpecial();
                 }
@@ -82,6 +82,10 @@ public class AttackState : ICoopState
                     case AbilityHelper.CoopAction.AOEHurt:
                         UseOffensiveTargetSpecial();
                         break;
+                    case AbilityHelper.CoopAction.Equip:
+                        lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
+                        aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.gameObject);
+                        break;
                     case AbilityHelper.CoopAction.InstantHeal:
                         aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.gameObject);
                         break;
@@ -92,11 +96,13 @@ public class AttackState : ICoopState
                         aiPlayer.activeSpecialAbility = null;
                         break;
                 }
+                
                 aiPlayer.activeSpecialAbility = null;
 
             }
         }
 
+        aiPlayer.CheckLocalVision(); //Update visible enemies
         WatchActiveplayerForFlee();
         HandleDestinationAnimation(aiPlayer.targetedEnemy, aiPlayer.activeBasicAbility);
 
@@ -330,8 +336,6 @@ public class AttackState : ICoopState
             return; //avoid running code we don't need to.
         }
 
-
-
         float remainingDistance = Vector3.Distance(aiPlayer.targetedEnemy.position, aiPlayer.transform.position);
         if (remainingDistance <= aiPlayer.activeBasicAbility.effectiveRange && aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
         {
@@ -339,7 +343,7 @@ public class AttackState : ICoopState
             aiPlayer.transform.LookAt(aiPlayer.targetedEnemy);
 
             
-            if (aiPlayer.activeBasicAbility.isReady())
+            if (aiPlayer.activeBasicAbility.isReady() && Time.time > lastAbilityCast + lastAbilityDelay) //EQUIP abilities are checked here.
             {
                 aiPlayer.animController.AnimateShoot();
                 aiPlayer.activeBasicAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
