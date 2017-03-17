@@ -85,6 +85,10 @@ public class PlayerAbilities : MonoBehaviour
             abilityArray[2] = new GrenadeThrow();
             abilityArray[3] = new BioGrenade();
         }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Basic = new ShotgunShot();
+        }
     }
 
     public void UpdateUnlockedAbilities(CharacterAttributes attributes)

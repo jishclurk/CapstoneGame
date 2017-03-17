@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
     private float chaseEpsilon;
     private float navSpeedDefault;
    
-    public IBasic activeBasicAbility; //accessed by cursor script
     public ISpecial activeSpecialAbility;
     private Player player;
     private PlayerAbilities abilities;
@@ -62,7 +61,6 @@ public class PlayerController : MonoBehaviour
         player = GetComponent<Player>();
         animController = player.animController;
         abilities = player.abilities;
-        activeBasicAbility = abilities.Basic;
         resources = player.resources;
         watchedEnemies = player.watchedEnemies;
         visibleEnemies = player.visibleEnemies;
@@ -124,7 +122,7 @@ public class PlayerController : MonoBehaviour
             HandleDestinationAnimation(specialTargetedEnemy, activeSpecialAbility);
         } else
         {
-            HandleDestinationAnimation(targetedEnemy, activeBasicAbility);
+            HandleDestinationAnimation(targetedEnemy, abilities.Basic);
         }
        
 
@@ -267,17 +265,17 @@ public class PlayerController : MonoBehaviour
             return;
         }
         float remainingDistance = Vector3.Distance(targetedEnemy.position, transform.position);
-        if (remainingDistance <= activeBasicAbility.effectiveRange && isTargetVisible(targetedEnemy))
+        if (remainingDistance <= abilities.Basic.effectiveRange && isTargetVisible(targetedEnemy))
         {
             //Within range, look at enemy and shoot
             transform.LookAt(targetedEnemy);
             //animController.AnimateAimStanding();
 
             bool targetIsDead = targetedEnemy.GetComponent<EnemyHealth>().isDead;
-            if (activeBasicAbility.isReady() && !targetIsDead)
+            if (abilities.Basic.isReady() && !targetIsDead)
             {
                 animController.AnimateShoot();
-                activeBasicAbility.Execute(player, gameObject, targetedEnemy.gameObject);
+                abilities.Basic.Execute(player, gameObject, targetedEnemy.gameObject);
             }
             if (targetIsDead)
             {
@@ -418,7 +416,6 @@ public class PlayerController : MonoBehaviour
         friendClicked = false;
         animSpeed = 0.0f;
         specialTargetedEnemy = null;
-        activeBasicAbility = abilities.Basic;
         activeSpecialAbility = null;
         if(aoeArea != null)
         {

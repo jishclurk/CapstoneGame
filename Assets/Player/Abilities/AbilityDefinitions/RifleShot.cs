@@ -42,7 +42,6 @@ public class RifleShot : IBasic, IAbility {
         float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
 
-        Vector3 playerToTarget = target.transform.position - player.gunbarrel.position;
         GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
         project.GetComponent<RifleProjectileScript>().destination = new Vector3(target.transform.position.x, (player.gunbarrel.position.y + target.transform.position.y)/2, target.transform.position.z);
         project.GetComponent<RifleProjectileScript>().targetedEnemy = target;
