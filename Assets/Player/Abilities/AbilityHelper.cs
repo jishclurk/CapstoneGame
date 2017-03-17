@@ -64,6 +64,7 @@ public class AbilityHelper : MonoBehaviour {
         FlameThrowScript ft = worldFlame.GetComponent<FlameThrowScript>();
         ft.castedPlayer = player;
         ft.effectiveRange = effectiveRange;
+        ft.damage = baseDamage;
         Destroy(worldFlame, 5.0f);
 
     }

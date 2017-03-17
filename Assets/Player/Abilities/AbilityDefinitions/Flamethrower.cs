@@ -40,7 +40,7 @@ public class Flamethrower : ISpecial, IAbility {
         id = 10;
         name = "Flamethrower";
         effectiveRange = 6.0f;
-        baseDamage = 5.0f;
+        baseDamage = 8.0f;
         timeToCast = 5.0f;
         coolDownTime = 20.0f;
         lastUsedTime = -Mathf.Infinity;
@@ -53,6 +53,7 @@ public class Flamethrower : ISpecial, IAbility {
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
+        baseDamage = baseDamage + (player.attributes.Strength * 0.5f);
         ah.FlameThrowerRoutine(player, origin, target, flame, baseDamage, effectiveRange);
 
         player.resources.UseEnergy(energyRequired);

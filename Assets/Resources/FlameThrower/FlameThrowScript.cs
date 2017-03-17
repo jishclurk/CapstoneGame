@@ -8,25 +8,31 @@ public class FlameThrowScript : MonoBehaviour {
     public HashSet<GameObject> affectedEnemies;
     //public HashSet<GameObject> affectedPlayers;
     public float effectiveRange;
-    public TeamManager tm;
+    private TeamManager tm;
     public Player castedPlayer;
+    public float damage;
     private ParticleSystem ps;
     private Light lite;
+    private bool damageOn;
+
+    private Vector3 playerToPoint;
 
     private void Awake()
     {
         affectedEnemies = new HashSet<GameObject>();
-        effectiveRange = Mathf.Infinity;
+        effectiveRange = Mathf.Infinity; //set by Ability
+        damage = 0; //set by Ability
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         ps = GetComponent<ParticleSystem>();
         lite = transform.FindChild("Point light").GetComponent<Light>();
+        damageOn = false;
     }
 
     // Use this for initialization
     void Start() {
         ps.Stop();
         lite.enabled = false;
-
+        InvokeRepeating("tickDamage", 0.0f, 0.2f);
     }
 
     // Update is called once per frame
@@ -51,30 +57,8 @@ public class FlameThrowScript : MonoBehaviour {
                     if (hit.collider.CompareTag("Floor"))
                     {
                         castedPlayer.transform.LookAt(new Vector3(hit.point.x, castedPlayer.transform.position.y, hit.point.z));
-                        Vector3 playerToPoint = Vector3.Normalize(hit.point - castedPlayer.transform.position) * effectiveRange;
-
-                        HashSet<EnemyHealth> ehSet = new HashSet<EnemyHealth>();
-                        foreach (GameObject enemy in castedPlayer.watchedEnemies)
-                        {
-                            ehSet.Add(enemy.GetComponent<EnemyHealth>());
-                        }
-                        foreach (EnemyHealth eh in ehSet)
-                        {
-                            Vector3 playerToTarget = eh.transform.position - castedPlayer.transform.position;
-                            if (playerToTarget.magnitude <= effectiveRange && Mathf.Abs(Vector3.Angle(playerToPoint, playerToTarget)) < 30.0f)
-                            {
-                                if (eh != null)
-                                {
-                                    eh.TakeDamage(1);
-                                    if (eh.isDead)
-                                    {
-                                        //on kill, remove from both team manager visible enemies and all local watchedenemies
-                                        castedPlayer.strategy.playerScript.tm.RemoveDeadEnemy(eh.gameObject);
-                                    }
-                                }
-                            }
-
-                        }
+                        playerToPoint = Vector3.Normalize(hit.point - castedPlayer.transform.position) * effectiveRange;
+                        damageOn = true;
 
                     }
                 }
@@ -85,6 +69,7 @@ public class FlameThrowScript : MonoBehaviour {
                     ps.Stop();
                     lite.enabled = false;
                 }
+                damageOn = false;
             }
 
         }
@@ -98,32 +83,9 @@ public class FlameThrowScript : MonoBehaviour {
                     ps.Play();
                     lite.enabled = true;
                 }
+                playerToPoint = Vector3.Normalize(castedPlayer.strategy.aiScript.targetedEnemy.position - castedPlayer.transform.position) * effectiveRange;
+                damageOn = true;
 
-                Vector3 playerToPoint = Vector3.Normalize(castedPlayer.strategy.aiScript.targetedEnemy.position - castedPlayer.transform.position) * effectiveRange;
-                HashSet<EnemyHealth> ehSet = new HashSet<EnemyHealth>();
-                foreach (GameObject enemy in castedPlayer.watchedEnemies)
-                {
-                    ehSet.Add(enemy.GetComponent<EnemyHealth>());
-                }
-                foreach(EnemyHealth eh in ehSet) { 
-                    Vector3 playerToTarget = eh.transform.position - castedPlayer.transform.position;
-                    if (playerToTarget.magnitude <= effectiveRange && Mathf.Abs(Vector3.Angle(playerToPoint, playerToTarget)) < 30.0f)
-                    {
-                        if (eh != null)
-                        {
-                            eh.TakeDamage(1);
-                            if (eh.isDead)
-                            {
-                                //on kill, remove from both team manager visible enemies and all local watchedenemies
-                                castedPlayer.strategy.aiScript.tm.RemoveDeadEnemy(eh.gameObject);
-                                castedPlayer.strategy.aiScript.targetedEnemy = null;
-                            }
-                        }
-                    }
-
-                }
-                castedPlayer.strategy.aiScript.targetedEnemy = null;
-                //castedPlayer.strategy.aiScript.attackState.reEvalutateTarget = true;
             } else
             {
                 if (ps.isPlaying)
@@ -131,10 +93,41 @@ public class FlameThrowScript : MonoBehaviour {
                     ps.Stop();
                     lite.enabled = false;
                 }
+                damageOn = false;
             }
         }
     }
 
+    private void tickDamage()
+    {
+        if (damageOn)
+        {
+            HashSet<EnemyHealth> ehSet = new HashSet<EnemyHealth>();
+            foreach (GameObject enemy in castedPlayer.watchedEnemies)
+            {
+                ehSet.Add(enemy.GetComponent<EnemyHealth>());
+            }
+            foreach (EnemyHealth eh in ehSet)
+            {
+                Vector3 playerToTarget = eh.transform.position - castedPlayer.transform.position;
+                if (playerToTarget.magnitude <= effectiveRange && Mathf.Abs(Vector3.Angle(playerToPoint, playerToTarget)) < 30.0f)
+                {
+                    if (eh != null)
+                    {
+                        eh.TakeDamage(damage);
+                        if (eh.isDead)
+                        {
+                            //on kill, remove from both team manager visible enemies and all local watchedenemies
+                            castedPlayer.strategy.playerScript.tm.RemoveDeadEnemy(eh.gameObject);
+                            castedPlayer.strategy.aiScript.targetedEnemy = null;
+                        }
+                    }
+                }
 
+            }
+        }
+
+
+    }
 
 }

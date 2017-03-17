@@ -257,7 +257,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1384680172059444}
   m_LocalRotation: {x: 0.70710695, y: -0.000000026341775, z: 0.0000000052683595, w: 0.70710665}
-  m_LocalPosition: {x: 0.00000016905268, y: -0.73703206, z: 0.07459629}
+  m_LocalPosition: {x: -0, y: -0.742, z: 0.074}
   m_LocalScale: {x: 1, y: 0.99999976, z: 0.99999964}
   m_Children: []
   m_Father: {fileID: 4356279278707858}
@@ -463,6 +463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetedEnemy: {fileID: 0}
   changeTargetOnSpecial: 0
+  tm: {fileID: 0}
 --- !u!114 &114743577469438592
 MonoBehaviour:
   m_ObjectHideFlags: 1

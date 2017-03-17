@@ -214,8 +214,10 @@ public class PlayerController : MonoBehaviour
                 aoeArea = null;
             }
         }
-
-        activeSpecialAbility = null;
+        if (ability.GetAction() != AbilityHelper.Action.Equip)
+        {
+            activeSpecialAbility = null;
+        }
 
     }
 
