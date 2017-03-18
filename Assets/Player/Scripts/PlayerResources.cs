@@ -36,9 +36,14 @@ public class PlayerResources : MonoBehaviour {
     private Animator anim;
     private PlayerAnimationController animController;
     private TeamManager tm;
+    private CharacterAttributes attributes;
     public bool isDead { get { return currentHealth <= 0; } }
     public bool isDamaged { get { return currentHealth < maxHealth; } }
     private bool deathHandled = false;
+
+    private float staminaMultLowBound = 0.5f;
+    private float staminaToReachLowBound = 50;
+
 
 	void Awake ()
     {
@@ -48,6 +53,7 @@ public class PlayerResources : MonoBehaviour {
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
         InvokeRepeating("RegenerateEnergy", 1.0f, energyRegenRateInSeconds);
+        attributes = GetComponent<CharacterAttributes>();
 	}
 	
 
@@ -64,8 +70,13 @@ public class PlayerResources : MonoBehaviour {
 
     public void TakeDamage (float amount)
     {
-        currentHealth -= Mathf.Abs(amount);
-        Debug.Log("Player Lost " + amount.ToString() + " Health");
+        float staminaMultiplier = staminaMultLowBound;
+        if (attributes.TotalStamina < staminaToReachLowBound)
+            staminaMultiplier = (attributes.TotalStamina)*((staminaMultLowBound - 1)/(staminaToReachLowBound)) + 1; //Maps 0-50 stamina to 1.0-0.5 multiplier for incoming damage
+        float adjustedAmount = amount * staminaMultiplier;
+        Debug.Log(staminaMultiplier + " <--- stamina multiplier");
+        currentHealth -= Mathf.Abs(adjustedAmount);
+        Debug.Log("Player Lost " + adjustedAmount.ToString() + " Health");
         Debug.Log("Player Health:  " + currentHealth);
         if (isDead && !deathHandled)
         {

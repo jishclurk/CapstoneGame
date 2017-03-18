@@ -39,8 +39,6 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector]
     public HashSet<GameObject> visibleEnemies;
     [HideInInspector]
-    public IBasic activeBasicAbility;
-    [HideInInspector]
     public ISpecial activeSpecialAbility;
     [HideInInspector]
     public Transform targetedEnemy;
@@ -109,7 +107,6 @@ public class CoopAiController : MonoBehaviour {
         player = GetComponent<Player>();
         animController = player.animController;
         abilities = player.abilities;
-        activeBasicAbility = abilities.Basic;
         attributes = player.attributes;
         watchedEnemies = player.watchedEnemies;
         visibleEnemies = player.visibleEnemies;
@@ -168,7 +165,6 @@ public class CoopAiController : MonoBehaviour {
         navMeshAgent.speed = navSpeedDefault;
         if (abilities != null)
         {
-            activeBasicAbility = abilities.Basic;
             activeSpecialAbility = null;
         }
 

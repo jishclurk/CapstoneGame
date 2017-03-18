@@ -104,7 +104,7 @@ public class AttackState : ICoopState
 
         aiPlayer.CheckLocalVision(); //Update visible enemies
         WatchActiveplayerForFlee();
-        HandleDestinationAnimation(aiPlayer.targetedEnemy, aiPlayer.activeBasicAbility);
+        HandleDestinationAnimation(aiPlayer.targetedEnemy, aiPlayer.abilities.Basic);
 
     }
 
@@ -337,16 +337,16 @@ public class AttackState : ICoopState
         }
 
         float remainingDistance = Vector3.Distance(aiPlayer.targetedEnemy.position, aiPlayer.transform.position);
-        if (remainingDistance <= aiPlayer.activeBasicAbility.effectiveRange && aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
+        if (remainingDistance <= aiPlayer.abilities.Basic.effectiveRange && aiPlayer.isTargetVisible(aiPlayer.targetedEnemy))
         {
             //Within range, look at enemy and shoot
             aiPlayer.transform.LookAt(aiPlayer.targetedEnemy);
 
             
-            if (aiPlayer.activeBasicAbility.isReady() && Time.time > lastAbilityCast + lastAbilityDelay) //EQUIP abilities are checked here.
+            if (aiPlayer.abilities.Basic.isReady() && Time.time > lastAbilityCast + lastAbilityDelay) //EQUIP abilities are checked here.
             {
                 aiPlayer.animController.AnimateShoot();
-                aiPlayer.activeBasicAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
+                aiPlayer.abilities.Basic.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
 
                 //check if enemy died
                 EnemyHealth enemyHP = aiPlayer.targetedEnemy.GetComponent<EnemyHealth>();
