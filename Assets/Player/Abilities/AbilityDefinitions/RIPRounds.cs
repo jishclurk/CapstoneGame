@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Zap : ISpecial, IAbility {
+public class RIPRounds : ISpecial, IAbility {
 
     public string name { get; set; }
     public string description { get; set; }
@@ -22,43 +22,33 @@ public class Zap : ISpecial, IAbility {
     public int StrengthRequired { get; private set; }
     public int StaminaRequired { get; private set; }
     public int IntelligenceRequired { get; private set; }
-    private Object bullet;
 
-    public Zap()
+    public RIPRounds()
     {
-        StrengthRequired = 0;
-        StaminaRequired = 3;
+        StrengthRequired = 6;
+        StaminaRequired = 0;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/Zap", typeof(Image)) as Image;
-        id = 4;
-        name = "Zap";
-        effectiveRange = 9.0f;
-        baseDamage = 40.0f;
+        id = 14;
+        name = "R.I.P. Rounds";
+        effectiveRange = 0.0f;
+        baseDamage = 0.0f;
         timeToCast = 0.0f;
-        coolDownTime = 10.0f;
+        coolDownTime = 0.0f;
         lastUsedTime = -Mathf.Infinity;
-        energyRequired = 30.0f;
+        energyRequired = 0.0f;
         aoeTarget = null;
-        description = "A quick Zap from your gun.";
-        bullet = Resources.Load("Zap/ZapObj");
+        description = "Double Strength";
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
-        lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
-        target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
-
-        Vector3 playerToTarget = target.transform.position - player.gunbarrel.position;
-        GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
-        project.GetComponent<ZapProjectileScript>().destination = new Vector3(target.transform.position.x, (player.gunbarrel.position.y + target.transform.position.y) / 2, target.transform.position.z);
-        project.GetComponent<ZapProjectileScript>().targetedEnemy = target;
-        player.resources.UseEnergy(energyRequired);
+        //no code here, this is a passive
     }
 
     public void updatePassiveBonuses(CharacterAttributes attributes)
     {
-
+        attributes.PassiveStrength = attributes.Strength;
     }
 
     public bool isReady()
@@ -84,11 +74,11 @@ public class Zap : ISpecial, IAbility {
 
     public AbilityHelper.Action GetAction()
     {
-        return AbilityHelper.Action.Target;
+        return AbilityHelper.Action.Passive;
     }
 
     public AbilityHelper.CoopAction GetCoopAction()
     {
-        return AbilityHelper.CoopAction.TargetHurt;
+        return AbilityHelper.CoopAction.Passive;
     }
 }

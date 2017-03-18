@@ -59,6 +59,11 @@ public class EmptyAbility : ISpecial, IAbility {
         return 0;
     }
 
+    public void updatePassiveBonuses(CharacterAttributes attributes)
+    {
+
+    }
+
     public AbilityHelper.Action GetAction()
     {
         return AbilityHelper.Action.Basic;

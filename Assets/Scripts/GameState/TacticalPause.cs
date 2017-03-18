@@ -254,8 +254,11 @@ public class TacticalPause : MonoBehaviour {
         ISpecial[] array = displayedPlayer.abilities.abilityArray;
 
         //prints players ability array for debugging 
+        //Nick: Added Passive bonus allocation here for each ability
+        displayedPlayer.attributes.ResetPassiveBonus();
         foreach(ISpecial x in array)
         {
+            x.updatePassiveBonuses(displayedPlayer.attributes);
             Debug.Log(x);
         }
     }

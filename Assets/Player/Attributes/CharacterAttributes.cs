@@ -25,6 +25,14 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
     public int Intelligence { get { return intelligence; } set { intelligence = value; } }
     public int Stamina { get { return stamina; } set { stamina = value; } }
 
+    public int PassiveStrength { get; set; }
+    public int PassiveIntelligence { get; set; }
+    public int PassiveStamina { get; set; }
+
+    public int TotalStrength { get { return strength + PassiveStrength; } }
+    public int TotalIntelligence { get { return intelligence + PassiveIntelligence; } }
+    public int TotalStamina { get { return stamina + PassiveStamina; } }
+
     int level;
     int experience;
     int experienceNeededForNextLevel;
@@ -44,6 +52,9 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         strength = 1;
         intelligence = 1;
         stamina = 1;
+        PassiveStrength = 0;
+        PassiveIntelligence = 0;
+        PassiveStamina = 0;
     }
 
     void LevelUp()
@@ -57,5 +68,12 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         // stamina += 1;
         Debug.Log("level = " + level);
         Debug.Log("experienceNeededForNextLevel = " + experienceNeededForNextLevel);
+    }
+
+    public void ResetPassiveBonus()
+    {
+        PassiveStrength = 0;
+        PassiveIntelligence = 0;
+        PassiveStamina = 0;
     }
 }

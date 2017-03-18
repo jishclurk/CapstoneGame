@@ -68,6 +68,10 @@ public class GrenadeThrow : ISpecial, IAbility {
 
     }
 
+    public void updatePassiveBonuses(CharacterAttributes attributes)
+    {
+
+    }
 
     public bool isReady()
     {

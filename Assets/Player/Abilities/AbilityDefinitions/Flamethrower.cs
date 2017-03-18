@@ -65,6 +65,11 @@ public class Flamethrower : ISpecial, IAbility {
         return targetedEnemy != null && Vector3.Distance(targetedEnemy.position, player.transform.position) < effectiveRange;
     }
 
+    public void updatePassiveBonuses(CharacterAttributes attributes)
+    {
+
+    }
+
     public float RemainingTime()
     {
         return lastUsedTime + coolDownTime - Time.time;

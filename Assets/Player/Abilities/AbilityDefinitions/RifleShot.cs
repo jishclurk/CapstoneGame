@@ -39,7 +39,7 @@ public class RifleShot : IBasic, IAbility {
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
+        float adjustedDamage = baseDamage + player.attributes.TotalStrength * 0.5f;
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
 
         GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;

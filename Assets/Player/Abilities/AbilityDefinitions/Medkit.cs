@@ -55,6 +55,11 @@ public class MedKit : ISpecial, IAbility
         GameObject.Destroy(gb, 1.0f);
     }
 
+    public void updatePassiveBonuses(CharacterAttributes attributes)
+    {
+
+    }
+
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
     {
         return player.resources.maxHealth - player.resources.currentHealth >= baseDamage;

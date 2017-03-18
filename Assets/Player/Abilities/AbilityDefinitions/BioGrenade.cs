@@ -78,6 +78,11 @@ public class BioGrenade : ISpecial, IAbility {
         return count >= 2;
     }
 
+    public void updatePassiveBonuses(CharacterAttributes attributes)
+    {
+
+    }
+
     public float RemainingTime()
     {
         return lastUsedTime + coolDownTime - Time.time;
@@ -92,5 +97,6 @@ public class BioGrenade : ISpecial, IAbility {
     {
         return AbilityHelper.CoopAction.AOEHeal;
     }
+    
 
 }
