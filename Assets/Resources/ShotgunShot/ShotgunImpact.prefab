@@ -29,7 +29,7 @@ GameObject:
   - component: {fileID: 19982894}
   - component: {fileID: 19824418}
   m_Layer: 0
-  m_Name: RifleImpact
+  m_Name: ShotgunImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -245,10 +245,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e9c249c9d073d2647b12578e32521b62, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 723191daa845c6f4fa0979dbba60cfc4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
-  m_Pitch: 3
+  m_Volume: 0.25
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0

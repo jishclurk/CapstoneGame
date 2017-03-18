@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 13500000}
   - component: {fileID: 2300000}
   - component: {fileID: 5400000}
-  - component: {fileID: 114091588710721128}
+  - component: {fileID: 114036653779111068}
   m_Layer: 0
-  m_Name: RifleProjectile
+  m_Name: ShotgunProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,7 +133,7 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
---- !u!114 &114091588710721128
+--- !u!114 &114036653779111068
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -141,11 +141,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8995768f62a192341bc80414aeddd50b, type: 3}
+  m_Script: {fileID: 11500000, guid: 12615349b941709468f5cff4c6980060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactParticle: {fileID: 122632, guid: 17af9b9c91c8a054a9201bcf176d7101, type: 2}
+  impactParticle: {fileID: 122632, guid: 0107451511d0b6d46b1e7c27f7430324, type: 2}
   destination: {x: 0, y: 0, z: 0}
-  projectileParticle: {fileID: 149566, guid: 943411dc5625bab4a834f2b2eec14afe, type: 2}
+  projectileParticle: {fileID: 149566, guid: f4e6e772f1ee31f428afde0be9615414, type: 2}
   trailParticles: []
   impactNormal: {x: 0, y: 0, z: 0}
+  rot: 0

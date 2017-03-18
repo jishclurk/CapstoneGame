@@ -85,9 +85,13 @@ public class PlayerAbilities : MonoBehaviour
             abilityArray[2] = new GrenadeThrow();
             abilityArray[3] = new BioGrenade();
         }
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             Basic = new ShotgunShot();
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Basic = new SMGShot();
         }
     }
 
