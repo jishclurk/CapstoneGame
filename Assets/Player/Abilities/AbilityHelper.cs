@@ -69,6 +69,16 @@ public class AbilityHelper : MonoBehaviour {
 
     }
 
+    // SHIELD BOOSTER //
+    public void ShieldBoosterRoutine(CharacterAttributes attributes, GameObject target, float length, Object booster)
+    {
+        AOETargetController aoeController = target.GetComponent<AOETargetController>();
+        GameObject[] affectedPlayersCopy = new GameObject[aoeController.affectedPlayers.Count];
+        aoeController.affectedPlayers.CopyTo(affectedPlayersCopy);
+        StartCoroutine(ShieldBoosterEffect(affectedPlayersCopy, length, booster));
+        Destroy(target);
+    }
+
 
     //CO-OP HELPER METHODS//
     public void CoopExecuteAOE(Player player, GameObject origin, GameObject aoeTarget, ISpecial ability)
@@ -113,9 +123,19 @@ public class AbilityHelper : MonoBehaviour {
     }
 
     //
-    IEnumerator regenField(Transform grenade, Transform target, float overTime)
+    IEnumerator ShieldBoosterEffect(GameObject[] affectedPlayers, float length, Object booster)
     {
-
-        yield return null;
+        foreach(GameObject player in affectedPlayers)
+        {
+            player.GetComponent<CharacterAttributes>().PassiveStamina += 50;
+            GameObject gb = Object.Instantiate(booster, player.transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+            gb.GetComponent<StayWithPlayer>().player = player.transform;
+            Destroy(gb, length);
+        }
+        yield return new WaitForSeconds(length);
+        foreach (GameObject player in affectedPlayers)
+        {
+            player.GetComponent<CharacterAttributes>().PassiveStamina -= 50;
+        }
     }
 }
