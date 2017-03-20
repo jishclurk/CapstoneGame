@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public bool changeTargetOnSpecial = false;
 
     private Transform specialTargetedEnemy;
+    private Transform specialTargetedFriend;
 
     private Transform targetedFriend;
     private bool friendClicked;
@@ -83,8 +84,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Input.GetButton("Fire2"))
         {
-            //Physics.Raycast(eyes.position, playerToTarget, out hit, 100f, Layers.NonPlayer) && hit.collider.gameObject.CompareTag("Enemy");
-            if (Physics.Raycast(ray, out hit, 100f, Layers.NonWall))
+            if (Physics.Raycast(ray, out hit, 100f, Layers.Enemy | Layers.Floor))
             {
                 HandleRayCastHit(hit);
             }
@@ -104,6 +104,13 @@ public class PlayerController : MonoBehaviour
             else
                 ShootSpecialOnTarget(specialTargetedEnemy);
         }
+        else if (activeSpecialAbility != null && activeSpecialAbility.GetAction() == AbilityHelper.Action.TargetFriend)
+        {
+            if (specialTargetedEnemy == null)
+                AimTargetFriendSpecial();
+            else
+                ShootSpecialOnTarget(specialTargetedFriend);
+        }
         else if (activeSpecialAbility != null && activeSpecialAbility.GetAction() == AbilityHelper.Action.Equip)
         {
             if(activeSpecialAbility.RemainingTime() < activeSpecialAbility.coolDownTime - activeSpecialAbility.timeToCast)
@@ -120,7 +127,12 @@ public class PlayerController : MonoBehaviour
         if(specialTargetedEnemy != null)
         {
             HandleDestinationAnimation(specialTargetedEnemy, activeSpecialAbility);
-        } else
+        }
+        else if(specialTargetedFriend != null)
+        {
+            HandleDestinationAnimation(specialTargetedFriend, activeSpecialAbility);
+        }
+        else
         {
             HandleDestinationAnimation(targetedEnemy, abilities.Basic);
         }
@@ -134,7 +146,7 @@ public class PlayerController : MonoBehaviour
     private void HandleRayCastHit(RaycastHit hit)
     {
         bool enemyClicked = false;
-        if (hit.collider.CompareTag("Enemy"))
+        if (hit.collider.CompareTag("Enemy") && !hit.transform.gameObject.GetComponent<EnemyHealth>().isDead)
         {
             //target is instead the raycast hit, rather than a transform. Put work into Execute().
             targetedEnemy = hit.transform;
@@ -146,13 +158,6 @@ public class PlayerController : MonoBehaviour
             visibleEnemies.Add(targetedEnemy.gameObject);
             tm.visibleEnemies.Add(targetedEnemy.gameObject);
             watchedEnemies.Add(targetedEnemy.gameObject);
-        }
-        else if (hit.collider.CompareTag("Player"))
-        {
-            targetedFriend = hit.transform;
-            transform.LookAt(hit.transform); //prevents slow turn
-            navMeshAgent.destination = transform.position; //temporary, can add functionality to set teammate as destination for healing/buff abilities later
-            friendClicked = true;
         }
         else
         {
@@ -212,10 +217,29 @@ public class PlayerController : MonoBehaviour
                 aoeArea = null;
             }
         }
+        else if(ability.GetAction() == AbilityHelper.Action.Target)
+        {
+            if(specialTargetedEnemy != null)
+            {
+                navMeshAgent.destination = transform.position;
+                specialTargetedEnemy = null;
+            }
+        }
+        else if(ability.GetAction() == AbilityHelper.Action.TargetFriend)
+        {
+            if (specialTargetedFriend != null)
+            {
+                navMeshAgent.destination = transform.position;
+                specialTargetedFriend = null;
+            }
+        }
+
+        //happens in all abilities EXCEPT Equip, since Equip cannot be cancelled
         if (ability.GetAction() != AbilityHelper.Action.Equip)
         {
             activeSpecialAbility = null;
         }
+
 
     }
 
@@ -234,7 +258,7 @@ public class PlayerController : MonoBehaviour
 
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100f, Layers.NonWall))
+                if (Physics.Raycast(ray, out hit, 100f, Layers.Floor))
                 {
                     aoeArea = Instantiate(ability.aoeTarget, hit.point, Quaternion.Euler(-90, 0, 0)) as GameObject;
                 }
@@ -271,16 +295,15 @@ public class PlayerController : MonoBehaviour
             transform.LookAt(targetedEnemy);
             //animController.AnimateAimStanding();
 
-            bool targetIsDead = targetedEnemy.GetComponent<EnemyHealth>().isDead;
-            if (abilities.Basic.isReady() && !targetIsDead)
+            if (abilities.Basic.isReady() && !targetedEnemy.GetComponent<EnemyHealth>().isDead)
             {
                 animController.AnimateShoot();
                 abilities.Basic.Execute(player, gameObject, targetedEnemy.gameObject);
-            }
-            if (targetIsDead)
-            {
-                tm.RemoveDeadEnemy(targetedEnemy.gameObject);
-                navMeshAgent.destination = transform.position;
+                if (targetedEnemy.GetComponent<EnemyHealth>().isDead)
+                {
+                    tm.RemoveDeadEnemy(targetedEnemy.gameObject);
+                    navMeshAgent.destination = transform.position;
+                }
             }
             animSpeed = 0.0f;
         }
@@ -295,10 +318,10 @@ public class PlayerController : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, 100f, Layers.Enemy))
             {
-                if (hit.collider.CompareTag("Enemy"))
+                if (hit.collider.CompareTag("Enemy") && !hit.transform.gameObject.GetComponent<EnemyHealth>().isDead) //WE NEED A SOLUTION FOR THIS
                 {
                     specialTargetedEnemy = hit.transform;
-                    if (changeTargetOnSpecial)
+                    if (changeTargetOnSpecial || targetedEnemy == null)
                     {
                         targetedEnemy = specialTargetedEnemy;
                         visibleEnemies.Add(targetedEnemy.gameObject);
@@ -318,6 +341,24 @@ public class PlayerController : MonoBehaviour
         } 
     }
 
+    //Look for left click on friend
+    private void AimTargetFriendSpecial()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Input.GetButtonDown("Fire1"))
+        {
+            if (Physics.Raycast(ray, out hit, 100f, Layers.Player))
+            {
+                if (hit.collider.CompareTag("Player"))
+                {
+                    specialTargetedFriend = hit.transform;
+                }
+            }
+        }
+    }
+
+
     private void ShootSpecialOnTarget(Transform target)
     {
         if (target == null)
@@ -331,21 +372,47 @@ public class PlayerController : MonoBehaviour
             transform.LookAt(target);
             //animController.AnimateAimStanding();
 
-            bool targetIsDead = target.GetComponent<EnemyHealth>().isDead;
-            if (activeSpecialAbility.isReady() && !targetIsDead)
+            if (activeSpecialAbility.isReady() && !target.GetComponent<EnemyHealth>().isDead)
             {
                 activeSpecialAbility.Execute(player, gameObject, target.gameObject);
+
+                if (specialTargetedEnemy != null && target.GetComponent<EnemyHealth>().isDead)
+                {
+                    tm.RemoveDeadEnemy(target.gameObject);
+                    if (changeTargetOnSpecial)
+                    {
+                        targetedEnemy = null;
+                    }
+                }
                 activeSpecialAbility = null;
                 specialTargetedEnemy = null;
             }
-            if (targetIsDead)
+
+            navMeshAgent.destination = transform.position;
+            animSpeed = 0.0f;
+        }
+    }
+
+    private void ShootSpecialOnFriendTarget(Transform target)
+    {
+        if (target == null)
+        {
+            return;
+        }
+        float remainingDistance = Vector3.Distance(target.position, transform.position);
+        if (remainingDistance <= activeSpecialAbility.effectiveRange)
+        {
+            //Within range, look at enemy and shoot
+            transform.LookAt(target);
+            //animController.AnimateAimStanding();
+
+            if (activeSpecialAbility.isReady())
             {
-                tm.RemoveDeadEnemy(target.gameObject);
-                if (changeTargetOnSpecial)
-                {
-                    targetedEnemy = null;
-                }
+                activeSpecialAbility.Execute(player, gameObject, target.gameObject);
+                activeSpecialAbility = null;
+                specialTargetedFriend = null;
             }
+
             navMeshAgent.destination = transform.position;
             animSpeed = 0.0f;
         }

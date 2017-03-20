@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AbilityHelper : MonoBehaviour {
 
-    public enum Action { Basic, Equip, Target, AOE, Passive }
+    public enum Action { Basic, Equip, Target, TargetFriend, AOE, Passive }
     public enum CoopAction { Basic, InstantHeal, Equip, TargetHeal, TargetHurt, AOEHeal, AOEHurt, Passive }
 
     // GRENADE THROW //

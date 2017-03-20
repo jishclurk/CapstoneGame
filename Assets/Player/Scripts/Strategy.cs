@@ -6,12 +6,14 @@ public class Strategy : MonoBehaviour {
 
     public bool isplayerControlled; //who starts as AI controlled or not will be set in inspector for now.
 
+    public Player playerDataScript;
     public PlayerController playerScript;
     public CoopAiController aiScript;
     private TeamManager tm;
 
     // Use this for initialization
     void Start () {
+        playerDataScript = GetComponent<Player>();
         playerScript = GetComponent<PlayerController>();
         aiScript = GetComponent<CoopAiController>();
         if (isplayerControlled)
@@ -34,12 +36,23 @@ public class Strategy : MonoBehaviour {
     {
         isplayerControlled = true;
         playerScript.ResetOnSwitch(); //reset player to default values Why do this? reset run and targets
+
+
         //set values based on previous ai control
+
+        //playercontroller only inherits targeted enemy as visible
+        foreach (GameObject enemy in playerDataScript.visibleEnemies)
+        {
+            tm.RemoveEnemyIfNotTeamVisible(enemy);
+        }
+        playerDataScript.visibleEnemies.Clear();
+
         if (aiScript.targetedEnemy != null)
         {
             playerScript.targetedEnemy = aiScript.targetedEnemy;
+            playerDataScript.visibleEnemies.Add(playerScript.targetedEnemy.gameObject);
         }
-       
+
         aiScript.enabled = false;
         playerScript.enabled = true;
 
@@ -51,7 +64,6 @@ public class Strategy : MonoBehaviour {
         playerScript.ResetOnSwitch(); //reset player to default values. Why do this? Disable AOETarget
         aiScript.ResetOnSwitch(); //reset ai default values
         //set values based on previous player control
-
 
         aiScript.enabled = true;
         playerScript.enabled = false;
