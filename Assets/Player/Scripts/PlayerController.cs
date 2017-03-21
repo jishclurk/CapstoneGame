@@ -106,10 +106,10 @@ public class PlayerController : MonoBehaviour
         }
         else if (activeSpecialAbility != null && activeSpecialAbility.GetAction() == AbilityHelper.Action.TargetFriend)
         {
-            if (specialTargetedEnemy == null)
+            if (specialTargetedFriend == null)
                 AimTargetFriendSpecial();
             else
-                ShootSpecialOnTarget(specialTargetedFriend);
+                ShootSpecialOnFriendTarget(specialTargetedFriend);
         }
         else if (activeSpecialAbility != null && activeSpecialAbility.GetAction() == AbilityHelper.Action.Equip)
         {
@@ -271,7 +271,7 @@ public class PlayerController : MonoBehaviour
                 activeSpecialAbility = ability;
                 //AimAOE
             }
-            else if (ability.GetAction() == AbilityHelper.Action.Target)
+            else if (ability.GetAction() == AbilityHelper.Action.Target || ability.GetAction() == AbilityHelper.Action.TargetFriend)
             {
                 activeSpecialAbility = ability;
                 //AimTarget

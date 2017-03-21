@@ -118,4 +118,14 @@ public class PlayerResources : MonoBehaviour {
         Debug.Log("Player died!");
         // Animation stuff goes here
     }
+
+    public void Revive()
+    {
+        animController.AnimateRevive();
+        deathHandled = false;
+        gameObject.GetComponent<Strategy>().setAsCoopAI();
+        gameObject.GetComponent<Collider>().enabled = true;
+        currentHealth = 1;
+    }
+
 }

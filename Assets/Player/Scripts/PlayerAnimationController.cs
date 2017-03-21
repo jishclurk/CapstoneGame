@@ -15,7 +15,23 @@ public class PlayerAnimationController : MonoBehaviour {
         evt.functionName = "FootStep";
         AnimationClip clip = animator.runtimeAnimatorController.animationClips[0];
         clip.AddEvent(evt);
+
+        AnimationEvent evt2 = new AnimationEvent();
+        evt2.functionName = "EndPickup";
+        AnimationClip clip2 = animator.runtimeAnimatorController.animationClips[1];
+        clip.AddEvent(evt2);
+
+
     }
+
+    public void AnimateRevive()
+    {
+        deathAnimated = false;
+        animator.SetFloat("Y", 0.0f);
+        animator.SetBool("Dead", false);
+        deathAnimated = false;
+    }
+
 
     public void AnimateDeath()
     {
@@ -106,9 +122,25 @@ public class PlayerAnimationController : MonoBehaviour {
 
     }
 
+    public void AnimatePickup()
+    {
+        if (!deathAnimated)
+        {
+            animator.SetBool("OnGround", true);
+            animator.SetFloat("Speed", 0.0f);
+            animator.SetBool("Aiming", false);
+            animator.SetTrigger("Pickup");
+        }
+    }
+
     private void FootStep()
     {
         //here is where we can put footstep related things if we want
+    }
+
+    private void EndPickup()
+    {
+        //here is where we can put pickup
     }
 
 }
