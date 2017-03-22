@@ -79,6 +79,18 @@ public class AbilityHelper : MonoBehaviour {
         Destroy(target);
     }
 
+    // SENTRY TURRET //
+    public void SentryTurretRoutine(Player player, GameObject target, float length, Object turret)
+    {
+        AOETargetController aoeController = target.GetComponent<AOETargetController>();
+        GameObject sentry = Instantiate(turret, target.transform.position, Quaternion.identity) as GameObject;
+        sentry.transform.LookAt(player.transform);
+        sentry.transform.Rotate(0, 90, 0);
+        sentry.GetComponent<SentryScript>().castedPlayer = player;
+        Destroy(sentry, length);
+        Destroy(target);
+    }
+
 
     //CO-OP HELPER METHODS//
     public void CoopExecuteAOE(Player player, GameObject origin, GameObject aoeTarget, ISpecial ability)
