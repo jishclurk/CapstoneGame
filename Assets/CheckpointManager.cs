@@ -16,7 +16,7 @@ public class CheckpointManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         checkpoints = new List<CheckPoint>();
-        gm = SimpleGameManager.Instance;
+        gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();
         //completed = 0;
         levelCompleted = false;
         foreach (Transform child in transform)

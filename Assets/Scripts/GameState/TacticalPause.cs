@@ -59,7 +59,7 @@ public class TacticalPause : MonoBehaviour {
 
         inTacticalPause = false;
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        gm = SimpleGameManager.Instance;
+        gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();
 
         unLockedAbitiesSlots = new List<GameObject>();
         setAbilitesSlots = new List<GameObject>();

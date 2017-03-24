@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
 
     public void Start()
     {
-        gm = SimpleGameManager.Instance;
+        //gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();
 
         LoadMenu = LoadMenu.GetComponent<Canvas>();
         Menu = Menu.GetComponent<Canvas>();
@@ -31,38 +31,61 @@ public class MainMenu : MonoBehaviour
         LoadMenu.enabled = false;
     }
 
+    //Created a new SavedState and saves it under autosave.  Loads level 1 
     public void LoadNewGame()
     {
+        SavedState newGame = new SavedState();
+        newGame.name = "autosave";
+        newGame.level = 1;
+        newGame.checkPoint = 0;
+
+        SerializedPlayer[] players = new SerializedPlayer[4];
+        for(int i = 0; i<4; i++)
+        {
+            SerializedPlayer playerStart = new SerializedPlayer();
+            playerStart.level = 1;
+            playerStart.experience = 0;
+            playerStart.statPoints = 5;
+            playerStart.stamina = 1;
+            playerStart.strength = 1;
+            playerStart.intelligence = 1; 
+            playerStart.id = i + 1;
+            players[i] = playerStart;
+        }
+
+        newGame.players = players;
+
+        bool[] objectives = new bool[6] { false, false, false, false, false, false };
+        newGame.objectives = objectives;
+
         Debug.Log("setting state change to Load level 1");
         levelToLoad = 1;
-        gm.newGame = true;
-        gm.OnStateChange += LoadLevel;
-        Play();
+        SaveLoad.Save(newGame, "autosave");
+        //  gm.newGame = true;
+        // gm.OnStateChange += LoadLevel;
+        //Play();
+        LoadLevel();
     }
 
 
     public void LoadLevel()
     {
-        //Debug.Log("loading level 1");
         Menu.enabled = false;
         Loading.enabled = true;
 
         StartCoroutine(LoadGame("Level" + levelToLoad.ToString()));
-        Debug.Log("finished loading 1");
-
-        //GameManager.manager.StartNewGame();
     }
 
-    private void Play()
-    {
-        gm.SetGameState(GameState.PLAY);
-    }
+    //private void Play()
+    //{
+    //    gm.SetGameState(GameState.PLAY);
+    //}
 
-    public void LoadTest()
-    {
-        Debug.Log("test");
-        LoadSavedGame("test");
-    }
+    //public void LoadTest()
+    //{
+    //    Debug.Log("test");
+    //    LoadSavedGame("test");
+    //}
 
     //Loads game 
     IEnumerator LoadGame(string sceneName)
@@ -96,14 +119,16 @@ public class MainMenu : MonoBehaviour
     //
     public void LoadSavedGame(string name)
     {
-        gm.newGame = false;
+      //  gm.newGame = false;
         LoadMenu.enabled = false;
         SavedState gameToLoad = SaveLoad.Load(name);
         Debug.Log(gameToLoad);
-            gm.autosave = gameToLoad;
+        SaveLoad.Save(gameToLoad, "autosave");
+            //gm.autosave = gameToLoad;
             levelToLoad = gameToLoad.level;
-            gm.OnStateChange += LoadLevel;
-            Play();
+        //gm.OnStateChange += LoadLevel;
+        //  Play();
+        LoadLevel();
     }
 
     public void ExitGame()

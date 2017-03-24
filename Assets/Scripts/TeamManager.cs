@@ -19,6 +19,8 @@ public class TeamManager : MonoBehaviour {
     public HashSet<GameObject> visibleEnemies;
     private SimpleGameManager gm;
 
+    private int deathCount;
+
 
     // Use this for initialization
     void Awake () {
@@ -29,7 +31,7 @@ public class TeamManager : MonoBehaviour {
         }
 
         tacticalPause = GameObject.Find("TacticalPause").GetComponent<TacticalPause>();
-        gm = SimpleGameManager.Instance;
+        gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();
 
        // prefabList = GameObject.FindGameObjectsWithTag("Player");
 
@@ -57,12 +59,16 @@ public class TeamManager : MonoBehaviour {
         cameraScript.activePlayerCharacter = activePlayer.gameObject;
         visibleEnemies = new HashSet<GameObject>();
         playerResources = activePlayer.GetComponent<PlayerResources>();
-
+        deathCount = 0;
     }
 
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            gm.onDeath();
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             StartComabtPause();
@@ -174,6 +180,15 @@ public class TeamManager : MonoBehaviour {
         }
     
 
+    }
+
+    public void UpdateDeathCount()
+    {
+        deathCount++;
+        if(deathCount == 4)
+        {
+            gm.onDeath();
+        }
     }
 
 
