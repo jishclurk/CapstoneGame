@@ -93,6 +93,10 @@ public class PlayerAbilities : MonoBehaviour
         {
             Basic = new SMGShot();
         }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Basic = new SniperShot();
+        }
     }
 
     public void UpdateUnlockedAbilities(CharacterAttributes attributes)
