@@ -57,7 +57,7 @@ public class AbilityHelper : MonoBehaviour {
 
     // FLAME THROWER //
 
-    public void FlameThrowerRoutine(Player player, GameObject origin, GameObject target, Object flame, float baseDamage, float effectiveRange)
+    public void FlameThrowerRoutine(Player player, GameObject origin, GameObject target, Object flame, float baseDamage, float effectiveRange, float length)
     {
         GameObject worldFlame = Instantiate(flame, player.gunbarrel.position, Quaternion.identity) as GameObject;
         worldFlame.transform.parent = player.transform;

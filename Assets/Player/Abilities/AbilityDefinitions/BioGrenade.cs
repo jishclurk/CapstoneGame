@@ -65,6 +65,11 @@ public class BioGrenade : ISpecial, IAbility {
         return Time.time > lastUsedTime + coolDownTime;
     }
 
+    public void setAsReady()
+    {
+        lastUsedTime = -Mathf.Infinity;
+    }
+
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
     {
         int count = 0;

@@ -53,7 +53,12 @@ public class RIPRounds : ISpecial, IAbility {
 
     public bool isReady()
     {
-        return Time.time > lastUsedTime + coolDownTime;
+        return false;
+    }
+
+    public void setAsReady()
+    {
+        
     }
 
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
