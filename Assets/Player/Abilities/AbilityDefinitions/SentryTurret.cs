@@ -64,6 +64,11 @@ public class SentryTurret : ISpecial, IAbility {
 
     }
 
+    public void setAsReady()
+    {
+        lastUsedTime = -Mathf.Infinity;
+    }
+
     public bool isReady()
     {
         return Time.time > lastUsedTime + coolDownTime;

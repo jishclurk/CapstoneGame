@@ -11,6 +11,7 @@ public interface ISpecial : IAbility {
     Object aoeTarget { get; set; }
 
     float RemainingTime();
+    void setAsReady();
     void updatePassiveBonuses(CharacterAttributes attributes);
     bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm);
 

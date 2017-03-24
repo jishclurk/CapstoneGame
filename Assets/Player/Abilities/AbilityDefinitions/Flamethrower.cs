@@ -22,6 +22,7 @@ public class Flamethrower : ISpecial, IAbility {
     private AbilityHelper ah;
     private Object flame;
     private float lastUsedTime;
+    private float effectLength = 5.0f;
 
 
 
@@ -54,7 +55,7 @@ public class Flamethrower : ISpecial, IAbility {
     {
         lastUsedTime = Time.time;
         baseDamage = baseDamage + (player.attributes.Strength * 0.5f);
-        ah.FlameThrowerRoutine(player, origin, target, flame, baseDamage, effectiveRange);
+        ah.FlameThrowerRoutine(player, origin, target, flame, baseDamage, effectiveRange, effectLength);
 
         player.resources.UseEnergy(energyRequired);
     }
@@ -78,6 +79,14 @@ public class Flamethrower : ISpecial, IAbility {
     public bool isReady()
     {
         return Time.time > lastUsedTime + coolDownTime;
+    }
+
+    public void setAsReady()
+    {
+        if (Time.time > lastUsedTime + effectLength)
+        {
+            lastUsedTime = -Mathf.Infinity;
+        }
     }
 
     public AbilityHelper.Action GetAction()

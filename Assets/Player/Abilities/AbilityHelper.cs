@@ -57,7 +57,7 @@ public class AbilityHelper : MonoBehaviour {
 
     // FLAME THROWER //
 
-    public void FlameThrowerRoutine(Player player, GameObject origin, GameObject target, Object flame, float baseDamage, float effectiveRange)
+    public void FlameThrowerRoutine(Player player, GameObject origin, GameObject target, Object flame, float baseDamage, float effectiveRange, float length)
     {
         GameObject worldFlame = Instantiate(flame, player.gunbarrel.position, Quaternion.identity) as GameObject;
         worldFlame.transform.parent = player.transform;
@@ -79,6 +79,22 @@ public class AbilityHelper : MonoBehaviour {
         Destroy(target);
     }
 
+    IEnumerator ShieldBoosterEffect(GameObject[] affectedPlayers, float length, Object booster)
+    {
+        foreach (GameObject player in affectedPlayers)
+        {
+            player.GetComponent<CharacterAttributes>().PassiveStamina += 50;
+            GameObject gb = Object.Instantiate(booster, player.transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+            gb.GetComponent<StayWithPlayer>().player = player.transform;
+            Destroy(gb, length);
+        }
+        yield return new WaitForSeconds(length);
+        foreach (GameObject player in affectedPlayers)
+        {
+            player.GetComponent<CharacterAttributes>().PassiveStamina -= 50;
+        }
+    }
+
     // SENTRY TURRET //
     public void SentryTurretRoutine(Player player, GameObject target, float length, Object turret)
     {
@@ -89,6 +105,19 @@ public class AbilityHelper : MonoBehaviour {
         sentry.GetComponent<SentryScript>().castedPlayer = player;
         Destroy(sentry, length);
         Destroy(target);
+    }
+
+    // STIMPAK //
+    public void StimpakRoutine(CharacterAttributes attributes, float length)
+    {
+        StartCoroutine(StimpakEffect(attributes, length));
+        attributes.PassiveStrength += 10;
+    }
+
+    IEnumerator StimpakEffect(CharacterAttributes attributes, float length)
+    {
+        yield return new WaitForSeconds(length);
+        attributes.PassiveStrength -= 10;
     }
 
 
@@ -135,19 +164,5 @@ public class AbilityHelper : MonoBehaviour {
     }
 
     //
-    IEnumerator ShieldBoosterEffect(GameObject[] affectedPlayers, float length, Object booster)
-    {
-        foreach(GameObject player in affectedPlayers)
-        {
-            player.GetComponent<CharacterAttributes>().PassiveStamina += 50;
-            GameObject gb = Object.Instantiate(booster, player.transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
-            gb.GetComponent<StayWithPlayer>().player = player.transform;
-            Destroy(gb, length);
-        }
-        yield return new WaitForSeconds(length);
-        foreach (GameObject player in affectedPlayers)
-        {
-            player.GetComponent<CharacterAttributes>().PassiveStamina -= 50;
-        }
-    }
+
 }

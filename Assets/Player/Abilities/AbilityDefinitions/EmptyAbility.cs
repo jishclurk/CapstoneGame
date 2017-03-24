@@ -48,6 +48,10 @@ public class EmptyAbility : ISpecial, IAbility {
         return false;
     }
 
+    public void setAsReady()
+    {
+    }
+
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
     {
 

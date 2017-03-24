@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShieldBooster : ISpecial, IAbility {
+public class Invigorate : ISpecial, IAbility {
 
     public string name { get; set; }
     public string description { get; set; }
@@ -17,51 +17,42 @@ public class ShieldBooster : ISpecial, IAbility {
     public float timeToCast { get; set; }
     public Object aoeTarget { get; set; }
 
-    private float lastUsedTime;
-    private Object explosion;
-    private Object grenade;
-    private GameObject abilityObj;
+    private float lastUsedTime { get; set; }
 
     public int StrengthRequired { get; private set; }
     public int StaminaRequired { get; private set; }
     public int IntelligenceRequired { get; private set; }
 
-    private float effectLength = 10.0f;
-    private Object booster;
-
-    public ShieldBooster()
+    public Invigorate()
     {
-        StrengthRequired = 0;
-        StaminaRequired = 6;
-        IntelligenceRequired = 0;
-        image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
-        id = 16;
-        name = "Shield Booster";
-        description = "Sets all players' defense to max within the effect circle";
-        effectiveRange = 15.0f;
+        StrengthRequired = 3;
+        StaminaRequired = 0;
+        IntelligenceRequired = 3;
+        image = Resources.Load("Abilities/Zap", typeof(Image)) as Image;
+        id = 21;
+        name = "Invigorate";
+        effectiveRange = 0.0f;
         baseDamage = 0.0f;
         timeToCast = 0.0f;
-        coolDownTime = 5.0f;
+        coolDownTime = 20.0f;
         lastUsedTime = -Mathf.Infinity;
-        energyRequired = 30.0f;
-        aoeTarget = Resources.Load("ShieldBooster/4x4BlueAuraTarget");
-        booster = Resources.Load("ShieldBooster/Booster");
-        abilityObj = GameObject.FindWithTag("AbilityHelper");
+        energyRequired = 2.0f;
+        aoeTarget = null;
+        description = "All ability Cooldowns become 0";
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
-    {  
-        abilityObj.GetComponent<AbilityHelper>().ShieldBoosterRoutine(player.attributes, target, effectLength, booster);
-        player.animController.AnimateUse(0.35f);
-
+    {
+        foreach(ISpecial ability in player.abilities.abilityArray)
+        {
+            ability.setAsReady();
+        }
         lastUsedTime = Time.time;
         player.resources.UseEnergy(energyRequired);
-
     }
 
     public void updatePassiveBonuses(CharacterAttributes attributes)
     {
-
     }
 
     public bool isReady()
@@ -71,13 +62,12 @@ public class ShieldBooster : ISpecial, IAbility {
 
     public void setAsReady()
     {
-        lastUsedTime = -Mathf.Infinity;
+        //cannot set itself as ready
     }
 
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
     {
-
-        return player.attributes.Stamina > 15 || player.resources.currentHealth < 50;
+        return false;
     }
 
     public float RemainingTime()
@@ -87,12 +77,11 @@ public class ShieldBooster : ISpecial, IAbility {
 
     public AbilityHelper.Action GetAction()
     {
-        return AbilityHelper.Action.AOE;
+        return AbilityHelper.Action.Equip;
     }
-
 
     public AbilityHelper.CoopAction GetCoopAction()
     {
-        return AbilityHelper.CoopAction.AOEHeal;
+        return AbilityHelper.CoopAction.InstantHeal;
     }
 }

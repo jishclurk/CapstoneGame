@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RifleShot : IBasic, IAbility {
+public class SniperShot : IBasic, IAbility {
 
     public string name { get; set; }
     public string description { get; set; }
@@ -19,19 +19,19 @@ public class RifleShot : IBasic, IAbility {
     public int StaminaRequired { get; private set; }
     public int IntelligenceRequired { get; private set; }
 
-    private Object bullet = Resources.Load("RifleShot/RifleProjectile");
+    private Object bullet = Resources.Load("SniperShot/YellowSniperObj");
 
-    public RifleShot()
+    public SniperShot()
     {
         StrengthRequired = 0;
         StaminaRequired = 0;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
-        id = 8;
+        id = 19;
         name = "Rifle Shot";
-        effectiveRange = 9.0f;
-        baseDamage = 3.0f;
-        fireRate = 0.2f;
+        effectiveRange = 11.0f;
+        baseDamage = 22.0f;
+        fireRate = 0.9f;
         lastUsedTime = 0.0f;
 
     }
@@ -41,9 +41,10 @@ public class RifleShot : IBasic, IAbility {
         lastUsedTime = Time.time;
         float adjustedDamage = baseDamage + player.attributes.TotalStrength * 0.5f;
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
+
         GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
-        project.GetComponent<RifleProjectileScript>().destination = new Vector3(target.transform.position.x, (player.gunbarrel.position.y + target.transform.position.y)/2, target.transform.position.z);
-        project.GetComponent<RifleProjectileScript>().targetedEnemy = target;
+        project.GetComponent<SniperProjectileScript>().destination = new Vector3(target.transform.position.x, (player.gunbarrel.position.y + target.transform.position.y)/2, target.transform.position.z);
+        project.GetComponent<SniperProjectileScript>().targetedEnemy = target;
         //useEnergy not required
     }
 

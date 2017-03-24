@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShieldBooster : ISpecial, IAbility {
+public class Stimpak : ISpecial, IAbility
+{
 
     public string name { get; set; }
     public string description { get; set; }
@@ -17,51 +18,57 @@ public class ShieldBooster : ISpecial, IAbility {
     public float timeToCast { get; set; }
     public Object aoeTarget { get; set; }
 
-    private float lastUsedTime;
-    private Object explosion;
-    private Object grenade;
+    private float lastUsedTime { get; set; }
+    private Object regenField;
     private GameObject abilityObj;
 
     public int StrengthRequired { get; private set; }
     public int StaminaRequired { get; private set; }
     public int IntelligenceRequired { get; private set; }
 
-    private float effectLength = 10.0f;
-    private Object booster;
+    private float effectLength = 8.0f;
 
-    public ShieldBooster()
+    public Stimpak()
     {
         StrengthRequired = 0;
-        StaminaRequired = 6;
-        IntelligenceRequired = 0;
-        image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
-        id = 16;
-        name = "Shield Booster";
-        description = "Sets all players' defense to max within the effect circle";
-        effectiveRange = 15.0f;
-        baseDamage = 0.0f;
+        StaminaRequired = 2;
+        IntelligenceRequired = 2;
+        image = Resources.Load("Abilities/Stimpak", typeof(Image)) as Image;
+        id = 20;
+        name = "Stimpak";
+        effectiveRange = 5.0f;
+        baseDamage = 25.0f;
         timeToCast = 0.0f;
-        coolDownTime = 5.0f;
+        coolDownTime = 8.0f;
         lastUsedTime = -Mathf.Infinity;
-        energyRequired = 30.0f;
-        aoeTarget = Resources.Load("ShieldBooster/4x4BlueAuraTarget");
-        booster = Resources.Load("ShieldBooster/Booster");
+        energyRequired = 20.0f;
+        aoeTarget = null;
+        description = "Energy Up";
+        regenField = Resources.Load("Stimpak/StimBooster");
         abilityObj = GameObject.FindWithTag("AbilityHelper");
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
-    {  
-        abilityObj.GetComponent<AbilityHelper>().ShieldBoosterRoutine(player.attributes, target, effectLength, booster);
-        player.animController.AnimateUse(0.35f);
-
+    {
         lastUsedTime = Time.time;
-        player.resources.UseEnergy(energyRequired);
+        float adjustedDamage = baseDamage + player.attributes.Intelligence;
 
+        GameObject gb = Object.Instantiate(regenField, origin.transform.position, Quaternion.identity) as GameObject;
+        gb.GetComponent<StayWithPlayer>().player = origin.transform;
+        abilityObj.GetComponent<AbilityHelper>().StimpakRoutine(player.attributes, effectLength);
+
+        player.resources.currentEnergy += 50;
+        GameObject.Destroy(gb, 6.0f);
     }
 
     public void updatePassiveBonuses(CharacterAttributes attributes)
     {
 
+    }
+
+    public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
+    {
+        return player.resources.maxHealth - player.resources.currentHealth >= baseDamage;
     }
 
     public bool isReady()
@@ -74,12 +81,6 @@ public class ShieldBooster : ISpecial, IAbility {
         lastUsedTime = -Mathf.Infinity;
     }
 
-    public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
-    {
-
-        return player.attributes.Stamina > 15 || player.resources.currentHealth < 50;
-    }
-
     public float RemainingTime()
     {
         return lastUsedTime + coolDownTime - Time.time;
@@ -87,12 +88,11 @@ public class ShieldBooster : ISpecial, IAbility {
 
     public AbilityHelper.Action GetAction()
     {
-        return AbilityHelper.Action.AOE;
+        return AbilityHelper.Action.Equip;
     }
-
 
     public AbilityHelper.CoopAction GetCoopAction()
     {
-        return AbilityHelper.CoopAction.AOEHeal;
+        return AbilityHelper.CoopAction.InstantHeal;
     }
 }
