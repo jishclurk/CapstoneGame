@@ -23,39 +23,13 @@ public class SimpleGameManager : MonoBehaviour
     //autosaved state from last cp 
     public SavedState autosave;
 
-    void Awake()
-    {
-
-    }
 
     private void OnLevelWasLoaded(int level)
     {
-       // Debug.Log("on level was loaded 888888888");
-        //if (gameState != GameState.MAIN_MENU)
-       // {
-            cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
-            SetSavedState(autosave);
-            //if (newGame)
-            //{
-            //    Debug.Log("gm is loading new game");
-            //    NewGame();
-            //    newGame = false;
-            //}
-            //else
-            //{
-            //    newGame = false;
-            //    Debug.Log("gm is loading saved state");
-            //    SetSavedState(autosave);
+        Debug.Log("level was loaded");
+        cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
+        SetSavedState(SaveLoad.Load("autosave"));
 
-            //}
-
-       // }
-
-    }
-
-    private void Start()
-    {
-        Debug.Log("HERE 0000000000000000000000");
     }
 
     //State is changed and function set to OnStateChange is called
