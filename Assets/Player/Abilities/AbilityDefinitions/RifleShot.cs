@@ -41,7 +41,6 @@ public class RifleShot : IBasic, IAbility {
         lastUsedTime = Time.time;
         float adjustedDamage = baseDamage + player.attributes.TotalStrength * 0.5f;
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
-
         GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
         project.GetComponent<RifleProjectileScript>().destination = new Vector3(target.transform.position.x, (player.gunbarrel.position.y + target.transform.position.y)/2, target.transform.position.z);
         project.GetComponent<RifleProjectileScript>().targetedEnemy = target;

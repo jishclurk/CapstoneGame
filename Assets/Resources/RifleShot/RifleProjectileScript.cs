@@ -15,11 +15,11 @@ public class RifleProjectileScript : MonoBehaviour
 
     void Start()
     {
-        transform.LookAt(destination);
+        transform.LookAt(new Vector3(destination.x, transform.position.y, destination.z));
         projectileParticle = Instantiate(projectileParticle, transform.position, transform.rotation) as GameObject;
         projectileParticle.transform.parent = transform;
         Vector3 normalizedTrajectory = Vector3.Normalize(destination - transform.position);
-        GetComponent<Rigidbody>().velocity = normalizedTrajectory * 50.0f;
+        GetComponent<Rigidbody>().velocity = normalizedTrajectory * 45.0f;
     }
 
     /*
