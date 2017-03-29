@@ -116,6 +116,7 @@ public class PlayerResources : MonoBehaviour {
 
        //Destroy(gameObject, 5.0f);
         Debug.Log("Player died!");
+        tm.UpdateDeathCount();
         // Animation stuff goes here
     }
 

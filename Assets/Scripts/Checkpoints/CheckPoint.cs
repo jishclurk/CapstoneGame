@@ -27,25 +27,26 @@ public class CheckPoint : MonoBehaviour
     private bool inTrigger;
     private bool firstEnter;
     public bool finalCheckpoint;
-
+    public bool startCheckpoint;
 
     public void Start()
     {
+        if (!startCheckpoint)
+        {
+            CheckPointPopUp = transform.GetChild(0).gameObject.GetComponent<Canvas>();
+            SaveAsScreen = transform.GetChild(1).gameObject.GetComponent<Canvas>();
+
+            SaveAsScreen.enabled = false;
+            CheckPointPopUp.enabled = false;
+
+            nameInputField = SaveAsScreen.transform.GetChild(5).GetComponent<InputField>();
+            nameInputField.onEndEdit.AddListener(delegate { SaveGame(nameInputField.text, true); });
+        }
         inTrigger = false;
         firstEnter = true;
         checkpointReached = false;
 
-        CheckPointPopUp = transform.GetChild(0).gameObject.GetComponent<Canvas>();
-        SaveAsScreen = transform.GetChild(1).gameObject.GetComponent<Canvas>();
-
-        SaveAsScreen.enabled = false;
-        CheckPointPopUp.enabled = false;
-
-        nameInputField = SaveAsScreen.transform.GetChild(5).GetComponent<InputField>();
-        nameInputField.onEndEdit.AddListener(delegate { SaveGame(nameInputField.text, true); });
-
-
-        gm = SimpleGameManager.Instance;
+        gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();
         //Debug.Log(gm.level);
         tm = GameObject.Find("TeamManager").gameObject.GetComponent<TeamManager>();
         checkpointManager = transform.parent.gameObject.GetComponent<CheckpointManager>();

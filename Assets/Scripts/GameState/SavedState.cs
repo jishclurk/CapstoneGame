@@ -31,7 +31,7 @@ public class SavedState
 
     public void setFromGameManager()
     {
-        SimpleGameManager gm = SimpleGameManager.Instance;
+        SimpleGameManager gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();
         this.level = gm.level;
         //this.checkPoint = gm.getCheckpoint();
     }
