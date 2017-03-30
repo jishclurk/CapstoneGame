@@ -28,20 +28,20 @@ public class ChainLightning : ISpecial, IAbility {
     public ChainLightning()
     {
         StrengthRequired = 0;
-        StaminaRequired = 3;
+        StaminaRequired = 6;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/Zap", typeof(Image)) as Image;
-        id = 4;
-        name = "Zap";
+        id = 23;
+        name = "Chain Lightning";
         effectiveRange = 9.0f;
-        baseDamage = 40.0f;
+        baseDamage = 35.0f;
         timeToCast = 0.0f;
         coolDownTime = 10.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 30.0f;
         aoeTarget = null;
         description = "A quick Zap from your gun.";
-        bullet = Resources.Load("Zap/ZapObj");
+        bullet = Resources.Load("ChainLightning/ChainObj");
         abilityObj = GameObject.FindWithTag("AbilityHelper");
     }
 
@@ -49,12 +49,13 @@ public class ChainLightning : ISpecial, IAbility {
     {
         lastUsedTime = Time.time;
         float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
-        target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
 
         Vector3 playerToTarget = target.transform.position - player.gunbarrel.position;
         GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
-        project.GetComponent<ZapProjectileScript>().destination = new Vector3(target.transform.position.x, (player.gunbarrel.position.y + target.transform.position.y) / 2, target.transform.position.z);
-        project.GetComponent<ZapProjectileScript>().targetedEnemy = target;
+        project.GetComponent<ChainProjectileScript>().destination = new Vector3(target.transform.position.x, (player.gunbarrel.position.y + target.transform.position.y) / 2, target.transform.position.z);
+        project.GetComponent<ChainProjectileScript>().targetedEnemy = target;
+        project.GetComponent<ChainProjectileScript>().damage = adjustedDamage;
+        project.GetComponent<ChainProjectileScript>().enemyPool = player.watchedEnemies;
         player.resources.UseEnergy(energyRequired);
     }
 
@@ -75,13 +76,7 @@ public class ChainLightning : ISpecial, IAbility {
 
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
     {
-        bool use = false;
-        if(targetedEnemy != null)
-        {
-            EnemyHealth eh = targetedEnemy.GetComponent<EnemyHealth>();
-            use = eh.maxHealth - eh.currentHealth > baseDamage/2;
-        }
-        return use;
+        return player.watchedEnemies.Count > 2;
     }
 
     public float RemainingTime()

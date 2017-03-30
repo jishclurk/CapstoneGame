@@ -53,7 +53,7 @@ public class RIPRounds : ISpecial, IAbility {
 
     public bool isReady()
     {
-        return false;
+        return true;
     }
 
     public void setAsReady()
