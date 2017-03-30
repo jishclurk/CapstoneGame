@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 441272}
   - component: {fileID: 8237434}
   m_Layer: 0
-  m_Name: ZapProjectile
+  m_Name: ChainProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
