@@ -34,29 +34,27 @@ public class TeamManager : MonoBehaviour {
         gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();
 
         playerList = new List<Player>();
+
         //assign active player to user controller player
         for (int i = 0; i < prefabList.Length; i++)
         {
             Player player = prefabList[i].GetComponent<Player>();
-            //player.id = i+1;
             Debug.Log("ID: " + player.id);
 
             playerList.Add(player);
 
-            //Debug.Log(player);
-            //Debug.Log(player.strategy);
-            if (player.strategy.isplayerControlled)
-            {
-                activePlayer = player;
-            }
+         //   if (player.strategy.isplayerControlled)
+        //    {
+          //      activePlayer = player;
+           // }
         }
 
         playerList.Sort((x, y) => x.id - y.id);
 
         cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
-        cameraScript.activePlayerCharacter = activePlayer.gameObject;
+       // cameraScript.activePlayerCharacter = activePlayer.gameObject;
         visibleEnemies = new HashSet<GameObject>();
-        playerResources = activePlayer.GetComponent<PlayerResources>();
+       // playerResources = activePlayer.GetComponent<PlayerResources>();
         deathCount = 0;
     }
 
@@ -268,6 +266,7 @@ public class TeamManager : MonoBehaviour {
 
     public void LoadSavedState(SerializedPlayer[] state)
     {
+        Debug.Log("Setting saved state in tm");
         for (int i = 0; i<playerList.Count; i++)
         {
             SerializedPlayer playerState = state[i];
@@ -283,10 +282,11 @@ public class TeamManager : MonoBehaviour {
 
             if (playerState.isInControl)
             {
+                Debug.Log("found active player");
                 activePlayer = currentPlayer; 
                 currentPlayer.strategy.isplayerControlled = true;
                 playerResources = activePlayer.GetComponent<PlayerResources>();
-                cameraScript = Camera.main.GetComponent<OffsetCamera>(); 
+               // cameraScript = Camera.main.GetComponent<OffsetCamera>(); 
                 cameraScript.activePlayerCharacter = activePlayer.gameObject;
             }
 

@@ -504,7 +504,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 986fead5740847f46b02134b43dbc70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isplayerControlled: 1
+  isplayerControlled: 0
+  playerDataScript: {fileID: 0}
   playerScript: {fileID: 0}
   aiScript: {fileID: 0}
 --- !u!135 &135403203572723240

@@ -6,7 +6,7 @@ public class OffsetCamera : MonoBehaviour
 {
 
     public GameObject activePlayerCharacter;
-    private TeamManager tm;
+   // private TeamManager tm;
     private Vector3 offset;
     private bool followPlayer;
     private float radius;
@@ -25,8 +25,8 @@ public class OffsetCamera : MonoBehaviour
     //Simple script from Roll a Ball
     void Start()
     {
-        tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        activePlayerCharacter = tm.activePlayer.gameObject;
+       // tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
+        //activePlayerCharacter = tm.activePlayer.gameObject;
         float offsetXValue = 5f;
         offsetYValue = 9f;
         float offsetZValue = 5f;
@@ -41,8 +41,7 @@ public class OffsetCamera : MonoBehaviour
         xzRotationArray[7] = -offsetZValue;
         xzRotationArrayIndex = 4;
         offset = new Vector3(xzRotationArray[xzRotationArrayIndex], offsetYValue, xzRotationArray[xzRotationArrayIndex + 1]);
-        transform.position = activePlayerCharacter.transform.position + offset;
-        SmoothLookAt();
+       // SmoothLookAt();
         Debug.Log("offset:" + offset);
         followPlayer = false;
         radius = Mathf.Sqrt(offset.x * offset.x + offset.z * offset.z);
@@ -54,6 +53,14 @@ public class OffsetCamera : MonoBehaviour
         yPositionMax = offsetYValue + 3f;
         xRotationMin = 40f;
         xRotationMax = 50f;
+    }
+
+    public void setCamera(GameObject player)
+    {
+        activePlayerCharacter = player;
+        transform.position = activePlayerCharacter.transform.position + offset;
+        SmoothLookAt();
+
     }
 
     void LateUpdate()

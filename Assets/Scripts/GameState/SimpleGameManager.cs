@@ -29,6 +29,8 @@ public class SimpleGameManager : MonoBehaviour
 
     private ObjectiveManager objManager;
 
+    public Canvas GameOverScreen;
+
     private void Start()
     {
         Debug.Log("start");
@@ -36,6 +38,8 @@ public class SimpleGameManager : MonoBehaviour
         cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
         SetSavedState(SaveLoad.Load("autosave"));
         objManager = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>();
+        GameOverScreen = transform.GetChild(0).GetComponent<Canvas>();
+        GameOverScreen.enabled = false;
     }
 
     private void OnLevelWasLoaded(int level)
@@ -54,6 +58,7 @@ public class SimpleGameManager : MonoBehaviour
         {
             OnStateChange -= (function as OnStateChangeHandler);
         }
+        Debug.Log("here");
     }
 
     public void nextLevel()
@@ -68,6 +73,7 @@ public class SimpleGameManager : MonoBehaviour
 
     IEnumerator LoadScene(string sceneName)
     {
+        Debug.Log("Loading " + sceneName);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         while (!asyncLoad.isDone)
         {
@@ -84,13 +90,46 @@ public class SimpleGameManager : MonoBehaviour
         tm.LoadSavedState(saved.players);
         cpManager.setState(saved.checkPoint);
         GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>().loadState(saved.objectives);
+        Debug.Log( tm);
 
+        Debug.Log("active player" + tm.activePlayer.gameObject);
+        Camera.main.GetComponent<OffsetCamera>().setCamera(tm.activePlayer.gameObject);
+
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void unPause()
+    {
+        Time.timeScale = 1;
     }
 
     public void onDeath()
     {
         Debug.Log("DEAD");
-        SetSavedState(autosave);
+        OnStateChange += Pause;
+        SetGameState(GameState.PAUSE);
+        GameOverScreen.enabled = true;
+        //SetSavedState(autosave);
     }
 
+    public void toMain()
+    {
+        OnStateChange += unPause;
+        SetGameState(GameState.MAIN_MENU);
+        Debug.Log("here 2");
+        StartCoroutine(LoadScene("MainMenu"));
+    }
+
+    public void LoadAutoSave()
+    {
+        OnStateChange += unPause;
+        SetGameState(GameState.PLAY);
+        GameOverScreen.enabled = false;
+        SavedState autosave = SaveLoad.Load("autosave");
+        SetSavedState(autosave);
+    }
 }
