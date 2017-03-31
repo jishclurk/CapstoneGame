@@ -32,7 +32,7 @@ public class ShotgunShot : IBasic, IAbility {
         id = 9;
         name = "Shotgun Shot";
         effectiveRange = 8.0f;
-        baseDamage = 15.0f;
+        baseDamage = 5.0f;
         fireRate = 0.8f;
         lastUsedTime = 0.0f;
 
@@ -44,29 +44,17 @@ public class ShotgunShot : IBasic, IAbility {
         Vector3 targetDest = new Vector3(target.transform.position.x, player.gunbarrel.position.y, target.transform.position.z);
 
         float adjustedDamage = baseDamage + player.attributes.Strength * 0.5f;
-
-        GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
-        project.GetComponent<ShotgunProjectileScript>().destination = targetDest;
-        project.GetComponent<ShotgunProjectileScript>().rot = 0.0f;
-
-        GameObject project2 = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
-        project2.GetComponent<ShotgunProjectileScript>().destination = targetDest;
-        project2.GetComponent<ShotgunProjectileScript>().rot = 15.0f;
-
-        GameObject project3 = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
-        project3.GetComponent<ShotgunProjectileScript>().destination = targetDest;
-        project3.GetComponent<ShotgunProjectileScript>().rot = 30.0f;
-
-        GameObject project4 = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
-        project4.GetComponent<ShotgunProjectileScript>().destination = targetDest;
-        project4.GetComponent<ShotgunProjectileScript>().rot = -15.0f;
-
-        GameObject project5 = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
-        project5.GetComponent<ShotgunProjectileScript>().destination = targetDest;
-        project5.GetComponent<ShotgunProjectileScript>().rot = -30.0f;
+        
+        for(float shellRot = -30.0f; shellRot <30.1f; shellRot += 15.0f)
+        {
+            GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
+            project.GetComponent<ShotgunProjectileScript>().destination = targetDest;
+            project.GetComponent<ShotgunProjectileScript>().rot = shellRot;
+            project.GetComponent<ShotgunProjectileScript>().damage = adjustedDamage;
+        }
 
 
-        Vector3 playerToPoint = Vector3.Normalize(target.transform.position - player.transform.position) * effectiveRange;
+        /*Vector3 playerToPoint = Vector3.Normalize(target.transform.position - player.transform.position) * effectiveRange;
         HashSet<EnemyHealth> ehSet = new HashSet<EnemyHealth>();
         foreach (GameObject enemy in player.watchedEnemies)
         {
@@ -83,7 +71,7 @@ public class ShotgunShot : IBasic, IAbility {
                 }
             }
 
-        }
+        }*/
 
         //useEnergy not required*/
     }

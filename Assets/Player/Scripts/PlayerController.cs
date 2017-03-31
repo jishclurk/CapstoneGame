@@ -113,8 +113,10 @@ public class PlayerController : MonoBehaviour
         }
         else if (activeSpecialAbility != null && activeSpecialAbility.GetAction() == AbilityHelper.Action.Equip)
         {
-            if(activeSpecialAbility.RemainingTime() < activeSpecialAbility.coolDownTime - activeSpecialAbility.timeToCast)
+            animController.AnimateAimStanding();
+            if (activeSpecialAbility.RemainingTime() < activeSpecialAbility.coolDownTime - activeSpecialAbility.timeToCast)
             {
+                animController.AnimateIdle();
                 activeSpecialAbility = null;
             }
         }
