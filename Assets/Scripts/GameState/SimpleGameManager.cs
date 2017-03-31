@@ -41,10 +41,6 @@ public class SimpleGameManager : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         Debug.Log("level was loaded");
-        //tm = GameObject.Find("TeamManager").GetComponent<TeamManager>();
-        //cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
-        //SetSavedState(SaveLoad.Load("autosave"));
-        //objManager = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>();
     }
 
     //State is changed and function set to OnStateChange is called
