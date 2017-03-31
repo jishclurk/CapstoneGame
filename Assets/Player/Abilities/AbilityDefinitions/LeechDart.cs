@@ -30,7 +30,7 @@ public class LeechDart : ISpecial, IAbility {
         StrengthRequired = 2;
         StaminaRequired = 0;
         IntelligenceRequired = 2;
-        image = Resources.Load("Abilities/Zap", typeof(Image)) as Image;
+        image = Resources.Load("Abilities/LeechDartIcon", typeof(Image)) as Image;
         id = 26;
         name = "LeechDart";
         effectiveRange = 9.0f;

@@ -28,7 +28,7 @@ public class RIPRounds : ISpecial, IAbility {
         StrengthRequired = 6;
         StaminaRequired = 0;
         IntelligenceRequired = 0;
-        image = Resources.Load("Abilities/Zap", typeof(Image)) as Image;
+        image = Resources.Load("Abilities/RIPRoundsIcon", typeof(Image)) as Image;
         id = 14;
         name = "R.I.P. Rounds";
         effectiveRange = 0.0f;

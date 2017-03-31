@@ -32,7 +32,7 @@ public class Shockwave : ISpecial, IAbility {
         StrengthRequired = 3;
         StaminaRequired = 3;
         IntelligenceRequired = 0;
-        image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
+        image = Resources.Load("Abilities/ShockwaveIcon", typeof(Image)) as Image;
         id = 25;
         name = "Shockwave";
         description = "Knock Back enemies, damage them, do damage";

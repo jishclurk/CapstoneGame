@@ -33,7 +33,7 @@ public class Stimpak : ISpecial, IAbility
         StrengthRequired = 0;
         StaminaRequired = 2;
         IntelligenceRequired = 2;
-        image = Resources.Load("Abilities/Stimpak", typeof(Image)) as Image;
+        image = Resources.Load("Abilities/StimpakIcon", typeof(Image)) as Image;
         id = 20;
         name = "Stimpak";
         effectiveRange = 5.0f;

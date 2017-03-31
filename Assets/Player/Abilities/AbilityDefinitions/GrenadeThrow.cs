@@ -31,7 +31,7 @@ public class GrenadeThrow : ISpecial, IAbility {
         StrengthRequired = 3;
         StaminaRequired = 0;
         IntelligenceRequired = 0;
-        image = Resources.Load("Abilities/Grenade", typeof(Image)) as Image;
+        image = Resources.Load("Abilities/GrenadeThrowIcon", typeof(Image)) as Image;
         id = 0;
         name = "Grenade Throw";
         effectiveRange = 10.0f;

@@ -23,6 +23,7 @@ public class ChainProjectileScript : MonoBehaviour {
         projectileParticle.transform.parent = transform;
         Vector3 normalizedTrajectory = Vector3.Normalize(destination - transform.position);
         GetComponent<Rigidbody>().velocity = normalizedTrajectory * 35.0f;
+        Destroy(gameObject, 2.0f);
     }
 
     /*
