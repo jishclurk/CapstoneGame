@@ -55,7 +55,7 @@ public class SniperProjectileScript : MonoBehaviour
         {
             hasCollided = true;
             //transform.DetachChildren();
-            impactParticle = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, impactNormal)) as GameObject;
+            impactParticle = Instantiate(impactParticle, transform.TransformPoint(GetComponent<SphereCollider>().center), Quaternion.FromToRotation(Vector3.up, impactNormal)) as GameObject;
             //Debug.DrawRay(hit.contacts[0].point, hit.contacts[0].normal * 1, Color.yellow);
 
             //yield WaitForSeconds (0.05);
