@@ -260,7 +260,6 @@ public class AttackState : ICoopState
                 if (enemyHP.isDead)
                 {
                     //on kill, remove from both team manager visible enemies and all local watchedenemies
-                    aiPlayer.tm.RemoveDeadEnemy(aiPlayer.targetedEnemy.gameObject);
                     aiPlayer.targetedEnemy = null;
                     if (!aiPlayer.tm.IsTeamInCombat())
                     {
@@ -355,7 +354,6 @@ public class AttackState : ICoopState
                     if (enemyHP.isDead)
                     {
                         //on kill, remove from both team manager visible enemies and all local watchedenemies
-                        aiPlayer.tm.RemoveDeadEnemy(aiPlayer.targetedEnemy.gameObject);
                         aiPlayer.targetedEnemy = null;
                         if (!aiPlayer.tm.IsTeamInCombat())
                         {

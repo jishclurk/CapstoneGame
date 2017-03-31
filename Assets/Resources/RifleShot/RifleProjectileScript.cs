@@ -20,6 +20,7 @@ public class RifleProjectileScript : MonoBehaviour
         projectileParticle.transform.parent = transform;
         Vector3 normalizedTrajectory = Vector3.Normalize(destination - transform.position);
         GetComponent<Rigidbody>().velocity = normalizedTrajectory * 45.0f;
+        Destroy(gameObject, 3.0f);
     }
 
     /*

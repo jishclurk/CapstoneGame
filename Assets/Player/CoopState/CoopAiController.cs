@@ -188,6 +188,21 @@ public class CoopAiController : MonoBehaviour {
         }
     }
 
+    public void ResetVisibleEnemies()
+    {
+        StartCoroutine(resetColliderRoutine());
+    }
 
+    private IEnumerator resetColliderRoutine()
+    {
+        player.visibleEnemies.Clear();
+        player.watchedEnemies.Clear();
+        SphereCollider enemyTrigger = player.GetComponent<SphereCollider>();
+        enemyTrigger.enabled = false;
+
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        enemyTrigger.enabled = false;
+    }
 
 }

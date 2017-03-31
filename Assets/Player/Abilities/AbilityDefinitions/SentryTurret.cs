@@ -33,7 +33,7 @@ public class SentryTurret : ISpecial, IAbility {
         StrengthRequired = 0;
         StaminaRequired = 3;
         IntelligenceRequired = 3;
-        image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
+        image = Resources.Load("Abilities/SentryTurretIcon", typeof(Image)) as Image;
         id = 18;
         name = "Sentry Turret";
         description = "Spawns a turret";

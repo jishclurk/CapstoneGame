@@ -28,7 +28,7 @@ public class Invigorate : ISpecial, IAbility {
         StrengthRequired = 3;
         StaminaRequired = 0;
         IntelligenceRequired = 3;
-        image = Resources.Load("Abilities/Zap", typeof(Image)) as Image;
+        image = Resources.Load("Abilities/InvigorateIcon", typeof(Image)) as Image;
         id = 21;
         name = "Invigorate";
         effectiveRange = 0.0f;

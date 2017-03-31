@@ -76,6 +76,7 @@ public class EnemyHealth : MonoBehaviour {
     private void Death()
     {
         // Handle death animation stuff here
+        teamManager.RemoveDeadEnemy(gameObject);
         animator.AnimateDeath();
         teamManager.AwardExperience(experiencePoints);
         HideHealthBar();

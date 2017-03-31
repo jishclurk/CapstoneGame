@@ -30,7 +30,7 @@ public class ChainLightning : ISpecial, IAbility {
         StrengthRequired = 0;
         StaminaRequired = 6;
         IntelligenceRequired = 0;
-        image = Resources.Load("Abilities/Zap", typeof(Image)) as Image;
+        image = Resources.Load("Abilities/ChainLightningIcon", typeof(Image)) as Image;
         id = 23;
         name = "Chain Lightning";
         effectiveRange = 9.0f;

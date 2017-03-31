@@ -34,7 +34,7 @@ public class ShieldBooster : ISpecial, IAbility {
         StrengthRequired = 0;
         StaminaRequired = 6;
         IntelligenceRequired = 0;
-        image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
+        image = Resources.Load("Abilities/ShieldBoosterIcon", typeof(Image)) as Image;
         id = 16;
         name = "Shield Booster";
         description = "Sets all players' defense to max within the effect circle";

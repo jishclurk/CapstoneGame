@@ -80,11 +80,6 @@ public class ShotgunShot : IBasic, IAbility {
                 if (eh != null)
                 {
                     eh.TakeDamage(adjustedDamage);
-                    if (eh.isDead)
-                    {
-                        //on kill, remove from both team manager visible enemies and all local watchedenemies
-                        player.strategy.playerScript.tm.RemoveDeadEnemy(eh.gameObject);
-                    }
                 }
             }
 

@@ -23,6 +23,7 @@ public class ChainProjectileScript : MonoBehaviour {
         projectileParticle.transform.parent = transform;
         Vector3 normalizedTrajectory = Vector3.Normalize(destination - transform.position);
         GetComponent<Rigidbody>().velocity = normalizedTrajectory * 35.0f;
+        Destroy(gameObject, 2.0f);
     }
 
     /*
@@ -62,6 +63,7 @@ public class ChainProjectileScript : MonoBehaviour {
 
             //enemy takes damage
             other.GetComponent<EnemyHealth>().TakeDamage(damage);
+            enemyPool.Remove(other.gameObject);
 
             //new gameobject is born if damage hasn't been decreased too far
             GameObject newTarget = null;

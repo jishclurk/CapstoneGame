@@ -29,7 +29,7 @@ public class Revive : ISpecial, IAbility {
         StrengthRequired = 0;
         StaminaRequired = 0;
         IntelligenceRequired = 6;
-        image = Resources.Load("Abilities/Zap", typeof(Image)) as Image;
+        image = Resources.Load("Abilities/ReviveIcon", typeof(Image)) as Image;
         id = 17;
         name = "Revive";
         effectiveRange = 1.8f;

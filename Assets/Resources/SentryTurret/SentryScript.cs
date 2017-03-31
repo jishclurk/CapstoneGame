@@ -75,7 +75,6 @@ public class SentryScript : MonoBehaviour {
                 gunToFire++;
             } else if (targetedEnemy.GetComponent<EnemyHealth>().isDead)
             {
-                tm.RemoveDeadEnemy(targetedEnemy.gameObject);
                 visibleEnemies.Remove(targetedEnemy.gameObject);
                 watchedEnemies.Remove(targetedEnemy.gameObject);
             }

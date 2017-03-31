@@ -118,7 +118,6 @@ public class FlameThrowScript : MonoBehaviour {
                         if (eh.isDead)
                         {
                             //on kill, remove from both team manager visible enemies and all local watchedenemies
-                            castedPlayer.strategy.playerScript.tm.RemoveDeadEnemy(eh.gameObject);
                             castedPlayer.strategy.aiScript.targetedEnemy = null;
                         }
                     }
