@@ -7,6 +7,7 @@ public class FleeState : ICoopState
 
     private readonly CoopAiController aiPlayer;
     private float animSpeed;
+    private float resumeTime;
 
     public FleeState(CoopAiController coopAi)
     {
@@ -61,12 +62,13 @@ public class FleeState : ICoopState
         {
             aiPlayer.navMeshAgent.Resume();
             animSpeed = aiPlayer.walkSpeed;
+            resumeTime = Time.time + 1.5f;
         }
         else
         {
             aiPlayer.navMeshAgent.Stop();
             animSpeed = 0.0f;
-            if(aiPlayer.tm.activePlayer.visibleEnemies.Count > 0)
+            if(aiPlayer.tm.activePlayer.visibleEnemies.Count > 0 || Time.time > resumeTime)
             {
                 ToAttackState();
             }
@@ -77,5 +79,7 @@ public class FleeState : ICoopState
            
         }
     }
+
+
 
 }
