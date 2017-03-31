@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public enum GameState { INTRO, MAIN_MENU, PLAY, PAUSE, COMABT_PAUSE }
 
@@ -31,8 +32,13 @@ public class SimpleGameManager : MonoBehaviour
 
     public Canvas GameOverScreen;
 
+    public Canvas LoadingScreen;
+    private Text LoadingProgress;
+    private Image LoadingBar;
+
     private void Start()
     {
+
         Debug.Log("start");
         tm = GameObject.Find("TeamManager").GetComponent<TeamManager>();
         cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
@@ -40,6 +46,11 @@ public class SimpleGameManager : MonoBehaviour
         objManager = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>();
         GameOverScreen = transform.GetChild(0).GetComponent<Canvas>();
         GameOverScreen.enabled = false;
+        LoadingScreen = LoadingScreen.GetComponent<Canvas>();
+        LoadingProgress = LoadingScreen.GetComponentInChildren<Text>();
+        LoadingBar = LoadingScreen.transform.GetChild(1).GetComponent<Image>();
+        LoadingScreen.enabled = false;
+        percentComplete = 0f;
     }
 
     private void OnLevelWasLoaded(int level)
@@ -73,6 +84,7 @@ public class SimpleGameManager : MonoBehaviour
 
     IEnumerator LoadScene(string sceneName)
     {
+        LoadingScreen.enabled = true;
         Debug.Log("Loading " + sceneName);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         while (!asyncLoad.isDone)
@@ -131,5 +143,11 @@ public class SimpleGameManager : MonoBehaviour
         GameOverScreen.enabled = false;
         SavedState autosave = SaveLoad.Load("autosave");
         SetSavedState(autosave);
+    }
+
+    void OnGUI()
+    {
+        LoadingProgress.text = "Loading... ";
+        LoadingBar.fillAmount = percentComplete;
     }
 }

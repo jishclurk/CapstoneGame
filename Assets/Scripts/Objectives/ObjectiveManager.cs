@@ -80,6 +80,20 @@ public class ObjectiveManager : MonoBehaviour {
 
         return state;
     }
+
+    public bool LevelComplete()
+    {
+        bool complete = true;
+        foreach (GoalManager objective in objectives)
+        {
+            if (!objective.isComplete())
+            {
+                complete = false;
+                break;
+            }
+        }
+        return complete;
+    }
 }
 
 

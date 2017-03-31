@@ -70,7 +70,14 @@ public class CheckPoint : MonoBehaviour
             CheckPointPopUp.enabled = true;
             if (finalCheckpoint)
             {
-                CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [S] to save and continue/n Press [N] to continue";
+                if (objmanager.LevelComplete())
+                {
+                    CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [S] to save and continue/n Press [N] to continue";
+                }else
+                {
+                    CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Need to complete objectives to advance!  Press [S] to save";
+
+                }
             }
         }
     }
@@ -94,7 +101,7 @@ public class CheckPoint : MonoBehaviour
                 LanchSaveScreen();
                // CheckPointPopUp.enabled = false;
             }
-            if (finalCheckpoint)
+            if (finalCheckpoint && objmanager.LevelComplete())
             {
                 if (Input.GetKeyDown(KeyCode.N))
                 {
@@ -137,7 +144,7 @@ public class CheckPoint : MonoBehaviour
         autosave.players = tm.currentState();
         autosave.objectives = objmanager.currentState();
         autosave.checkPoint = checkpointManager.GetCheckPoint(this);
-        if (finalCheckpoint)
+        if (finalCheckpoint && objmanager.LevelComplete())
         {
             autosave.level++;
             autosave.checkPoint = 0;
@@ -157,7 +164,7 @@ public class CheckPoint : MonoBehaviour
         toSave.players = tm.currentState();
         toSave.objectives = objmanager.currentState();
         toSave.checkPoint = checkpointManager.GetCheckPoint(this);
-        if (finalCheckpoint) {
+        if (finalCheckpoint && objmanager.LevelComplete()) {
             toSave.level++;
             toSave.checkPoint = 0;
         }
@@ -199,7 +206,7 @@ public class CheckPoint : MonoBehaviour
         SaveAsScreen.enabled = false;
         gm.OnStateChange += UnPause;
         gm.SetGameState(GameState.PLAY);
-        if (finalCheckpoint)
+        if (finalCheckpoint && objmanager.LevelComplete())
         {
             gm.nextLevel();
         }

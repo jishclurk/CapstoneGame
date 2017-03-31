@@ -51,6 +51,10 @@ public class MainMenu : MonoBehaviour
             playerStart.intelligence = 1; 
             playerStart.id = i + 1;
             players[i] = playerStart;
+            if(i == 0)
+            {
+                playerStart.isInControl = true;
+            }
         }
 
         newGame.players = players;
