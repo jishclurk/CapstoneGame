@@ -76,17 +76,6 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(LoadGame("Level" + levelToLoad.ToString()));
     }
 
-    //private void Play()
-    //{
-    //    gm.SetGameState(GameState.PLAY);
-    //}
-
-    //public void LoadTest()
-    //{
-    //    Debug.Log("test");
-    //    LoadSavedGame("test");
-    //}
-
     //Loads game 
     IEnumerator LoadGame(string sceneName)
     {
@@ -106,8 +95,6 @@ public class MainMenu : MonoBehaviour
         LoadMenu.enabled = true;
         List<string> gameNames = SaveLoad.savedGames();
         Debug.Log(gameNames[0]);
-        //created buttons for each saved game
-
     }
 
     public void CloseLoadMenu()
@@ -116,18 +103,13 @@ public class MainMenu : MonoBehaviour
         Menu.enabled = true;
     }
 
-    //
     public void LoadSavedGame(string name)
     {
-      //  gm.newGame = false;
         LoadMenu.enabled = false;
         SavedState gameToLoad = SaveLoad.Load(name);
         Debug.Log(gameToLoad);
         SaveLoad.Save(gameToLoad, "autosave");
-            //gm.autosave = gameToLoad;
-            levelToLoad = gameToLoad.level;
-        //gm.OnStateChange += LoadLevel;
-        //  Play();
+        levelToLoad = gameToLoad.level;
         LoadLevel();
     }
 

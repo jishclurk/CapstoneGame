@@ -23,13 +23,28 @@ public class SimpleGameManager : MonoBehaviour
     //autosaved state from last cp 
     public SavedState autosave;
 
+    private float percentComplete;
+
+    private TeamManager tm;
+
+    private ObjectiveManager objManager;
+
+    private void Start()
+    {
+        Debug.Log("start");
+        tm = GameObject.Find("TeamManager").GetComponent<TeamManager>();
+        cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
+        SetSavedState(SaveLoad.Load("autosave"));
+        objManager = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>();
+    }
 
     private void OnLevelWasLoaded(int level)
     {
         Debug.Log("level was loaded");
-        cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
-        SetSavedState(SaveLoad.Load("autosave"));
-
+        //tm = GameObject.Find("TeamManager").GetComponent<TeamManager>();
+        //cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
+        //SetSavedState(SaveLoad.Load("autosave"));
+        //objManager = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>();
     }
 
     //State is changed and function set to OnStateChange is called
@@ -51,39 +66,30 @@ public class SimpleGameManager : MonoBehaviour
         Debug.Log("advance to level " + level);
         autosave.checkPoint = 0;
         autosave.level++;
-     //   LoadLevel(level);
+        StartCoroutine(LoadScene("Level" + level.ToString()));
     }
 
-    //Loads Level level
-    public static void LoadLevel(int level)
+
+    IEnumerator LoadScene(string sceneName)
     {
-        SceneManager.LoadScene("Level" + level.ToString());
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+        while (!asyncLoad.isDone)
+        {
+            percentComplete = asyncLoad.progress;
+            yield return null;
+        }
+
     }
 
     //after the level of saved in loaded, sets the state of the game
     public void SetSavedState(SavedState saved)
     {
         level = saved.level;
-        GameObject.Find("TeamManager").GetComponent<TeamManager>().LoadSavedState(saved.players);
+        tm.LoadSavedState(saved.players);
         cpManager.setState(saved.checkPoint);
         GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>().loadState(saved.objectives);
 
     }
-
-    //sets up new game
-    //public void NewGame()
-    //{
-    //    //create last saved start as start state 
-    //    Debug.Log("new game");
-    //    //name = null;
-    //    //hasBeenSaved = false;
-    //    level = 1;
-    //    autosave = new SavedState();
-    //    autosave.level = level;
-    //    autosave.checkPoint = 0;
-    //    autosave.players = GameObject.Find("TeamManager").GetComponent<TeamManager>().currentState();
-    //    autosave.objectives = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>().currentState();
-    //}
 
     public void onDeath()
     {
@@ -91,8 +97,4 @@ public class SimpleGameManager : MonoBehaviour
         SetSavedState(autosave);
     }
 
-    public void AutoSave()
-    {
-        //  TO DO
-    }
 }

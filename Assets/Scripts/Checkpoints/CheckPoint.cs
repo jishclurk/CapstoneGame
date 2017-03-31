@@ -57,28 +57,31 @@ public class CheckPoint : MonoBehaviour
     //called when player is 'close' to the checkpoint
     public void OnTriggerEnter(Collider other)
     {
-
         if (other.gameObject.tag.Equals("Player") && (!other.isTrigger) && !inTrigger)
         {
             if (firstEnter)
             {
-                gm.AutoSave();
-                //checkpointManager.UpdateCheckpoints();
+                autosave();
                 firstEnter = false;
                 checkpointReached = true;
-                if (finalCheckpoint)
-                {
-                    checkpointManager.FinallCheckPointReached();
-                }
+              
             }
             inTrigger = true;
             CheckPointPopUp.enabled = true;
             if (finalCheckpoint)
             {
                 CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [S] to save and continue/n Press [N] to continue";
-
             }
-           
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (inTrigger)
+        {
+            Debug.Log("EXITED TRIGGER");
+            CheckPointPopUp.enabled = false;
+            inTrigger = false;
         }
     }
 
@@ -91,27 +94,17 @@ public class CheckPoint : MonoBehaviour
                 LanchSaveScreen();
                // CheckPointPopUp.enabled = false;
             }
-            if (checkpointManager.levelCompleted)
+            if (finalCheckpoint)
             {
                 if (Input.GetKeyDown(KeyCode.N))
                 {
+                    Debug.Log("MOVING TO NEXT LEVEL");
                     Debug.Log(gm.level);
                     gm.nextLevel();
                 }
             }
 
         }
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if (inTrigger)
-        {
-            Debug.Log("EXITED TRIGGER");
-            CheckPointPopUp.enabled = false;
-            inTrigger = false;
-        }
-     
     }
 
     public void ToMain()
@@ -135,6 +128,24 @@ public class CheckPoint : MonoBehaviour
             SaveAsScreen.enabled = true;
     }
 
+    private void autosave()
+    {
+        Debug.Log("autosaving");
+        SavedState autosave = new SavedState();
+        autosave.setFromGameManager();
+        autosave.name = "autosave";
+        autosave.players = tm.currentState();
+        autosave.objectives = objmanager.currentState();
+        autosave.checkPoint = checkpointManager.GetCheckPoint(this);
+        if (finalCheckpoint)
+        {
+            autosave.level++;
+            autosave.checkPoint = 0;
+        }
+        SaveLoad.Save(autosave, "autosave");
+        gm.autosave = autosave;
+    }
+
     //Sets game name as input in InputFeild, saves the game 
     public void SaveGame(string name, bool newGame)
     {
@@ -146,19 +157,17 @@ public class CheckPoint : MonoBehaviour
         toSave.players = tm.currentState();
         toSave.objectives = objmanager.currentState();
         toSave.checkPoint = checkpointManager.GetCheckPoint(this);
-        if (checkpointManager.levelCompleted) {
+        if (finalCheckpoint) {
             toSave.level++;
             toSave.checkPoint = 0;
         }
         SaveLoad.Save(toSave,name);
         if (newGame)
         {
-
             checkpointManager.UpdateButtons(name);
         }
         Debug.Log("saved");
         progressGame();
-        //
     }
 
     //Freezes game
@@ -190,7 +199,7 @@ public class CheckPoint : MonoBehaviour
         SaveAsScreen.enabled = false;
         gm.OnStateChange += UnPause;
         gm.SetGameState(GameState.PLAY);
-        if (checkpointManager.levelCompleted)
+        if (finalCheckpoint)
         {
             gm.nextLevel();
         }

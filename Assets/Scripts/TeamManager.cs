@@ -33,8 +33,6 @@ public class TeamManager : MonoBehaviour {
         tacticalPause = GameObject.Find("TacticalPause").GetComponent<TacticalPause>();
         gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();
 
-       // prefabList = GameObject.FindGameObjectsWithTag("Player");
-
         playerList = new List<Player>();
         //assign active player to user controller player
         for (int i = 0; i < prefabList.Length; i++)

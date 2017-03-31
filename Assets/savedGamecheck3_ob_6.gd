@@ -2,7 +2,7 @@
 <GameState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <name>check3_ob_6</name>
   <Level>1</Level>
-  <Check_x0020_Point>3</Check_x0020_Point>
+  <Check_x0020_Point>5</Check_x0020_Point>
   <Players>
     <Player>
       <In_x0020_Control>true</In_x0020_Control>
