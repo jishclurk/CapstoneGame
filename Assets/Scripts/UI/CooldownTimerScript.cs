@@ -20,7 +20,7 @@ public class CooldownTimerScript : MonoBehaviour {
         ISpecial abil = tm.activePlayer.abilities.abilityArray[index];
         if (abil != null)
         {
-            bool visible = abil.isReady();
+            bool visible = !(abil.isReady());
             Overlay.gameObject.SetActive(visible);
             Timer.gameObject.SetActive(visible);
             if (visible)
@@ -31,6 +31,5 @@ public class CooldownTimerScript : MonoBehaviour {
                 Timer.text = ((int)timeLeft).ToString();
             }
         }
-        
 	}
 }

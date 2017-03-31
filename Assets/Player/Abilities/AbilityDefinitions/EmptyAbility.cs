@@ -45,7 +45,7 @@ public class EmptyAbility : ISpecial, IAbility {
 
     public bool isReady()
     {
-        return false;
+        return true;
     }
 
     public void setAsReady()
