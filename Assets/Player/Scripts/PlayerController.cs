@@ -301,7 +301,6 @@ public class PlayerController : MonoBehaviour
                 abilities.Basic.Execute(player, gameObject, targetedEnemy.gameObject);
                 if (targetedEnemy.GetComponent<EnemyHealth>().isDead)
                 {
-                    tm.RemoveDeadEnemy(targetedEnemy.gameObject);
                     navMeshAgent.destination = transform.position;
                 }
             }
@@ -378,7 +377,6 @@ public class PlayerController : MonoBehaviour
 
                 if (specialTargetedEnemy != null && target.GetComponent<EnemyHealth>().isDead)
                 {
-                    tm.RemoveDeadEnemy(target.gameObject);
                     if (changeTargetOnSpecial)
                     {
                         targetedEnemy = null;

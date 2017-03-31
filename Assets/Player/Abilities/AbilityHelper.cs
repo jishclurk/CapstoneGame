@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AbilityHelper : MonoBehaviour {
 
@@ -120,6 +121,39 @@ public class AbilityHelper : MonoBehaviour {
         attributes.PassiveStrength -= 10;
     }
 
+    // SHOCKWAVE //
+    public void ShockwaveRoutine(Transform playerOrigin, GameObject target, Object blast, float damage, float stunLength)
+    {
+        AOETargetController aoeController = target.GetComponent<AOETargetController>();
+        GameObject[] affectedEnemiesCopy = new GameObject[aoeController.affectedEnemies.Count];
+        aoeController.affectedEnemies.CopyTo(affectedEnemiesCopy);
+        Instantiate(blast, playerOrigin.position, Quaternion.Euler(-90, 0, 0));
+        foreach (GameObject enemy in affectedEnemiesCopy)
+        {
+            Vector3 nextEnemyPos = (Vector3.Normalize(enemy.transform.position - playerOrigin.position) * 10.0f) + playerOrigin.position;
+            StartCoroutine(ShockwaveEnemy(enemy.transform, nextEnemyPos, 0.5f));
+            enemy.GetComponent<EnemyHealth>().TakeDamage(damage);
+        }
+        Destroy(target);
+    }
+
+    IEnumerator ShockwaveEnemy(Transform enemy, Vector3 target, float overTime)
+    {
+        float startTime = Time.time;
+        float initialZ = enemy.position.z;
+        float initialX = enemy.position.x;
+        NavMeshAgent nav = enemy.GetComponent<NavMeshAgent>();
+        while (Time.time < startTime + overTime)
+        {
+            Vector3 newPosition = enemy.position;
+            newPosition.z = Mathf.Lerp(initialZ, target.z, (Time.time - startTime) / overTime);
+            newPosition.x = Mathf.Lerp(initialX, target.x, (Time.time - startTime) / overTime);
+            nav.Warp(newPosition);
+
+            yield return null;
+        }
+    }
+
 
     //CO-OP HELPER METHODS//
     public void CoopExecuteAOE(Player player, GameObject origin, GameObject aoeTarget, ISpecial ability)
@@ -162,6 +196,8 @@ public class AbilityHelper : MonoBehaviour {
             yield return null;
         }
     }
+
+
 
     //
 

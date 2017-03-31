@@ -144,10 +144,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0bb3da1abac1c2438da0cbe63b49f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactParticle: {fileID: 159846, guid: 38a433e4fef13024980d5e37b32173a0, type: 2}
+  impactParticle: {fileID: 159846, guid: f0228a79b477ba041b34980eb4cf5eef, type: 2}
   destination: {x: 0, y: 0, z: 0}
   damage: 0
   targetedEnemy: {fileID: 0}
-  projectileParticle: {fileID: 180268, guid: 55d588e5376b3044f875eafe23279dc6, type: 2}
+  projectileParticle: {fileID: 180268, guid: e1b6c532f05effc47bdf17427ef736c6, type: 2}
   trailParticles: []
   impactNormal: {x: 0, y: 0, z: 0}

@@ -51,9 +51,9 @@ public class AOETargetController : MonoBehaviour
                     }
                     else
                     {
-                        location = new Vector3(hit.point.x, hit.point.y + 0.3f, hit.point.z);
+                        location = new Vector3(hit.point.x, hit.point.y, hit.point.z);
                         Vector3 playerToPoint = location - activePlayer.transform.position;
-                        Vector3 adjustedPosition = activePlayer.transform.position + (Vector3.Normalize(playerToPoint) * effectiveRange);
+                        Vector3 adjustedPosition = activePlayer.transform.position + (Vector3.Normalize(playerToPoint) * effectiveRange) + new Vector3(0, 0.3f, 0);
                         transform.position = adjustedPosition;
                     }
 

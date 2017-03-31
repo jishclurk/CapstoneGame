@@ -62,6 +62,7 @@ public class ChainProjectileScript : MonoBehaviour {
 
             //enemy takes damage
             other.GetComponent<EnemyHealth>().TakeDamage(damage);
+            enemyPool.Remove(other.gameObject);
 
             //new gameobject is born if damage hasn't been decreased too far
             GameObject newTarget = null;
