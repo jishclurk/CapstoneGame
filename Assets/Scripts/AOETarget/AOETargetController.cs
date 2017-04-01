@@ -48,6 +48,9 @@ public class AOETargetController : MonoBehaviour
                     {
                         location = new Vector3(hit.point.x, hit.point.y + 0.3f, hit.point.z);
                         transform.position = location;
+                        float holdXRot = transform.eulerAngles.x;
+                        transform.LookAt(activePlayer.transform.position);
+                        transform.rotation = Quaternion.Euler(holdXRot, transform.eulerAngles.y, transform.eulerAngles.z);
                     }
                     else
                     {
@@ -55,6 +58,9 @@ public class AOETargetController : MonoBehaviour
                         Vector3 playerToPoint = location - activePlayer.transform.position;
                         Vector3 adjustedPosition = activePlayer.transform.position + (Vector3.Normalize(playerToPoint) * effectiveRange) + new Vector3(0, 0.3f, 0);
                         transform.position = adjustedPosition;
+                        float holdXRot = transform.eulerAngles.x;
+                        transform.LookAt(activePlayer.transform.position);
+                        transform.rotation = Quaternion.Euler(holdXRot, transform.eulerAngles.y, transform.eulerAngles.z);
                     }
 
                 }

@@ -154,6 +154,22 @@ public class AbilityHelper : MonoBehaviour {
         }
     }
 
+    // FLAME WALL //
+    public void FlameWallRoutine(Player player, GameObject target, float damage, float effectLength, Object wall)
+    {
+
+        GameObject flameWall = Instantiate(wall, player.transform.position, Quaternion.identity) as GameObject;
+        flameWall.GetComponent<FlameWallScript>().damage = damage;
+        //set flamewall stuff
+
+        flameWall.transform.LookAt(target.transform);
+        StartCoroutine(MoveObject(flameWall.transform, target.transform, 0.3f));
+        Destroy(target, 0.35f);
+        Destroy(flameWall, effectLength);
+    }
+
+
+
 
     //CO-OP HELPER METHODS//
     public void CoopExecuteAOE(Player player, GameObject origin, GameObject aoeTarget, ISpecial ability)
