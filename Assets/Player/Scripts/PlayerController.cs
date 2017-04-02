@@ -44,7 +44,9 @@ public class PlayerController : MonoBehaviour
 
     private GameObject aoeArea;
 
-
+    private bool firstClick;
+    [HideInInspector]
+    public bool inheritDefendState = false;
 
     // Use this for initialization
     //things local to player go here
@@ -82,8 +84,9 @@ public class PlayerController : MonoBehaviour
         //PLAYER INPUT//
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Input.GetButton("Fire2"))
+        if (Input.GetButtonDown("Fire2") || firstClick && Input.GetButton("Fire2"))
         {
+            firstClick = true;
             if (Physics.Raycast(ray, out hit, 100f, Layers.Enemy | Layers.Floor))
             {
                 HandleRayCastHit(hit);
@@ -163,11 +166,23 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            animSpeed = walkSpeed;
-            friendClicked = false;
-            navMeshAgent.destination = hit.point;
-            transform.LookAt(new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z));
-            navMeshAgent.Resume();
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                navMeshAgent.destination = hit.point;
+                navMeshAgent.Resume();
+                inheritDefendState = true;
+                tm.cycleActivePlayer();
+            }
+            else
+            {
+                animSpeed = walkSpeed;
+                friendClicked = false;
+                navMeshAgent.destination = hit.point;
+                transform.LookAt(new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z));
+                navMeshAgent.Resume();
+            }
+
         }
 
         if (!enemyClicked && targetedEnemy != null)
@@ -458,7 +473,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             if (navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance)
-                animController.AnimateMovement(animSpeed);
+                animController.AnimateMovement(animSpeed); //animController.AnimateMovement(navMeshAgent.velocity.magnitude/navMeshAgent.speed); for smooth walking
             else
                 animController.AnimateIdle();
         }
@@ -484,6 +499,7 @@ public class PlayerController : MonoBehaviour
         animSpeed = 0.0f;
         specialTargetedEnemy = null;
         activeSpecialAbility = null;
+        firstClick = false;
         if(aoeArea != null)
         {
             Destroy(aoeArea);

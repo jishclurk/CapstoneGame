@@ -36,8 +36,6 @@ public class Strategy : MonoBehaviour {
     {
         isplayerControlled = true;
         playerScript.ResetOnSwitch(); //reset player to default values Why do this? reset run and targets
-
-
         //set values based on previous ai control
 
         //playercontroller only inherits targeted enemy as visible
@@ -53,6 +51,7 @@ public class Strategy : MonoBehaviour {
             playerDataScript.visibleEnemies.Add(playerScript.targetedEnemy.gameObject);
         }
 
+
         aiScript.enabled = false;
         playerScript.enabled = true;
 
@@ -61,9 +60,21 @@ public class Strategy : MonoBehaviour {
     public void setAsCoopAI()
     {
         isplayerControlled = false;
+        bool inheritDefend = playerScript.inheritDefendState;
+        Vector3 dest = GetComponent<UnityEngine.AI.NavMeshAgent>().destination;
+
         playerScript.ResetOnSwitch(); //reset player to default values. Why do this? Disable AOETarget
         aiScript.ResetOnSwitch(); //reset ai default values
         //set values based on previous player control
+        if (inheritDefend)
+        {
+            GetComponent<UnityEngine.AI.NavMeshAgent>().destination = dest;
+            aiScript.SetToDefendState(8.0f);
+        }
+
+       
+       
+
 
         aiScript.enabled = true;
         playerScript.enabled = false;

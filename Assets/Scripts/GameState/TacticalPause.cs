@@ -91,6 +91,7 @@ public class TacticalPause : MonoBehaviour {
 
             if (Input.GetKeyDown(KeyCode.Tab))
             {
+                displayedPlayer = tm.activePlayer; //note to Claudia, this is my "bandaid" fix for some nulls if you tab before pressing c
                 int displayedPlayerId = displayedPlayer.id;
                 if (displayedPlayerId < 4)
                 {

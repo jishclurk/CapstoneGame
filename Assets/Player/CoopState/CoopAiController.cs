@@ -21,11 +21,11 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector]
     public float followDist = 3.8f;
     [HideInInspector]
-    public float randomDist = 0.8f; //followDist is + or - this value
+    public float randomDist = 0.6f; //followDist is + or - this value
     [HideInInspector]
     public float followEpsilon = 2.0f; //Determines how far player has to move for ai to start to follow again.
     [HideInInspector]
-    public float chaseEpsilon = 2.0f;
+    public float chaseEpsilon = 2.2f;
     [HideInInspector]
     public float navSpeedDefault;
 
@@ -84,6 +84,8 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector] public CastState castState;
     [HideInInspector]
     public FleeState fleeState;
+    [HideInInspector]
+    public DefendState defendState;
 
     private void Awake()
     {
@@ -92,6 +94,7 @@ public class CoopAiController : MonoBehaviour {
         attackState = new AttackState(this);
         castState = new CastState(this);
         fleeState = new FleeState(this);
+        defendState = new DefendState(this);
 
         anim = GetComponent<Animator>();
         walkSpeed = 1.0f;
@@ -162,6 +165,7 @@ public class CoopAiController : MonoBehaviour {
     {
         targetedEnemy = null;
         currentState = idleState;
+        StopAllCoroutines();
         navMeshAgent.speed = navSpeedDefault;
         if (abilities != null)
         {
@@ -188,10 +192,40 @@ public class CoopAiController : MonoBehaviour {
         }
     }
 
+    public void SetCoopPreferences()
+    {
+        idleState = new IdleState(this);
+        moveState = new MoveState(this);
+        attackState = new AttackState(this);
+        castState = new CastState(this);
+        fleeState = new FleeState(this);
+        defendState = new DefendState(this);
+    }
+
+
+    public void SetToDefendState(float duration)
+    {
+        StartCoroutine(DefendRoutine(duration));
+    }
+
+    private IEnumerator DefendRoutine(float delay)
+    {
+        currentState = defendState;
+        yield return new WaitForFixedUpdate();
+        navMeshAgent.Resume();
+        yield return new WaitForSeconds(delay);
+        if (currentState == defendState)
+        {
+            currentState = idleState;
+        }
+    }
+
     public void ResetVisibleEnemies()
     {
         StartCoroutine(resetColliderRoutine());
     }
+
+
 
     private IEnumerator resetColliderRoutine()
     {
