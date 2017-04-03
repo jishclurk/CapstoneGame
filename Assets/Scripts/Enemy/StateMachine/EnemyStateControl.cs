@@ -43,13 +43,15 @@ public class EnemyStateControl : MonoBehaviour {
     [HideInInspector]
     public TeamManager tm;
 
+    [HideInInspector]
+    public bool isStunned;
+
     private EnemyMobKnowledge mobKnowledge;
     private EnemyHealth health;
     private GameObject chaseTarget;
     private PlayerResources chaseTargetResources;
     private List<GameObject> visiblePlayers;
     private bool isTargetting;
-
 
     private void Awake()
     {

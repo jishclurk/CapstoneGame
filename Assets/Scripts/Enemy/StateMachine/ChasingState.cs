@@ -82,8 +82,10 @@ public class ChasingState : IEnemyState {
     private void Chase()
     {
         enemy.navMeshAgent.destination = enemy.GetTargetPosition();
-        enemy.navMeshAgent.Resume();
         enemy.animator.AnimateMovement();
+
+        if (!enemy.isStunned)
+            enemy.navMeshAgent.Resume();
     }
 
 }

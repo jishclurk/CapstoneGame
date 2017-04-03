@@ -58,8 +58,10 @@ public class ReturningState : IEnemyState {
     private void ReturnToSpawn()
     {
         enemy.navMeshAgent.destination = enemy.returnPosition;
-        enemy.navMeshAgent.Resume();
         enemy.animator.AnimateMovement();
+
+        if (!enemy.isStunned)
+            enemy.navMeshAgent.Resume();
 
         // Have to manually do this because using pathStatus doesn't work
         if (enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance)
