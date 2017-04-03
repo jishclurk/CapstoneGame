@@ -23,6 +23,9 @@ public class EnemyHealth : MonoBehaviour {
     public bool isDead { get { return currentHealth <= 0; } }
     public bool isDamaged { get { return currentHealth < maxHealth; } }
 
+    private float burnDamage = 0.0f;
+    private float burnTickSeconds = 1.0f;
+
     private bool deathHandled = false;
     private Image healthBar;
     private GameObject healthBarCanvas;
@@ -46,6 +49,7 @@ public class EnemyHealth : MonoBehaviour {
         damageText = healthBarCanvas.transform.FindChild("FloatingDamageText").gameObject;
         damageTextTrans = damageText.transform;
         teamManager = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
+        StartCoroutine(ApplyBurnDamage());
     }
 
     void Update()
@@ -72,6 +76,16 @@ public class EnemyHealth : MonoBehaviour {
         }
     }
 
+    public void TakeBurnDamage(float amount)
+    {
+        burnDamage += amount;
+    }
+
+    public void TakeStunDamage(float amount)
+    {
+        TakeDamage(amount);
+        animator.AnimateStun();
+    }
 
     private void Death()
     {
@@ -105,5 +119,32 @@ public class EnemyHealth : MonoBehaviour {
         txt.color = new Color(1, Mathf.Clamp((255 - (2 * damage * (maxHealth / 255))), 0, 255) / 255, 0, 1);
         txt.text = ((int)damage).ToString();
         newDmg.SetActive(true);
+    }
+
+    private IEnumerator ApplyBurnDamage()
+    {
+        float lastBurnDamage = 0.0f;
+        int numTicksDuration = 5;
+        int tickCheck = 0;
+        while (true)
+        {
+            yield return new WaitForSeconds(burnTickSeconds);
+            if (burnDamage > 0)
+            {
+                TakeDamage(burnDamage);
+                if (burnDamage > lastBurnDamage)
+                {
+                    lastBurnDamage = burnDamage;
+                    tickCheck = numTicksDuration;
+                }
+
+                tickCheck -= 1;
+                if (tickCheck <= 0)
+                {
+                    burnDamage = 0;
+                    lastBurnDamage = 0;
+                }
+            }
+        }
     }
 }

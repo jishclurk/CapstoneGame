@@ -6,7 +6,7 @@ public class EnemyAnimationController : MonoBehaviour {
 
     private Animator animator;
 
-    private enum AnimState { Idle, Attacking, Running}
+    private enum AnimState { Idle, Attacking, Running }
 
     private AnimState currentAnim;
 
@@ -49,5 +49,15 @@ public class EnemyAnimationController : MonoBehaviour {
             animator.SetTrigger("attacking");
             currentAnim = AnimState.Attacking;
         }
+    }
+
+    public void AnimateStun()
+    {
+        animator.SetBool("stunned", true);
+    }
+
+    public void EndStunAnimation()
+    {
+        animator.SetBool("stunned", false);
     }
 }
