@@ -130,7 +130,6 @@ public class AbilityHelper : MonoBehaviour {
         Instantiate(blast, playerOrigin.position, Quaternion.Euler(-90, 0, 0));
         foreach (GameObject enemy in affectedEnemiesCopy)
         {
-            enemy.GetComponent<EnemyHealth>().TakeStunDamage(1);
             Vector3 nextEnemyPos = (Vector3.Normalize(enemy.transform.position - playerOrigin.position) * 9.0f) + playerOrigin.position;
             StartCoroutine(ShockwaveEnemy(enemy.transform, nextEnemyPos, 0.5f));
             enemy.GetComponent<EnemyHealth>().TakeDamage(damage);
@@ -153,7 +152,8 @@ public class AbilityHelper : MonoBehaviour {
 
             yield return null;
         }
-        
+        enemy.GetComponent<EnemyHealth>().TakeStunDamage(1);
+
     }
 
     // FLAME WALL //
