@@ -12,7 +12,7 @@ public class FlameWallScript : MonoBehaviour {
         if (!other.isTrigger && other.tag.Equals("Enemy") && !other.GetComponent<EnemyHealth>().isDead)
         {
             other.GetComponent<EnemyHealth>().TakeDamage(damage);
-            //burn effect
+            other.GetComponent<EnemyHealth>().TakeBurnDamage(2);
         }
 
     }

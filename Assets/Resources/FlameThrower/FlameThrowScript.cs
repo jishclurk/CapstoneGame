@@ -12,6 +12,7 @@ public class FlameThrowScript : MonoBehaviour {
     public Player castedPlayer;
     public float damage;
     private ParticleSystem ps;
+    private AudioSource sound;
     private Light lite;
     private bool damageOn;
 
@@ -24,6 +25,7 @@ public class FlameThrowScript : MonoBehaviour {
         damage = 0; //set by Ability
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         ps = GetComponent<ParticleSystem>();
+        sound = GetComponent<AudioSource>();
         lite = transform.FindChild("Point light").GetComponent<Light>();
         damageOn = false;
     }
@@ -47,8 +49,10 @@ public class FlameThrowScript : MonoBehaviour {
                 if (!ps.isPlaying)
                 {
                     ps.Play();
+                    sound.Play();
                     lite.enabled = true;
                 }
+
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
@@ -66,6 +70,7 @@ public class FlameThrowScript : MonoBehaviour {
             {
                 if (ps.isPlaying)
                 {
+                    sound.Stop();
                     ps.Stop();
                     lite.enabled = false;
                 }
@@ -81,6 +86,7 @@ public class FlameThrowScript : MonoBehaviour {
                 if (!ps.isPlaying)
                 {
                     ps.Play();
+                    sound.Play();
                     lite.enabled = true;
                 }
                 playerToPoint = Vector3.Normalize(castedPlayer.strategy.aiScript.targetedEnemy.position - castedPlayer.transform.position) * effectiveRange;
@@ -91,6 +97,7 @@ public class FlameThrowScript : MonoBehaviour {
                 if (ps.isPlaying)
                 {
                     ps.Stop();
+                    sound.Stop();
                     lite.enabled = false;
                 }
                 damageOn = false;

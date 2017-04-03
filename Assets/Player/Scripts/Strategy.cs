@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Strategy : MonoBehaviour {
 
     public bool isplayerControlled; //who starts as AI controlled or not will be set in inspector for now.
@@ -10,6 +12,12 @@ public class Strategy : MonoBehaviour {
     public PlayerController playerScript;
     public CoopAiController aiScript;
     private TeamManager tm;
+
+    //attack prefs
+    [HideInInspector]
+    public enum AbilityPref { Agressive, Offensive, Defensive, Balanced, None };
+    [HideInInspector]
+    public enum TargetPref { Closest, Lowest, Active };
 
     // Use this for initialization
     void Start () {
@@ -27,10 +35,6 @@ public class Strategy : MonoBehaviour {
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void setAsPlayer()
     {
@@ -72,10 +76,6 @@ public class Strategy : MonoBehaviour {
             aiScript.SetToDefendState(8.0f);
         }
 
-       
-       
-
-
         aiScript.enabled = true;
         playerScript.enabled = false;
 
@@ -95,5 +95,22 @@ public class Strategy : MonoBehaviour {
         isplayerControlled = false;
         aiScript.enabled = false;
         playerScript.enabled = false;
+    }
+
+    public void SetCoopTargetPref(Strategy.TargetPref pref)
+    {
+        aiScript.targetChoose = pref;
+        aiScript.SetCoopPreferences();
+    }
+
+    public void SetCoopAbilityPref(Strategy.AbilityPref pref)
+    {
+        aiScript.abilityChoose = pref;
+        aiScript.SetCoopPreferences();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
     }
 }

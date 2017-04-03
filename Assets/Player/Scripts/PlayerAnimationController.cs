@@ -6,6 +6,7 @@ public class PlayerAnimationController : MonoBehaviour {
 
     private Animator animator;
     private bool deathAnimated;
+    private bool idleAnimated;
 
     // Use this for initialization
     void Awake()
@@ -30,6 +31,7 @@ public class PlayerAnimationController : MonoBehaviour {
         animator.SetFloat("Y", 0.0f);
         animator.SetBool("Dead", false);
         deathAnimated = false;
+        idleAnimated = false;
     }
 
 
@@ -47,6 +49,7 @@ public class PlayerAnimationController : MonoBehaviour {
     {
         if (!deathAnimated)
         {
+            idleAnimated = false;
             animator.SetFloat("Y", 0.0f);
             animator.SetBool("OnGround", true);
             animator.SetFloat("Speed", speed);
@@ -56,18 +59,44 @@ public class PlayerAnimationController : MonoBehaviour {
 
     public void AnimateIdle()
     {
-        if (!deathAnimated)
+        if (!deathAnimated && !idleAnimated)
         {
-            animator.SetFloat("Y", 0.0f);
-            animator.SetBool("OnGround", true);
+            animator.SetFloat("Y", 0.00f);
             animator.SetFloat("Speed", 0.0f);
+            animator.SetBool("Aiming", false);
+            animator.SetBool("OnGround", true);
         }
     }
+
+    /*public void AnimateIdle()
+    {
+        if (!deathAnimated && !idleAnimated)
+        {
+            idleAnimated = true;
+            StopAllCoroutines();
+            StartCoroutine(IdleRoutine());
+        }
+    }
+
+    IEnumerator IdleRoutine()
+    {
+        
+        animator.SetFloat("Y", 0.01f);
+        animator.SetBool("Aiming", true);
+        animator.SetBool("OnGround", true);
+        yield return new WaitForSeconds(0.10f);
+        animator.SetFloat("Y", 0.00f);
+        animator.SetFloat("Speed", 0.0f);
+        yield return new WaitForSeconds(2.5f);
+        animator.SetBool("Aiming", false);
+
+    }*/
 
     public void AnimateAimChasing()
     {
         if (!deathAnimated)
         {
+            idleAnimated = false;
             animator.SetFloat("Y", 1.0f);
             animator.SetBool("OnGround", true);
             animator.SetFloat("Speed", 0.0f);
@@ -79,6 +108,7 @@ public class PlayerAnimationController : MonoBehaviour {
     {
         if (!deathAnimated)
         {
+            idleAnimated = false;
             animator.SetFloat("Y", 0.0f);
             animator.SetBool("OnGround", true);
             animator.SetFloat("Speed", 0.0f);
@@ -90,6 +120,7 @@ public class PlayerAnimationController : MonoBehaviour {
     {
         if (!deathAnimated)
         {
+            idleAnimated = false;
             animator.SetBool("OnGround", true);
             animator.SetFloat("Speed", 0.0f);
             animator.SetBool("Aiming", true);
@@ -101,6 +132,7 @@ public class PlayerAnimationController : MonoBehaviour {
     {
         if (!deathAnimated)
         {
+            idleAnimated = false;
             animator.SetBool("OnGround", true);
             animator.SetFloat("Speed", 0.0f);
             animator.SetBool("Aiming", true);
@@ -126,6 +158,7 @@ public class PlayerAnimationController : MonoBehaviour {
     {
         if (!deathAnimated)
         {
+            idleAnimated = false;
             animator.SetBool("OnGround", true);
             animator.SetFloat("Speed", 0.0f);
             animator.SetBool("Aiming", false);

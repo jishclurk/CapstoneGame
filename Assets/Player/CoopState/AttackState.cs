@@ -20,22 +20,40 @@ public class AttackState : ICoopState
         aiPlayer = statePatternPlayer;
         reEvalutateTarget = true;
         switch (aiPlayer.abilityChoose) {
-            case CoopAiController.AbilityPref.Agressive:
+            case Strategy.AbilityPref.Agressive:
                 timeBetweenCasts = 1.0f;
                 break;
-            case CoopAiController.AbilityPref.Balanced:
+            case Strategy.AbilityPref.Balanced:
                 timeBetweenCasts = 5.0f;
                 break;
-            case CoopAiController.AbilityPref.None:
+            case Strategy.AbilityPref.None:
                 timeBetweenCasts = Mathf.Infinity;
                 break;
             default:
                 timeBetweenCasts = 1.0f;
                 break;
         }
-
         lastAbilityDelay = 0.0f;
         lastAbilityCast = -Mathf.Infinity;
+    }
+
+    public void setPrefs()
+    {
+        switch (aiPlayer.abilityChoose)
+        {
+            case Strategy.AbilityPref.Agressive:
+                timeBetweenCasts = 1.0f;
+                break;
+            case Strategy.AbilityPref.Balanced:
+                timeBetweenCasts = 5.0f;
+                break;
+            case Strategy.AbilityPref.None:
+                timeBetweenCasts = Mathf.Infinity;
+                break;
+            default:
+                timeBetweenCasts = 1.0f;
+                break;
+        }
     }
 
     public void UpdateState()
@@ -44,13 +62,13 @@ public class AttackState : ICoopState
         {
             switch (aiPlayer.targetChoose)
             {
-                case CoopAiController.TargetPref.Closest:
+                case Strategy.TargetPref.Closest:
                     FindClosestTarget();
                     break;
-                case CoopAiController.TargetPref.Lowest:
+                case Strategy.TargetPref.Lowest:
                     FindLowestHealthTarget();
                     break;
-                case CoopAiController.TargetPref.Active:
+                case Strategy.TargetPref.Active:
                     FindActivePlayerTarget();
                     break;
                 default:

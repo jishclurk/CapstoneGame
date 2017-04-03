@@ -48,6 +48,7 @@ public class Zap : ISpecial, IAbility {
         lastUsedTime = Time.time;
         float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
+        target.GetComponent<EnemyHealth>().TakeStunDamage(1);
 
         Vector3 playerToTarget = target.transform.position - player.gunbarrel.position;
         GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;

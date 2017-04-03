@@ -45,16 +45,9 @@ public class CoopAiController : MonoBehaviour {
     [HideInInspector]
     public Transform eyes;
 
-    //attack prefs
-    [HideInInspector]
-    public enum TargetPref { Closest, Lowest, Active};
-    public TargetPref targetChoose;
-
     //ability prefs
-    //attack prefs
-    [HideInInspector]
-    public enum AbilityPref { Agressive, Offensive, Defensive, Balanced, None };
-    public AbilityPref abilityChoose;
+    public Strategy.TargetPref targetChoose;
+    public Strategy.AbilityPref abilityChoose;
 
 
     [HideInInspector]
@@ -192,14 +185,11 @@ public class CoopAiController : MonoBehaviour {
         }
     }
 
+    //essentially calls a new (but simplified) "Awake" so private variables are set
     public void SetCoopPreferences()
     {
-        idleState = new IdleState(this);
-        moveState = new MoveState(this);
-        attackState = new AttackState(this);
-        castState = new CastState(this);
-        fleeState = new FleeState(this);
-        defendState = new DefendState(this);
+        attackState.setPrefs();
+        defendState.setPrefs();
     }
 
 
