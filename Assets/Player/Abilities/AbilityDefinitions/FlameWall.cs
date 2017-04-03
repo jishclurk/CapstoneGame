@@ -31,8 +31,8 @@ public class FlameWall : ISpecial, IAbility {
     public FlameWall()
     {
         StrengthRequired = 2;
-        StaminaRequired = 0;
-        IntelligenceRequired = 2;
+        StaminaRequired = 2;
+        IntelligenceRequired = 0;
         image = Resources.Load("Abilities/FlameWallIcon", typeof(Image)) as Image;
         id = 26;
         name = "Flame Wall";

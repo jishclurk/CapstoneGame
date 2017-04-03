@@ -340,9 +340,12 @@ public class PlayerController : MonoBehaviour
                     if (changeTargetOnSpecial || targetedEnemy == null)
                     {
                         targetedEnemy = specialTargetedEnemy;
-                        visibleEnemies.Add(targetedEnemy.gameObject);
-                        tm.visibleEnemies.Add(targetedEnemy.gameObject);
-                        watchedEnemies.Add(targetedEnemy.gameObject);
+                        if (targetedEnemy != null && !targetedEnemy.GetComponent<EnemyHealth>().isDead)
+                        {
+                            visibleEnemies.Add(targetedEnemy.gameObject);
+                            tm.visibleEnemies.Add(targetedEnemy.gameObject);
+                            watchedEnemies.Add(targetedEnemy.gameObject);
+                        }
                     }
 
                 }

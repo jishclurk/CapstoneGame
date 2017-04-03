@@ -67,7 +67,15 @@ public class Invigorate : ISpecial, IAbility {
 
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
     {
-        return false;
+        int count = 0;
+        foreach (ISpecial spec in player.abilities.abilityArray)
+        {
+            if (!spec.isReady())
+            {
+                count++;
+            }
+        }
+        return count > 1;
     }
 
     public float RemainingTime()

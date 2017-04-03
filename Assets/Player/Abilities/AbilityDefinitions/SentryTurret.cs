@@ -93,6 +93,6 @@ public class SentryTurret : ISpecial, IAbility {
 
     public AbilityHelper.CoopAction GetCoopAction()
     {
-        return AbilityHelper.CoopAction.AOEHurt;
+        return AbilityHelper.CoopAction.AOEHeal;
     }
 }

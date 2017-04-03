@@ -45,7 +45,7 @@ public class Strategy : MonoBehaviour {
         }
         playerDataScript.visibleEnemies.Clear();
 
-        if (aiScript.targetedEnemy != null)
+        if (aiScript.targetedEnemy != null && !aiScript.targetedEnemy.GetComponent<EnemyHealth>().isDead)
         {
             playerScript.targetedEnemy = aiScript.targetedEnemy;
             playerDataScript.visibleEnemies.Add(playerScript.targetedEnemy.gameObject);

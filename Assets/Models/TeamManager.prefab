@@ -55,9 +55,11 @@ MonoBehaviour:
   navTexture: {fileID: 2800000, guid: 853e319745dc0704c9f434c8eb02ae48, type: 3}
   shootTexture: {fileID: 2800000, guid: 9441c08824e06434592b193599803de0, type: 3}
   abilityTexture: {fileID: 2800000, guid: 490cee995fd965d45b828584d40e0d6b, type: 3}
+  defendTexture: {fileID: 2800000, guid: 01a8d33136ee0ac4ab7c40f06d91c192, type: 3}
   navTextureSmall: {fileID: 2800000, guid: 98feccdff8721ee4caf9bf7772723eb0, type: 3}
   shootTextureSmall: {fileID: 2800000, guid: 37587c23b9ee40f418df8fe34c41cd88, type: 3}
   abilityTextureSmall: {fileID: 2800000, guid: 8ee6380110d81154a82977087b4c2cbd, type: 3}
+  defendTextureSmall: {fileID: 2800000, guid: 6a3800cbeff592045bd84c6b68067997, type: 3}
   cursorMode: 1
 --- !u!114 &114967963865493260
 MonoBehaviour:

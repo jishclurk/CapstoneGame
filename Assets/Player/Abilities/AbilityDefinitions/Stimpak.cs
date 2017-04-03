@@ -68,7 +68,7 @@ public class Stimpak : ISpecial, IAbility
 
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
     {
-        return player.resources.maxHealth - player.resources.currentHealth >= baseDamage;
+        return targetedEnemy != null && player.resources.currentEnergy < 70;
     }
 
     public bool isReady()
@@ -93,6 +93,6 @@ public class Stimpak : ISpecial, IAbility
 
     public AbilityHelper.CoopAction GetCoopAction()
     {
-        return AbilityHelper.CoopAction.InstantHeal;
+        return AbilityHelper.CoopAction.Equip;
     }
 }

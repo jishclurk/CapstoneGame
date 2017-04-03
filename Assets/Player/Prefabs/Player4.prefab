@@ -485,7 +485,7 @@ MonoBehaviour:
   targetedEnemy: {fileID: 0}
   eyes: {fileID: 0}
   targetChoose: 2
-  abilityChoose: 4
+  abilityChoose: 0
   abilities: {fileID: 0}
   player: {fileID: 0}
   attributes: {fileID: 0}
@@ -572,6 +572,7 @@ MonoBehaviour:
   targetedEnemy: {fileID: 0}
   changeTargetOnSpecial: 0
   tm: {fileID: 0}
+  inheritDefendState: 0
 --- !u!135 &135675358767437124
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -150,7 +150,7 @@ public class CoopAiController : MonoBehaviour {
         bool canSeeOneEnemy = false;
         foreach (GameObject enemy in watchedEnemies)
         {
-            if (isTargetVisible(enemy.transform))
+            if (isTargetVisible(enemy.transform) && !enemy.GetComponent<EnemyHealth>().isDead)
             {
                 visibleEnemies.Add(enemy);
                 tm.visibleEnemies.Add(enemy);

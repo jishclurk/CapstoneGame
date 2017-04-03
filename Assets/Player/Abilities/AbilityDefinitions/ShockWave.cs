@@ -74,8 +74,17 @@ public class Shockwave : ISpecial, IAbility {
 
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
     {
+        int count = 0;
+        if(player.visibleEnemies.Count > 2)
+        {
+            foreach(GameObject enemy in player.visibleEnemies)
+            {
+                if (Vector3.Distance(enemy.transform.position, player.transform.position) < 3.0f)
+                    count++;
+            }
+        }
 
-        return player.attributes.Stamina > 15 || player.resources.currentHealth < 50;
+        return count > 2;
     }
 
     public float RemainingTime()
@@ -91,6 +100,6 @@ public class Shockwave : ISpecial, IAbility {
 
     public AbilityHelper.CoopAction GetCoopAction()
     {
-        return AbilityHelper.CoopAction.AOEHurt;
+        return AbilityHelper.CoopAction.AOEHeal;
     }
 }

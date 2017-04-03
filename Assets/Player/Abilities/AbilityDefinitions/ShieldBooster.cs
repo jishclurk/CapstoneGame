@@ -77,7 +77,7 @@ public class ShieldBooster : ISpecial, IAbility {
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
     {
 
-        return player.attributes.Stamina > 15 || player.resources.currentHealth < 50;
+        return player.attributes.Stamina < 20 && tm.visibleEnemies.Count > 1 || player.resources.currentHealth < 50 || tm.visibleEnemies.Count > 4;
     }
 
     public float RemainingTime()

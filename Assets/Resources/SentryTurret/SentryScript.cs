@@ -95,7 +95,7 @@ public class SentryScript : MonoBehaviour {
         {
             if (enemy != null)
             {
-                if (isTargetVisible(enemy.transform))
+                if (isTargetVisible(enemy.transform) && !enemy.GetComponent<EnemyHealth>().isDead)
                 {
                     visibleEnemies.Add(enemy);
                     tm.visibleEnemies.Add(enemy);

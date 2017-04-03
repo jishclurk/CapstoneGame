@@ -32,7 +32,7 @@ public class BioGrenade : ISpecial, IAbility {
         StrengthRequired = 0;
         StaminaRequired = 0;
         IntelligenceRequired = 6;
-        image = Resources.Load("Abilities/BioGrenade", typeof(Image)) as Image;
+        image = Resources.Load("Abilities/BioGrenadeIcon", typeof(Image)) as Image;
         id = 0;
         name = "Bio Grenade";
         effectiveRange = 8.0f;
