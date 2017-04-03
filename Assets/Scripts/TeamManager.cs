@@ -35,27 +35,19 @@ public class TeamManager : MonoBehaviour {
 
         playerList = new List<Player>();
 
-        //assign active player to user controller player
         for (int i = 0; i < prefabList.Length; i++)
         {
             Player player = prefabList[i].GetComponent<Player>();
             Debug.Log("ID: " + player.id);
 
             playerList.Add(player);
-
-         //   if (player.strategy.isplayerControlled)
-        //    {
-          //      activePlayer = player;
-           // }
         }
 
         playerList.Sort((x, y) => x.id - y.id);
-
         cameraScript = Camera.main.GetComponent<OffsetCamera>(); //subject to change
-       // cameraScript.activePlayerCharacter = activePlayer.gameObject;
         visibleEnemies = new HashSet<GameObject>();
-       // playerResources = activePlayer.GetComponent<PlayerResources>();
         deathCount = 0;
+
     }
 
 
@@ -187,6 +179,20 @@ public class TeamManager : MonoBehaviour {
         }
     }
 
+    public void ReviveTeam(CheckPoint cp)
+    {
+        for(int i = 0; i <playerList.Count; i++)
+        {
+            Player player = playerList[i];
+            player.resources.currentHealth = player.resources.maxHealth;
+            player.resources.currentEnergy = player.resources.maxEnergy;
+            if (player.resources.isDead)
+            {
+                player.gameObject.GetComponent<NavMeshAgent>().Warp(cp.player1.transform.position);
+                player.animController.AnimateIdle();
+            }
+        }
+    }
 
     public bool IsTeamInCombat()
     {

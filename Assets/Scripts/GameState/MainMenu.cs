@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
     private Image LoadingBar;
     SimpleGameManager gm;
     private int levelToLoad;
+    public Canvas Settings;
 
     public void Start()
     {
@@ -26,7 +27,8 @@ public class MainMenu : MonoBehaviour
         LoadingProgress = Loading.GetComponentInChildren<Text>();
         LoadingBar = Loading.GetComponentInChildren<Image>();
         percentComplete = 0;
-
+        Settings = Settings.GetComponent<Canvas>();
+        Settings.enabled = false;
         Loading.enabled = false;
         LoadMenu.enabled = false;
     }
@@ -127,6 +129,13 @@ public class MainMenu : MonoBehaviour
     {
         LoadingProgress.text = "Loading... ";
         LoadingBar.fillAmount = percentComplete;
+    }
+
+    public void LoadSettingsMenu()
+    {
+        Debug.Log("loading settings menu");
+        Menu.enabled = false;
+        Settings.enabled = true;
     }
 
 }
