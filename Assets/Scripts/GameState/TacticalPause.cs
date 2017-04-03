@@ -152,7 +152,7 @@ public class TacticalPause : MonoBehaviour {
             if (!active.abilities.abilityArray[i].GetType().Equals(typeof(EmptyAbility)))
             {
                 Image image = GameObject.Instantiate(active.abilities.abilityArray[i].image) as Image;
-                image.transform.SetParent(setAbilitesSlots[i].transform);
+                image.transform.SetParent(setAbilitesSlots[i].transform, false);
                 setAbilities.Add(active.abilities.abilityArray[i].GetType());
             }
         }
@@ -164,7 +164,7 @@ public class TacticalPause : MonoBehaviour {
             if (!setAbilities.Contains(active.abilities.unlockedSpecialAbilities[i].GetType()))
             {
                 Image image = GameObject.Instantiate(active.abilities.unlockedSpecialAbilities[i].image) as Image;
-                image.transform.SetParent(unLockedAbitiesSlots[i].transform);
+                image.transform.SetParent(unLockedAbitiesSlots[i].transform, false);
                 unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability = active.abilities.unlockedSpecialAbilities[i];
             }
         }

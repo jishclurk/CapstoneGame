@@ -26,7 +26,7 @@ public class PlayerAbilities : MonoBehaviour
     private List<IBasic> potentialBasics; 
 
     //List of all potentail specail abilities
-    private List<ISpecial> potentialSpecials; 
+    private List<ISpecial> potentialSpecials;
 
     public void Awake()
     {
@@ -56,6 +56,11 @@ public class PlayerAbilities : MonoBehaviour
         unlockedSpecialAbilities.Add(new Zap());
         unlockedSpecialAbilities.Add(new MedKit());
         unlockedSpecialAbilities.Add(new GrenadeThrow());
+    }
+
+    public void setKeysFromSettings()
+    {
+
     }
 
     public void SetDefaultBindings()

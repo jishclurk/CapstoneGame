@@ -61,6 +61,7 @@ public class CheckPoint : MonoBehaviour
         {
             if (firstEnter)
             {
+                tm.ReviveTeam(this);
                 autosave();
                 firstEnter = false;
                 checkpointReached = true;
