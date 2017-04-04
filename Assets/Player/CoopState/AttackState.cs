@@ -26,6 +26,10 @@ public class AttackState : ICoopState
             case Strategy.AbilityPref.Balanced:
                 timeBetweenCasts = 5.0f;
                 break;
+            case Strategy.AbilityPref.Offensive:
+            case Strategy.AbilityPref.Defensive:
+                timeBetweenCasts = 3.0f;
+                break;
             case Strategy.AbilityPref.None:
                 timeBetweenCasts = Mathf.Infinity;
                 break;
@@ -46,6 +50,10 @@ public class AttackState : ICoopState
                 break;
             case Strategy.AbilityPref.Balanced:
                 timeBetweenCasts = 5.0f;
+                break;
+            case Strategy.AbilityPref.Offensive:
+            case Strategy.AbilityPref.Defensive:
+                timeBetweenCasts = 3.0f;
                 break;
             case Strategy.AbilityPref.None:
                 timeBetweenCasts = Mathf.Infinity;
@@ -223,7 +231,7 @@ public class AttackState : ICoopState
             ISpecial potentialAbility = aiPlayer.abilities.abilityArray[i];
             //maybe to "dumbify" ai make it some ratio of time since ready to full cooldown?
             //note: empty ability always returns false on isReady
-            if (potentialAbility.isReady() && potentialAbility.energyRequired < aiPlayer.player.resources.currentEnergy)
+            if (potentialAbility.isReady() && potentialAbility.energyRequired < aiPlayer.player.resources.currentEnergy && MatchesAbilityPref(potentialAbility))
             {
 
                 //Decide whether to use ability or continue searching (sorry this got kinda complicated!), might want a separate method?
@@ -246,6 +254,24 @@ public class AttackState : ICoopState
 
             }
         }
+    }
+
+    private bool MatchesAbilityPref(ISpecial ability)
+    {
+        bool matches = false;
+        AbilityHelper.CoopAction act = ability.GetCoopAction();
+        if (aiPlayer.abilityChoose == Strategy.AbilityPref.Offensive)
+        {
+            matches = act == AbilityHelper.CoopAction.AOEHurt || act == AbilityHelper.CoopAction.Equip || act == AbilityHelper.CoopAction.TargetHurt || ability.id == 10; //special case for invigorate
+
+        } else if (aiPlayer.abilityChoose == Strategy.AbilityPref.Defensive)
+        {
+            matches = act == AbilityHelper.CoopAction.AOEHeal || act == AbilityHelper.CoopAction.Equip || act == AbilityHelper.CoopAction.TargetHeal || act == AbilityHelper.CoopAction.InstantHeal;
+        } else
+        {
+            matches = true;
+        }
+        return matches;
     }
 
     private void UseOffensiveTargetSpecial()
