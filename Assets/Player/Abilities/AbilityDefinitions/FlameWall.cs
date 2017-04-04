@@ -34,7 +34,7 @@ public class FlameWall : ISpecial, IAbility {
         StaminaRequired = 2;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/FlameWallIcon", typeof(Image)) as Image;
-        id = 26;
+        id = 8;
         name = "Flame Wall";
         description = "Spawns a fiery wall";
         effectiveRange = 5.5f;

@@ -24,7 +24,6 @@ public class Shockwave : ISpecial, IAbility {
     public int StaminaRequired { get; private set; }
     public int IntelligenceRequired { get; private set; }
 
-    private float effectLength = 10.0f;
     private Object blast;
 
     public Shockwave()
@@ -33,7 +32,7 @@ public class Shockwave : ISpecial, IAbility {
         StaminaRequired = 3;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/ShockwaveIcon", typeof(Image)) as Image;
-        id = 25;
+        id = 17;
         name = "Shockwave";
         description = "Knock Back enemies, damage them, do damage";
         effectiveRange = 0.05f;

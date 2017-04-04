@@ -29,7 +29,7 @@ public class PistolShot : IBasic, IAbility {
         StaminaRequired = 0;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
-        id = 2;
+        id = -1;
         name = "Pistol Shot";
         effectiveRange = 9.0f;
         baseDamage = 5.0f;

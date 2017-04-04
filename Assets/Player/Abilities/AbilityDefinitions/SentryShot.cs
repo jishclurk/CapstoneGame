@@ -29,7 +29,7 @@ public class SentryShot : IBasic, IAbility {
         StaminaRequired = 0;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
-        id = 8;
+        id = -2;
         name = "Sentry Shot";
         effectiveRange = 9.0f;
         baseDamage = 5.0f;

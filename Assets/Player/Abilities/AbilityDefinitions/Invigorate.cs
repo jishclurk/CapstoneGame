@@ -29,7 +29,7 @@ public class Invigorate : ISpecial, IAbility {
         StaminaRequired = 0;
         IntelligenceRequired = 3;
         image = Resources.Load("Abilities/InvigorateIcon", typeof(Image)) as Image;
-        id = 21;
+        id = 10;
         name = "Invigorate";
         effectiveRange = 0.0f;
         baseDamage = 0.0f;

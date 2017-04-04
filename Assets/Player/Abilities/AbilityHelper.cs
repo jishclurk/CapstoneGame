@@ -99,7 +99,6 @@ public class AbilityHelper : MonoBehaviour {
     // SENTRY TURRET //
     public void SentryTurretRoutine(Player player, GameObject target, float length, Object turret)
     {
-        AOETargetController aoeController = target.GetComponent<AOETargetController>();
         GameObject sentry = Instantiate(turret, target.transform.position, Quaternion.identity) as GameObject;
         sentry.transform.LookAt(player.transform);
         sentry.transform.Rotate(0, 90, 0);

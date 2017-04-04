@@ -26,8 +26,8 @@ public class SMGShot : IBasic, IAbility {
         StrengthRequired = 0;
         StaminaRequired = 0;
         IntelligenceRequired = 0;
-        image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
-        id = 11;
+        image = Resources.Load("Abilities/SMG", typeof(Image)) as Image;
+        id = 2;
         name = "SMG Shot";
         effectiveRange = 8.0f;
         baseDamage = 2.0f;

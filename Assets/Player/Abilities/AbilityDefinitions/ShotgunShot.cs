@@ -28,8 +28,8 @@ public class ShotgunShot : IBasic, IAbility {
         StrengthRequired = 0;
         StaminaRequired = 0;
         IntelligenceRequired = 0;
-        image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
-        id = 9;
+        image = Resources.Load("Abilities/Shotgun", typeof(Image)) as Image;
+        id = 3;
         name = "Shotgun Shot";
         effectiveRange = 8.0f;
         baseDamage = 5.0f;

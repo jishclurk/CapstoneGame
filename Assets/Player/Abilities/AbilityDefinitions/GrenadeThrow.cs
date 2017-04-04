@@ -32,7 +32,7 @@ public class GrenadeThrow : ISpecial, IAbility {
         StaminaRequired = 0;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/GrenadeThrowIcon", typeof(Image)) as Image;
-        id = 0;
+        id = 9;
         name = "Grenade Throw";
         effectiveRange = 10.0f;
         baseDamage = 25.0f;

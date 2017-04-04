@@ -31,7 +31,7 @@ public class LeechDart : ISpecial, IAbility {
         StaminaRequired = 0;
         IntelligenceRequired = 2;
         image = Resources.Load("Abilities/LeechDartIcon", typeof(Image)) as Image;
-        id = 26;
+        id = 11;
         name = "LeechDart";
         effectiveRange = 9.0f;
         baseDamage = 40.0f;
@@ -52,7 +52,6 @@ public class LeechDart : ISpecial, IAbility {
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
         player.GetComponent<PlayerResources>().Heal(adjustedDamage / 2);
 
-        Vector3 playerToTarget = target.transform.position - player.gunbarrel.position;
         GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
         project.GetComponent<DartProjectileScript>().destination = new Vector3(target.transform.position.x, (player.gunbarrel.position.y + target.transform.position.y) / 2, target.transform.position.z);
         project.GetComponent<DartProjectileScript>().targetedEnemy = target;

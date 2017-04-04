@@ -8,7 +8,6 @@ public class DefendState : ICoopState
 {
 
     private readonly CoopAiController aiPlayer;
-    private float animSpeed;
     public bool reEvalutateTarget;
     private GameObject aoeArea;
     private float timeBetweenCasts;
@@ -17,7 +16,6 @@ public class DefendState : ICoopState
 
     public DefendState(CoopAiController statePatternPlayer)
     {
-        animSpeed = 0.0f;
         aiPlayer = statePatternPlayer;
         reEvalutateTarget = true;
         switch (aiPlayer.abilityChoose) {
@@ -292,7 +290,6 @@ public class DefendState : ICoopState
             }
             reEvalutateTarget = true;
             aiPlayer.navMeshAgent.Stop(); //within range, stop moving
-            animSpeed = 0.0f;
         }
     }
 
@@ -346,7 +343,6 @@ public class DefendState : ICoopState
             }
 
             aiPlayer.navMeshAgent.Stop(); //within range, stop moving
-            animSpeed = 0.0f;
         }
     }
 
@@ -369,13 +365,13 @@ public class DefendState : ICoopState
         if (aiPlayer.navMeshAgent.remainingDistance > aiPlayer.navMeshAgent.stoppingDistance)
         {
             
-            aiPlayer.animController.AnimateMovement(1.0f);
+            aiPlayer.animController.AnimateMovement(aiPlayer.navMeshAgent.velocity.magnitude/aiPlayer.navMeshAgent.speed);
         }
         else
         {
             if (target == null)
             {
-                aiPlayer.animController.AnimateIdle();
+                aiPlayer.animController.AnimateAimStanding();
             }
             else
             {

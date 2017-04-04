@@ -34,7 +34,7 @@ public class Stimpak : ISpecial, IAbility
         StaminaRequired = 2;
         IntelligenceRequired = 2;
         image = Resources.Load("Abilities/StimpakIcon", typeof(Image)) as Image;
-        id = 20;
+        id = 18;
         name = "Stimpak";
         effectiveRange = 5.0f;
         baseDamage = 25.0f;
@@ -51,7 +51,6 @@ public class Stimpak : ISpecial, IAbility
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.Intelligence;
 
         GameObject gb = Object.Instantiate(regenField, origin.transform.position, Quaternion.identity) as GameObject;
         gb.GetComponent<StayWithPlayer>().player = origin.transform;

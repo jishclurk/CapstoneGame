@@ -33,7 +33,6 @@ public class PlayerResources : MonoBehaviour {
     public float energyRegenRateInSeconds = 0.5f;
     public float energyRegenAmt = 1.0f;
 
-    private Animator anim;
     private PlayerAnimationController animController;
     private TeamManager tm;
     private CharacterAttributes attributes;
@@ -48,7 +47,6 @@ public class PlayerResources : MonoBehaviour {
 	void Awake ()
     {
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        anim = GetComponent<Animator>();
         animController = GetComponent<PlayerAnimationController>();
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;

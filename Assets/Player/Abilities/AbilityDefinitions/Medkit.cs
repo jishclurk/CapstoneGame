@@ -31,7 +31,7 @@ public class MedKit : ISpecial, IAbility
         StaminaRequired = 0;
         IntelligenceRequired = 3;
         image = Resources.Load("Abilities/MedkitIcon", typeof(Image)) as Image;
-        id = 3;
+        id = 12;
         name = "Heal";
         effectiveRange = 5.0f;
         baseDamage = 25.0f;
@@ -40,7 +40,7 @@ public class MedKit : ISpecial, IAbility
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 20.0f;
         aoeTarget = null;
-        description = "Heal up";
+        description = "Heal yourself.";
         regenField = Resources.Load("Medkit/HealBuff");
     }
 

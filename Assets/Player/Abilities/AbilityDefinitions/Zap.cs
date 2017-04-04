@@ -30,7 +30,7 @@ public class Zap : ISpecial, IAbility {
         StaminaRequired = 3;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/ZapIcon", typeof(Image)) as Image;
-        id = 4;
+        id = 19;
         name = "Zap";
         effectiveRange = 9.0f;
         baseDamage = 40.0f;
@@ -39,7 +39,7 @@ public class Zap : ISpecial, IAbility {
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 30.0f;
         aoeTarget = null;
-        description = "A quick Zap from your gun.";
+        description = "A lightning shot. Base Damage: " + (int) baseDamage + ", Energy Req: " + (int) energyRequired + ", Cool Down Time: " + (int) coolDownTime + ", Range: " + effectiveRange;
         bullet = Resources.Load("Zap/ZapObj");
     }
 
@@ -50,7 +50,6 @@ public class Zap : ISpecial, IAbility {
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
         target.GetComponent<EnemyHealth>().TakeStunDamage(1);
 
-        Vector3 playerToTarget = target.transform.position - player.gunbarrel.position;
         GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
         project.GetComponent<ZapProjectileScript>().destination = new Vector3(target.transform.position.x, (player.gunbarrel.position.y + target.transform.position.y) / 2, target.transform.position.z);
         project.GetComponent<ZapProjectileScript>().targetedEnemy = target;

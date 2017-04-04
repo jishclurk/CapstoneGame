@@ -30,7 +30,7 @@ public class Revive : ISpecial, IAbility {
         StaminaRequired = 0;
         IntelligenceRequired = 6;
         image = Resources.Load("Abilities/ReviveIcon", typeof(Image)) as Image;
-        id = 17;
+        id = 13;
         name = "Revive";
         effectiveRange = 1.8f;
         baseDamage = 50.0f;
@@ -39,7 +39,7 @@ public class Revive : ISpecial, IAbility {
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 40.0f;
         aoeTarget = null;
-        description = "A quick Zap from your gun.";
+        description = "Revive or Heal an ally.";
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
@@ -48,7 +48,6 @@ public class Revive : ISpecial, IAbility {
         float adjustedDamage = baseDamage + player.attributes.Intelligence * 0.1f;
         
 
-        Vector3 playerToTarget = target.transform.position - player.gunbarrel.position;
         PlayerResources friendHealth = target.GetComponent<PlayerResources>();
         if (friendHealth.isDead)
         {

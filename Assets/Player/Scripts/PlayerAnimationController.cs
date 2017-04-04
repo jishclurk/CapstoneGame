@@ -20,7 +20,7 @@ public class PlayerAnimationController : MonoBehaviour {
         AnimationEvent evt2 = new AnimationEvent();
         evt2.functionName = "EndPickup";
         AnimationClip clip2 = animator.runtimeAnimatorController.animationClips[1];
-        clip.AddEvent(evt2);
+        clip2.AddEvent(evt2);
 
 
     }

@@ -19,11 +19,7 @@ public class PlayerController : MonoBehaviour
     private Transform specialTargetedEnemy;
     private Transform specialTargetedFriend;
 
-    private Transform targetedFriend;
-    private bool friendClicked;
-
     private Ray shootRay;
-    private RaycastHit shootHit;
 
     private PlayerAnimationController animController;
     private float animSpeed;
@@ -157,7 +153,6 @@ public class PlayerController : MonoBehaviour
             targetedEnemy = hit.transform;
             transform.LookAt(hit.transform); //prevents slow turn
             enemyClicked = true;
-            friendClicked = false;
 
             //update combat
             visibleEnemies.Add(targetedEnemy.gameObject);
@@ -177,7 +172,6 @@ public class PlayerController : MonoBehaviour
             else
             {
                 animSpeed = walkSpeed;
-                friendClicked = false;
                 navMeshAgent.destination = hit.point;
                 transform.LookAt(new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z));
                 navMeshAgent.Resume();
@@ -497,8 +491,7 @@ public class PlayerController : MonoBehaviour
     {
         targetedEnemy = null;
         navMeshAgent.destination = transform.position;
-        targetedFriend = null;
-        friendClicked = false;
+        specialTargetedFriend = null;
         animSpeed = 0.0f;
         specialTargetedEnemy = null;
         activeSpecialAbility = null;

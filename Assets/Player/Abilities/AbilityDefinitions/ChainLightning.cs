@@ -23,7 +23,7 @@ public class ChainLightning : ISpecial, IAbility {
     public int StaminaRequired { get; private set; }
     public int IntelligenceRequired { get; private set; }
     private Object bullet;
-    private GameObject abilityObj;
+    //private GameObject abilityObj;
 
     public ChainLightning()
     {
@@ -31,7 +31,7 @@ public class ChainLightning : ISpecial, IAbility {
         StaminaRequired = 6;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/ChainLightningIcon", typeof(Image)) as Image;
-        id = 23;
+        id = 6;
         name = "Chain Lightning";
         effectiveRange = 9.0f;
         baseDamage = 35.0f;
@@ -42,7 +42,7 @@ public class ChainLightning : ISpecial, IAbility {
         aoeTarget = null;
         description = "A quick Zap from your gun.";
         bullet = Resources.Load("ChainLightning/ChainObj");
-        abilityObj = GameObject.FindWithTag("AbilityHelper");
+        //abilityObj = GameObject.FindWithTag("AbilityHelper");
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
@@ -50,7 +50,6 @@ public class ChainLightning : ISpecial, IAbility {
         lastUsedTime = Time.time;
         float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
 
-        Vector3 playerToTarget = target.transform.position - player.gunbarrel.position;
         GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
         project.GetComponent<ChainProjectileScript>().destination = new Vector3(target.transform.position.x, (player.gunbarrel.position.y + target.transform.position.y) / 2, target.transform.position.z);
         project.GetComponent<ChainProjectileScript>().targetedEnemy = target;

@@ -38,7 +38,7 @@ public class Flamethrower : ISpecial, IAbility {
         StaminaRequired = 0;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/FlamethrowerIcon", typeof(Image)) as Image;
-        id = 10;
+        id = 7;
         name = "Flamethrower";
         effectiveRange = 6.0f;
         baseDamage = 8.0f;

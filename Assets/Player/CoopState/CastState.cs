@@ -5,11 +5,9 @@ using UnityEngine;
 public class CastState : ICoopState
 {
 
-    private readonly CoopAiController player;
 
     public CastState(CoopAiController statePatternPlayer)
     {
-        player = statePatternPlayer;
     }
 
     public void UpdateState()
