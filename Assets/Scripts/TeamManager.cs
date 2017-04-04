@@ -181,6 +181,7 @@ public class TeamManager : MonoBehaviour {
 
     public void ReviveTeam(CheckPoint cp)
     {
+        deathCount = 0;
         for(int i = 0; i <playerList.Count; i++)
         {
             Player player = playerList[i];

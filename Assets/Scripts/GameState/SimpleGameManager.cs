@@ -122,8 +122,8 @@ public class SimpleGameManager : MonoBehaviour
     public void onDeath()
     {
         Debug.Log("DEAD");
-        OnStateChange += Pause;
-        SetGameState(GameState.PAUSE);
+       // OnStateChange += Pause;
+       // SetGameState(GameState.PAUSE);
         GameOverScreen.enabled = true;
         //SetSavedState(autosave);
     }
@@ -138,8 +138,8 @@ public class SimpleGameManager : MonoBehaviour
 
     public void LoadAutoSave()
     {
-        OnStateChange += unPause;
-        SetGameState(GameState.PLAY);
+        //OnStateChange += unPause;
+       // SetGameState(GameState.PLAY);
         GameOverScreen.enabled = false;
         SavedState autosave = SaveLoad.Load("autosave");
         SetSavedState(autosave);
