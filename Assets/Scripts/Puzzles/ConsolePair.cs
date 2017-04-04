@@ -7,6 +7,7 @@ public class ConsolePair : MonoBehaviour, ICircuitPiece {
 	Console[] consoles;
 	GameObject consoleGUIObject;
 	ConsoleGUI cG;
+	ConsoleGUITime cGT;
 	bool solved;
 
 	// Use this for initialization
@@ -15,6 +16,7 @@ public class ConsolePair : MonoBehaviour, ICircuitPiece {
 		consoleGUIObject = transform.FindChild ("ConsoleGUI").gameObject;
 		consoleGUIObject.gameObject.SetActive (false);
 		cG = consoleGUIObject.GetComponentInChildren<ConsoleGUI> ();
+		cGT = consoleGUIObject.GetComponentInChildren<ConsoleGUITime> ();
 	}
 	
 	// Update is called once per frame
@@ -27,7 +29,7 @@ public class ConsolePair : MonoBehaviour, ICircuitPiece {
 	}
 
 	public bool Output(){
-		return cG.Output ();
+		return cG.Output () || cGT.Output();
 
 	}
 

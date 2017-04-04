@@ -45,4 +45,12 @@ public class ClockPuzzle : MonoBehaviour {
 			genSpot.intensity = 0;
 		}
 	}
+
+	public bool hourComplete(){
+		return hourPart.Complete ();
+	}
+
+	public bool Output(){
+		return hourPart.Complete () && minutePart.Complete ();
+	}
 }
