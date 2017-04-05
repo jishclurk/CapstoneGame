@@ -32,6 +32,8 @@ public class SimpleGameManager : MonoBehaviour
 
     public Canvas GameOverScreen;
 
+    private bool revive;
+
     public Canvas LoadingScreen;
     private Text LoadingProgress;
     private Image LoadingBar;
@@ -51,6 +53,7 @@ public class SimpleGameManager : MonoBehaviour
         LoadingBar = LoadingScreen.transform.GetChild(1).GetComponent<Image>();
         LoadingScreen.enabled = false;
         percentComplete = 0f;
+        revive = false;
     }
 
     private void OnLevelWasLoaded(int level)
@@ -126,6 +129,7 @@ public class SimpleGameManager : MonoBehaviour
        // SetGameState(GameState.PAUSE);
         GameOverScreen.enabled = true;
         //SetSavedState(autosave);
+        revive = true;
     }
 
     public void toMain()
@@ -143,6 +147,10 @@ public class SimpleGameManager : MonoBehaviour
         GameOverScreen.enabled = false;
         SavedState autosave = SaveLoad.Load("autosave");
         SetSavedState(autosave);
+        if (revive)
+        {
+            tm.AnimatRevive();
+        }
     }
 
     void OnGUI()

@@ -195,6 +195,14 @@ public class TeamManager : MonoBehaviour {
         }
     }
 
+    public void AnimatRevive()
+    {
+        foreach(Player player in playerList)
+        {
+            player.animController.AnimateRevive();
+        }
+    }
+
     public bool IsTeamInCombat()
     {
         return visibleEnemies.Count > 0;
