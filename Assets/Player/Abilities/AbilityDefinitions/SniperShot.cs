@@ -25,10 +25,10 @@ public class SniperShot : IBasic, IAbility {
     {
         StrengthRequired = 0;
         StaminaRequired = 0;
-        IntelligenceRequired = 0;
+        IntelligenceRequired = 2;
         image = Resources.Load("Abilities/Sniper", typeof(Image)) as Image;
         id = 4;
-        name = "Rifle Shot";
+        name = "Sniper Shot";
         effectiveRange = 11.0f;
         baseDamage = 22.0f;
         fireRate = 0.9f;

@@ -1087,7 +1087,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 1
-  isSetSlot: 1
+  isBarSlot: 1
+  isSpecialSlot: 1
 --- !u!114 &114066668749923208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1123,7 +1124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 5
-  isSetSlot: 0
+  isBarSlot: 0
+  isSpecialSlot: 0
 --- !u!114 &114081046099117424
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1136,7 +1138,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 4
-  isSetSlot: 0
+  isBarSlot: 0
+  isSpecialSlot: 0
 --- !u!114 &114103215937771930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2345,7 +2348,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 4
-  isSetSlot: 0
+  isBarSlot: 0
+  isSpecialSlot: 0
 --- !u!114 &114620108796053334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2408,7 +2412,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 2
-  isSetSlot: 1
+  isBarSlot: 1
+  isSpecialSlot: 1
 --- !u!114 &114648497086571994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2629,7 +2634,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 4
-  isSetSlot: 0
+  isBarSlot: 0
+  isSpecialSlot: 0
 --- !u!114 &114697496196519834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2848,7 +2854,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 3
-  isSetSlot: 1
+  isBarSlot: 1
+  isSpecialSlot: 1
 --- !u!114 &114790249529438142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2940,7 +2947,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 4
-  isSetSlot: 0
+  isBarSlot: 0
+  isSpecialSlot: 0
 --- !u!114 &114836020561450344
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3013,7 +3021,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 4
-  isSetSlot: 0
+  isBarSlot: 0
+  isSpecialSlot: 0
 --- !u!114 &114845164279994562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3308,7 +3317,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 4
-  isSetSlot: 0
+  isBarSlot: 0
+  isSpecialSlot: 0
 --- !u!114 &114941203723841088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3348,7 +3358,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: 0
-  isSetSlot: 1
+  isBarSlot: 1
+  isSpecialSlot: 1
 --- !u!114 &114959831238388116
 MonoBehaviour:
   m_ObjectHideFlags: 1

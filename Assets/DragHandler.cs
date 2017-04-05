@@ -8,7 +8,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public static GameObject itemBeingDraged;
     Vector3 startPosition;
-    public static ISpecial abilityBeingDraged;
+    public static IAbility abilityBeingDraged;
     Transform startParent;
 
     public void OnBeginDrag(PointerEventData eventData)
