@@ -281,7 +281,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1249808551138818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 45.154392, y: 0, z: -67.28087}
+  m_LocalPosition: {x: 345.8765, y: 0.14999992, z: 327.65393}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4941414895281790}
@@ -418,10 +418,10 @@ Light:
   m_Enabled: 1
   serializedVersion: 7
   m_Type: 0
-  m_Color: {r: 0.6754566, g: 0.63235295, b: 1, a: 1}
-  m_Intensity: 8
+  m_Color: {r: 0.63235295, g: 0.6501015, b: 1, a: 1}
+  m_Intensity: 3.9
   m_Range: 26.03
-  m_SpotAngle: 63.5
+  m_SpotAngle: 47.89
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -487,8 +487,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c39fbc122a5faa4d8d5324f3317a356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  maxEnergy: 100
   energyRegenRateInSeconds: 0.5
   energyRegenAmt: 1
 --- !u!114 &114226505702799302
@@ -561,6 +559,7 @@ MonoBehaviour:
   targetedEnemy: {fileID: 0}
   changeTargetOnSpecial: 0
   tm: {fileID: 0}
+  inheritDefendState: 0
 --- !u!114 &114989348916197514
 MonoBehaviour:
   m_ObjectHideFlags: 1
