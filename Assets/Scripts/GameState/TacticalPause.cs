@@ -198,14 +198,14 @@ public class TacticalPause : MonoBehaviour {
         }
         Debug.Log(setAbilities);
 
-        for (int i = 0; i < active.abilities.unlockedSpecialAbilities.Count; i++)
+        for (int i = 0; i < active.abilities.unlockedAbilities.Count; i++)
         {
             Debug.Log(i);
-            if (!setAbilities.Contains(active.abilities.unlockedSpecialAbilities[i].GetType()))
+            if (!setAbilities.Contains(active.abilities.unlockedAbilities[i].GetType()))
             {
-                Image image = GameObject.Instantiate(active.abilities.unlockedSpecialAbilities[i].image) as Image;
+                Image image = GameObject.Instantiate(active.abilities.unlockedAbilities[i].image) as Image;
                 image.transform.SetParent(unLockedAbitiesSlots[i].transform, false);
-                unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability = active.abilities.unlockedSpecialAbilities[i];
+                unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability = active.abilities.unlockedAbilities[i];
             }
         }
 
@@ -289,7 +289,7 @@ public class TacticalPause : MonoBehaviour {
         loadCurrentPlayerInfo(displayedPlayer);
     }
     //puts ability into the displayed players ability array at spot
-    public void updateAbilities(int spot, ISpecial ability)
+    public void updateSpecialAbilities(int spot, ISpecial ability)
     {
         displayedPlayer.abilities.SetNewAbility(ability, spot);
         ISpecial[] array = displayedPlayer.abilities.abilityArray;
@@ -302,6 +302,12 @@ public class TacticalPause : MonoBehaviour {
             x.updatePassiveBonuses(displayedPlayer.attributes);
             Debug.Log(x);
         }
+    }
+    //puts basic ability into the displayed players Basic
+    public void updateBasicAbility(IBasic ability)
+    {
+        displayedPlayer.abilities.Basic = ability;
+
     }
 
     //Stops game, turns of pause screen

@@ -6,11 +6,13 @@ using UnityEngine.EventSystems;
 
 public class SlotScript : MonoBehaviour, IDropHandler {
 
-    public ISpecial ability { get; set; }
+    public IAbility ability { get; set; }
 
     public int spot;
 
-    public bool isSetSlot;
+    public bool isBarSlot;
+
+    public bool isSpecialSlot;
 
     private TacticalPause tp;
 
@@ -34,20 +36,34 @@ public class SlotScript : MonoBehaviour, IDropHandler {
 
     public void OnDrop(PointerEventData eventData)
     {
+        //TODO: DRAG LOGIC
         if (!item)
         {
            // Debug.Log(ability);
             Debug.Log(spot);
             ability = DragHandler.abilityBeingDraged;
-            if (isSetSlot)
+            if (isBarSlot && (ability.GetAction() != AbilityHelper.Action.Basic) && isSpecialSlot) //isSpecial ability and it's a special slot? //S -> S
             {
                 DragHandler.itemBeingDraged.transform.SetParent(transform);
-                tp.updateAbilities(spot, ability); //needs to separately handle basic ability change?
-            }else
+                tp.updateSpecialAbilities(spot, (ISpecial) ability); //needs to separately handle basic ability change?
+                //add swap functionality
+            }
+            else if (isBarSlot && (ability.GetAction() == AbilityHelper.Action.Basic) && !isSpecialSlot) //B -> B
             {
+
+                //tp.updateBasicAbility((IBasic) ability);
+            }
+            else if(false){ //S -> anywhere but S
+
+            } 
+            else{ //B -> anywhere but B
+
+
+                //reset original spot to empty if ability is dragged out of ability bar
+                Debug.Log("bad drop!!");
                 spot = DragHandler.itemBeingDraged.transform.parent.GetComponent<SlotScript>().spot;
                 DragHandler.itemBeingDraged.transform.SetParent(transform);
-                tp.updateAbilities(spot, new EmptyAbility());
+                tp.updateSpecialAbilities(spot, new EmptyAbility());
             }
 
             //ExecuteEvents.ExecuteHierarchy<IHasChanged>(gameObject, null, (x, y) => x.HasChanged());

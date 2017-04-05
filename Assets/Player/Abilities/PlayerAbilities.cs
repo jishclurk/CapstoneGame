@@ -16,29 +16,22 @@ public class PlayerAbilities : MonoBehaviour
     //Basic gun ability
     public IBasic Basic { get; set; }
 
-    //List of unlocked basic abilities
-    public List<IBasic> unlockedBasics = new List<IBasic>();
-
     //List of all available abilities
-    public List<ISpecial> unlockedSpecialAbilities { get; set; }
-
-    //List of all potenital basic abilities
-    private List<IBasic> potentialBasics; 
+    public List<IAbility> unlockedAbilities { get; set; }
 
     //List of all potentail specail abilities
-    private List<ISpecial> potentialSpecials;
+    private List<IAbility> potentialAbilities;
 
     public void Awake()
     {
-        potentialSpecials = new List<ISpecial>() {new GrenadeThrow(), new MedKit(), new Zap(), new BioGrenade(), new RIPRounds(), new ShieldBooster(), new Revive(), new SentryTurret(), new Flamethrower(), new Stimpak(), new Invigorate(), new ChainLightning(), new Shockwave(), new LeechDart(), new FlameWall()};
-        potentialBasics = new List<IBasic>();
-        unlockedBasics.Add(new PistolShot());
+        potentialAbilities = new List<IAbility>() {new GrenadeThrow(), new MedKit(), new Zap(), new BioGrenade(), new RIPRounds(),
+            new ShieldBooster(), new Revive(), new SentryTurret(), new Flamethrower(), new Stimpak(), new Invigorate(),
+            new ChainLightning(), new Shockwave(), new LeechDart(), new FlameWall(), new SniperShot(), new SMGShot()};
         AbilityBindings = new Dictionary<KeyCode, int>();
 
-        Basic = unlockedBasics[0];
         Basic = new RifleShot();
 
-        unlockedSpecialAbilities = new List<ISpecial>();
+        unlockedAbilities = new List<IAbility>();
         //LoadUnlockedAbilities();
         // LoadHotBar();
 
@@ -53,9 +46,9 @@ public class PlayerAbilities : MonoBehaviour
 
     private void LoadUnlockedAbilities()
     {
-        unlockedSpecialAbilities.Add(new Zap());
-        unlockedSpecialAbilities.Add(new MedKit());
-        unlockedSpecialAbilities.Add(new GrenadeThrow());
+        unlockedAbilities.Add(new Zap());
+        unlockedAbilities.Add(new MedKit());
+        unlockedAbilities.Add(new GrenadeThrow());
     }
 
     public void setKeysFromSettings()
@@ -106,11 +99,12 @@ public class PlayerAbilities : MonoBehaviour
 
     public void UpdateUnlockedAbilities(CharacterAttributes attributes)
     {
-        foreach(ISpecial x in unlockedSpecialAbilities)
+        foreach(IAbility x in unlockedAbilities)
         {
             Debug.Log(x);
         }
-        for (int i = potentialBasics.Count - 1; i >= 0; i--)
+        /* 
+         * for (int i = potentialBasics.Count - 1; i >= 0; i--)
         {
             IBasic potential = potentialBasics[i];
             if (attributes.Strength >= potential.StrengthRequired && attributes.Stamina >= potential.StaminaRequired && attributes.Intelligence >= potential.StaminaRequired)
@@ -120,19 +114,20 @@ public class PlayerAbilities : MonoBehaviour
             }
 
         }
+        */
 
-        for (int i = potentialSpecials.Count - 1; i>= 0; i--)
+        for (int i = potentialAbilities.Count - 1; i>= 0; i--)
         {
-            ISpecial potential = potentialSpecials[i];
+            IAbility potential = potentialAbilities[i];
             if (attributes.Strength >= potential.StrengthRequired && attributes.Stamina >= potential.StaminaRequired && attributes.Intelligence >= potential.IntelligenceRequired)
             {
-                potentialSpecials.Remove(potential);
-                unlockedSpecialAbilities.Add(potential);
+                potentialAbilities.Remove(potential);
+                unlockedAbilities.Add(potential);
             }
 
         }
 
-        foreach (ISpecial x in unlockedSpecialAbilities)
+        foreach (IAbility x in unlockedAbilities)
         {
             Debug.Log(x);
         }
