@@ -52,6 +52,8 @@ public class MainMenu : MonoBehaviour
             playerStart.strength = 1;
             playerStart.intelligence = 1; 
             playerStart.id = i + 1;
+            playerStart.health = PlayerResources.maxHealth;
+            playerStart.energy = PlayerResources.maxEnergy;
             players[i] = playerStart;
             if(i == 0)
             {

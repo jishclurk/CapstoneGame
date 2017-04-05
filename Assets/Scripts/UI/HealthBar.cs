@@ -21,6 +21,6 @@ public class HealthBar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		healthSlider.fillAmount = resources.currentHealth / resources.maxHealth;
+		healthSlider.fillAmount = resources.currentHealth / PlayerResources.maxHealth;
 	}
 }

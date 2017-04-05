@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerResources : MonoBehaviour {
 
-    public float maxHealth = 100;
+    public static float maxHealth = 100;
 
     private float _currentHealth;
     public float currentHealth
@@ -18,7 +18,7 @@ public class PlayerResources : MonoBehaviour {
         }
     }
 
-    public float maxEnergy = 100;
+    public static float maxEnergy = 100;
     private float _currentEnergy;
     public float currentEnergy
     {

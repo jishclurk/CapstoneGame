@@ -75,7 +75,7 @@ public class BioGrenade : ISpecial, IAbility {
         int count = 0;
         foreach(Player p in tm.playerList)
         {
-            if(p.resources.maxHealth - p.resources.currentHealth >= (baseDamage*(healLength/healRate)*0.8)) //if at least 2 players could use 80% of max healing ability
+            if(PlayerResources.maxHealth - p.resources.currentHealth >= (baseDamage*(healLength/healRate)*0.8)) //if at least 2 players could use 80% of max healing ability
             {
                 count++;
             }

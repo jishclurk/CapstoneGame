@@ -12,11 +12,11 @@ public class SlotScript : MonoBehaviour, IDropHandler {
 
     public bool isSetSlot;
 
-    private TeamManager tm;
+    private TacticalPause tp;
 
     private void Start()
     {
-        tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
+        tp = GameObject.Find("TacticalPause").GetComponent<TacticalPause>();
 
     }
 
@@ -42,12 +42,12 @@ public class SlotScript : MonoBehaviour, IDropHandler {
             if (isSetSlot)
             {
                 DragHandler.itemBeingDraged.transform.SetParent(transform);
-                tm.tacticalPause.updateAbilities(spot, ability); //needs to separately handle basic ability change?
+                tp.updateAbilities(spot, ability); //needs to separately handle basic ability change?
             }else
             {
                 spot = DragHandler.itemBeingDraged.transform.parent.GetComponent<SlotScript>().spot;
                 DragHandler.itemBeingDraged.transform.SetParent(transform);
-                tm.tacticalPause.updateAbilities(spot, new EmptyAbility());
+                tp.updateAbilities(spot, new EmptyAbility());
             }
 
             //ExecuteEvents.ExecuteHierarchy<IHasChanged>(gameObject, null, (x, y) => x.HasChanged());

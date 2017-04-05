@@ -62,7 +62,7 @@ public class MedKit : ISpecial, IAbility
 
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
     {
-        return player.resources.maxHealth - player.resources.currentHealth >= baseDamage;
+        return PlayerResources.maxHealth - player.resources.currentHealth >= baseDamage;
     }
 
     public bool isReady()
