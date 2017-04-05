@@ -35,6 +35,7 @@ public class ClockPuzzle : MonoBehaviour {
 			print ("\nHour: " + hour+"\nMinute: "+min);
 			btest = false;
 		}
+		print ("\nHour: " + hour+"\nMinute: "+min);
 		hourPart.setActiveButton(hour);
 		minutePart.setActiveButton (min);
 		if (hourPart.Complete() && minutePart.Complete()) {

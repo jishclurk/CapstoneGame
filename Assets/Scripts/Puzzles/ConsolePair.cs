@@ -29,7 +29,12 @@ public class ConsolePair : MonoBehaviour, ICircuitPiece {
 	}
 
 	public bool Output(){
-		return cG.Output () || cGT.Output();
+		if (cGT != null) {
+			return cGT.Output ();
+		} else {
+			return cG.Output ();
+
+		}
 
 	}
 
