@@ -28,9 +28,7 @@ public class PlayerAnimationController : MonoBehaviour {
     public void AnimateRevive()
     {
         deathAnimated = false;
-        animator.SetBool("Dead", false);
-        animator.SetFloat("Y", 0.0f);
-        Debug.Log("I revived");
+        animator.Rebind();
         idleAnimated = false;
     }
 

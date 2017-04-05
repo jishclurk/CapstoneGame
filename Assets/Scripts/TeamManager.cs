@@ -184,14 +184,15 @@ public class TeamManager : MonoBehaviour {
         for(int i = 0; i <playerList.Count; i++)
         {
             Player player = playerList[i];
-            player.resources.currentHealth = PlayerResources.maxHealth;
-            player.resources.currentEnergy = PlayerResources.maxEnergy;
-            player.animController.AnimateRevive();
             if (player.resources.isDead)
             {
                 Debug.Log("is dead coming back to life");
+                player.animController.AnimateRevive();
+                player.strategy.setAsCoopAI();
                 player.gameObject.GetComponent<NavMeshAgent>().Warp(cp.player1.transform.position);
             }
+            player.resources.currentHealth = PlayerResources.maxHealth;
+            player.resources.currentEnergy = PlayerResources.maxEnergy;
         }
     }
 
