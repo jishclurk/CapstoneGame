@@ -23,6 +23,6 @@ public class EnergyBar : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        energySlider.fillAmount = resources.currentEnergy / resources.maxEnergy;
+        energySlider.fillAmount = resources.currentEnergy / PlayerResources.maxEnergy;
     }
 }

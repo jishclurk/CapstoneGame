@@ -11,12 +11,14 @@ public class TacticalPause : MonoBehaviour {
 
     Canvas PauseScreen;
     public GameObject AbilitiesScreen;
+    private Transform Menus;
+    private GameObject attributesScreen;
+
+    private List<GameObject> setAbilitesSlots;
+    private List<GameObject> unLockedAbitiesSlots;
 
     private bool inTacticalPause;
-    private List<GameObject> unLockedAbitiesSlots;
-    private List<GameObject> setAbilitesSlots;
     TeamManager tm;
-    private GameObject attributesScreen;
     private Player displayedPlayer;
     SimpleGameManager gm;
 
@@ -43,7 +45,10 @@ public class TacticalPause : MonoBehaviour {
     void Start() {
         PauseScreen = GetComponent<Canvas>();
         PauseScreen.enabled = false;
-        AbilitiesScreen = transform.GetChild(1).gameObject;
+        Menus = transform.Find("Menus");
+        Menus.gameObject.SetActive(false);
+
+        AbilitiesScreen = Menus.transform.Find("Abilities").gameObject;
         AbilitiesScreen.SetActive(false);
         attributesScreen = AbilitiesScreen.transform.Find("Attributes").gameObject;
 
@@ -60,7 +65,7 @@ public class TacticalPause : MonoBehaviour {
         inTacticalPause = false;
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();
-
+        
         unLockedAbitiesSlots = new List<GameObject>();
         setAbilitesSlots = new List<GameObject>();
 
@@ -79,19 +84,50 @@ public class TacticalPause : MonoBehaviour {
         }
 
     }
-
     // Update is called once per frame
     void Update () {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (gm.gameState.Equals(GameState.COMABT_PAUSE))
+            {
+                gm.OnStateChange += Disable;
+                //PauseScreen.enabled = false;
+                //Menus.gameObject.SetActive(false);
+                //Time.timeScale = 1;
+                gm.SetGameState(GameState.PLAY);
+                //inTacticalPause = false;  
+            }else
+            {
+
+                gm.OnStateChange += Enable;
+                gm.SetGameState(GameState.COMABT_PAUSE);
+            }
+        }
+
+    //         public void StartComabtPause()
+    //{
+    //    if (gm.gameState.Equals(GameState.COMABT_PAUSE))
+    //    {
+    //        gm.OnStateChange += tacticalPause.Disable;
+    //        gm.SetGameState(GameState.PLAY);
+    //    }
+    //    else
+    //    {
+    //        gm.OnStateChange += tacticalPause.Enable;
+    //        gm.SetGameState(GameState.COMABT_PAUSE);
+    //    }
+    //}
         if (inTacticalPause && !tm.IsTeamInCombat())
         {
             if (Input.GetKeyDown(KeyCode.C))
             {
+                Debug.Log("pressed c");
                 toggleAbilityMenu();
             }
 
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                displayedPlayer = tm.activePlayer; //note to Claudia, this is my "bandaid" fix for some nulls if you tab before pressing c
+                displayedPlayer = tm.activePlayer; //note to Claudia, this is my "bandaid" fix for some nulls if you tab before pressing c, an excellent work around -claudia
                 int displayedPlayerId = displayedPlayer.id;
                 if (displayedPlayerId < 4)
                 {
@@ -128,14 +164,18 @@ public class TacticalPause : MonoBehaviour {
 
     public void toggleAbilityMenu()
     {
-        if (AbilitiesScreen.activeInHierarchy)
+        if (Menus.gameObject.activeInHierarchy)
         {
-            PauseScreen.enabled = true;
-            AbilitiesScreen.SetActive(false);
+            Debug.Log("1");
+            Menus.gameObject.SetActive(false);
+            //PauseScreen.enabled = true;
+            //AbilitiesScreen.SetActive(false);
         }
         else
         {
+            Debug.Log("2");
             //PauseScreen.enabled = false;
+            Menus.gameObject.SetActive(true);
             AbilitiesScreen.SetActive(true);
             displayedPlayer = tm.activePlayer;
             loadCurrentPlayerInfo(tm.activePlayer);

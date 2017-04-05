@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class TeamManager : MonoBehaviour {
-    public TacticalPause tacticalPause;
 
     public GameObject[] prefabList = new GameObject[4];
     public List<Player> playerList;
@@ -30,7 +29,7 @@ public class TeamManager : MonoBehaviour {
             prefabList[i] = Instantiate(prefabList[i]);
         }
 
-        tacticalPause = GameObject.Find("TacticalPause").GetComponent<TacticalPause>();
+       // tacticalPause = GameObject.Find("TacticalPause").GetComponent<TacticalPause>();
         gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();
 
         playerList = new List<Player>();
@@ -57,10 +56,10 @@ public class TeamManager : MonoBehaviour {
         {
             gm.onDeath();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartComabtPause();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    StartComabtPause();
+        //}
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             cycleActivePlayer();
@@ -130,10 +129,10 @@ public class TeamManager : MonoBehaviour {
     }
 
     //find a way to not do this shit
-    public void loadPlayerOnTactiaclPause(int id)
-    {
-        tacticalPause.loadCurrentPlayerInfo(getPlayerFromId(id));
-    }
+    //public void loadPlayerOnTactiaclPause(int id)
+    //{
+    //    tacticalPause.loadCurrentPlayerInfo(getPlayerFromId(id));
+    //}
 
     //eventually will take a parameter to change certain player
     public void cycleActivePlayer()
@@ -185,12 +184,13 @@ public class TeamManager : MonoBehaviour {
         for(int i = 0; i <playerList.Count; i++)
         {
             Player player = playerList[i];
-            player.resources.currentHealth = player.resources.maxHealth;
-            player.resources.currentEnergy = player.resources.maxEnergy;
+            player.resources.currentHealth = PlayerResources.maxHealth;
+            player.resources.currentEnergy = PlayerResources.maxEnergy;
+            player.animController.AnimateRevive();
             if (player.resources.isDead)
             {
+                Debug.Log("is dead coming back to life");
                 player.gameObject.GetComponent<NavMeshAgent>().Warp(cp.player1.transform.position);
-                player.animController.AnimateIdle();
             }
         }
     }
@@ -200,19 +200,19 @@ public class TeamManager : MonoBehaviour {
         return visibleEnemies.Count > 0;
     }
 
-    public void StartComabtPause()
-    {
-        if (gm.gameState.Equals(GameState.COMABT_PAUSE))
-        {
-            gm.OnStateChange += tacticalPause.Disable;
-            gm.SetGameState(GameState.PLAY);
-        }
-        else
-        {
-            gm.OnStateChange += tacticalPause.Enable;
-            gm.SetGameState(GameState.COMABT_PAUSE);
-        }
-    }
+    //public void StartComabtPause()
+    //{
+    //    if (gm.gameState.Equals(GameState.COMABT_PAUSE))
+    //    {
+    //        gm.OnStateChange += tacticalPause.Disable;
+    //        gm.SetGameState(GameState.PLAY);
+    //    }
+    //    else
+    //    {
+    //        gm.OnStateChange += tacticalPause.Enable;
+    //        gm.SetGameState(GameState.COMABT_PAUSE);
+    //    }
+    //}
 
     public void RemoveDeadEnemy(GameObject enemy)
     {
@@ -266,6 +266,8 @@ public class TeamManager : MonoBehaviour {
             player.id = playerList[i].id;
             player.statPoints = current.StatPoints;
             players[i] = player;
+            player.health = playerList[i].resources.currentHealth;
+            player.energy = playerList[i].resources.currentEnergy;
         }
         
         return players;
@@ -286,6 +288,8 @@ public class TeamManager : MonoBehaviour {
             current.Intelligence = playerState.intelligence;
             current.Stamina = playerState.stamina;
             currentPlayer.abilities.UpdateUnlockedAbilities(current);
+            currentPlayer.resources.currentHealth = playerState.health;
+            currentPlayer.resources.currentEnergy = playerState.energy;
 
             if (playerState.isInControl)
             {

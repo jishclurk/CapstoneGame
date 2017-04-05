@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - component: {fileID: 480780}
   - component: {fileID: 10820636}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Point light (109)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 487398}
   - component: {fileID: 3369292}
   - component: {fileID: 6481380}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: W2_D0_Collider(2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 418058}
   - component: {fileID: 10848502}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Point light (107)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   m_Component:
   - component: {fileID: 481332}
   - component: {fileID: 10861630}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Point light (108)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 408272}
   - component: {fileID: 3310974}
   - component: {fileID: 2369874}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: W2_D0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 440196}
   - component: {fileID: 3373094}
   - component: {fileID: 6468590}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: W2_D0_Collider(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,8 +105,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 135378}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.614891, y: 1.9623184, z: 28.446037}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 142.3938, y: 162.98328, z: -28.573044}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 440196}
@@ -116,7 +116,7 @@ Transform:
   - {fileID: 481332}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &418058
 Transform:
   m_ObjectHideFlags: 1
@@ -287,7 +287,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -321,7 +321,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -355,7 +355,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295

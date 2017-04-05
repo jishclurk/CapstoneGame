@@ -17,6 +17,9 @@ public class SerializedPlayer {
     public int stamina;
     public int id;
 
+    public float health;
+    public float energy;
+
     public SerializedPlayer()
     {
 
