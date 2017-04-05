@@ -138,4 +138,10 @@ public class MainMenu : MonoBehaviour
         Settings.enabled = true;
     }
 
+    public void CloseSettingsMenu()
+    {
+        Settings.enabled = false;
+        Menu.enabled = true;
+    }
+
 }
