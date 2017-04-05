@@ -138,6 +138,7 @@ public class AbilityHelper : MonoBehaviour {
 
     IEnumerator ShockwaveEnemy(Transform enemy, Vector3 target, float overTime)
     {
+        yield return new WaitForFixedUpdate();
         float startTime = Time.time;
         float initialZ = enemy.position.z;
         float initialX = enemy.position.x;

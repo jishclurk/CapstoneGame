@@ -134,13 +134,15 @@ public class PlayerAnimationController : MonoBehaviour {
             animator.SetBool("OnGround", true);
             animator.SetFloat("Speed", 0.0f);
             animator.SetBool("Aiming", true);
-            animator.SetTrigger("Use");
-            StartCoroutine(StopUse(duration));
+            StopAllCoroutines();
+            StartCoroutine(UseAnimation(duration));
         }
     }
 
-    private IEnumerator StopUse(float duration)
+    private IEnumerator UseAnimation(float duration)
     {
+        yield return new WaitForFixedUpdate();
+        animator.SetTrigger("Use");
         yield return new WaitForSeconds(duration);
         if (!deathAnimated)
         {

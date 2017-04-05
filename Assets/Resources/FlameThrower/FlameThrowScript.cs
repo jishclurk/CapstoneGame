@@ -38,7 +38,7 @@ public class FlameThrowScript : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         transform.position = castedPlayer.gunbarrel.position;
         transform.rotation = castedPlayer.transform.rotation;
         if (castedPlayer == tm.activePlayer)

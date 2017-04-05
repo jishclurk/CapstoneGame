@@ -63,7 +63,7 @@ public class CursorScript : MonoBehaviour {
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (tm.activePlayer.strategy.playerScript.activeSpecialAbility != null)
+        if (tm.activePlayer.strategy.playerScript.activeSpecialAbility != null && tm.activePlayer.strategy.playerScript.activeSpecialAbility.GetCoopAction() != AbilityHelper.CoopAction.InstantHeal)
         {
             Cursor.SetCursor(abilityCursor, new Vector2(abilityCursor.height / 2, abilityCursor.width / 2), cursorMode);
         }
@@ -88,7 +88,7 @@ public class CursorScript : MonoBehaviour {
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (tm.activePlayer.strategy.playerScript.activeSpecialAbility != null)
+        if (tm.activePlayer.strategy.playerScript.activeSpecialAbility != null && tm.activePlayer.strategy.playerScript.activeSpecialAbility.GetCoopAction() != AbilityHelper.CoopAction.InstantHeal)
         {
             Cursor.SetCursor(abilityCursor, new Vector2(abilityCursor.height / 2, abilityCursor.width / 2), cursorMode);
         }

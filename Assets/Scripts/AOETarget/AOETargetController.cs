@@ -12,6 +12,11 @@ public class AOETargetController : MonoBehaviour
     public Player activePlayer;
     public bool isPlayerCalled;
     private Vector3 location;
+    private ParticleSystem ps;
+
+
+    private float lastTime;
+
 
     private void Awake()
     {
@@ -20,14 +25,17 @@ public class AOETargetController : MonoBehaviour
         effectiveRange = Mathf.Infinity;
         activePlayer = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>().activePlayer;
         isPlayerCalled = true;
+        ps = GetComponent<ParticleSystem>();
     }
 
     private void Start()
     {
+        lastTime = Time.realtimeSinceStartup;
         if (isPlayerCalled)
         {
             StartCoroutine(UpdateAOEPosition());
         }
+       
     }
 
     //this is weird, but I can explain (NC)
@@ -68,14 +76,19 @@ public class AOETargetController : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        float deltaTime = Time.realtimeSinceStartup - lastTime;
+        ps.Simulate(deltaTime, true, false); //last must be false!!
+        lastTime = Time.realtimeSinceStartup;
+    }
 
-
+    public void DisableTracking()
+    {
+        StopAllCoroutines();
     }
 
     private void OnTriggerEnter(Collider other)

@@ -436,7 +436,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             activeSpecialAbility.Execute(player, gameObject, aoeArea);
-            aoeArea.GetComponent<AOETargetController>().enabled = false;
+            aoeArea.GetComponent<AOETargetController>().DisableTracking();
             aoeArea = null; //if switch player, aoeArea will be null so it will still exist if cast
             activeSpecialAbility = null;
         }
