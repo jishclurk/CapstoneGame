@@ -12,6 +12,7 @@ public class ClockPuzzle : MonoBehaviour {
 	HourScript hourPart;
 	MinuteScript minutePart;
 	ClockCollide trigger;
+	ParticleSystem completeEffect;
 
 	bool complete;
 	// Use this for initialization
@@ -24,6 +25,7 @@ public class ClockPuzzle : MonoBehaviour {
 		hourPart = this.transform.FindChild ("Hours").GetComponent<HourScript> ();
 		minutePart = this.transform.FindChild ("Minutes").GetComponent<MinuteScript> ();
 		trigger = this.gameObject.transform.Find ("ColliderEq_6").GetComponent<ClockCollide> ();
+		completeEffect = this.gameObject.transform.Find ("GreenSwirlyAura").GetComponent<ParticleSystem> ();
 		complete = false;
 	}
 	
@@ -44,16 +46,18 @@ public class ClockPuzzle : MonoBehaviour {
 			if (hourPart.Complete () && minutePart.Complete ()) {
 				print ("Clock Accomplished");
 				complete = true;
-				hourPart.Disable ();
-				minutePart.Disable ();
+				hourPart.gameObject.SetActive (false);
+				minutePart.gameObject.SetActive (false);
 				genSpot.intensity = 100;
+				completeEffect.Play ();
 
 			} else {
 				genSpot.intensity = 0;
 			}
 		} else if (complete) {
-
+			
 		} else {
+			completeEffect.Stop ();
 			hourPart.ResetTime ();
 			minutePart.ResetTime ();
 			hourPart.gameObject.SetActive (false);
