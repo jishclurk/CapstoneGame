@@ -61,8 +61,6 @@ public class DefendState : ICoopState
     {
         if (!(aiPlayer.navMeshAgent.remainingDistance > aiPlayer.navMeshAgent.stoppingDistance)) //giant ugly if statement that says don't start shooting until you reach your destination
         {
-
-
             if (aiPlayer.targetedEnemy == null || reEvalutateTarget)
             {
                 switch (aiPlayer.targetChoose)
@@ -282,10 +280,6 @@ public class DefendState : ICoopState
                 {
                     //on kill, remove from both team manager visible enemies and all local watchedenemies
                     aiPlayer.targetedEnemy = null;
-                    if (!aiPlayer.tm.IsTeamInCombat())
-                    {
-                        ToIdleState();
-                    }
                 }
             }
             reEvalutateTarget = true;
@@ -333,10 +327,6 @@ public class DefendState : ICoopState
                     {
                         //on kill, remove from both team manager visible enemies and all local watchedenemies
                         aiPlayer.targetedEnemy = null;
-                        if (!aiPlayer.tm.IsTeamInCombat())
-                        {
-                            ToIdleState();
-                        }
                     }
                 }
                 reEvalutateTarget = true;

@@ -490,8 +490,8 @@ public class PlayerController : MonoBehaviour
     public void ResetOnSwitch()
     {
         targetedEnemy = null;
-        inheritDefendState = false;
         navMeshAgent.destination = transform.position;
+        inheritDefendState = false;
         specialTargetedFriend = null;
         animSpeed = 0.0f;
         specialTargetedEnemy = null;

@@ -195,11 +195,14 @@ public class CoopAiController : MonoBehaviour {
 
     public void SetToDefendState(float duration)
     {
+        StopAllCoroutines();
         StartCoroutine(DefendRoutine(duration));
     }
 
     private IEnumerator DefendRoutine(float delay)
     {
+        currentState = defendState;
+        yield return new WaitForFixedUpdate();
         currentState = defendState;
         yield return new WaitForFixedUpdate();
         navMeshAgent.Resume();
