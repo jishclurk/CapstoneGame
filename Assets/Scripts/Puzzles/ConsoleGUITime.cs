@@ -10,7 +10,8 @@ public class ConsoleGUITime : MonoBehaviour, ICircuitPiece {
 	SpriteRenderer[] flickeringImages;
 	PuzzleManager pm;
 	AudioSource sound;
-	public bool minuteSolved;
+	//public bool minuteSolved;
+	public ConsoleGUITime minuteConsole;
 
 	float flickerTime = 0.2f;
 	float cTime;
@@ -28,7 +29,7 @@ public class ConsoleGUITime : MonoBehaviour, ICircuitPiece {
 		sound = GetComponent<AudioSource>();
 		played = false;
 		solved = false;
-
+		errorText [4].gameObject.SetActive (false);
 	}
 
 	// Update is called once per frame
@@ -41,9 +42,10 @@ public class ConsoleGUITime : MonoBehaviour, ICircuitPiece {
 		if (pm.Output ()) {
 			errorText [0].color = Color.cyan;
 			errorText [2].color = Color.cyan;
+			errorText [4].gameObject.SetActive (true);
 			errorText [0].text = errorText[2].text = hour+" :";
 			//errorText [2].text = "GRANTED";
-			if (!minuteSolved) {
+			if (minuteConsole != null && !minuteConsole.Output()) {
 				errorText [1].text = errorText [3].text =	"" + Random.Range (0, 6) + Random.Range (0, 10);
 			} else {
 				errorText [1].color = Color.cyan;
@@ -63,7 +65,7 @@ public class ConsoleGUITime : MonoBehaviour, ICircuitPiece {
 			//foreach (Text t in errorText) {
 				if (cTime < flickerTime) {
 					if (flick) {
-						if (!minuteSolved) {
+					if (minuteConsole != null && !minuteConsole.Output()) {
 							errorText [0].text = errorText [2].text = Random.Range (1, 13) + ":";
 
 						} else {
@@ -73,7 +75,7 @@ public class ConsoleGUITime : MonoBehaviour, ICircuitPiece {
 						}
 						errorText[1].text = errorText[3].text =	""+Random.Range(0,6)+Random.Range(0,10);
 					} else {
-						if (!minuteSolved) {
+					if (minuteConsole != null && !minuteConsole.Output()) {
 							errorText [0].text = errorText [2].text = Random.Range (1, 13) + ":";
 						} else {
 							errorText [0].text = errorText[2].text = hour+" :";
