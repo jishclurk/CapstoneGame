@@ -13,6 +13,7 @@ public class ClockPuzzle : MonoBehaviour {
 	MinuteScript minutePart;
 	ClockCollide trigger;
 	ParticleSystem completeEffect;
+	private AudioSource sound;
 
 	bool complete;
 	// Use this for initialization
@@ -21,6 +22,7 @@ public class ClockPuzzle : MonoBehaviour {
 		min = System.DateTime.Now.Minute;
 		btest = true;
 		genSpot = this.gameObject.transform.Find ("Spot Light").GetComponent<Light> ();
+		sound = GetComponent<AudioSource>();
 		turnedOn = false;
 		hourPart = this.transform.FindChild ("Hours").GetComponent<HourScript> ();
 		minutePart = this.transform.FindChild ("Minutes").GetComponent<MinuteScript> ();
@@ -46,10 +48,11 @@ public class ClockPuzzle : MonoBehaviour {
 			if (hourPart.Complete () && minutePart.Complete ()) {
 				print ("Clock Accomplished");
 				complete = true;
-				hourPart.gameObject.SetActive (false);
-				minutePart.gameObject.SetActive (false);
+				hourPart.Disable ();
+				minutePart.Disable ();
 				genSpot.intensity = 100;
 				completeEffect.Play ();
+				sound.Play ();
 
 			} else {
 				genSpot.intensity = 0;
