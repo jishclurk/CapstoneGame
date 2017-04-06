@@ -69,8 +69,16 @@ public class PlayerAbilities : MonoBehaviour
         AbilityBindings[key] = spot;
     }
 
-    public void SetNewAbility(ISpecial ability, int spot)
+    public void SetNewAbility(int abilityId, int spot)
     {
+        ISpecial ability = new EmptyAbility();
+        foreach(IAbility a in unlockedAbilities)
+        {
+            if(a.id == abilityId)
+            {
+                ability = (ISpecial)a;
+            }
+        }
         abilityArray[spot] = ability;
     }
 
@@ -92,22 +100,6 @@ public class PlayerAbilities : MonoBehaviour
 
     public void UpdateUnlockedAbilities(CharacterAttributes attributes)
     {
-        //foreach(IAbility x in unlockedAbilities)
-        //{
-        //    Debug.Log(x);
-        //}
-        /* 
-         * for (int i = potentialBasics.Count - 1; i >= 0; i--)
-        {
-            IBasic potential = potentialBasics[i];
-            if (attributes.Strength >= potential.StrengthRequired && attributes.Stamina >= potential.StaminaRequired && attributes.Intelligence >= potential.StaminaRequired)
-            {
-                potentialBasics.Remove(potential);
-                unlockedBasics.Add(potential);
-            }
-
-        }
-        */
 
         for (int i = potentialAbilities.Count - 1; i>= 0; i--)
         {
@@ -119,11 +111,6 @@ public class PlayerAbilities : MonoBehaviour
             }
 
         }
-
-        //foreach (IAbility x in unlockedAbilities)
-        //{
-        //    Debug.Log(x);
-        //}
     }
 
 

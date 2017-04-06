@@ -308,7 +308,7 @@ public class TacticalPause : MonoBehaviour {
     //puts ability into the displayed players ability array at spot
     public void updateSpecialAbilities(int spot, ISpecial ability)
     {
-        displayedPlayer.abilities.SetNewAbility(ability, spot);
+        displayedPlayer.abilities.SetNewAbility(ability.id, spot);
         ISpecial[] array = displayedPlayer.abilities.abilityArray;
         displayedPlayer.attributes.ResetPassiveBonus();
         foreach(ISpecial x in array)

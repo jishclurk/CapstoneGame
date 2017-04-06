@@ -73,7 +73,7 @@ public class CheckPoint : MonoBehaviour
             {
                 if (objmanager.LevelComplete())
                 {
-                    CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [S] to save and continue/n Press [N] to continue";
+                    CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [S] to save and continue Press [N] to continue";
                 }else
                 {
                     CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Need to complete objectives to advance!  Press [S] to save";
@@ -188,19 +188,6 @@ public class CheckPoint : MonoBehaviour
     {
         Time.timeScale = 1;
     }
-
-    ////Closes the checkpoint scrren and starts the game
-    //public void closeCheckpointScreen()
-    //{
-    //   // CheckPointSceen.enabled = false;
-    //    progressGame();
-    //}
-
-    //public void openCheckPointScreen()
-    //{
-    //    SaveAsScreen.enabled = false;
-    //   // CheckPointSceen.enabled = true;
-    //}
 
     public void progressGame()
     {
