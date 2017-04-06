@@ -28,7 +28,7 @@ public class GrenadeThrow : ISpecial, IAbility {
 
     public GrenadeThrow()
     {
-        StrengthRequired = 3;
+        StrengthRequired = 5;
         StaminaRequired = 0;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/GrenadeThrowIcon", typeof(Image)) as Image;

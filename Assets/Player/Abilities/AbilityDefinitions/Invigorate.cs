@@ -25,9 +25,9 @@ public class Invigorate : ISpecial, IAbility {
 
     public Invigorate()
     {
-        StrengthRequired = 3;
+        StrengthRequired = 10;
         StaminaRequired = 0;
-        IntelligenceRequired = 3;
+        IntelligenceRequired = 10;
         image = Resources.Load("Abilities/InvigorateIcon", typeof(Image)) as Image;
         id = 10;
         name = "Invigorate";

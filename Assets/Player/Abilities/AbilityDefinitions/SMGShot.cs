@@ -23,7 +23,7 @@ public class SMGShot : IBasic, IAbility {
 
     public SMGShot()
     {
-        StrengthRequired = 0;
+        StrengthRequired = 15;
         StaminaRequired = 0;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/SMG", typeof(Image)) as Image;

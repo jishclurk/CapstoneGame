@@ -32,7 +32,7 @@ public class ShieldBooster : ISpecial, IAbility {
     public ShieldBooster()
     {
         StrengthRequired = 0;
-        StaminaRequired = 6;
+        StaminaRequired = 10;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/ShieldBoosterIcon", typeof(Image)) as Image;
         id = 16;

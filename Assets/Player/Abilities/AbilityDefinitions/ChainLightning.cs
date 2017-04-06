@@ -28,7 +28,7 @@ public class ChainLightning : ISpecial, IAbility {
     public ChainLightning()
     {
         StrengthRequired = 0;
-        StaminaRequired = 6;
+        StaminaRequired = 20;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/ChainLightningIcon", typeof(Image)) as Image;
         id = 6;

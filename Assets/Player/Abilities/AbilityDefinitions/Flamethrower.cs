@@ -34,7 +34,7 @@ public class Flamethrower : ISpecial, IAbility {
 
     public Flamethrower()
     {
-        StrengthRequired = 5;
+        StrengthRequired = 10;
         StaminaRequired = 0;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/FlamethrowerIcon", typeof(Image)) as Image;

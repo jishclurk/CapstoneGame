@@ -31,7 +31,7 @@ public class BioGrenade : ISpecial, IAbility {
     {
         StrengthRequired = 0;
         StaminaRequired = 0;
-        IntelligenceRequired = 6;
+        IntelligenceRequired = 20;
         image = Resources.Load("Abilities/BioGrenadeIcon", typeof(Image)) as Image;
         id = 5;
         name = "Bio Grenade";

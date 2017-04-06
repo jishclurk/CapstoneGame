@@ -25,7 +25,7 @@ public class RIPRounds : ISpecial, IAbility {
 
     public RIPRounds()
     {
-        StrengthRequired = 6;
+        StrengthRequired = 20;
         StaminaRequired = 0;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/RIPRoundsIcon", typeof(Image)) as Image;

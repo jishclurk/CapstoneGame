@@ -31,8 +31,8 @@ public class Stimpak : ISpecial, IAbility
     public Stimpak()
     {
         StrengthRequired = 0;
-        StaminaRequired = 2;
-        IntelligenceRequired = 2;
+        StaminaRequired = 5;
+        IntelligenceRequired = 5;
         image = Resources.Load("Abilities/StimpakIcon", typeof(Image)) as Image;
         id = 18;
         name = "Stimpak";

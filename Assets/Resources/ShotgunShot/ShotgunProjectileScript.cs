@@ -54,7 +54,7 @@ public class ShotgunProjectileScript : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!hasCollided && other.CompareTag("Enemy") && !other.isTrigger)
+        if (!hasCollided && other.CompareTag("Enemy") && !other.isTrigger && !other.GetComponent<EnemyHealth>().isDead)
         {
             hasCollided = true;
             //transform.DetachChildren();

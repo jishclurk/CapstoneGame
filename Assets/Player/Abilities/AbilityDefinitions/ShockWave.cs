@@ -28,8 +28,8 @@ public class Shockwave : ISpecial, IAbility {
 
     public Shockwave()
     {
-        StrengthRequired = 3;
-        StaminaRequired = 3;
+        StrengthRequired = 10;
+        StaminaRequired = 10;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/ShockwaveIcon", typeof(Image)) as Image;
         id = 17;

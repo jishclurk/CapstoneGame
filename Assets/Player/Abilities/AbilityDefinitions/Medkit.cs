@@ -29,7 +29,7 @@ public class MedKit : ISpecial, IAbility
     {
         StrengthRequired = 0;
         StaminaRequired = 0;
-        IntelligenceRequired = 3;
+        IntelligenceRequired = 5;
         image = Resources.Load("Abilities/MedkitIcon", typeof(Image)) as Image;
         id = 12;
         name = "Heal";

@@ -25,7 +25,7 @@ public class SniperShot : IBasic, IAbility {
     {
         StrengthRequired = 0;
         StaminaRequired = 0;
-        IntelligenceRequired = 2;
+        IntelligenceRequired = 15;
         image = Resources.Load("Abilities/Sniper", typeof(Image)) as Image;
         id = 4;
         name = "Sniper Shot";

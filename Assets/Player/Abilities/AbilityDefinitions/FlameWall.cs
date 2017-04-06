@@ -30,8 +30,8 @@ public class FlameWall : ISpecial, IAbility {
 
     public FlameWall()
     {
-        StrengthRequired = 2;
-        StaminaRequired = 2;
+        StrengthRequired = 5;
+        StaminaRequired = 5;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/FlameWallIcon", typeof(Image)) as Image;
         id = 8;

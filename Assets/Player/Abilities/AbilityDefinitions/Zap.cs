@@ -27,7 +27,7 @@ public class Zap : ISpecial, IAbility {
     public Zap()
     {
         StrengthRequired = 0;
-        StaminaRequired = 3;
+        StaminaRequired = 5;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/ZapIcon", typeof(Image)) as Image;
         id = 19;

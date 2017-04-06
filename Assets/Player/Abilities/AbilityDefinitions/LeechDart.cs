@@ -27,9 +27,9 @@ public class LeechDart : ISpecial, IAbility {
 
     public LeechDart()
     {
-        StrengthRequired = 2;
+        StrengthRequired = 5;
         StaminaRequired = 0;
-        IntelligenceRequired = 2;
+        IntelligenceRequired = 5;
         image = Resources.Load("Abilities/LeechDartIcon", typeof(Image)) as Image;
         id = 11;
         name = "LeechDart";

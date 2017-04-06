@@ -26,7 +26,7 @@ public class PlayerAbilities : MonoBehaviour
     {
         potentialAbilities = new List<IAbility>() {new GrenadeThrow(), new MedKit(), new Zap(), new BioGrenade(), new RIPRounds(),
             new ShieldBooster(), new Revive(), new SentryTurret(), new Flamethrower(), new Stimpak(), new Invigorate(),
-            new ChainLightning(), new Shockwave(), new LeechDart(), new FlameWall(), new SniperShot(), new SMGShot(), new RifleShot()};
+            new ChainLightning(), new Shockwave(), new LeechDart(), new FlameWall(), new SniperShot(), new SMGShot(), new RifleShot(), new ShotgunShot()};
         AbilityBindings = new Dictionary<KeyCode, int>();
 
         Basic = new RifleShot();
@@ -76,13 +76,6 @@ public class PlayerAbilities : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            abilityArray[0] = new Zap();
-            abilityArray[1] = new Flamethrower();
-            abilityArray[2] = new GrenadeThrow();
-            abilityArray[3] = new BioGrenade();
-        }
         if (Input.GetKeyDown(KeyCode.K))
         {
             Basic = new ShotgunShot();

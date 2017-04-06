@@ -26,7 +26,7 @@ public class ShotgunShot : IBasic, IAbility {
     public ShotgunShot()
     {
         StrengthRequired = 0;
-        StaminaRequired = 0;
+        StaminaRequired = 15;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/Shotgun", typeof(Image)) as Image;
         id = 3;

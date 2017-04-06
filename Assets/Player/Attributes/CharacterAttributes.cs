@@ -76,4 +76,12 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         PassiveIntelligence = 0;
         PassiveStamina = 0;
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            StatPoints += 10;
+        }
+    }
 }

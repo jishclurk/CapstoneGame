@@ -28,7 +28,7 @@ public class Revive : ISpecial, IAbility {
     {
         StrengthRequired = 0;
         StaminaRequired = 0;
-        IntelligenceRequired = 6;
+        IntelligenceRequired = 10;
         image = Resources.Load("Abilities/ReviveIcon", typeof(Image)) as Image;
         id = 13;
         name = "Revive";
