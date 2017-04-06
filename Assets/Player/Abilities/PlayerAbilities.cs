@@ -99,10 +99,10 @@ public class PlayerAbilities : MonoBehaviour
 
     public void UpdateUnlockedAbilities(CharacterAttributes attributes)
     {
-        foreach(IAbility x in unlockedAbilities)
-        {
-            Debug.Log(x);
-        }
+        //foreach(IAbility x in unlockedAbilities)
+        //{
+        //    Debug.Log(x);
+        //}
         /* 
          * for (int i = potentialBasics.Count - 1; i >= 0; i--)
         {
@@ -127,10 +127,10 @@ public class PlayerAbilities : MonoBehaviour
 
         }
 
-        foreach (IAbility x in unlockedAbilities)
-        {
-            Debug.Log(x);
-        }
+        //foreach (IAbility x in unlockedAbilities)
+        //{
+        //    Debug.Log(x);
+        //}
     }
 
 

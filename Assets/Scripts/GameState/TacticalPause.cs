@@ -105,7 +105,6 @@ public class TacticalPause : MonoBehaviour {
                 //inTacticalPause = false;  
             }else
             {
-
                 gm.OnStateChange += Enable;
                 gm.SetGameState(GameState.COMABT_PAUSE);
             }
@@ -177,7 +176,7 @@ public class TacticalPause : MonoBehaviour {
         }
     }
 
-    private GameObject FindSlotById(int id)
+    public GameObject FindSlotById(int id)
     {
         for(int i = 0; i<unLockedAbilitesSlotScripts.Count; i++)
         {
@@ -204,7 +203,7 @@ public class TacticalPause : MonoBehaviour {
                 setAbilities.Add(active.abilities.abilityArray[i].GetType());
             }
         }
-        Debug.Log(setAbilities);
+      //  Debug.Log(setAbilities);
 
         foreach (IAbility unlockedAbility in active.abilities.unlockedAbilities)
         {
@@ -216,17 +215,6 @@ public class TacticalPause : MonoBehaviour {
             }
 
         }
-
-        //for (int i = 0; i < active.abilities.unlockedAbilities.Count; i++)
-        //{
-        //    Debug.Log(i);
-        //    if (!setAbilities.Contains(active.abilities.unlockedAbilities[i].GetType()))
-        //    {
-        //        Image image = GameObject.Instantiate(active.abilities.unlockedAbilities[i].image) as Image;
-        //        image.transform.SetParent(unLockedAbitiesSlots[i].transform, false);
-        //        unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability = active.abilities.unlockedAbilities[i];
-        //    }
-        //}
 
         loadAttributesInfo();
     }
@@ -310,6 +298,8 @@ public class TacticalPause : MonoBehaviour {
     //puts ability into the displayed players ability array at spot
     public void updateSpecialAbilities(int spot, ISpecial ability)
     {
+        //Debug.Log(ability);
+        //Debug.Log("putting ability " + ability + "in spot " + spot);
         displayedPlayer.abilities.SetNewAbility(ability, spot);
         ISpecial[] array = displayedPlayer.abilities.abilityArray;
 
@@ -318,8 +308,8 @@ public class TacticalPause : MonoBehaviour {
         displayedPlayer.attributes.ResetPassiveBonus();
         foreach(ISpecial x in array)
         {
+           // Debug.Log(x);
             x.updatePassiveBonuses(displayedPlayer.attributes);
-            Debug.Log(x);
         }
     }
     //puts basic ability into the displayed players Basic
