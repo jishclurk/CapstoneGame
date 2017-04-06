@@ -2714,6 +2714,7 @@ MonoBehaviour:
   sounds: {fileID: 0}
   eyes: {fileID: 0}
   tm: {fileID: 0}
+  isStunned: 0
 --- !u!114 &114675240405217086
 MonoBehaviour:
   m_ObjectHideFlags: 1
