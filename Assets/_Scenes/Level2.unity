@@ -47112,7 +47112,7 @@ Transform:
   m_PrefabInternal: {fileID: 1680279375}
 --- !u!114 &998199257 stripped
 MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114420735934643464, guid: 4c1a2e93e626b470486e8ef7917a4785,
+  m_PrefabParentObject: {fileID: 114139091588133614, guid: 9c3de8a72760a4731a70807b08c6423e,
     type: 2}
   m_PrefabInternal: {fileID: 1823057272}
   m_Script: {fileID: 11500000, guid: c29c52455f9d44d96b97a85f8e131173, type: 3}
@@ -63111,10 +63111,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1301704242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ca52538e5d994315b8201fe9a876175, type: 3}
+  m_Script: {fileID: 11500000, guid: 9aec93ddd4f74444f806b9529fb75608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleActivator: {fileID: 998199257}
+  puzzleActivator: {fileID: 1346659850}
 --- !u!1001 &1305217535
 Prefab:
   m_ObjectHideFlags: 0
@@ -87809,44 +87809,49 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4148457130233494, guid: 4c1a2e93e626b470486e8ef7917a4785, type: 2}
+    - target: {fileID: 4956000670775044, guid: 9c3de8a72760a4731a70807b08c6423e, type: 2}
       propertyPath: m_LocalPosition.x
       value: 151
       objectReference: {fileID: 0}
-    - target: {fileID: 4148457130233494, guid: 4c1a2e93e626b470486e8ef7917a4785, type: 2}
+    - target: {fileID: 4956000670775044, guid: 9c3de8a72760a4731a70807b08c6423e, type: 2}
       propertyPath: m_LocalPosition.y
       value: -0.03
       objectReference: {fileID: 0}
-    - target: {fileID: 4148457130233494, guid: 4c1a2e93e626b470486e8ef7917a4785, type: 2}
+    - target: {fileID: 4956000670775044, guid: 9c3de8a72760a4731a70807b08c6423e, type: 2}
       propertyPath: m_LocalPosition.z
       value: 141.8
       objectReference: {fileID: 0}
-    - target: {fileID: 4148457130233494, guid: 4c1a2e93e626b470486e8ef7917a4785, type: 2}
+    - target: {fileID: 4956000670775044, guid: 9c3de8a72760a4731a70807b08c6423e, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4148457130233494, guid: 4c1a2e93e626b470486e8ef7917a4785, type: 2}
+    - target: {fileID: 4956000670775044, guid: 9c3de8a72760a4731a70807b08c6423e, type: 2}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4148457130233494, guid: 4c1a2e93e626b470486e8ef7917a4785, type: 2}
+    - target: {fileID: 4956000670775044, guid: 9c3de8a72760a4731a70807b08c6423e, type: 2}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4148457130233494, guid: 4c1a2e93e626b470486e8ef7917a4785, type: 2}
+    - target: {fileID: 4956000670775044, guid: 9c3de8a72760a4731a70807b08c6423e, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4148457130233494, guid: 4c1a2e93e626b470486e8ef7917a4785, type: 2}
+    - target: {fileID: 4956000670775044, guid: 9c3de8a72760a4731a70807b08c6423e, type: 2}
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 1857762052087516, guid: 4c1a2e93e626b470486e8ef7917a4785, type: 2}
+    - target: {fileID: 223872011513620826, guid: 9c3de8a72760a4731a70807b08c6423e,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 101684418}
+    - target: {fileID: 1394571476135856, guid: 9c3de8a72760a4731a70807b08c6423e, type: 2}
       propertyPath: m_Name
       value: ClockPuzzle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 4c1a2e93e626b470486e8ef7917a4785, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: 9c3de8a72760a4731a70807b08c6423e, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1823524857
 Prefab:
@@ -97018,8 +97023,8 @@ Transform:
   - {fileID: 1685097891}
   - {fileID: 1666267759}
   - {fileID: 1535466957}
-  - {fileID: 745124598}
   - {fileID: 1693058885}
+  - {fileID: 745124598}
   - {fileID: 794251037}
   m_Father: {fileID: 0}
   m_RootOrder: 31
