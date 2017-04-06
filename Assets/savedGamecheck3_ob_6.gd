@@ -13,6 +13,8 @@
       <intelligence>1</intelligence>
       <stamina>1</stamina>
       <id>1</id>
+      <health>100</health>
+      <energy>100</energy>
     </Player>
     <Player>
       <In_x0020_Control>false</In_x0020_Control>
@@ -23,6 +25,8 @@
       <intelligence>1</intelligence>
       <stamina>1</stamina>
       <id>2</id>
+      <health>100</health>
+      <energy>100</energy>
     </Player>
     <Player>
       <In_x0020_Control>false</In_x0020_Control>
@@ -33,6 +37,8 @@
       <intelligence>1</intelligence>
       <stamina>1</stamina>
       <id>3</id>
+      <health>100</health>
+      <energy>100</energy>
     </Player>
     <Player>
       <In_x0020_Control>false</In_x0020_Control>
@@ -43,6 +49,8 @@
       <intelligence>1</intelligence>
       <stamina>1</stamina>
       <id>4</id>
+      <health>100</health>
+      <energy>100</energy>
     </Player>
   </Players>
   <Objectives>

@@ -100,11 +100,7 @@ public class TacticalPause : MonoBehaviour {
             if (gm.gameState.Equals(GameState.COMABT_PAUSE))
             {
                 gm.OnStateChange += Disable;
-                //PauseScreen.enabled = false;
-                //Menus.gameObject.SetActive(false);
-                //Time.timeScale = 1;
                 gm.SetGameState(GameState.PLAY);
-                //inTacticalPause = false;  
             }else
             {
                 gm.OnStateChange += Enable;
@@ -312,17 +308,11 @@ public class TacticalPause : MonoBehaviour {
     //puts ability into the displayed players ability array at spot
     public void updateSpecialAbilities(int spot, ISpecial ability)
     {
-        //Debug.Log(ability);
-        //Debug.Log("putting ability " + ability + "in spot " + spot);
         displayedPlayer.abilities.SetNewAbility(ability, spot);
         ISpecial[] array = displayedPlayer.abilities.abilityArray;
-
-        //prints players ability array for debugging 
-        //Nick: Added Passive bonus allocation here for each ability
         displayedPlayer.attributes.ResetPassiveBonus();
         foreach(ISpecial x in array)
         {
-           // Debug.Log(x);
             x.updatePassiveBonuses(displayedPlayer.attributes);
         }
     }
@@ -333,7 +323,7 @@ public class TacticalPause : MonoBehaviour {
 
     }
 
-    //Stops game, turns of pause screen
+    //Stops game, turns on pause screen
     public void Enable()
     {
         PauseScreen.enabled = true;
@@ -347,7 +337,8 @@ public class TacticalPause : MonoBehaviour {
         AbilitiesScreen.SetActive(false);
         PauseScreen.enabled = false;
         Time.timeScale = 1;
-        inTacticalPause = false;
+        inTacticalPause = false; Menus.gameObject.SetActive(false);
+
     }
 
     public void ExitToMain()

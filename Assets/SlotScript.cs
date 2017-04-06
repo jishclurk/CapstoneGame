@@ -62,13 +62,13 @@ public class SlotScript : MonoBehaviour, IDropHandler {
     {
         if (isValidDrop())
         {
+            Debug.Log("Good Drop");
             if (DragHandler.abilityBeingDraggedSlot.isBarSlot)
             {
-
+                Debug.Log("leaving bar slot");
                 tp.updateSpecialAbilities(DragHandler.abilityBeingDraggedSlot.spot, new EmptyAbility());
             }
 
-            Debug.Log("Good Drop");
             if (item) 
             {
                 Debug.Log("Something in the slot");
@@ -80,10 +80,12 @@ public class SlotScript : MonoBehaviour, IDropHandler {
                        // ability = item.get
                     }
                     Transform treeSlot = tp.FindSlotById(ability.id).transform;
+                    ability = DragHandler.abilityBeingDraggedSlot.ability;
                     transform.GetChild(0).SetParent(treeSlot, false);
                     DragHandler.itemBeingDragged.transform.SetParent(transform);
                     if (!isBasicBarSlot)
                     {
+                        Debug.Log("update non basic");
                          tp.updateSpecialAbilities(spot, (ISpecial)ability);
                     }
                     else
@@ -97,27 +99,46 @@ public class SlotScript : MonoBehaviour, IDropHandler {
                 else
                 {
                     Transform treeSlot = tp.FindSlotById(DragHandler.abilityBeingDraggedSlot.abilityId).transform;
-                    DragHandler.abilityBeingDraggedSlot.gameObject.transform.SetParent(treeSlot, false);
+                    DragHandler.itemBeingDragged.transform.SetParent(treeSlot, false);
 
                 }
-                
-            }
-            ability = DragHandler.abilityBeingDraggedSlot.ability;
 
-            if (isBarSlot)
+            }else
             {
-                abilityId = DragHandler.abilityBeingDraggedSlot.abilityId;
-            }
-            DragHandler.itemBeingDragged.transform.SetParent(transform);
-            if (isBasicBarSlot)
-            {
-                tp.updateBasicAbility((IBasic)ability);
-            }
-            else
-            {
+                Debug.Log("nothing in the spot");
+                if (isBarSlot)
+                {
+                    ability = DragHandler.abilityBeingDraggedSlot.ability;
+                    if (isBasicBarSlot)
+                    {
+                        Debug.Log("Shouln't ever come here??");
+                        tp.updateBasicAbility((IBasic)ability);
 
-                tp.updateSpecialAbilities(spot, (ISpecial)ability);
+                    }
+                    else
+                    {
+                        tp.updateSpecialAbilities(spot, (ISpecial)ability);
+                    }
+                    abilityId = DragHandler.abilityBeingDraggedSlot.abilityId;
+                    DragHandler.itemBeingDragged.transform.SetParent(transform, false);
+                }
+                else
+                {
+
+                    Transform treeSlot = tp.FindSlotById(DragHandler.abilityBeingDraggedSlot.abilityId).transform;
+                    Debug.Log("moving to slot of ability with id" + DragHandler.abilityBeingDraggedSlot.abilityId);
+                    DragHandler.itemBeingDragged.transform.SetParent(treeSlot, false);
+                    if (DragHandler.abilityBeingDraggedSlot.isBarSlot)
+                    {
+                        Debug.Log("moving from bar");
+                        tp.updateSpecialAbilities(DragHandler.abilityBeingDraggedSlot.spot, new EmptyAbility());
+                    }
+                }
+
+
+
             }
+           
 
         }
         else
@@ -126,38 +147,5 @@ public class SlotScript : MonoBehaviour, IDropHandler {
             Debug.Log("Bad Drop");
         }
 
-
-        ////TODO: DRAG LOGIC
-        //if (!item)
-        //{
-        //   // Debug.Log(ability);
-        //    Debug.Log(spot);
-        //    ability = DragHandler.abilityBeingDraggedSlot.ability;
-        //    if (isBarSlot && (ability.GetAction() != AbilityHelper.Action.Basic) && isSpecialSlot) //isSpecial ability and it's a special slot? //S -> S
-        //    {
-        //        DragHandler.itemBeingDragged.transform.SetParent(transform);
-        //        tp.updateSpecialAbilities(spot, (ISpecial) ability); //needs to separately handle basic ability change?
-        //        //add swap functionality
-        //    }
-        //    else if (isBarSlot && (ability.GetAction() == AbilityHelper.Action.Basic) && !isSpecialSlot) //B -> B
-        //    {
-
-        //        //tp.updateBasicAbility((IBasic) ability);
-        //    }
-        //    else if(false){ //S -> anywhere but S
-
-        //    } 
-        //    else{ //B -> anywhere but B
-
-
-        //        //reset original spot to empty if ability is dragged out of ability bar
-        //        Debug.Log("bad drop!!");
-        //        spot = DragHandler.itemBeingDragged.transform.parent.GetComponent<SlotScript>().spot;
-        //        DragHandler.itemBeingDragged.transform.SetParent(transform);
-        //        tp.updateSpecialAbilities(spot, new EmptyAbility());
-        //    }
-
-        //}
-        
     }
 }
