@@ -62,6 +62,11 @@ public class SlotScript : MonoBehaviour, IDropHandler {
     {
         if (isValidDrop())
         {
+            if (DragHandler.abilityBeingDraggedSlot.isBarSlot)
+            {
+
+                tp.updateSpecialAbilities(DragHandler.abilityBeingDraggedSlot.spot, new EmptyAbility());
+            }
 
             Debug.Log("Good Drop");
             if (item) 
@@ -70,10 +75,24 @@ public class SlotScript : MonoBehaviour, IDropHandler {
                 if (isBarSlot)
                 {
                     Debug.Log("Swap");
+                    if(ability == null)
+                    {
+                       // ability = item.get
+                    }
                     Transform treeSlot = tp.FindSlotById(ability.id).transform;
                     transform.GetChild(0).SetParent(treeSlot, false);
                     DragHandler.itemBeingDragged.transform.SetParent(transform);
-                    tp.updateSpecialAbilities(spot, (ISpecial)ability);
+                    if (!isBasicBarSlot)
+                    {
+                         tp.updateSpecialAbilities(spot, (ISpecial)ability);
+                    }
+                    else
+                    {
+                        Debug.Log(ability);
+                        ability = DragHandler.abilityBeingDraggedSlot.ability;
+                        Debug.Log(ability);
+                        tp.updateBasicAbility((IBasic)ability);
+                    }
                 }
                 else
                 {

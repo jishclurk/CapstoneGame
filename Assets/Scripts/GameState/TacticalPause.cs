@@ -18,6 +18,7 @@ public class TacticalPause : MonoBehaviour {
     private List<GameObject> setAbilitesSlots;
     private List<GameObject> unLockedAbitiesSlots;
     private List<SlotScript> unLockedAbilitesSlotScripts;
+    private GameObject basicAbilitySlot;
 
     private bool inTacticalPause;
     TeamManager tm;
@@ -85,10 +86,11 @@ public class TacticalPause : MonoBehaviour {
 
         //get list of set ability slots
         Transform setAbilities = AbilitiesScreen.transform.Find("AbilitiesPanel/SetAbilities ");
-        for (int i = 0; i < setAbilities.childCount; i++)
+        for (int i = 0; i < 4; i++)
         {
             setAbilitesSlots.Add(setAbilities.GetChild(i).gameObject);
         }
+        basicAbilitySlot = setAbilities.GetChild(4).gameObject;
 
     }
     // Update is called once per frame
@@ -153,6 +155,10 @@ public class TacticalPause : MonoBehaviour {
                 Destroy(slot.transform.GetChild(0).gameObject);
             }
         }
+        if(basicAbilitySlot.transform.childCount > 0)
+        {
+            Destroy(basicAbilitySlot.transform.GetChild(0).gameObject);
+        }
     }
 
     public void toggleAbilityMenu()
@@ -203,6 +209,12 @@ public class TacticalPause : MonoBehaviour {
                 setAbilities.Add(active.abilities.abilityArray[i].GetType());
             }
         }
+
+        Image basicImage = GameObject.Instantiate(active.abilities.Basic.image) as Image;
+        basicImage.transform.SetParent(basicAbilitySlot.transform, false);
+        basicAbilitySlot.GetComponent<SlotScript>().ability = active.abilities.Basic;
+        setAbilities.Add(active.abilities.Basic.GetType());
+
       //  Debug.Log(setAbilities);
 
         foreach (IAbility unlockedAbility in active.abilities.unlockedAbilities)
@@ -215,6 +227,8 @@ public class TacticalPause : MonoBehaviour {
             }
 
         }
+
+        
 
         loadAttributesInfo();
     }

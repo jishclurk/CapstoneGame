@@ -26,7 +26,7 @@ public class PlayerAbilities : MonoBehaviour
     {
         potentialAbilities = new List<IAbility>() {new GrenadeThrow(), new MedKit(), new Zap(), new BioGrenade(), new RIPRounds(),
             new ShieldBooster(), new Revive(), new SentryTurret(), new Flamethrower(), new Stimpak(), new Invigorate(),
-            new ChainLightning(), new Shockwave(), new LeechDart(), new FlameWall(), new SniperShot(), new SMGShot()};
+            new ChainLightning(), new Shockwave(), new LeechDart(), new FlameWall(), new SniperShot(), new SMGShot(), new RifleShot()};
         AbilityBindings = new Dictionary<KeyCode, int>();
 
         Basic = new RifleShot();
