@@ -45,7 +45,7 @@ public class ObjectiveManager : MonoBehaviour {
 				activeObjective = false;
 			}
 		}
-		goalListText.text = objectiveList;
+		//goalListText.text = objectiveList;
 	}
 
     public void loadState(bool[] state)

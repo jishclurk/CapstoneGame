@@ -64,6 +64,13 @@ public class ClockPuzzle : MonoBehaviour {
 			minutePart.gameObject.SetActive (false);
 		}
 	}
+
+	public bool ConsoleOn(){
+
+		return trigger.triggered || complete;
+
+	}
+		
 		
 
 	public bool Output(){
