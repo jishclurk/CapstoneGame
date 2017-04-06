@@ -9,18 +9,19 @@ public class MainMenu : MonoBehaviour
 
     private float percentComplete;
     public Canvas Menu;  //main menu of game
-    public Canvas Loading;  //canvus shows when a game is loading
+    public Canvas Loading;  //canvas shows when a game is loading
     public Canvas LoadMenu;  //load a saved game
     private Text LoadingProgress;
     private Image LoadingBar;
     SimpleGameManager gm;
     private int levelToLoad;
     public Canvas Settings;
+    public Canvas Credits;
 
     public void Start()
     {
         //gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();
-
+        
         LoadMenu = LoadMenu.GetComponent<Canvas>();
         Menu = Menu.GetComponent<Canvas>();
         Loading = Loading.GetComponent<Canvas>();
@@ -28,9 +29,12 @@ public class MainMenu : MonoBehaviour
         LoadingBar = Loading.GetComponentInChildren<Image>();
         percentComplete = 0;
         Settings = Settings.GetComponent<Canvas>();
+        Credits = Credits.GetComponent<Canvas>();
         Settings.enabled = false;
         Loading.enabled = false;
         LoadMenu.enabled = false;
+        Credits.enabled = false;
+        AudioListener.volume = 0.5f;
     }
 
     //Created a new SavedState and saves it under autosave.  Loads level 1 
@@ -135,7 +139,6 @@ public class MainMenu : MonoBehaviour
 
     public void LoadSettingsMenu()
     {
-        Debug.Log("loading settings menu");
         Menu.enabled = false;
         Settings.enabled = true;
     }
@@ -146,4 +149,15 @@ public class MainMenu : MonoBehaviour
         Menu.enabled = true;
     }
 
+    public void LoadCredits()
+    {
+        Menu.enabled = false;
+        Credits.enabled = true;
+    }
+
+    public void CloseCredits()
+    {
+        Credits.enabled = false;
+        Menu.enabled = true;
+    }
 }

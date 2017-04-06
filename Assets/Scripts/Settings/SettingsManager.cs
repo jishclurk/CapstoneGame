@@ -32,8 +32,17 @@ public class SettingsManager : MonoBehaviour {
 
         gameSettings = new GameSettings();
         gameSettings.fullscreen = fullscreenToggle.isOn = Screen.fullScreen;
+        resolutionDropdown.RefreshShownValue();
+        gameSettings.resolutionIndex = resolutionDropdown.value;
         gameSettings.volume = volumeSlider.value = AudioListener.volume;
+    }
 
+    public void UpdateSettingsWhenEnabled()
+    {
+        gameSettings.fullscreen = fullscreenToggle.isOn = Screen.fullScreen;
+        resolutionDropdown.RefreshShownValue();
+        gameSettings.resolutionIndex = resolutionDropdown.value;
+        gameSettings.volume = volumeSlider.value = AudioListener.volume;
     }
 
     public void OnFullscreenToggle()
