@@ -11,6 +11,8 @@ public class Hour : MonoBehaviour {
 	ParticleSystem inactivePS;
 	ParticleSystem activePS;
 	HourScript parentHour;
+
+
 	int num;
 
 	void Start () {
@@ -27,6 +29,20 @@ public class Hour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+	}
+
+	void OnEnable(){
+//		tm = FindObjectOfType<TeamManager> ();
+//		sound = GetComponent<AudioSource>();
+//		pressed = false;
+//		inactivePS = this.transform.FindChild ("ModularPortal").GetComponent<ParticleSystem> ();
+//		activePS = this.transform.FindChild ("YellowPortal").GetComponent<ParticleSystem> ();
+		inactivePS = this.transform.FindChild ("ModularPortal").GetComponent<ParticleSystem> ();
+		activePS = this.transform.FindChild ("YellowPortal").GetComponent<ParticleSystem> ();
+		activePS.Stop ();
+		inactivePS.Play ();
+		pressed = false;
+//
 	}
 	void OnTriggerEnter(Collider other)
 	{
@@ -63,6 +79,7 @@ public class Hour : MonoBehaviour {
 	public void setTime(int i ){
 		num = i;
 	}
+		
 
 
 

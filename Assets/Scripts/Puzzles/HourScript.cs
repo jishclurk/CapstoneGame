@@ -37,6 +37,11 @@ public class HourScript : MonoBehaviour {
 		
 	}
 
+	public void ResetTime(){
+		incpressed = 0;
+		pressed = false;
+	}
+
 	public void setActiveButton(int i){
 		activeNum = i;
 	}
@@ -52,6 +57,13 @@ public class HourScript : MonoBehaviour {
 	public void activePressed(bool p){
 
 		pressed = p;
+	}
+
+	public void Disable(){
+		foreach (Hour h in hourButtons) {
+			h.Disable ();
+		}
+
 	}
 
 	public bool Complete(){
