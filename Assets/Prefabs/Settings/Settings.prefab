@@ -697,19 +697,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: CloseSettingsMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 114615252307516098}
-        m_MethodName: SaveSettings
+        m_MethodName: CloseSettingsMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1227,7 +1216,8 @@ MonoBehaviour:
   fullscreenToggle: {fileID: 114782598640121916}
   resolutionDropdown: {fileID: 114544395161783994}
   volumeSlider: {fileID: 114982206358010984}
-  gameSettings: {fileID: 0}
+  Menu: {fileID: 0}
+  Settings: {fileID: 223165781516101828}
 --- !u!114 &114624267750262462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1459,7 +1449,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 120
+  m_Spacing: 80
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -2106,7 +2096,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 15}
+  m_AnchoredPosition: {x: 0, y: 40}
   m_SizeDelta: {x: -62, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224379171141898810
@@ -2375,8 +2365,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 500}
+  m_AnchoredPosition: {x: 0, y: -38}
+  m_SizeDelta: {x: 300, y: 423}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224774101133643426
 RectTransform:

@@ -9,13 +9,17 @@ public class SettingsManager : MonoBehaviour {
     public Toggle fullscreenToggle;
     public Dropdown resolutionDropdown;
     public Slider volumeSlider;
-
+    public Canvas Menu;
+    public Canvas Settings;
     public Resolution[] resolutions;
-    public GameSettings gameSettings;
+    private GameSettings gameSettings;
 
     void Start()
     {
         DontDestroyOnLoad(this);
+        Menu = Menu.GetComponent<Canvas>();
+        Settings = Settings.GetComponent<Canvas>();
+        Settings.enabled = false;
     }
 
     private void OnEnable()
@@ -62,6 +66,25 @@ public class SettingsManager : MonoBehaviour {
         // Debug.Log("AudioListener.volume = " + AudioListener.volume);
     }
 
+    public void LoadSettingsMenu()
+    {
+        if(Menu != null)
+        {
+            Menu.enabled = false;
+        }
+        Settings.enabled = true;
+    }
+
+    public void CloseSettingsMenu()
+    {
+        Settings.enabled = false;
+        if (Menu != null)
+        {
+            Menu.enabled = true;
+        }
+    }
+
+    /*
     public void SaveSettings()
     {
         string jsonData = JsonUtility.ToJson(gameSettings, true);
@@ -74,5 +97,5 @@ public class SettingsManager : MonoBehaviour {
         volumeSlider.value = gameSettings.volume;
         resolutionDropdown.value = gameSettings.resolutionIndex;
         fullscreenToggle.isOn = gameSettings.fullscreen;
-    }
+    }*/
 }
