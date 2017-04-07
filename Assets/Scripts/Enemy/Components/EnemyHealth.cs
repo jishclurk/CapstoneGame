@@ -23,6 +23,9 @@ public class EnemyHealth : MonoBehaviour {
     public bool isDead { get { return currentHealth <= 0; } }
     public bool isDamaged { get { return currentHealth < maxHealth; } }
 
+    private float burnDamage = 0.0f;
+    private float burnTickSeconds = 1.0f;
+
     private bool deathHandled = false;
     private Image healthBar;
     private GameObject healthBarCanvas;
@@ -46,16 +49,13 @@ public class EnemyHealth : MonoBehaviour {
         damageText = healthBarCanvas.transform.FindChild("FloatingDamageText").gameObject;
         damageTextTrans = damageText.transform;
         teamManager = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
+        StartCoroutine(ApplyBurnDamage());
     }
 
     void Update()
     {
-        // Just for testing purposes
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(10);
-            Debug.Log("Enemy Damaged");
-        }
+        if (isDamaged && !isDead)
+            ShowHealthBar();
     }
 
     public void TakeDamage(float amount)
@@ -63,9 +63,6 @@ public class EnemyHealth : MonoBehaviour {
         amount = Mathf.Abs(amount);
         currentHealth -= amount;
         healthBar.fillAmount = currentHealth / maxHealth;
-
-        if (isDamaged)
-            ShowHealthBar();
 
         if (isDead && !deathHandled)
         {
@@ -79,11 +76,24 @@ public class EnemyHealth : MonoBehaviour {
         }
     }
 
+    public void TakeBurnDamage(float amount)
+    {
+        burnDamage += amount;
+    }
+
+    public void TakeStunDamage(float amount)
+    {
+        TakeDamage(amount);
+        animator.AnimateStun();
+    }
+
     private void Death()
     {
         // Handle death animation stuff here
+        teamManager.RemoveDeadEnemy(gameObject);
         animator.AnimateDeath();
         teamManager.AwardExperience(experiencePoints);
+        HideHealthBar();
         Destroy(gameObject, 5.0f);
     }
 
@@ -101,10 +111,40 @@ public class EnemyHealth : MonoBehaviour {
     {
         GameObject newDmg = Instantiate(damageText);
         newDmg.transform.SetParent(healthBarCanvas.transform);
-        newDmg.transform.localPosition = damageTextTrans.localPosition;
+        
         newDmg.transform.localRotation = damageTextTrans.localRotation;
-        newDmg.transform.localScale = damageTextTrans.localScale;
-        newDmg.GetComponent<Text>().text = ((int) damage).ToString();
+        newDmg.transform.localScale = damageTextTrans.localScale * (0.5f + Mathf.Clamp((2 * damage) / maxHealth, 0, 1.25f));
+        newDmg.transform.localPosition = damageTextTrans.localPosition + (15 * newDmg.transform.localScale);
+        Text txt = newDmg.GetComponent<Text>();
+        txt.color = new Color(1, Mathf.Clamp((255 - (2 * damage * (maxHealth / 255))), 0, 255) / 255, 0, 1);
+        txt.text = ((int)damage).ToString();
         newDmg.SetActive(true);
+    }
+
+    private IEnumerator ApplyBurnDamage()
+    {
+        float lastBurnDamage = 0.0f;
+        int numTicksDuration = 5;
+        int tickCheck = 0;
+        while (true)
+        {
+            yield return new WaitForSeconds(burnTickSeconds);
+            if (burnDamage > 0)
+            {
+                TakeDamage(burnDamage);
+                if (burnDamage > lastBurnDamage)
+                {
+                    lastBurnDamage = burnDamage;
+                    tickCheck = numTicksDuration;
+                }
+
+                tickCheck -= 1;
+                if (tickCheck <= 0)
+                {
+                    burnDamage = 0;
+                    lastBurnDamage = 0;
+                }
+            }
+        }
     }
 }

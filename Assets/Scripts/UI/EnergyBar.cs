@@ -5,17 +5,24 @@ using UnityEngine.UI;
 
 public class EnergyBar : MonoBehaviour {
 
-	private TeamManager tm;
-	private Slider energySlider;
+    [Range(1, 4)]
+    public int ID;
 
-	// Use this for initialization
-	void Awake () {
-		tm = GameObject.FindWithTag ("TeamManager").GetComponent<TeamManager> ();
-		energySlider = GetComponent<Slider> ();
-	}
+    private TeamManager tm;
+    private Image energySlider;
+    private PlayerResources resources;
 
-	// Update is called once per frame
-	void Update () {
-		energySlider.value = tm.playerResources.currentEnergy;
-	}
+    // Use this for initialization
+    void Start ()
+    {
+        tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
+        energySlider = GetComponent<Image>();
+        resources = tm.playerList[ID - 1].resources;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        energySlider.fillAmount = resources.currentEnergy / PlayerResources.maxEnergy;
+    }
 }

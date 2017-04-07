@@ -1,59 +1,84 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAnimationController : MonoBehaviour {
 
     private Animator animator;
-    private bool deathAnimated;
+
+    private EnemyStateControl enemyState;
+
+    private enum AnimState { Idle, Attacking, Running }
+
+    private AnimState currentAnim;
 
 	// Use this for initialization
 	void Awake () {
+        enemyState = GetComponent<EnemyStateControl>();
         animator = GetComponent<Animator>();
-	}
+        animator.SetInteger("rand", Random.Range(0, 101));
+        currentAnim = AnimState.Idle;
+    }
 
     public void AnimateDeath()
     {
-        if (!deathAnimated)
-        {
-            animator.SetBool("Moving", false);
-            animator.SetBool("Sprinting", false);
-            animator.SetInteger("Action", 0);
-            animator.SetInteger("Death", 2);
-            deathAnimated = true;
-        }
+        animator.SetBool("dead", true);
     }
 
     public void AnimateMovement()
     {
-        if (!deathAnimated)
+        if (currentAnim != AnimState.Running)
         {
-            animator.SetBool("Moving", true);
-            animator.SetBool("Sprinting", true);
-            animator.SetInteger("Action", 0);
-            animator.SetInteger("Death", 0);
+            animator.SetTrigger("running");
+            currentAnim = AnimState.Running;
         }
     }
 
     public void AnimateIdle()
     {
-        if (!deathAnimated)
+        if (currentAnim != AnimState.Idle)
         {
-            animator.SetBool("Moving", false);
-            animator.SetBool("Sprinting", false);
-            animator.SetInteger("Action", 0);
-            animator.SetInteger("Death", 0);
+            animator.SetTrigger("idle");
+            animator.SetInteger("rand", Random.Range(0, 101));
+            currentAnim = AnimState.Idle;
         }
     }
 
     public void AnimateAttack()
     {
-        if (!deathAnimated)
+        if (currentAnim != AnimState.Attacking)
         {
-            animator.SetBool("Moving", false);
-            animator.SetBool("Sprinting", false);
-            animator.SetInteger("Action", 1);
-            animator.SetInteger("Death", 0);
+            animator.SetInteger("rand", Random.Range(0, 101));
+            animator.SetTrigger("attacking");
+            currentAnim = AnimState.Attacking;
+        }
+    }
+
+    public void AnimateStun()
+    {
+        animator.SetBool("stunned", true);
+        enemyState.navMeshAgent.Stop();
+        enemyState.isStunned = true;
+    }
+
+    public void EndStunAnimation()
+    {
+        animator.SetBool("stunned", false);
+        enemyState.navMeshAgent.Resume();
+        enemyState.isStunned = false;
+        animator.SetInteger("rand", Random.Range(0, 101));
+        switch (currentAnim)
+        {
+            case AnimState.Running:
+                animator.SetTrigger("running");
+                break;
+            case AnimState.Attacking:
+                animator.SetTrigger("attacking");
+                break;
+            default:
+                animator.SetTrigger("idle");
+                break;
         }
     }
 }

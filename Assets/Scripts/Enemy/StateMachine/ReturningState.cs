@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using LayerDefinitions;
 
 public class ReturningState : IEnemyState {
 
@@ -30,6 +31,7 @@ public class ReturningState : IEnemyState {
 
     public void ToChasingState()
     {
+        //enemy.sounds.PlayAggroSound();
         enemy.currentState = enemy.chasingState;
     }
 
@@ -40,28 +42,26 @@ public class ReturningState : IEnemyState {
 
     private void CheckVision()
     {
-        float minDist = float.PositiveInfinity;
-        float testDist = 0;
-        foreach (GameObject player in enemy.visiblePlayers)
+        foreach (GameObject player in enemy.GetVisiblePlayers())
         {
             RaycastHit hit;
             Vector3 enemyToTarget = new Vector3(player.transform.position.x - enemy.eyes.position.x, 0, player.transform.position.z - enemy.eyes.position.z);
-            testDist = Vector3.Magnitude(enemyToTarget);
-            if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player") && testDist < minDist)
+            if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit, 100f, Layers.NonEnemy) && hit.collider.gameObject.CompareTag("Player"))
             {
-                enemy.chaseTarget = hit.collider.gameObject;
-                minDist = testDist;
+                enemy.FindTarget();
                 ToChasingState();
+                return;
             }
         }
     }
 
     private void ReturnToSpawn()
     {
-        enemy.meshRendererFlag.material.color = Color.blue;
         enemy.navMeshAgent.destination = enemy.returnPosition;
-        enemy.navMeshAgent.Resume();
         enemy.animator.AnimateMovement();
+
+        if (!enemy.isStunned)
+            enemy.navMeshAgent.Resume();
 
         // Have to manually do this because using pathStatus doesn't work
         if (enemy.navMeshAgent.remainingDistance <= enemy.navMeshAgent.stoppingDistance)

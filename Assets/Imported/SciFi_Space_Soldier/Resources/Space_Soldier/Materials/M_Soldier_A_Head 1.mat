@@ -1,0 +1,214 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: M_Soldier_A_Head 1
+  m_Shader: {fileID: 4800000, guid: b109fe30baa6ae24593d0da3972e0bb6, type: 3}
+  m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 2000
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _BumpMap
+      second:
+        m_Texture: {fileID: 2800000, guid: b6464163ec4ac5341982a79d02e6a767, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ColorMask
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailAlbedoMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailMask
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailNormalMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DiffuseCM
+      second:
+        m_Texture: {fileID: 2800000, guid: b498b07523c8c804c9294b2fded8de2e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _EmissionMap
+      second:
+        m_Texture: {fileID: 2800000, guid: cf28180a9a456e340967b4ee17178919, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _EmissiveMap
+      second:
+        m_Texture: {fileID: 2800000, guid: a057d79e6c18078428d62b5a54cf4b6b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _GlossMap
+      second:
+        m_Texture: {fileID: 2800000, guid: 0c39ce78837276142af0dbf0ef872ce3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 2f5a147c8e798ed45ac7ac5e13006a16, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MetallicGlossMap
+      second:
+        m_Texture: {fileID: 2800000, guid: 5a18c989b69887946ac9a044b78c0202, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MetallicMap
+      second:
+        m_Texture: {fileID: 2800000, guid: 9709f8bd059d7514bb67f0e199e0dfeb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MetalnessMap
+      second:
+        m_Texture: {fileID: 2800000, guid: e7e39d5e60bcda2428268207e655462e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _OcclusionMap
+      second:
+        m_Texture: {fileID: 2800000, guid: ef8b7b6cfca228f4e8ebe7a2dfa2510e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ParallaxMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _SpecularMap
+      second:
+        m_Texture: {fileID: 2800000, guid: 9636cbd903a13d249a6cd95dddbd9dc1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _BumpScale
+      second: 1
+    - first:
+        name: _Cutoff
+      second: 0.5
+    - first:
+        name: _DamageFX
+      second: 0
+    - first:
+        name: _DetailNormalMapScale
+      second: 1
+    - first:
+        name: _DiffuseFactor
+      second: 1.69
+    - first:
+        name: _DstBlend
+      second: 0
+    - first:
+        name: _EmissionFactor
+      second: 2
+    - first:
+        name: _EmissiveFactor
+      second: 1
+    - first:
+        name: _Glossiness
+      second: 0.9
+    - first:
+        name: _Metallic
+      second: 1
+    - first:
+        name: _MetalnessFactor
+      second: 0
+    - first:
+        name: _Mode
+      second: 0
+    - first:
+        name: _OcclusionStrength
+      second: 1
+    - first:
+        name: _Outline
+      second: 0
+    - first:
+        name: _Parallax
+      second: 0.02
+    - first:
+        name: _Specular
+      second: 1
+    - first:
+        name: _SpecularColorized
+      second: 0.826
+    - first:
+        name: _SpecularFactor
+      second: 1
+    - first:
+        name: _SrcBlend
+      second: 1
+    - first:
+        name: _UVSec
+      second: 0
+    - first:
+        name: _UVWorldScale
+      second: 1
+    - first:
+        name: _ZWrite
+      second: 1
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 0.034482718, g: 1, b: 0, a: 1}
+    - first:
+        name: _Color1
+      second: {r: 0.42409173, g: 0.57760227, b: 0.7794118, a: 1}
+    - first:
+        name: _Color2
+      second: {r: 0.33823532, g: 0.677188, b: 1, a: 1}
+    - first:
+        name: _DamageColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _EmissionColor
+      second: {r: 1, g: 0.8924949, b: 0.6102941, a: 1}
+    - first:
+        name: _EmissiveColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _MaskedColorA
+      second: {r: 1, g: 0, b: 0, a: 1}
+    - first:
+        name: _MaskedColorB
+      second: {r: 0, g: 1, b: 0, a: 1}
+    - first:
+        name: _MaskedColorC
+      second: {r: 0, g: 0, b: 1, a: 1}
+    - first:
+        name: _OutlineColor
+      second: {r: 0.4338235, g: 0.78914815, b: 1, a: 0.39215687}
+    - first:
+        name: _UVScale
+      second: {r: 1, g: 1, b: 1, a: 1}

@@ -1,21 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LayerDefinitions;
 
 public class ChasingState : IEnemyState {
 
     private readonly EnemyStateControl enemy;
-    private EnemyAttack attack;
 
     public ChasingState(EnemyStateControl stateControl)
     {
         enemy = stateControl;
-        attack = enemy.gameObject.GetComponent<EnemyAttack>();
     }
 
     public void UpdateState()
     {
-        CheckSpawnDistance();
+        //CheckSpawnDistance();
         Look();
         Chase();
     }
@@ -27,6 +26,7 @@ public class ChasingState : IEnemyState {
 
     public void ToReturningState()
     {
+        enemy.StopTargetting();
         enemy.currentState = enemy.returningState;
     }
 
@@ -44,6 +44,7 @@ public class ChasingState : IEnemyState {
     {
         if (Vector3.Distance(enemy.transform.position, enemy.returnPosition) >= enemy.deaggroDistance)
         {
+            enemy.ReportTargetOutOfRange();
             ToReturningState();
         }
     }
@@ -51,11 +52,10 @@ public class ChasingState : IEnemyState {
     private void Look()
     {
         RaycastHit hit;
-        Vector3 enemyToTarget = new Vector3(enemy.chaseTarget.transform.position.x - enemy.eyes.position.x, 0, enemy.chaseTarget.transform.position.z - enemy.eyes.position.z);
-        if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player"))
+        Vector3 enemyToTarget = new Vector3(enemy.GetTargetPosition().x - enemy.eyes.position.x, 0, enemy.GetTargetPosition().z - enemy.eyes.position.z);
+        if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit, 100f, Layers.NonEnemy) && hit.collider.gameObject.CompareTag("Player"))
         {
-            enemy.chaseTarget = hit.collider.gameObject;
-            if (Vector3.Distance(enemy.chaseTarget.transform.position, enemy.transform.position) <= (attack.attackRange - attack.attackRangeOffset))
+            if (Vector3.Distance(enemy.GetTargetPosition(), enemy.transform.position) <= (enemy.attack.attackRange - enemy.attack.attackRangeOffset))
             {
                 ToAttackingState();
                 return;
@@ -64,12 +64,12 @@ public class ChasingState : IEnemyState {
         else
         {
             // If chasing target is not in our vision, check if another player is
-            foreach (GameObject player in enemy.visiblePlayers)
+            foreach (GameObject player in enemy.GetVisiblePlayers())
             {
                 enemyToTarget = new Vector3(player.transform.position.x - enemy.eyes.position.x, 0, player.transform.position.z - enemy.eyes.position.z);
-                if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit) && hit.collider.gameObject.CompareTag("Player"))
+                if (Physics.Raycast(enemy.eyes.position, enemyToTarget, out hit, 100f, Layers.NonEnemy) && hit.collider.gameObject.CompareTag("Player"))
                 {
-                    enemy.chaseTarget = hit.collider.gameObject;
+                    enemy.FindTarget();
                     return;
                 }
             }
@@ -81,10 +81,11 @@ public class ChasingState : IEnemyState {
 
     private void Chase()
     {
-        enemy.meshRendererFlag.material.color = Color.red;
-        enemy.navMeshAgent.destination = enemy.chaseTarget.transform.position;
-        enemy.navMeshAgent.Resume();
+        enemy.navMeshAgent.destination = enemy.GetTargetPosition();
         enemy.animator.AnimateMovement();
+
+        if (!enemy.isStunned)
+            enemy.navMeshAgent.Resume();
     }
 
 }

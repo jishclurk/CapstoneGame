@@ -11,6 +11,10 @@ TagManager:
   - Enemy
   - TeamManager
   - Door
+  - Floor
+  - EnemyMob
+  - Piece
+  - AbilityHelper
   layers:
   - Default
   - TransparentFX
@@ -21,10 +25,10 @@ TagManager:
   - 
   - 
   - Floor
-  - 
-  - 
-  - 
-  - 
+  - Wall
+  - Player
+  - Enemy
+  - VisibleFloor
   - 
   - 
   - 

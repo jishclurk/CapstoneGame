@@ -5,9 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyStateControl : MonoBehaviour {
 
-    public float chasingDuration = 4f;
     public float deaggroDistance = 20f;
-    public MeshRenderer meshRendererFlag;
 
     [HideInInspector]
     public Vector3 returnPosition;
@@ -31,13 +29,13 @@ public class EnemyStateControl : MonoBehaviour {
     public AttackingState attackingState;
 
     [HideInInspector]
-    public List<GameObject> visiblePlayers;
-
-    [HideInInspector]
-    public GameObject chaseTarget;
-
-    [HideInInspector]
     public EnemyAnimationController animator;
+
+    [HideInInspector]
+    public EnemyAttack attack;
+
+    [HideInInspector]
+    public EnemySoundController sounds;
 
     [HideInInspector]
     public Transform eyes;
@@ -45,7 +43,15 @@ public class EnemyStateControl : MonoBehaviour {
     [HideInInspector]
     public TeamManager tm;
 
+    [HideInInspector]
+    public bool isStunned;
+
+    private EnemyMobKnowledge mobKnowledge;
     private EnemyHealth health;
+    private GameObject chaseTarget;
+    private PlayerResources chaseTargetResources;
+    private List<GameObject> visiblePlayers;
+    private bool isTargetting;
 
     private void Awake()
     {
@@ -59,8 +65,15 @@ public class EnemyStateControl : MonoBehaviour {
 
         eyes = transform.FindChild("Eyes");
         health = GetComponent<EnemyHealth>();
+        attack = GetComponent<EnemyAttack>();
+        sounds = GetComponent<EnemySoundController>();
         animator = GetComponent<EnemyAnimationController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+
+        isTargetting = false;
+
+        if (transform.parent.CompareTag("EnemyMob"))
+            mobKnowledge = GetComponentInParent<EnemyMobKnowledge>();
 
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
     }
@@ -77,27 +90,95 @@ public class EnemyStateControl : MonoBehaviour {
             currentState.UpdateState();
         else
         {
-            DisableNavRotation();
-            DisableNavPosition();
+            StopTargetting();
+            foreach (GameObject player in visiblePlayers)
+                mobKnowledge.RemoveVisiblePlayer(player);
+
+            navMeshAgent.enabled = false;
+            this.enabled = false;
         }
 	}
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !other.isTrigger)
         {
-            Debug.Log("Player Seen");
             visiblePlayers.Add(other.gameObject);
+            mobKnowledge.AddVisiblePlayer(other.gameObject);
+            FindTarget();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !other.isTrigger)
         {
-            Debug.Log("Player Left");
             visiblePlayers.Remove(other.gameObject);
+            mobKnowledge.RemoveVisiblePlayer(other.gameObject);
         }
+    }
+
+    public void DamageCurrentTarget()
+    {
+        if (chaseTargetResources != null)
+        {
+            chaseTargetResources.TakeDamage(attack.attackDamage);
+        }
+    }
+
+    public void FindTarget()
+    {
+        if (isTargetting)
+            StopTargetting();
+
+        chaseTarget = mobKnowledge.GetNewTarget();
+        if (chaseTarget != null)
+        {
+            chaseTargetResources = chaseTarget.GetComponent<PlayerResources>();
+            isTargetting = true;
+        }
+    }
+
+    public void StopTargetting()
+    {
+        if (chaseTarget != null && isTargetting)
+        {
+            mobKnowledge.RemoveTargettedPlayer(chaseTarget);
+            isTargetting = false;
+        }  
+    }
+
+    public void ReportTargetOutOfRange()
+    {
+        mobKnowledge.RemoveKnowledgeOfPlayer(chaseTarget);
+    }
+
+    public List<GameObject> GetVisiblePlayers()
+    {
+        if (mobKnowledge != null)
+            return mobKnowledge.GetVisiblePlayers();
+
+        return visiblePlayers;
+    }
+
+    public Vector3 GetTargetPosition()
+    {
+        if (chaseTarget != null)
+            return chaseTarget.transform.position;
+        else
+            return transform.position;
+    }
+
+    public bool IsTargetDead()
+    {
+        if (chaseTargetResources != null)
+        {
+            if (chaseTargetResources.isDead)
+                mobKnowledge.RemoveKnowledgeOfPlayer(chaseTarget);
+            return chaseTargetResources.isDead;
+        }
+
+        return true;
     }
 
     public void DisableNavRotation()
@@ -108,16 +189,6 @@ public class EnemyStateControl : MonoBehaviour {
     public void EnableNavRotation()
     {
         navMeshAgent.updateRotation = true;
-    }
-
-    public void DisableNavPosition()
-    {
-        navMeshAgent.updatePosition = false;
-    }
-
-    public void EnableNavPosition()
-    {
-        navMeshAgent.updatePosition = true;
     }
 
 }

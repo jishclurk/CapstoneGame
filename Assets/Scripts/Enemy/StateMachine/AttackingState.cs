@@ -12,19 +12,15 @@ using UnityEngine;
 public class AttackingState : IEnemyState {
 
     public readonly EnemyStateControl enemy;
-    private EnemyAttack attack;
     private float timer;
 
     public AttackingState(EnemyStateControl stateControl)
     {
         enemy = stateControl;
-        attack = enemy.gameObject.GetComponent<EnemyAttack>();
-        timer = 0;
     }
 
     public void UpdateState()
     {
-        enemy.meshRendererFlag.material.color = Color.black;
         timer += Time.fixedDeltaTime;
 
         enemy.DisableNavRotation();
@@ -35,35 +31,32 @@ public class AttackingState : IEnemyState {
 
     public void ToIdleState()
     {
-        timer = 0;
         enemy.EnableNavRotation();
         Debug.Log("Can't transition from attack state to idle state");
     }
 
     public void ToReturningState()
     {
-        timer = 0;
         enemy.EnableNavRotation();
+        enemy.StopTargetting();
         enemy.currentState = enemy.returningState;
     }
 
     public void ToChasingState()
     {
-        timer = 0;
         enemy.EnableNavRotation();
         enemy.currentState = enemy.chasingState;
     }
 
     public void ToAttackingState()
     {
-        timer = 0;
         enemy.EnableNavRotation();
         Debug.Log("Can't transition from attack state to attack state");
     }
 
     private void CheckRange()
     {
-        if (Vector3.Distance(enemy.chaseTarget.transform.position, enemy.transform.position) > (attack.attackRange - attack.attackRangeOffset))
+        if (Vector3.Distance(enemy.GetTargetPosition(), enemy.transform.position) > (enemy.attack.attackRange - enemy.attack.attackRangeOffset))
         {
             ToChasingState();
         }
@@ -74,21 +67,12 @@ public class AttackingState : IEnemyState {
         // Bad way to make the LookAt() function only rotate around y
         float oldX = enemy.transform.rotation.x;
         float oldZ = enemy.transform.rotation.z;
-        enemy.transform.LookAt(enemy.chaseTarget.transform, enemy.transform.up);
+        enemy.transform.LookAt(enemy.GetTargetPosition(), enemy.transform.up);
         enemy.transform.rotation = new Quaternion(oldX, enemy.transform.rotation.y, oldZ, enemy.transform.rotation.w);
 
         enemy.animator.AnimateAttack();
 
-        if (timer >= attack.attackSpeed)
-        {
-            timer = 0;
-            PlayerResources playerHP = enemy.chaseTarget.GetComponent<PlayerResources>();
-            if (playerHP != null)
-            {
-                playerHP.TakeDamage(attack.attackDamage);
-                if (playerHP.isDead)
-                    ToReturningState();
-            }
-        }
+        if (enemy.IsTargetDead())
+            ToReturningState();
     }
 }
