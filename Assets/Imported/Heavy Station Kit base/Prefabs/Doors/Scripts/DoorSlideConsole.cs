@@ -12,8 +12,11 @@
 		private int _plaingSnd = -1; // 0-Open, 1-Close 
 		public ConsolePair puzzleActivator;
 	bool doorOpen;
+	GameObject popUpObject;
 
 		void Start () {
+			
+			popUpObject = transform.FindChild ("PopupText").gameObject;
 			foreach(Transform child in transform.parent.transform){
 				switch(child.name){
 				case "Door_Slider": _animator = child.GetComponent<Animator>(); break;
@@ -56,8 +59,12 @@
 //				if (!doorOpen) {
 					slide_door (other, 0); // Open door
 					Debug.Log ("Trying to open door");
+			popUpObject.gameObject.SetActive (false);
 //					doorOpen = true;
 //				}
+			}else {
+
+					popUpObject.gameObject.SetActive (true);
 			}
 		}	
 

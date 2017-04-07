@@ -11,9 +11,12 @@ public class DoorSlideClock : MonoBehaviour {
 	private bool _sndLoaded = false;
 	private int _plaingSnd = -1; // 0-Open, 1-Close 
 	public ClockPuzzle puzzleActivator;
+	GameObject popUpObject;
 	bool doorOpen;
 
 	void Start () {
+
+		popUpObject = transform.FindChild ("PopupText").gameObject;
 		foreach(Transform child in transform.parent.transform){
 			switch(child.name){
 			case "Door_Slider": _animator = child.GetComponent<Animator>(); break;
@@ -52,14 +55,20 @@ public class DoorSlideClock : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other){
-		if (puzzleActivator == null || puzzleActivator.Output()) {
+		if (puzzleActivator == null || puzzleActivator.Output ()) {
 			//				if (!doorOpen) {
 			slide_door (other, 0); // Open door
 			Debug.Log ("Trying to open door");
+			popUpObject.gameObject.SetActive (false);
 			//					doorOpen = true;
 			//				}
+		} else {
+
+			popUpObject.gameObject.SetActive (true);
 		}
 	}	
+
+
 
 	void OnTriggerExit(Collider other){
 		if (puzzleActivator == null || puzzleActivator.Output()){
