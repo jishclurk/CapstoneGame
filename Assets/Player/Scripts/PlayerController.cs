@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         //PLAYER INPUT//
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Input.GetButtonDown("Fire2") || firstClick && Input.GetButton("Fire2"))
+        if (Input.GetButtonDown("Fire2") || firstClick && targetedEnemy == null && Input.GetButton("Fire2"))
         {
             firstClick = true;
             if (Physics.Raycast(ray, out hit, 100f, Layers.Enemy | Layers.Floor))
@@ -490,6 +490,7 @@ public class PlayerController : MonoBehaviour
     public void ResetOnSwitch()
     {
         targetedEnemy = null;
+        inheritDefendState = false;
         navMeshAgent.destination = transform.position;
         specialTargetedFriend = null;
         animSpeed = 0.0f;

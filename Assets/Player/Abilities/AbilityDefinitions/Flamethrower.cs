@@ -22,7 +22,7 @@ public class Flamethrower : ISpecial, IAbility {
     private AbilityHelper ah;
     private Object flame;
     private float lastUsedTime;
-    private float effectLength = 5.0f;
+    private float effectLength = 8.0f;
 
 
 
