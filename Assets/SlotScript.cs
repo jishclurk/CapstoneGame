@@ -8,6 +8,8 @@ public class SlotScript : MonoBehaviour, IDropHandler {
 
     public IAbility ability { get; set; }
 
+    public int abilityId;
+
     public int spot;
 
     public bool isBarSlot;
@@ -18,6 +20,10 @@ public class SlotScript : MonoBehaviour, IDropHandler {
 
     private void Start()
     {
+        if (!isBarSlot)
+        {
+            ability = Utils.AbilityIDs[abilityId];
+        }
         tp = GameObject.Find("TacticalPause").GetComponent<TacticalPause>();
 
     }

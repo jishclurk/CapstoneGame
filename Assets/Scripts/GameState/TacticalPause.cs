@@ -16,6 +16,7 @@ public class TacticalPause : MonoBehaviour {
 
     private List<GameObject> setAbilitesSlots;
     private List<GameObject> unLockedAbitiesSlots;
+    private List<SlotScript> unLockedAbilitesSlotScripts;
 
     private bool inTacticalPause;
     TeamManager tm;
@@ -68,12 +69,15 @@ public class TacticalPause : MonoBehaviour {
         
         unLockedAbitiesSlots = new List<GameObject>();
         setAbilitesSlots = new List<GameObject>();
+        unLockedAbilitesSlotScripts = new List<SlotScript>();
 
         //get list of unlockedAbility slots
         Transform unlockedAbilities = AbilitiesScreen.transform.Find("AbilitiesPanel/UnlockedAbilities");
         for (int i = 0; i < unlockedAbilities.childCount; i++)
         {
-            unLockedAbitiesSlots.Add(unlockedAbilities.GetChild(i).gameObject);
+            GameObject slot = unlockedAbilities.GetChild(i).gameObject;
+            unLockedAbitiesSlots.Add(slot);
+            unLockedAbilitesSlotScripts.Add(slot.GetComponent<SlotScript>());
         }
 
         //get list of set ability slots
@@ -104,19 +108,6 @@ public class TacticalPause : MonoBehaviour {
             }
         }
 
-    //         public void StartComabtPause()
-    //{
-    //    if (gm.gameState.Equals(GameState.COMABT_PAUSE))
-    //    {
-    //        gm.OnStateChange += tacticalPause.Disable;
-    //        gm.SetGameState(GameState.PLAY);
-    //    }
-    //    else
-    //    {
-    //        gm.OnStateChange += tacticalPause.Enable;
-    //        gm.SetGameState(GameState.COMABT_PAUSE);
-    //    }
-    //}
         if (inTacticalPause && !tm.IsTeamInCombat())
         {
             if (Input.GetKeyDown(KeyCode.C))
@@ -182,6 +173,19 @@ public class TacticalPause : MonoBehaviour {
         }
     }
 
+    private GameObject FindSlotById(int id)
+    {
+        for(int i = 0; i<unLockedAbilitesSlotScripts.Count; i++)
+        {
+            if(unLockedAbilitesSlotScripts[i].abilityId == id)
+            {
+                return unLockedAbitiesSlots[i];
+            }
+        }
+        Debug.Log("counldn't find the slot by id");
+        return unLockedAbitiesSlots[0]; //added bc c# made me
+    }
+
     //Loads the available abilities and set abilities of active
     public void loadCurrentPlayerInfo(Player active)
     {
@@ -198,16 +202,27 @@ public class TacticalPause : MonoBehaviour {
         }
         Debug.Log(setAbilities);
 
-        for (int i = 0; i < active.abilities.unlockedAbilities.Count; i++)
+        foreach (IAbility unlockedAbility in active.abilities.unlockedAbilities)
         {
-            Debug.Log(i);
-            if (!setAbilities.Contains(active.abilities.unlockedAbilities[i].GetType()))
+            if (!setAbilities.Contains(unlockedAbility.GetType()))
             {
-                Image image = GameObject.Instantiate(active.abilities.unlockedAbilities[i].image) as Image;
-                image.transform.SetParent(unLockedAbitiesSlots[i].transform, false);
-                unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability = active.abilities.unlockedAbilities[i];
+                GameObject abilityTreeSlot = FindSlotById(unlockedAbility.id);
+                Image image = GameObject.Instantiate(unlockedAbility.image) as Image;
+                image.transform.SetParent(abilityTreeSlot.transform, false);
             }
+
         }
+
+        //for (int i = 0; i < active.abilities.unlockedAbilities.Count; i++)
+        //{
+        //    Debug.Log(i);
+        //    if (!setAbilities.Contains(active.abilities.unlockedAbilities[i].GetType()))
+        //    {
+        //        Image image = GameObject.Instantiate(active.abilities.unlockedAbilities[i].image) as Image;
+        //        image.transform.SetParent(unLockedAbitiesSlots[i].transform, false);
+        //        unLockedAbitiesSlots[i].GetComponent<SlotScript>().ability = active.abilities.unlockedAbilities[i];
+        //    }
+        //}
 
         loadAttributesInfo();
     }
