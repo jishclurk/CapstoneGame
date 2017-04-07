@@ -26,7 +26,37 @@ public class PrefDropdownHelper : MonoBehaviour {
 
     void Update()
     {
-        
+        switch (tm.activePlayer.strategy.aiScript.abilityChoose)
+        {
+            case Strategy.AbilityPref.Agressive:
+                abilityText.text = "Quick";
+                break;
+            case Strategy.AbilityPref.Offensive:
+                abilityText.text = "Offensive";
+                break;
+            case Strategy.AbilityPref.Defensive:
+                abilityText.text = "Defensive";
+                break;
+            case Strategy.AbilityPref.Balanced:
+                abilityText.text = "Balanced";
+                break;
+            case Strategy.AbilityPref.None:
+                abilityText.text = "None";
+                break;
+        }
+
+        switch (tm.activePlayer.strategy.aiScript.targetChoose)
+        {
+            case Strategy.TargetPref.Closest:
+                targetText.text = "Closest";
+                break;
+            case Strategy.TargetPref.Lowest:
+                targetText.text = "Lowest Health";
+                break;
+            case Strategy.TargetPref.Active:
+                targetText.text = "Active Player Target";
+                break;
+        }
     }
 
     void Destroy()
