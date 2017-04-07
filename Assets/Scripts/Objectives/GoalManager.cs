@@ -47,6 +47,7 @@ public class GoalManager : MonoBehaviour {
 				//					goals.RemoveAt (i);
 				//}
 				if (!goals [i].IsAchieved ()) {
+					
 					goalListString += "\n" + goals [i].GoalText;
 				} else {
 					goals [i].Complete ();
@@ -61,6 +62,7 @@ public class GoalManager : MonoBehaviour {
 		} else {
 			active = false;
 		}
+		Debug.Log (goalListString);
 	}
 
 	public string goalList(){

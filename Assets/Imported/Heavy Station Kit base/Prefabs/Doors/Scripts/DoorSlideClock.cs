@@ -60,13 +60,17 @@ public class DoorSlideClock : MonoBehaviour {
 			slide_door (other, 0); // Open door
 			Debug.Log ("Trying to open door");
 			popUpObject.gameObject.SetActive (false);
-			//					doorOpen = true;
+								doorOpen = true;
 			//				}
 		} else {
-
+			doorOpen = false;
 			popUpObject.gameObject.SetActive (true);
 		}
 	}	
+
+	public bool isDoorOpen(){
+		return doorOpen;
+	}
 
 
 

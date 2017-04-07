@@ -18,6 +18,7 @@ public class ObjectiveManager : MonoBehaviour {
         Debug.Log("obj manager starting");
 		objectives = new List<GoalManager>(GetComponentsInChildren<GoalManager> ());
 		foreach (GoalManager gm in objectives){
+
 			gm.tm = this.tm;
 
 		}
@@ -29,6 +30,7 @@ public class ObjectiveManager : MonoBehaviour {
     void Update() {
 		objectiveList =  "Objectives: \n";
 		for (int i = 0; i<objectives.Count ; i++){
+			//Debug.Log("obj count:" +i);
 			objectiveList += "\n"+(i+1)+".  " + objectives[i].objectiveName;
 			if (objectives [i].isComplete ()) {
 				objectiveList += "\n **Completed**";
@@ -40,12 +42,14 @@ public class ObjectiveManager : MonoBehaviour {
 			} 
 			if (!objectives [i].isComplete () && activeObjNum == i) {
 				objectiveList += "\n" + objectives [i].goalList () +"\n";
+
 			}
 			if (objectives [i].isComplete () && activeObjective) {
 				activeObjective = false;
 			}
 		}
 		goalListText.text = objectiveList;
+		Debug.Log (goalListText.text);
 	}
 
     public void loadState(bool[] state)
@@ -57,6 +61,7 @@ public class ObjectiveManager : MonoBehaviour {
         }
         if(state.Length == objectives.Count)
         {
+
             for (int i = 0; i< objectives.Count; i++)
             {
                 Debug.Log(state[i]);
@@ -86,11 +91,11 @@ public class ObjectiveManager : MonoBehaviour {
         bool complete = true;
         foreach (GoalManager objective in objectives)
         {
-            if (!objective.isComplete())
-            {
-                complete = false;
-                break;
-            }
+			if (!objective.isComplete ()) {
+				
+				complete = false;
+				break;
+			} 
         }
         return complete;
     }
