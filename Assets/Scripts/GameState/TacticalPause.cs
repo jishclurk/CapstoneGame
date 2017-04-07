@@ -13,6 +13,7 @@ public class TacticalPause : MonoBehaviour {
     public GameObject AbilitiesScreen;
     private Transform Menus;
     private GameObject attributesScreen;
+    private GameObject CustomizeScreen;
 
     private List<GameObject> setAbilitesSlots;
     private List<GameObject> unLockedAbitiesSlots;
@@ -51,6 +52,8 @@ public class TacticalPause : MonoBehaviour {
 
         AbilitiesScreen = Menus.transform.Find("Abilities").gameObject;
         AbilitiesScreen.SetActive(false);
+        CustomizeScreen = Menus.transform.Find("Customize").gameObject;
+        CustomizeScreen.SetActive(false);
         attributesScreen = AbilitiesScreen.transform.Find("Attributes").gameObject;
 
         XPText = attributesScreen.transform.GetChild(0).GetComponent<Text>();
@@ -168,6 +171,7 @@ public class TacticalPause : MonoBehaviour {
             //PauseScreen.enabled = false;
             Menus.gameObject.SetActive(true);
             AbilitiesScreen.SetActive(true);
+            CustomizeScreen.SetActive(false);
             displayedPlayer = tm.activePlayer;
             loadCurrentPlayerInfo(tm.activePlayer);
         }
@@ -335,6 +339,7 @@ public class TacticalPause : MonoBehaviour {
 
     public void Disable()
     {
+        CustomizeScreen.SetActive(false);
         AbilitiesScreen.SetActive(false);
         PauseScreen.enabled = false;
         Time.timeScale = 1;
