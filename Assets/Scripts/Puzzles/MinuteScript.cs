@@ -34,6 +34,11 @@ public class MinuteScript : MonoBehaviour {
 
 	}
 
+	public void ResetTime(){
+		incpressed = 0;
+		pressed = false;
+	}
+
 	public void setActiveButton(int i){
 		activeNum = i;
 	}
@@ -49,6 +54,13 @@ public class MinuteScript : MonoBehaviour {
 	public void activePressed(bool p){
 
 		pressed = p;
+	}
+
+	public void Disable(){
+		foreach (Minute m in minuteButtons) {
+			m.Disable ();
+		}
+
 	}
 
 	public bool Complete(){

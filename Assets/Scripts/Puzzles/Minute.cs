@@ -26,6 +26,13 @@ public class Minute : MonoBehaviour {
 
 	}
 
+	void OnEnable(){
+		inactivePS = this.transform.FindChild ("ModularPortal").GetComponent<ParticleSystem> ();
+		activePS = this.transform.FindChild ("BluePortal").GetComponent<ParticleSystem> ();
+		activePS.Stop ();
+		inactivePS.Play ();
+		pressed = false;
+	}
 	// Update is called once per frame
 	void Update () {
 
