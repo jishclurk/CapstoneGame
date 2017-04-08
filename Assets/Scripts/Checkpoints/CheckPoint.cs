@@ -106,6 +106,7 @@ public class CheckPoint : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.N))
                 {
+                    CheckPointPopUp.enabled = false;
                     Debug.Log("MOVING TO NEXT LEVEL");
                     Debug.Log(gm.level);
                     gm.nextLevel();
