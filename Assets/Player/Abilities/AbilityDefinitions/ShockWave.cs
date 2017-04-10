@@ -34,21 +34,22 @@ public class Shockwave : ISpecial, IAbility {
         image = Resources.Load("Abilities/ShockwaveIcon", typeof(Image)) as Image;
         id = 17;
         name = "Shockwave";
-        description = "Knock Back enemies, damage them, do damage";
+        description = "Knock Back enemies, stun them, do damage";
         effectiveRange = 0.05f;
-        baseDamage = 0.0f;
+        baseDamage = 10.0f;
         timeToCast = 0.0f;
         coolDownTime = 15.0f;
         lastUsedTime = -Mathf.Infinity;
-        energyRequired = 30.0f;
+        energyRequired = 35.0f;
         aoeTarget = Resources.Load("Shockwave/4x4BlueAuraTarget");
         blast = Resources.Load("Shockwave/blast");
         abilityObj = GameObject.FindWithTag("AbilityHelper");
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
-    {  
-        abilityObj.GetComponent<AbilityHelper>().ShockwaveRoutine(player.transform, target, blast, baseDamage, 3.0f);
+    {
+        float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalStrength - StrengthRequired) * 0.04f);
+        abilityObj.GetComponent<AbilityHelper>().ShockwaveRoutine(player.transform, target, blast, adjustedDamage, 3.0f);
         player.animController.AnimatePickup();
 
         lastUsedTime = Time.time;

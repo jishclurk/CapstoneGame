@@ -41,7 +41,7 @@ public class SentryShot : IBasic, IAbility {
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.TotalStrength * 0.5f;
+        float adjustedDamage = baseDamage + (baseDamage * player.attributes.TotalStrength * 0.08f);
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
 
         GameObject project = Object.Instantiate(bullet, origin.transform.position, Quaternion.identity) as GameObject;

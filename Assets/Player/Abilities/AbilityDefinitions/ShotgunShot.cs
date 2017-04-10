@@ -43,9 +43,9 @@ public class ShotgunShot : IBasic, IAbility {
         lastUsedTime = Time.time;
         Vector3 targetDest = new Vector3(target.transform.position.x, player.gunbarrel.position.y, target.transform.position.z);
 
-        float adjustedDamage = baseDamage + player.attributes.Strength * 0.5f;
-        
-        for(float shellRot = -30.0f; shellRot <30.1f; shellRot += 15.0f)
+        float adjustedDamage = baseDamage + (baseDamage * player.attributes.TotalStrength * 0.08f);
+
+        for (float shellRot = -30.0f; shellRot <30.1f; shellRot += 15.0f)
         {
             GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
             project.GetComponent<ShotgunProjectileScript>().destination = targetDest;

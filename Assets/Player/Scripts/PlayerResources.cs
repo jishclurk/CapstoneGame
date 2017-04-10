@@ -31,7 +31,7 @@ public class PlayerResources : MonoBehaviour {
         }
     }
     public float energyRegenRateInSeconds = 0.5f;
-    public float energyRegenAmt = 1.0f;
+    public float energyRegenAmt = 0.5f;
 
     private PlayerAnimationController animController;
     private TeamManager tm;

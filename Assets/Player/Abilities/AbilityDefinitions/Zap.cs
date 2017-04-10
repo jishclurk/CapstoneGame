@@ -35,7 +35,7 @@ public class Zap : ISpecial, IAbility {
         effectiveRange = 9.0f;
         baseDamage = 40.0f;
         timeToCast = 0.0f;
-        coolDownTime = 10.0f;
+        coolDownTime = 12.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 30.0f;
         aoeTarget = null;
@@ -46,7 +46,7 @@ public class Zap : ISpecial, IAbility {
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
+        float adjustedDamage = baseDamage + (baseDamage * player.attributes.TotalStrength * 0.04f);
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
         target.GetComponent<EnemyHealth>().TakeStunDamage(1);
 

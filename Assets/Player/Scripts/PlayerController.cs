@@ -119,9 +119,19 @@ public class PlayerController : MonoBehaviour
                 activeSpecialAbility = null;
             }
         }
-        else if (targetedEnemy != null)
+        else 
         {
-            ShootGun();
+            if (Input.GetButtonDown("Fire1"))
+            {
+                if (Physics.Raycast(ray, out hit, 100f, Layers.Enemy))
+                {
+                    HandleRayCastHit(hit);
+                }
+            }
+            if (targetedEnemy != null)
+            {
+                ShootGun();
+            }
         }
 
         //PLAYER ANIMATION//
@@ -159,7 +169,7 @@ public class PlayerController : MonoBehaviour
             tm.visibleEnemies.Add(targetedEnemy.gameObject);
             watchedEnemies.Add(targetedEnemy.gameObject);
         }
-        else
+        else if(hit.collider.CompareTag("Floor"))
         {
 
             if (Input.GetKey(KeyCode.LeftShift))

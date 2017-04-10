@@ -35,9 +35,9 @@ public class GrenadeThrow : ISpecial, IAbility {
         id = 9;
         name = "Grenade Throw";
         effectiveRange = 10.0f;
-        baseDamage = 25.0f;
+        baseDamage = 30.0f;
         timeToCast = 1.0f;
-        coolDownTime = 5.0f;
+        coolDownTime = 10.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 25.0f;
         aoeTarget = Resources.Load("GrenadeThrow/3x3RedAuraTarget");
@@ -47,8 +47,9 @@ public class GrenadeThrow : ISpecial, IAbility {
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
-    {  
-        abilityObj.GetComponent<AbilityHelper>().GrenadeThrowRoutine(player.attributes, origin, target, baseDamage, explosion, timeToCast, grenade);
+    {
+        float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalStrength - StrengthRequired) * 0.04f);
+        abilityObj.GetComponent<AbilityHelper>().GrenadeThrowRoutine(player.attributes, origin, target, adjustedDamage, explosion, timeToCast, grenade);
         player.animController.AnimateUse(0.35f);
         /*float adjustedDamage = baseDamage + attributes.Strength * 2;
         Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");

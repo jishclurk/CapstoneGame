@@ -34,9 +34,9 @@ public class Invigorate : ISpecial, IAbility {
         effectiveRange = 0.0f;
         baseDamage = 0.0f;
         timeToCast = 0.0f;
-        coolDownTime = 20.0f;
+        coolDownTime = 30.0f;
         lastUsedTime = -Mathf.Infinity;
-        energyRequired = 2.0f;
+        energyRequired = 0.0f;
         aoeTarget = null;
         description = "All ability Cooldowns become 0";
     }

@@ -34,11 +34,11 @@ public class MedKit : ISpecial, IAbility
         id = 12;
         name = "Heal";
         effectiveRange = 5.0f;
-        baseDamage = 25.0f;
+        baseDamage = 20.0f;
         timeToCast = 0.0f;
-        coolDownTime = 8.0f;
+        coolDownTime = 20.0f;
         lastUsedTime = -Mathf.Infinity;
-        energyRequired = 20.0f;
+        energyRequired = 25.0f;
         aoeTarget = null;
         description = "Heal yourself.";
         regenField = Resources.Load("Medkit/HealBuff");
@@ -47,7 +47,7 @@ public class MedKit : ISpecial, IAbility
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.Intelligence;
+        float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalIntelligence - IntelligenceRequired) * 0.04f);
         target.GetComponent<PlayerResources>().Heal(adjustedDamage);
         GameObject gb = Object.Instantiate(regenField, origin.transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
         gb.GetComponent<StayWithPlayer>().player = origin.transform;

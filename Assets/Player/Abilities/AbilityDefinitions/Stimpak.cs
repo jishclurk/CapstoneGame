@@ -39,9 +39,9 @@ public class Stimpak : ISpecial, IAbility
         effectiveRange = 5.0f;
         baseDamage = 25.0f;
         timeToCast = 0.0f;
-        coolDownTime = 8.0f;
+        coolDownTime = 25.0f;
         lastUsedTime = -Mathf.Infinity;
-        energyRequired = 20.0f;
+        energyRequired = 0.0f;
         aoeTarget = null;
         description = "Energy Up";
         regenField = Resources.Load("Stimpak/StimBooster");

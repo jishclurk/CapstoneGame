@@ -31,7 +31,7 @@ public class SMGShot : IBasic, IAbility {
         name = "SMG Shot";
         effectiveRange = 8.0f;
         baseDamage = 2.0f;
-        fireRate = 0.08f;
+        fireRate = 0.11f;
         lastUsedTime = 0.0f;
 
     }
@@ -39,7 +39,7 @@ public class SMGShot : IBasic, IAbility {
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
+        float adjustedDamage = baseDamage + (baseDamage * player.attributes.TotalStrength * 0.08f);
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
 
         GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;

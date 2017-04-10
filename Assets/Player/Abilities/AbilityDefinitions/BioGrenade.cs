@@ -38,7 +38,7 @@ public class BioGrenade : ISpecial, IAbility {
         effectiveRange = 8.0f;
         baseDamage = 2.0f;
         timeToCast = 0.0f;
-        coolDownTime = 1.0f;
+        coolDownTime = 25.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 50.0f;
         aoeTarget = Resources.Load("BioGrenade/5x5GreenAuraTarget");
@@ -51,6 +51,7 @@ public class BioGrenade : ISpecial, IAbility {
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
+        float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalIntelligence - IntelligenceRequired) * 0.03f);
         abilityObj.GetComponent<AbilityHelper>().BioGrenadeRoutine(player.attributes, origin, target, baseDamage, healRate, healLength, timeToCast, bubble);
 
         lastUsedTime = Time.time;

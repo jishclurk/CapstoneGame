@@ -35,7 +35,7 @@ public class Revive : ISpecial, IAbility {
         effectiveRange = 1.8f;
         baseDamage = 50.0f;
         timeToCast = 0.0f;
-        coolDownTime = 10.0f;
+        coolDownTime = 20.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 40.0f;
         aoeTarget = null;
@@ -45,8 +45,8 @@ public class Revive : ISpecial, IAbility {
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.Intelligence * 0.1f;
-        
+        float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalIntelligence - IntelligenceRequired) * 0.03f);
+
 
         PlayerResources friendHealth = target.GetComponent<PlayerResources>();
         if (friendHealth.isDead)

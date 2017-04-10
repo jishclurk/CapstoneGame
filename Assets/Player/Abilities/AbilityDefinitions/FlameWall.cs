@@ -38,20 +38,21 @@ public class FlameWall : ISpecial, IAbility {
         name = "Flame Wall";
         description = "Spawns a fiery wall";
         effectiveRange = 5.5f;
-        baseDamage = 55.0f;
+        baseDamage = 30.0f;
         timeToCast = 0.0f;
-        coolDownTime = 10.0f;
+        coolDownTime = 15.0f;
         effectLength = 10.0f;
         lastUsedTime = -Mathf.Infinity;
-        energyRequired = 30.0f;
+        energyRequired = 70.0f;
         aoeTarget = Resources.Load("FlameWall/4x1RedAuraTarget");
         wall = Resources.Load("FlameWall/FlameWallObj");
         abilityObj = GameObject.FindWithTag("AbilityHelper");
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) 
-    {  
-        abilityObj.GetComponent<AbilityHelper>().FlameWallRoutine(player, target, baseDamage, effectLength, wall);
+    {
+        float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalStrength - StrengthRequired) * 0.04f);
+        abilityObj.GetComponent<AbilityHelper>().FlameWallRoutine(player, target, adjustedDamage, effectLength, wall);
         player.animController.AnimateUse(0.4f);
         lastUsedTime = Time.time;
         player.resources.UseEnergy(energyRequired);

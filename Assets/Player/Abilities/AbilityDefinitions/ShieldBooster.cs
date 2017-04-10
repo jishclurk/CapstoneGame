@@ -41,7 +41,7 @@ public class ShieldBooster : ISpecial, IAbility {
         effectiveRange = 15.0f;
         baseDamage = 0.0f;
         timeToCast = 0.0f;
-        coolDownTime = 5.0f;
+        coolDownTime = 40.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 30.0f;
         aoeTarget = Resources.Load("ShieldBooster/4x4BlueAuraTarget");
