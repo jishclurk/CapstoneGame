@@ -43,6 +43,8 @@ public class PlayerResources : MonoBehaviour {
     private float staminaMultLowBound = 0.5f;
     private float staminaToReachLowBound = 50;
 
+    private BoxCollider deadCollider;
+
 
 	void Awake ()
     {
@@ -52,6 +54,7 @@ public class PlayerResources : MonoBehaviour {
         currentEnergy = maxEnergy;
         InvokeRepeating("RegenerateEnergy", 1.0f, energyRegenRateInSeconds);
         attributes = GetComponent<CharacterAttributes>();
+        deadCollider = transform.FindChild("DeadHitBox").GetComponent<BoxCollider>();
 	}
 	
 
@@ -111,6 +114,7 @@ public class PlayerResources : MonoBehaviour {
 
         // Disable collider so enemies don't see player anymore
         gameObject.GetComponent<Collider>().enabled = false;
+        deadCollider.enabled = true;
 
        //Destroy(gameObject, 5.0f);
         Debug.Log("Player died!");
@@ -124,6 +128,7 @@ public class PlayerResources : MonoBehaviour {
         deathHandled = false;
         gameObject.GetComponent<Strategy>().setAsCoopAI();
         gameObject.GetComponent<Collider>().enabled = true;
+        deadCollider.enabled = false;
         currentHealth = 1;
     }
 

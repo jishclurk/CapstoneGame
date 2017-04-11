@@ -373,7 +373,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, 100f, Layers.Player))
             {
-                if (hit.collider.CompareTag("Player"))
+                if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("DeadPlayer"))
                 {
                     specialTargetedFriend = hit.transform;
                 }
