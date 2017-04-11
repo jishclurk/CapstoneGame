@@ -48,7 +48,7 @@ public class RIPRounds : ISpecial, IAbility {
 
     public void updatePassiveBonuses(CharacterAttributes attributes)
     {
-        attributes.PassiveStrength = attributes.Strength;
+        attributes.PassiveStrength += attributes.Strength;
     }
 
     public bool isReady()
