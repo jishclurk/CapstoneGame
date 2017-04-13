@@ -78,4 +78,8 @@ public class EmptyAbility : ISpecial, IAbility {
         return AbilityHelper.CoopAction.Basic;
     }
 
+    public string GetHoverDescription(Player p)
+    {
+        return "Empty";
+    }
 }

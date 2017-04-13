@@ -40,6 +40,7 @@ public class Flamethrower : ISpecial, IAbility {
         image = Resources.Load("Abilities/FlamethrowerIcon", typeof(Image)) as Image;
         id = 7;
         name = "Flamethrower";
+        description = "Equip a Flamethrower for " + effectLength + " seconds. Hold left click to fire. ";
         effectiveRange = 6.0f;
         baseDamage = 10.0f;
         timeToCast = 5.0f;
@@ -97,5 +98,26 @@ public class Flamethrower : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.Equip;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Damage per hit: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + ". Cooldown: " + coolDownTime + " seconds.";
     }
 }

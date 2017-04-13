@@ -39,7 +39,7 @@ public class Zap : ISpecial, IAbility {
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 30.0f;
         aoeTarget = null;
-        description = "A lightning shot. Base Damage: " + (int) baseDamage + ", Energy Req: " + (int) energyRequired + ", Cool Down Time: " + (int) coolDownTime + ", Range: " + effectiveRange;
+        description = "A lightning shot that deals high damage and stuns the enemy. Select target with left click. ";
         bullet = Resources.Load("Zap/ZapObj");
     }
 
@@ -95,5 +95,26 @@ public class Zap : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.TargetHurt;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Damage: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + ". Cooldown: " + coolDownTime + " seconds.";
     }
 }

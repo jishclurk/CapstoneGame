@@ -35,6 +35,7 @@ public class BioGrenade : ISpecial, IAbility {
         image = Resources.Load("Abilities/BioGrenadeIcon", typeof(Image)) as Image;
         id = 5;
         name = "Bio Grenade";
+        description = "A healing field that heals allied players over time. ";
         effectiveRange = 8.0f;
         baseDamage = 2.0f;
         timeToCast = 0.0f;
@@ -52,7 +53,7 @@ public class BioGrenade : ISpecial, IAbility {
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalIntelligence - IntelligenceRequired) * 0.03f);
-        abilityObj.GetComponent<AbilityHelper>().BioGrenadeRoutine(player.attributes, origin, target, baseDamage, healRate, healLength, timeToCast, bubble);
+        abilityObj.GetComponent<AbilityHelper>().BioGrenadeRoutine(player.attributes, origin, target, adjustedDamage, healRate, healLength, timeToCast, bubble);
 
         lastUsedTime = Time.time;
 
@@ -103,6 +104,26 @@ public class BioGrenade : ISpecial, IAbility {
     {
         return AbilityHelper.CoopAction.AOEHeal;
     }
-    
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Heal Amount: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired) * 0.03f)) * healLength/healRate) + " over " + healLength + " seconds. Cooldown: " + coolDownTime + " seconds.";
+    }
 
 }

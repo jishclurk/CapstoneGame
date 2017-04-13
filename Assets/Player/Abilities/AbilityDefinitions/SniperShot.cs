@@ -28,7 +28,8 @@ public class SniperShot : IBasic, IAbility {
         IntelligenceRequired = 15;
         image = Resources.Load("Abilities/Sniper", typeof(Image)) as Image;
         id = 4;
-        name = "Sniper Shot";
+        name = "Sniper Rifle";
+        description = "*Basic Attack* A high damage, long range Sniper Rifle. ";
         effectiveRange = 11.0f;
         baseDamage = 22.0f;
         fireRate = 0.9f;
@@ -61,5 +62,26 @@ public class SniperShot : IBasic, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.Basic;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Damage: " + (baseDamage + (baseDamage * p.attributes.TotalStrength * 0.04f)) + " per shot";
     }
 }

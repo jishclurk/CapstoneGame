@@ -28,7 +28,8 @@ public class RifleShot : IBasic, IAbility {
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/Rifle", typeof(Image)) as Image;
         id = 1;
-        name = "Rifle Shot";
+        name = "Rifle";
+        description = "*Basic Attack* A standard issue space rifle. ";
         effectiveRange = 9.0f;
         baseDamage = 3.0f;
         fireRate = 0.25f;
@@ -61,4 +62,26 @@ public class RifleShot : IBasic, IAbility {
     {
         return AbilityHelper.CoopAction.Basic;
     }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Damage: " + Mathf.Floor((baseDamage + (baseDamage * p.attributes.TotalStrength * 0.08f))) + " per shot";
+    }
+
 }

@@ -39,7 +39,7 @@ public class Revive : ISpecial, IAbility {
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 40.0f;
         aoeTarget = null;
-        description = "Revive or Heal an ally.";
+        description = "Revive a downed teammate and heal them. Can also be used on alive teammates. ";
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
@@ -106,5 +106,26 @@ public class Revive : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.TargetHeal;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + " Heal Amount " + Mathf.Max(Mathf.Floor(baseDamage + (baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired))), 0.0f) + " Cooldown: " + coolDownTime + " seconds.";
     }
 }

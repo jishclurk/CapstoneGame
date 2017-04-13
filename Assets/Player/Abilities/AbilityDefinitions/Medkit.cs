@@ -32,7 +32,7 @@ public class MedKit : ISpecial, IAbility
         IntelligenceRequired = 5;
         image = Resources.Load("Abilities/MedkitIcon", typeof(Image)) as Image;
         id = 12;
-        name = "Heal";
+        name = "Medkit";
         effectiveRange = 5.0f;
         baseDamage = 20.0f;
         timeToCast = 0.0f;
@@ -40,7 +40,7 @@ public class MedKit : ISpecial, IAbility
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 25.0f;
         aoeTarget = null;
-        description = "Heal yourself.";
+        description = "Heals the user instantly. ";
         regenField = Resources.Load("Medkit/HealBuff");
     }
 
@@ -87,5 +87,26 @@ public class MedKit : ISpecial, IAbility
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.InstantHeal;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Heal Amount: " + Mathf.Floor(baseDamage + (baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired) * 0.04f)) + ". Cooldown: " + coolDownTime + " seconds.";
     }
 }

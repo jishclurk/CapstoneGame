@@ -34,7 +34,7 @@ public class Shockwave : ISpecial, IAbility {
         image = Resources.Load("Abilities/ShockwaveIcon", typeof(Image)) as Image;
         id = 17;
         name = "Shockwave";
-        description = "Knock Back enemies, stun them, do damage";
+        description = "Knock back enemies within the AOE. Stuns enemies and deals minor damage. ";
         effectiveRange = 0.05f;
         baseDamage = 10.0f;
         timeToCast = 0.0f;
@@ -101,5 +101,26 @@ public class Shockwave : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.AOEHeal;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Damage: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + ". Cooldown: " + coolDownTime + " seconds.";
     }
 }

@@ -61,4 +61,25 @@ public class PistolShot : IBasic, IAbility {
     {
         return AbilityHelper.CoopAction.Basic;
     }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Damage: " + (baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f)) + ".";
+    }
 }

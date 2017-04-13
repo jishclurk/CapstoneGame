@@ -33,6 +33,7 @@ public class ChainLightning : ISpecial, IAbility {
         image = Resources.Load("Abilities/ChainLightningIcon", typeof(Image)) as Image;
         id = 6;
         name = "Chain Lightning";
+        description = "Lightning Strike that chains between nearby targets. Select target with left click.";
         effectiveRange = 9.0f;
         baseDamage = 35.0f;
         timeToCast = 0.0f;
@@ -40,7 +41,6 @@ public class ChainLightning : ISpecial, IAbility {
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 35.0f;
         aoeTarget = null;
-        description = "A quick Zap from your gun.";
         bullet = Resources.Load("ChainLightning/ChainObj");
         //abilityObj = GameObject.FindWithTag("AbilityHelper");
     }
@@ -91,5 +91,26 @@ public class ChainLightning : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.TargetHurt;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "First Impact: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + " damage. Cooldown: " + coolDownTime + " seconds.";
     }
 }

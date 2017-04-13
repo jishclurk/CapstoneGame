@@ -37,7 +37,7 @@ public class ShieldBooster : ISpecial, IAbility {
         image = Resources.Load("Abilities/ShieldBoosterIcon", typeof(Image)) as Image;
         id = 16;
         name = "Shield Booster";
-        description = "Sets all players' defense to max within the effect circle";
+        description = "Sets all allied players' defense to max within the AOE circle. Lasts " + Mathf.Floor(effectLength) + " seconds. ";
         effectiveRange = 15.0f;
         baseDamage = 0.0f;
         timeToCast = 0.0f;
@@ -94,5 +94,26 @@ public class ShieldBooster : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.AOEHeal;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Cooldown: " + coolDownTime + " seconds.";
     }
 }

@@ -64,4 +64,11 @@ public class SentryShot : IBasic, IAbility {
     {
         return AbilityHelper.CoopAction.Basic;
     }
+
+    public string GetHoverDescription(Player p)
+    {
+
+
+        return "Not unlockable.";
+    }
 }

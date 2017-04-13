@@ -30,7 +30,8 @@ public class ShotgunShot : IBasic, IAbility {
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/Shotgun", typeof(Image)) as Image;
         id = 3;
-        name = "Shotgun Shot";
+        name = "Shotgun";
+        description = "*Basic Attack* A pump action shotgun. Deals a cone of damage at a slow fire rate. ";
         effectiveRange = 8.0f;
         baseDamage = 5.0f;
         fireRate = 0.8f;
@@ -89,5 +90,26 @@ public class ShotgunShot : IBasic, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.Basic;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Damage: " + Mathf.Floor((baseDamage + (baseDamage * p.attributes.TotalStrength * 0.08f))) + " per shot";
     }
 }

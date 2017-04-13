@@ -19,5 +19,6 @@ public interface IAbility {
     bool isReady();
     AbilityHelper.Action GetAction();
     AbilityHelper.CoopAction GetCoopAction();
+    string GetHoverDescription(Player p);
 
 }

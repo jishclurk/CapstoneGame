@@ -35,13 +35,13 @@ public class SentryTurret : ISpecial, IAbility {
         IntelligenceRequired = 10;
         image = Resources.Load("Abilities/SentryTurretIcon", typeof(Image)) as Image;
         id = 15;
+        effectLength = 10.0f;
         name = "Sentry Turret";
-        description = "Spawns a turret";
+        description = "Construct a turret for extra firepower. Lasts " + Mathf.Floor(effectLength) + " seconds. ";
         effectiveRange = 2.0f;
         baseDamage = 0.0f;
         timeToCast = 0.0f;
         coolDownTime = 10.0f;
-        effectLength = 10.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 30.0f;
         aoeTarget = Resources.Load("SentryTurret/1x1YellowAuraTarget");
@@ -94,5 +94,27 @@ public class SentryTurret : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.AOEHeal;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Damage: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.08f))) + 
+            ". Cooldown: " + coolDownTime + " seconds.";
     }
 }

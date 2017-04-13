@@ -34,6 +34,7 @@ public class GrenadeThrow : ISpecial, IAbility {
         image = Resources.Load("Abilities/GrenadeThrowIcon", typeof(Image)) as Image;
         id = 9;
         name = "Grenade Throw";
+        description = "A fragmentation grenade that deals high damage within the blast radius. ";
         effectiveRange = 10.0f;
         baseDamage = 30.0f;
         timeToCast = 1.0f;
@@ -104,5 +105,26 @@ public class GrenadeThrow : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.AOEHurt;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Damage: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + ". Cooldown: " + coolDownTime + " seconds."; 
     }
 }

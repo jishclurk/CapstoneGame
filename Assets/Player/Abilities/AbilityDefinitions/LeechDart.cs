@@ -40,12 +40,12 @@ public class LeechDart : ISpecial, IAbility {
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 30.0f;
         aoeTarget = null;
-        description = "HurtnHeal";
+        description = "Shoots a dart that saps enemy health. Select target with left click. ";
         bullet = Resources.Load("LeechDart/DartProjectile");
         regenField = Resources.Load("LeechDart/DartBooster");
     }
 
-    public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
+    public void Execute(Player player, GameObject origin, GameObject target) 
     {
         lastUsedTime = Time.time;
         float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalStrength - StrengthRequired) * 0.04f);
@@ -102,5 +102,26 @@ public class LeechDart : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.TargetHurt;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + " Damage " + Mathf.Floor(baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f)) + ". Cooldown: " + coolDownTime + " seconds.";
     }
 }

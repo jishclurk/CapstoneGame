@@ -35,13 +35,13 @@ public class FlameWall : ISpecial, IAbility {
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/FlameWallIcon", typeof(Image)) as Image;
         id = 8;
+        effectLength = 8.0f;
         name = "Flame Wall";
-        description = "Spawns a fiery wall";
+        description = "Shoots a wall of fire. Deals burn damage. Lasts " + Mathf.Floor(effectLength) + " seconds. ";
         effectiveRange = 5.5f;
         baseDamage = 30.0f;
         timeToCast = 0.0f;
         coolDownTime = 15.0f;
-        effectLength = 10.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 70.0f;
         aoeTarget = Resources.Load("FlameWall/4x1RedAuraTarget");
@@ -94,5 +94,26 @@ public class FlameWall : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.AOEHurt;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Damage: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + ". Cooldown: " + coolDownTime + " seconds.";
     }
 }

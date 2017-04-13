@@ -43,7 +43,7 @@ public class Stimpak : ISpecial, IAbility
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 0.0f;
         aoeTarget = null;
-        description = "Energy Up";
+        description = "Restores energy to full and provides a temporary damage boost. Lasts " + effectLength + " seconds. ";
         regenField = Resources.Load("Stimpak/StimBooster");
         abilityObj = GameObject.FindWithTag("AbilityHelper");
     }
@@ -93,5 +93,26 @@ public class Stimpak : ISpecial, IAbility
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.Equip;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + " Cooldown: " + coolDownTime + " seconds.";
     }
 }

@@ -28,7 +28,8 @@ public class SMGShot : IBasic, IAbility {
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/SMG", typeof(Image)) as Image;
         id = 2;
-        name = "SMG Shot";
+        name = "SMG";
+        description = "*Basic Attack* A high fire rate Sub Machine Gun. ";
         effectiveRange = 8.0f;
         baseDamage = 2.0f;
         fireRate = 0.11f;
@@ -61,5 +62,26 @@ public class SMGShot : IBasic, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.Basic;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Damage: " + (baseDamage + (baseDamage * p.attributes.TotalStrength * 0.08f)) + " per shot";
     }
 }

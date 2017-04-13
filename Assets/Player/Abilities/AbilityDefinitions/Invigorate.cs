@@ -38,7 +38,7 @@ public class Invigorate : ISpecial, IAbility {
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 0.0f;
         aoeTarget = null;
-        description = "All ability Cooldowns become 0";
+        description = "Resets all ability cooldown timers to zero seconds. ";
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
@@ -91,5 +91,26 @@ public class Invigorate : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.InstantHeal;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+
+        return description + "Requires: " + strReq + intReq + stmReq + "Cooldown: " + coolDownTime + " seconds.";
     }
 }
