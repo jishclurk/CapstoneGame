@@ -288,6 +288,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1163416119665616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4645126306286616}
+  m_Layer: 11
+  m_Name: LaserOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1313169275152604
 GameObject:
   m_ObjectHideFlags: 1
@@ -862,7 +877,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1063475808145188}
   m_LocalRotation: {x: -0, y: 0.03174807, z: -0, w: 0.9994959}
-  m_LocalPosition: {x: 48.1, y: 0.05, z: -66.87}
+  m_LocalPosition: {x: 45.364704, y: 0.05, z: -68.99656}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4338697819181530}
@@ -870,6 +885,7 @@ Transform:
   - {fileID: 4574953907124338}
   - {fileID: 4144030412954854}
   - {fileID: 4521005180874002}
+  - {fileID: 4645126306286616}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 3.6390002, z: 0}
@@ -1174,7 +1190,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1500720889410654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.157, y: 0.883, z: 2.902}
+  m_LocalPosition: {x: 0.001, y: 0.08, z: 5.354}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4032887157254082}
@@ -1315,6 +1331,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4552886178093110}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4645126306286616
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1163416119665616}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.07, y: 1.296, z: 1.098}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4032887157254082}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4666743843704314
 Transform:
@@ -1492,7 +1521,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1399074812360562}
-  m_LocalRotation: {x: 0.15533614, y: 0.6249377, z: 0.30021185, w: 0.70370203}
+  m_LocalRotation: {x: 0.15533613, y: 0.62493765, z: 0.30021182, w: 0.703702}
   m_LocalPosition: {x: 0.000000018626451, y: 0.048192278, z: -0.000000052154064}
   m_LocalScale: {x: 0.9999999, y: 0.9999999, z: 1}
   m_Children: []
@@ -1703,9 +1732,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SweepProjectileOrigin: {fileID: 4144030412954854}
+  LaserOrigin: {fileID: 4645126306286616}
   SweepProjectileDamage: 15
   ExplosionRadius: 7.5
   ExplosionDamage: 15
+  LaserDamage: 7
+  LaserSecondsBetweenDamage: 0.7
+  SpawnDamage: 10
+  SpawnSecondsBetweenDamage: 1
+  SpawnFieldDuration: 10
   tempTarget: {fileID: 4521005180874002}
 --- !u!137 &137466177723439738
 SkinnedMeshRenderer:

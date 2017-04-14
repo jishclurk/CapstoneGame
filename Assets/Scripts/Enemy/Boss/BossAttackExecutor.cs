@@ -5,15 +5,25 @@ using UnityEngine;
 public class BossAttackExecutor : MonoBehaviour {
 
     public Transform SweepProjectileOrigin;
+    public Transform LaserOrigin;
     public float SweepProjectileDamage = 15f;
     public float ExplosionRadius = 6f;
     public float ExplosionDamage = 15f;
+    public float LaserDamage = 7f;
+    public float LaserSecondsBetweenDamage = 0.7f;
+    public float SpawnDamage = 10f;
+    public float SpawnSecondsBetweenDamage = 1.0f;
+    public float SpawnFieldDuration = 10f;
+    
 
     public Transform tempTarget;
     private Object sweepProj;
     private Object explostionEffect;
+    private Object laserEffect;
+    private Object spawnEffect;
     private TeamManager tm;
 
+    private GameObject laserInstantiation;
 
     // Use this for initialization
     void Start ()
@@ -21,6 +31,8 @@ public class BossAttackExecutor : MonoBehaviour {
         tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
         sweepProj = Resources.Load("Boss/Sweep/SweepProjectile");
         explostionEffect = Resources.Load("Boss/Explosion/ExplosionEffect");
+        laserEffect = Resources.Load("Boss/Laser/LaserEffect");
+        spawnEffect = Resources.Load("Boss/Spawn/SpawnEffect");
     }
 	
 	
@@ -40,7 +52,7 @@ public class BossAttackExecutor : MonoBehaviour {
     public void ExecuteExplosionAttack()
     {
         GameObject explosion = Instantiate(explostionEffect, 
-                                           new Vector3(this.transform.position.x, this.transform.position.y + 0.5f, this.transform.position.z), 
+                                           new Vector3(this.transform.position.x, this.transform.position.y + 0.5f, this.transform.position.z),
                                            Quaternion.Euler(90, 0, 0)) as GameObject;
 
         foreach (Player player in tm.playerList) 
@@ -55,16 +67,26 @@ public class BossAttackExecutor : MonoBehaviour {
 
     public void StartLaserAttack()
     {
-
+        laserInstantiation = Instantiate(laserEffect, LaserOrigin.position, Quaternion.Euler(180, 0, 0)) as GameObject;
+        laserInstantiation.GetComponent<LaserScript>().damage = LaserDamage;
+        laserInstantiation.GetComponent<LaserScript>().secondsBetweenDamage = LaserSecondsBetweenDamage;
     }
 
     public void EndLaserAttack()
     {
-
+        foreach (ParticleSystem ps in laserInstantiation.GetComponentsInChildren<ParticleSystem>())
+        {
+            ps.Stop();
+        }
+        Destroy(laserInstantiation, 0.5f);
     }
 
     public void ExecuteSpawnAttack()
     {
-
+        Vector3 targetDest = new Vector3(tempTarget.transform.position.x, tempTarget.transform.position.y + 1f, tempTarget.transform.position.z);
+        GameObject spawnField = Instantiate(spawnEffect, targetDest, Quaternion.Euler(180, 0, 0)) as GameObject;
+        spawnField.GetComponent<SpawnFieldScript>().damage = SpawnDamage;
+        spawnField.GetComponent<SpawnFieldScript>().secondsBetweenDamage = SpawnSecondsBetweenDamage;
+        Destroy(spawnField, SpawnFieldDuration);
     }
 }
