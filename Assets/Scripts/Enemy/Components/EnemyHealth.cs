@@ -8,7 +8,8 @@ public class EnemyHealth : MonoBehaviour {
     public float maxHealth = 100;
     public int experiencePoints;
 
-    private float _currentHealth;
+    [HideInInspector]
+    public float _currentHealth;
     public float currentHealth  
     {
         get { return _currentHealth; }
@@ -58,7 +59,7 @@ public class EnemyHealth : MonoBehaviour {
             ShowHealthBar();
     }
 
-    public void TakeDamage(float amount)
+    public virtual void TakeDamage(float amount)
     {
         amount = Mathf.Abs(amount);
         currentHealth -= amount;
@@ -81,7 +82,7 @@ public class EnemyHealth : MonoBehaviour {
         burnDamage += amount;
     }
 
-    public void TakeStunDamage(float amount)
+    public virtual void TakeStunDamage(float amount)
     {
         TakeDamage(amount);
         animator.AnimateStun();
@@ -90,11 +91,13 @@ public class EnemyHealth : MonoBehaviour {
     private void Death()
     {
         // Handle death animation stuff here
+        foreach (Collider col in GetComponents<Collider>())
+            col.enabled = false;
         teamManager.RemoveDeadEnemy(gameObject);
         animator.AnimateDeath();
         teamManager.AwardExperience(experiencePoints);
         HideHealthBar();
-        Destroy(gameObject, 5.0f);
+        Destroy(gameObject, 3.0f);
     }
 
     private void HideHealthBar()
@@ -111,12 +114,12 @@ public class EnemyHealth : MonoBehaviour {
     {
         GameObject newDmg = Instantiate(damageText);
         newDmg.transform.SetParent(healthBarCanvas.transform);
-        
+
         newDmg.transform.localRotation = damageTextTrans.localRotation;
-        newDmg.transform.localScale = damageTextTrans.localScale * (0.5f + Mathf.Clamp((2 * damage) / maxHealth, 0, 1.25f));
+        newDmg.transform.localScale = damageTextTrans.localScale * (0.5f + Mathf.Clamp(damage / 50f, 0, 1.25f));
         newDmg.transform.localPosition = damageTextTrans.localPosition + (15 * newDmg.transform.localScale);
         Text txt = newDmg.GetComponent<Text>();
-        txt.color = new Color(1, Mathf.Clamp((255 - (2 * damage * (maxHealth / 255))), 0, 255) / 255, 0, 1);
+        txt.color = new Color(1, Mathf.Clamp(1 - (damage / 50f), 0, 1), 0, 1);
         txt.text = ((int)damage).ToString();
         newDmg.SetActive(true);
     }

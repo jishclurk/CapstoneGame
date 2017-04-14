@@ -22,6 +22,7 @@ public class BossAttackExecutor : MonoBehaviour {
     private Object laserEffect;
     private Object spawnEffect;
     private TeamManager tm;
+    private BossStateControl state;
 
     private GameObject laserInstantiation;
 
@@ -33,12 +34,13 @@ public class BossAttackExecutor : MonoBehaviour {
         explostionEffect = Resources.Load("Boss/Explosion/ExplosionEffect");
         laserEffect = Resources.Load("Boss/Laser/LaserEffect");
         spawnEffect = Resources.Load("Boss/Spawn/SpawnEffect");
+        state = GetComponent<BossStateControl>();
     }
 	
 	
     public void ExecuteSweepAttack()
     {
-        Vector3 targetDest = new Vector3(tempTarget.transform.position.x, SweepProjectileOrigin.position.y, tempTarget.transform.position.z);
+        Vector3 targetDest = new Vector3(state.currentTarget.transform.position.x, SweepProjectileOrigin.position.y, state.currentTarget.transform.position.z);
 
         for (float shellRot = -30.0f; shellRot < 30.1f; shellRot += 20.0f)
         {
@@ -67,7 +69,9 @@ public class BossAttackExecutor : MonoBehaviour {
 
     public void StartLaserAttack()
     {
-        laserInstantiation = Instantiate(laserEffect, LaserOrigin.position, Quaternion.Euler(180, 0, 0)) as GameObject;
+        laserInstantiation = Instantiate(laserEffect, LaserOrigin.position, transform.rotation) as GameObject;
+        laserInstantiation.transform.SetParent(this.transform);
+        laserInstantiation.transform.Rotate(new Vector3(180, 0, 0));
         laserInstantiation.GetComponent<LaserScript>().damage = LaserDamage;
         laserInstantiation.GetComponent<LaserScript>().secondsBetweenDamage = LaserSecondsBetweenDamage;
     }
@@ -83,7 +87,7 @@ public class BossAttackExecutor : MonoBehaviour {
 
     public void ExecuteSpawnAttack()
     {
-        Vector3 targetDest = new Vector3(tempTarget.transform.position.x, tempTarget.transform.position.y + 1f, tempTarget.transform.position.z);
+        Vector3 targetDest = new Vector3(state.currentTarget.transform.position.x, state.currentTarget.transform.position.y + 1f, state.currentTarget.transform.position.z);
         GameObject spawnField = Instantiate(spawnEffect, targetDest, Quaternion.Euler(180, 0, 0)) as GameObject;
         spawnField.GetComponent<SpawnFieldScript>().damage = SpawnDamage;
         spawnField.GetComponent<SpawnFieldScript>().secondsBetweenDamage = SpawnSecondsBetweenDamage;

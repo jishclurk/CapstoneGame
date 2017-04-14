@@ -42,7 +42,7 @@ public class BossAnimationController : MonoBehaviour {
     {
         if (currentAnim != AnimState.Explode)
         {
-            animator.SetTrigger("explode");
+            animator.SetTrigger("explosion");
             currentAnim = AnimState.Explode;
         }
     }
@@ -62,6 +62,24 @@ public class BossAnimationController : MonoBehaviour {
         {
             animator.SetTrigger("spawn");
             currentAnim = AnimState.Spawn;
+        }
+    }
+
+    public void AnimateLeftTurn()
+    {
+        if (currentAnim != AnimState.TurnLeft)
+        {
+            animator.SetTrigger("left");
+            currentAnim = AnimState.TurnLeft;
+        }
+    }
+
+    public void AnimateRightTurn()
+    {
+        if (currentAnim != AnimState.TurnRight)
+        {
+            animator.SetTrigger("right");
+            currentAnim = AnimState.TurnRight;
         }
     }
 }
