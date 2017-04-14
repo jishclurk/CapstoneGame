@@ -20,6 +20,13 @@ public class SerializedPlayer {
     public float health;
     public float energy;
 
+
+    [XmlArray("Abilities")]
+    [XmlArrayItem("Ability")]
+    public int[] abilities;
+
+    public int basic;
+
     public SerializedPlayer()
     {
 

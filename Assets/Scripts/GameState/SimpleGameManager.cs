@@ -53,10 +53,6 @@ public class SimpleGameManager : MonoBehaviour
         percentComplete = 0f;
     }
 
-    private void OnLevelWasLoaded(int level)
-    {
-        Debug.Log("level was loaded");
-    }
 
     //State is changed and function set to OnStateChange is called
     public void SetGameState(GameState state)
@@ -103,9 +99,12 @@ public class SimpleGameManager : MonoBehaviour
         cpManager.setState(saved.checkPoint);
         GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>().loadState(saved.objectives);
         Debug.Log( tm);
-
         Debug.Log("active player" + tm.activePlayer.gameObject);
         Camera.main.GetComponent<OffsetCamera>().setCamera(tm.activePlayer.gameObject);
+        if(level == 1 && saved.checkPoint == 0)
+        {
+
+        }
 
     }
 

@@ -55,7 +55,10 @@ public class MainMenu : MonoBehaviour
             playerStart.id = i + 1;
             playerStart.health = PlayerResources.maxHealth;
             playerStart.energy = PlayerResources.maxEnergy;
+            playerStart.abilities = new int[4];
+            playerStart.basic = 1;
             players[i] = playerStart;
+
             if(i == 0)
             {
                 playerStart.isInControl = true;

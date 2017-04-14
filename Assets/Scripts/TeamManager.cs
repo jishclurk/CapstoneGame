@@ -208,19 +208,6 @@ public class TeamManager : MonoBehaviour {
         return visibleEnemies.Count > 0;
     }
 
-    //public void StartComabtPause()
-    //{
-    //    if (gm.gameState.Equals(GameState.COMABT_PAUSE))
-    //    {
-    //        gm.OnStateChange += tacticalPause.Disable;
-    //        gm.SetGameState(GameState.PLAY);
-    //    }
-    //    else
-    //    {
-    //        gm.OnStateChange += tacticalPause.Enable;
-    //        gm.SetGameState(GameState.COMABT_PAUSE);
-    //    }
-    //}
 
     public void RemoveDeadEnemy(GameObject enemy)
     {
@@ -276,6 +263,16 @@ public class TeamManager : MonoBehaviour {
             players[i] = player;
             player.health = playerList[i].resources.currentHealth;
             player.energy = playerList[i].resources.currentEnergy;
+            int[] abilities = new int[4];
+            for (int j = 0; j< playerList[i].abilities.abilityArray.Length; j++)
+            {
+                IAbility ability = playerList[i].abilities.abilityArray[j];
+                abilities[j] = ability.id;
+            }
+            player.abilities = abilities;
+            player.basic = playerList[i].abilities.Basic.id;
+
+
         }
         
         return players;
@@ -298,6 +295,12 @@ public class TeamManager : MonoBehaviour {
             currentPlayer.abilities.UpdateUnlockedAbilities(current);
             currentPlayer.resources.currentHealth = playerState.health;
             currentPlayer.resources.currentEnergy = playerState.energy;
+
+            for(int j = 0; j<playerState.abilities.Length; j++)
+            {
+                currentPlayer.abilities.SetNewAbility(playerState.abilities[j], j);
+            }
+            currentPlayer.abilities.SetBasic(playerState.basic);
 
             if (playerState.isInControl)
             {

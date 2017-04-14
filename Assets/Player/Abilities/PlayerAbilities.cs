@@ -82,6 +82,21 @@ public class PlayerAbilities : MonoBehaviour
         abilityArray[spot] = ability;
     }
 
+    public void SetBasic(int abilityId)
+    {
+        IBasic basicToSet = new RifleShot();
+        foreach (IAbility a in unlockedAbilities)
+        {
+            if (a.id == abilityId)
+            {
+                basicToSet = (IBasic)a;
+            }
+        }
+
+        Basic = basicToSet;
+    }
+
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
