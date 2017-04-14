@@ -742,7 +742,7 @@ Prefab:
     - target: {fileID: 224079720682058414, guid: f2abb345828e0d649b82da3afdc1d273,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224507334681735740, guid: f2abb345828e0d649b82da3afdc1d273,
         type: 2}
@@ -762,7 +762,7 @@ Prefab:
     - target: {fileID: 224507334681735740, guid: f2abb345828e0d649b82da3afdc1d273,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -125
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224785423825203930, guid: f2abb345828e0d649b82da3afdc1d273,
         type: 2}
@@ -782,7 +782,7 @@ Prefab:
     - target: {fileID: 224785423825203930, guid: f2abb345828e0d649b82da3afdc1d273,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -255
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f2abb345828e0d649b82da3afdc1d273, type: 2}
@@ -1848,7 +1848,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: fc1f9dae06e856e439ba17af89faebf5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fe53a0eda0401164a83d6fe722945231, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

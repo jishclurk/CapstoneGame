@@ -12,6 +12,7 @@ public class TacticalPause : MonoBehaviour {
     Canvas PauseScreen;
     public GameObject AbilitiesScreen;
     private Transform Menus;
+    private Transform ControlMenu;
     private GameObject attributesScreen;
     private GameObject CustomizeScreen;
 
@@ -50,6 +51,8 @@ public class TacticalPause : MonoBehaviour {
         PauseScreen.enabled = false;
         Menus = transform.Find("Menus");
         Menus.gameObject.SetActive(false);
+        ControlMenu = transform.Find("ControlMenu");
+        ControlMenu.gameObject.SetActive(false);
 
         AbilitiesScreen = Menus.transform.Find("Abilities").gameObject;
         AbilitiesScreen.SetActive(false);
@@ -175,6 +178,21 @@ public class TacticalPause : MonoBehaviour {
             CustomizeScreen.SetActive(false);
             displayedPlayer = tm.activePlayer;
             loadCurrentPlayerInfo(tm.activePlayer);
+        }
+    }
+
+    public void toggleControlMenu()
+    {
+        if (ControlMenu.gameObject.activeInHierarchy)
+        {
+            ControlMenu.gameObject.SetActive(false);
+            //PauseScreen.enabled = true;
+            //AbilitiesScreen.SetActive(false);
+        }
+        else
+        {
+            //PauseScreen.enabled = false;
+            ControlMenu.gameObject.SetActive(true);
         }
     }
 
@@ -329,6 +347,8 @@ public class TacticalPause : MonoBehaviour {
         PauseScreen.enabled = true;
         Time.timeScale = 0;
         inTacticalPause = true;
+        ControlMenu.gameObject.SetActive(false); //idk I added these here and everything now works -nick
+        Menus.gameObject.SetActive(false);
     }
 
     public void Disable()
@@ -337,7 +357,9 @@ public class TacticalPause : MonoBehaviour {
         AbilitiesScreen.SetActive(false);
         PauseScreen.enabled = false;
         Time.timeScale = 1;
-        inTacticalPause = false; Menus.gameObject.SetActive(false);
+        inTacticalPause = false;
+        Menus.gameObject.SetActive(false);
+        ControlMenu.gameObject.SetActive(false);
 
     }
 
