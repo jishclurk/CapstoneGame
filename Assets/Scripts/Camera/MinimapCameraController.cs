@@ -44,24 +44,32 @@ public class MinimapCameraController : MonoBehaviour {
         }
     }
 
+    public void ZoomOut()
+    {
+        if (minimapCamera.orthographicSize < minimapSizeMax)
+        {
+            minimapCamera.orthographicSize += 10f;
+        }
+        else
+        {
+            minimapCamera.orthographicSize = minimapSizeMax;
+        }
+    }
+
+    public void ZoomIn()
+    {
+        if (minimapCamera.orthographicSize > minimapSizeMin)
+        {
+            minimapCamera.orthographicSize -= 10f;
+        }
+        else
+        {
+            minimapCamera.orthographicSize = minimapSizeMin;
+        }
+    }
+
     void LateUpdate()
     {
-        if (Input.GetKey(KeyCode.RightBracket) && offsetYValue > minimapSizeMin)
-        {
-            minimapCamera.orthographicSize -= minimapSizeSpeed;
-            if (minimapCamera.orthographicSize < minimapSizeMin)
-            {
-                minimapCamera.orthographicSize = minimapSizeMin;
-            }
-        }
-        if (Input.GetKey(KeyCode.LeftBracket) && offsetYValue < minimapSizeMax)
-        {
-            minimapCamera.orthographicSize += minimapSizeSpeed;
-            if (minimapCamera.orthographicSize > minimapSizeMax)
-            {
-                minimapCamera.orthographicSize = minimapSizeMax;
-            }
-        }
         activePlayerCharacter = tm.activePlayer.gameObject;
         if (transform.position != activePlayerCharacter.transform.position + offset)
         {

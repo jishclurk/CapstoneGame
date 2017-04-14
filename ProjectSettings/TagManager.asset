@@ -17,6 +17,7 @@ TagManager:
   - AbilityHelper
   - DeadPlayer
   - slot
+  - Minimap
   layers:
   - Default
   - TransparentFX
