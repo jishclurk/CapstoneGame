@@ -4924,7 +4924,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -80, y: 80}
+  m_AnchoredPosition: {x: -75, y: 75}
   m_SizeDelta: {x: 69.096, y: 69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224233929595014566
@@ -5184,11 +5184,11 @@ RectTransform:
   m_LocalScale: {x: 0.95920795, y: 0.95920795, z: 0.95920795}
   m_Children: []
   m_Father: {fileID: 224844632416578142}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -80, y: -80}
+  m_AnchoredPosition: {x: -75, y: -75}
   m_SizeDelta: {x: 69.096, y: 69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224398785091412206
@@ -5542,7 +5542,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: -80}
+  m_AnchoredPosition: {x: 75, y: -75}
   m_SizeDelta: {x: 69.096, y: 69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224608459215351964
@@ -5995,8 +5995,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 224367085860002644}
   - {fileID: 224964365679193610}
+  - {fileID: 224367085860002644}
   - {fileID: 224595069321203858}
   - {fileID: 224215810421086662}
   - {fileID: 224957221507203850}
@@ -6192,7 +6192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: 80}
+  m_AnchoredPosition: {x: 75, y: 75}
   m_SizeDelta: {x: 69.096, y: 69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224964365679193610
@@ -6203,10 +6203,10 @@ RectTransform:
   m_GameObject: {fileID: 1153603024037306}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1}
   m_Children: []
   m_Father: {fileID: 224844632416578142}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
