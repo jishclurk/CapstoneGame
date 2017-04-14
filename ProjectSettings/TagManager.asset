@@ -16,6 +16,7 @@ TagManager:
   - Piece
   - AbilityHelper
   - DeadPlayer
+  - slot
   layers:
   - Default
   - TransparentFX

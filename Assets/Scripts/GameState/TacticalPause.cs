@@ -83,8 +83,11 @@ public class TacticalPause : MonoBehaviour {
         for (int i = 0; i < unlockedAbilities.childCount; i++)
         {
             GameObject slot = unlockedAbilities.GetChild(i).gameObject;
-            unLockedAbitiesSlots.Add(slot);
-            unLockedAbilitesSlotScripts.Add(slot.GetComponent<SlotScript>());
+            if (slot.tag.Equals("slot"))
+            {
+                unLockedAbitiesSlots.Add(slot);
+                unLockedAbilitesSlotScripts.Add(slot.GetComponent<SlotScript>());
+            }
         }
 
         //get list of set ability slots
@@ -230,6 +233,10 @@ public class TacticalPause : MonoBehaviour {
         setAbilities.Add(active.abilities.Basic.GetType());
 
       //  Debug.Log(setAbilities);
+      foreach(SlotScript slot in unLockedAbilitesSlotScripts)
+        {
+            slot.setDisplayedPlayer(active);
+        }
 
         foreach (IAbility unlockedAbility in active.abilities.unlockedAbilities)
         {

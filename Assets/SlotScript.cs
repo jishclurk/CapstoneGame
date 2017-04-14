@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class SlotScript : MonoBehaviour, IDropHandler {
+public class SlotScript : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler {
 
     //ability in the slot
     public IAbility ability { get; set; }
@@ -18,10 +19,12 @@ public class SlotScript : MonoBehaviour, IDropHandler {
     public bool isBarSlot;
 
     public bool isBasicBarSlot;
-
-   // public bool isSpecialSlot;
-
+    public GameObject hoverBubble;
+    private Text hoverText;
+    private Player displayedPlayer;
     private TacticalPause tp;
+    private float bubbleWidth;
+    private float bubbleHeight;
 
     private void Start()
     {
@@ -30,7 +33,21 @@ public class SlotScript : MonoBehaviour, IDropHandler {
             ability = Utils.AbilityIDs[abilityId];
         }
         tp = GameObject.Find("TacticalPause").GetComponent<TacticalPause>();
+        if (!hoverBubble.Equals(null))
+        {
+            hoverText = hoverBubble.transform.GetChild(0).GetComponent<Text>();
+            hoverBubble.SetActive(false);
+          //  bubbleWidth = hoverBubble.GetComponent<Renderer>().bounds.size.x;
+            //bubbleHeight = hoverBubble.GetComponent<Renderer>().bounds.size.y;
+           // Debug.Log(bubbleHeight);
+            //Debug.Log(bubbleWidth);
 
+        }
+    }
+
+    public void setDisplayedPlayer(Player player)
+    {
+        displayedPlayer = player;
     }
 
     public GameObject item
@@ -147,5 +164,23 @@ public class SlotScript : MonoBehaviour, IDropHandler {
             Debug.Log("Bad Drop");
         }
 
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!hoverBubble.Equals(null))
+        {
+            hoverBubble.SetActive(false);
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!hoverBubble.Equals(null))
+        {
+            hoverText.text = ability.GetHoverDescription(displayedPlayer);
+            hoverBubble.SetActive(true);
+           // hoverBubble.transform.position = new Vector3(Input.mousePosition.x + bubbleWidth / 2, Input.mousePosition.y + bubbleHeight / 2, hoverBubble.transform.position.z);
+        }
     }
 }
