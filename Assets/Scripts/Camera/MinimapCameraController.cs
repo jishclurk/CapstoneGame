@@ -44,7 +44,7 @@ public class MinimapCameraController : MonoBehaviour {
         }
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         if (Input.GetKey(KeyCode.RightBracket) && offsetYValue > minimapSizeMin)
         {

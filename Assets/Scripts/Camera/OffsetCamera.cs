@@ -63,7 +63,7 @@ public class OffsetCamera : MonoBehaviour
 
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
