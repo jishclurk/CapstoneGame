@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <GameState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <name>prac</name>
+  <name>autosave</name>
   <Level>1</Level>
-  <Check_x0020_Point>1</Check_x0020_Point>
+  <Check_x0020_Point>0</Check_x0020_Point>
   <Players>
     <Player>
       <In_x0020_Control>true</In_x0020_Control>
       <level>1</level>
       <experience>0</experience>
-      <statPoints>10</statPoints>
-      <strength>6</strength>
+      <statPoints>5</statPoints>
+      <strength>1</strength>
       <intelligence>1</intelligence>
       <stamina>1</stamina>
       <id>1</id>
       <health>100</health>
       <energy>100</energy>
       <Abilities>
-        <Ability>9</Ability>
+        <Ability>0</Ability>
         <Ability>0</Ability>
         <Ability>0</Ability>
         <Ability>0</Ability>
@@ -27,7 +27,7 @@
       <In_x0020_Control>false</In_x0020_Control>
       <level>1</level>
       <experience>0</experience>
-      <statPoints>15</statPoints>
+      <statPoints>5</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
       <stamina>1</stamina>
@@ -46,7 +46,7 @@
       <In_x0020_Control>false</In_x0020_Control>
       <level>1</level>
       <experience>0</experience>
-      <statPoints>15</statPoints>
+      <statPoints>5</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
       <stamina>1</stamina>
@@ -65,7 +65,7 @@
       <In_x0020_Control>false</In_x0020_Control>
       <level>1</level>
       <experience>0</experience>
-      <statPoints>15</statPoints>
+      <statPoints>5</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
       <stamina>1</stamina>

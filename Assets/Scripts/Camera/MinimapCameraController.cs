@@ -28,7 +28,7 @@ public class MinimapCameraController : MonoBehaviour {
                 offsetXValue = 0f;
                 offsetYValue = 30f;
                 offsetZValue = 0f;
-                minimapSizeSpeed = 0.2f;
+                minimapSizeSpeed = 1f;
                 minimapSizeMin = 20f;
                 minimapSizeMax = 100f;
     offset = new Vector3(offsetXValue, offsetYValue, offsetZValue);
