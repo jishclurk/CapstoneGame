@@ -6,7 +6,7 @@ public class BossAnimationController : MonoBehaviour {
 
     private Animator animator;
 
-    private enum AnimState { Idle, Sweep, Explode, Laser, Spawn, TurnLeft, TurnRight }
+    private enum AnimState { Idle, Sweep, Explode, Laser, Spawn, Blast, TurnLeft, TurnRight }
 
     private AnimState currentAnim;
 
@@ -62,6 +62,15 @@ public class BossAnimationController : MonoBehaviour {
         {
             animator.SetTrigger("spawn");
             currentAnim = AnimState.Spawn;
+        }
+    }
+
+    public void AnimateBlastAttack()
+    {
+        if (currentAnim != AnimState.Blast)
+        {
+            animator.SetTrigger("blast");
+            currentAnim = AnimState.Blast;
         }
     }
 

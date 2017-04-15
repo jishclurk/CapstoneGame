@@ -14,13 +14,14 @@ public class BossAttackExecutor : MonoBehaviour {
     public float SpawnDamage = 10f;
     public float SpawnSecondsBetweenDamage = 1.0f;
     public float SpawnFieldDuration = 10f;
+    public float BlastProjectileDamage = 30f;
     
 
-    public Transform tempTarget;
     private Object sweepProj;
     private Object explostionEffect;
     private Object laserEffect;
     private Object spawnEffect;
+    private Object blastEffect;
     private TeamManager tm;
     private BossStateControl state;
 
@@ -34,6 +35,7 @@ public class BossAttackExecutor : MonoBehaviour {
         explostionEffect = Resources.Load("Boss/Explosion/ExplosionEffect");
         laserEffect = Resources.Load("Boss/Laser/LaserEffect");
         spawnEffect = Resources.Load("Boss/Spawn/SpawnEffect");
+        blastEffect = Resources.Load("Boss/Blast/BlastProjectile");
         state = GetComponent<BossStateControl>();
     }
 	
@@ -92,5 +94,16 @@ public class BossAttackExecutor : MonoBehaviour {
         spawnField.GetComponent<SpawnFieldScript>().damage = SpawnDamage;
         spawnField.GetComponent<SpawnFieldScript>().secondsBetweenDamage = SpawnSecondsBetweenDamage;
         Destroy(spawnField, SpawnFieldDuration);
+    }
+
+    public void ExecuteBlastAttack()
+    {
+        Vector3 targetDest = new Vector3(state.currentTarget.transform.position.x, SweepProjectileOrigin.position.y, state.currentTarget.transform.position.z);
+
+        GameObject project = Instantiate(blastEffect, SweepProjectileOrigin.position, Quaternion.identity) as GameObject;
+        project.GetComponent<BlastProjectileScript>().destination = targetDest;
+        project.GetComponent<BlastProjectileScript>().rot = transform.rotation.y;
+        project.GetComponent<BlastProjectileScript>().damage = BlastProjectileDamage;
+
     }
 }

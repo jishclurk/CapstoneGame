@@ -22,7 +22,7 @@ public class BossStateControl : MonoBehaviour {
     private TeamManager tm;
     private EnemySoundController sound;
 
-    private enum AttackBeingPerformed { None, Sweep, Laser, Explode, Spawn }
+    private enum AttackBeingPerformed { None, Sweep, Laser, Explode, Spawn, Blast }
     private AttackBeingPerformed currentAttack = AttackBeingPerformed.None;
 
     // Use this for initialization
@@ -148,9 +148,9 @@ public class BossStateControl : MonoBehaviour {
             }
         }
 
-        int choice = Random.Range(0, 4);
+        int choice = Random.Range(0, 5);
         if (choice == previousAttackChoice)
-            choice = Random.Range(0, 4);
+            choice = Random.Range(0, 5);
         previousAttackChoice = choice;
 
         switch (choice)
@@ -170,6 +170,10 @@ public class BossStateControl : MonoBehaviour {
             case 3:
                 currentAttack = AttackBeingPerformed.Spawn;
                 animator.AnimateSpawnAttack();
+                break;
+            case 4:
+                currentAttack = AttackBeingPerformed.Blast;
+                animator.AnimateBlastAttack();
                 break;
             default:
                 currentAttack = AttackBeingPerformed.Spawn;
