@@ -133,7 +133,8 @@ public class BossStateControl : MonoBehaviour {
         if (alivePlayers[choice].id == previousTargetIndex)
             choice = Random.Range(0, alivePlayers.Count);
 
-        return alivePlayers[choice];
+        //return alivePlayers[choice];
+        return tm.playerList[0];
     }
 
     private void PerformAttack()
@@ -152,6 +153,8 @@ public class BossStateControl : MonoBehaviour {
         if (choice == previousAttackChoice)
             choice = Random.Range(0, 5);
         previousAttackChoice = choice;
+
+        choice = 1;
 
         switch (choice)
         {

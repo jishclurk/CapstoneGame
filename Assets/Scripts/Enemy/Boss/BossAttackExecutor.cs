@@ -5,6 +5,7 @@ using UnityEngine;
 public class BossAttackExecutor : MonoBehaviour {
 
     public Transform SweepProjectileOrigin;
+    public Transform forwardTarget;
     public Transform LaserOrigin;
     public float SweepProjectileDamage = 15f;
     public float ExplosionRadius = 6f;
@@ -15,8 +16,8 @@ public class BossAttackExecutor : MonoBehaviour {
     public float SpawnSecondsBetweenDamage = 1.0f;
     public float SpawnFieldDuration = 10f;
     public float BlastProjectileDamage = 30f;
-    
 
+    
     private Object sweepProj;
     private Object explostionEffect;
     private Object laserEffect;
@@ -42,7 +43,7 @@ public class BossAttackExecutor : MonoBehaviour {
 	
     public void ExecuteSweepAttack()
     {
-        Vector3 targetDest = new Vector3(state.currentTarget.transform.position.x, SweepProjectileOrigin.position.y, state.currentTarget.transform.position.z);
+        Vector3 targetDest = new Vector3(forwardTarget.position.x, SweepProjectileOrigin.position.y, forwardTarget.position.z);
 
         for (float shellRot = -30.0f; shellRot < 30.1f; shellRot += 20.0f)
         {
@@ -71,6 +72,7 @@ public class BossAttackExecutor : MonoBehaviour {
 
     public void StartLaserAttack()
     {
+        //state.rotationSpeed = state.rotationSpeed / 2;
         laserInstantiation = Instantiate(laserEffect, LaserOrigin.position, transform.rotation) as GameObject;
         laserInstantiation.transform.SetParent(this.transform);
         laserInstantiation.transform.Rotate(new Vector3(180, 0, 0));
@@ -80,6 +82,7 @@ public class BossAttackExecutor : MonoBehaviour {
 
     public void EndLaserAttack()
     {
+        //state.rotationSpeed = state.rotationSpeed * 2;
         foreach (ParticleSystem ps in laserInstantiation.GetComponentsInChildren<ParticleSystem>())
         {
             ps.Stop();
@@ -98,7 +101,7 @@ public class BossAttackExecutor : MonoBehaviour {
 
     public void ExecuteBlastAttack()
     {
-        Vector3 targetDest = new Vector3(state.currentTarget.transform.position.x, SweepProjectileOrigin.position.y, state.currentTarget.transform.position.z);
+        Vector3 targetDest = new Vector3(forwardTarget.position.x, SweepProjectileOrigin.position.y, forwardTarget.position.z);
 
         GameObject project = Instantiate(blastEffect, SweepProjectileOrigin.position, Quaternion.identity) as GameObject;
         project.GetComponent<BlastProjectileScript>().destination = targetDest;
