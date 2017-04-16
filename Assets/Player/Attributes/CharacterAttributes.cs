@@ -42,6 +42,11 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
     int intelligence;
     int stamina;
 
+
+    private Object levelUpAura;
+    private Object levelUpBuff;
+    private AbilityAlert alert;
+
     public void Awake()
     {
         level = 1;
@@ -55,6 +60,10 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         PassiveStrength = 0;
         PassiveIntelligence = 0;
         PassiveStamina = 0;
+
+        levelUpAura = Resources.Load("Levelup/LevelAura");
+        levelUpBuff = Resources.Load("Levelup/LevelBuff");
+        alert = GameObject.Find("AbilityAlert").GetComponent<AbilityAlert>();
     }
 
     void LevelUp()
@@ -68,6 +77,13 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         // stamina += 1;
         Debug.Log("level = " + level);
         Debug.Log("experienceNeededForNextLevel = " + experienceNeededForNextLevel);
+        GameObject aura = Instantiate(levelUpAura, transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
+        aura.GetComponent<StayWithPlayer>().player = transform;
+        GameObject buff = Instantiate(levelUpBuff, transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
+        buff.GetComponent<StayWithPlayer>().player = transform;
+        Destroy(aura, 1.2f);
+        Destroy(buff, 1.0f);
+        alert.customMessage("Level up!", Color.yellow, 3.0f);
     }
 
     public void ResetPassiveBonus()

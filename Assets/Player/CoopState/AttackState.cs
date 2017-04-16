@@ -87,6 +87,10 @@ public class AttackState : ICoopState
             
         }
         if(aiPlayer.targetedEnemy != null){
+            if (aiPlayer.targetedEnemy.GetComponent<EnemyHealth>().isDead)
+            {
+                reEvalutateTarget = true;
+            }
             MoveAndShoot();
             if (aiPlayer.activeSpecialAbility == null)
             {
@@ -124,8 +128,8 @@ public class AttackState : ICoopState
                 }
                 
                 aiPlayer.activeSpecialAbility = null;
-
             }
+
         }
 
         aiPlayer.CheckLocalVision(); //Update visible enemies
@@ -305,10 +309,6 @@ public class AttackState : ICoopState
                 {
                     //on kill, remove from both team manager visible enemies and all local watchedenemies
                     aiPlayer.targetedEnemy = null;
-                    if (!aiPlayer.tm.IsTeamInCombat())
-                    {
-                        ToIdleState();
-                    }
                 }
             }
             reEvalutateTarget = true;
@@ -399,10 +399,6 @@ public class AttackState : ICoopState
                     {
                         //on kill, remove from both team manager visible enemies and all local watchedenemies
                         aiPlayer.targetedEnemy = null;
-                        if (!aiPlayer.tm.IsTeamInCombat())
-                        {
-                            ToIdleState();
-                        }
                     }
                 }
                 reEvalutateTarget = true;
