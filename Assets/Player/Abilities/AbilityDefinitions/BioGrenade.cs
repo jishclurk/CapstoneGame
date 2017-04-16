@@ -110,20 +110,25 @@ public class BioGrenade : ISpecial, IAbility {
         string strReq = "";
         string intReq = "";
         string stmReq = "";
-        if (StrengthRequired > 0)
+        if (p.attributes.Strength < StrengthRequired)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (IntelligenceRequired > 0)
+        if (p.attributes.Intelligence < IntelligenceRequired)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (StaminaRequired > 0)
+        if (p.attributes.Stamina < StaminaRequired)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
 
-        return description + "Requires: " + strReq + intReq + stmReq + "Heal Amount: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired) * 0.03f)) * healLength/healRate) + " over " + healLength + " seconds. Cooldown: " + coolDownTime + " seconds.";
+        return description + requires + strReq + intReq + stmReq + "Heal Amount: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired) * 0.03f)) * healLength/healRate) + " over " + healLength + " seconds. Cooldown: " + coolDownTime + " seconds.";
     }
 
 }

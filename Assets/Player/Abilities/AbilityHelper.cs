@@ -65,8 +65,15 @@ public class AbilityHelper : MonoBehaviour {
         ft.castedPlayer = player;
         ft.effectiveRange = effectiveRange;
         ft.damage = baseDamage;
-        Destroy(worldFlame, 5.0f);
+        StartCoroutine(DelayedDisable(ft, length));
+        Destroy(worldFlame, length);
 
+    }
+
+    IEnumerator DelayedDisable(FlameThrowScript ft, float length)
+    {
+        yield return new WaitForSeconds(length - 0.5f);
+        ft.dissipate = true;
     }
 
     // SHIELD BOOSTER //

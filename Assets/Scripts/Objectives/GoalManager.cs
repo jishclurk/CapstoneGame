@@ -62,7 +62,7 @@ public class GoalManager : MonoBehaviour {
 		} else {
 			active = false;
 		}
-		Debug.Log (goalListString);
+		//Debug.Log (goalListString);
 	}
 
 	public string goalList(){

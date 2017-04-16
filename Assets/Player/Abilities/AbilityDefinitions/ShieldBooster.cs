@@ -101,19 +101,24 @@ public class ShieldBooster : ISpecial, IAbility {
         string strReq = "";
         string intReq = "";
         string stmReq = "";
-        if (StrengthRequired > 0)
+        if (p.attributes.Strength < StrengthRequired)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (IntelligenceRequired > 0)
+        if (p.attributes.Intelligence < IntelligenceRequired)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (StaminaRequired > 0)
+        if (p.attributes.Stamina < StaminaRequired)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
 
-        return description + "Requires: " + strReq + intReq + stmReq + "Cooldown: " + coolDownTime + " seconds.";
+        return description + requires + strReq + intReq + stmReq + "Cooldown: " + coolDownTime + " seconds.";
     }
 }

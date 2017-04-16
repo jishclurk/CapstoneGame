@@ -79,7 +79,12 @@ public class PistolShot : IBasic, IAbility {
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
 
-        return description + "Requires: " + strReq + intReq + stmReq + "Damage: " + (baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f)) + ".";
+        return description + requires + strReq + intReq + stmReq + "Damage: " + (baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f)) + ".";
     }
 }

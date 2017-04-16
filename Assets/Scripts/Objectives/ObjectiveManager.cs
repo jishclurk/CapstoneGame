@@ -49,7 +49,7 @@ public class ObjectiveManager : MonoBehaviour {
 			}
 		}
 		goalListText.text = objectiveList;
-		Debug.Log (goalListText.text);
+		//Debug.Log (goalListText.text);
 	}
 
     public void loadState(bool[] state)

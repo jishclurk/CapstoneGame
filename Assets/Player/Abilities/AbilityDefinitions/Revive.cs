@@ -22,7 +22,8 @@ public class Revive : ISpecial, IAbility {
     public int StrengthRequired { get; private set; }
     public int StaminaRequired { get; private set; }
     public int IntelligenceRequired { get; private set; }
-    private Object bullet;
+    private Object regenField;
+
 
     public Revive()
     {
@@ -40,6 +41,7 @@ public class Revive : ISpecial, IAbility {
         energyRequired = 40.0f;
         aoeTarget = null;
         description = "Revive a downed teammate and heal them. Can also be used on alive teammates. ";
+        regenField = Resources.Load("Revive/RevBuff");
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
@@ -59,7 +61,10 @@ public class Revive : ISpecial, IAbility {
             player.animController.AnimateUse(0.5f);
             friendHealth.Heal(adjustedDamage);
         }
-        
+
+        GameObject gb = Object.Instantiate(regenField, target.transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
+        gb.GetComponent<StayWithPlayer>().player = target.transform;
+
 
         player.resources.UseEnergy(energyRequired);
     }
@@ -113,19 +118,24 @@ public class Revive : ISpecial, IAbility {
         string strReq = "";
         string intReq = "";
         string stmReq = "";
-        if (StrengthRequired > 0)
+        if (p.attributes.Strength < StrengthRequired)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (IntelligenceRequired > 0)
+        if (p.attributes.Intelligence < IntelligenceRequired)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (StaminaRequired > 0)
+        if (p.attributes.Stamina < StaminaRequired)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
 
-        return description + "Requires: " + strReq + intReq + stmReq + " Heal Amount " + Mathf.Max(Mathf.Floor(baseDamage + (baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired))), 0.0f) + " Cooldown: " + coolDownTime + " seconds.";
+        return description + requires + strReq + intReq + stmReq + " Heal Amount " + Mathf.Max(Mathf.Floor(baseDamage + (baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired))), 0.0f) + " Cooldown: " + coolDownTime + " seconds.";
     }
 }

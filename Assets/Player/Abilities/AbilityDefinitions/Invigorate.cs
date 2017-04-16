@@ -23,6 +23,8 @@ public class Invigorate : ISpecial, IAbility {
     public int StaminaRequired { get; private set; }
     public int IntelligenceRequired { get; private set; }
 
+    private Object sound;
+
     public Invigorate()
     {
         StrengthRequired = 10;
@@ -39,6 +41,7 @@ public class Invigorate : ISpecial, IAbility {
         energyRequired = 0.0f;
         aoeTarget = null;
         description = "Resets all ability cooldown timers to zero seconds. ";
+        sound = Resources.Load("Invigorate/InvigorateSound");
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
@@ -49,6 +52,8 @@ public class Invigorate : ISpecial, IAbility {
         }
         lastUsedTime = Time.time;
         player.resources.UseEnergy(energyRequired);
+        GameObject emptySound = GameObject.Instantiate(sound) as GameObject;
+        GameObject.Destroy(emptySound, 2.0f);
     }
 
     public void updatePassiveBonuses(CharacterAttributes attributes)
@@ -98,19 +103,24 @@ public class Invigorate : ISpecial, IAbility {
         string strReq = "";
         string intReq = "";
         string stmReq = "";
-        if (StrengthRequired > 0)
+        if (p.attributes.Strength < StrengthRequired)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (IntelligenceRequired > 0)
+        if (p.attributes.Intelligence < IntelligenceRequired)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (StaminaRequired > 0)
+        if (p.attributes.Stamina < StaminaRequired)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
 
-        return description + "Requires: " + strReq + intReq + stmReq + "Cooldown: " + coolDownTime + " seconds.";
+        return description + requires + strReq + intReq + stmReq + "Cooldown: " + coolDownTime + " seconds.";
     }
 }
