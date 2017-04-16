@@ -45,6 +45,8 @@ public class TacticalPause : MonoBehaviour {
     private string intellString;
     private string staminaString;
 
+    private Transform viewCharacterButton;
+
     // Use this for initialization
     void Start() {
         PauseScreen = GetComponent<Canvas>();
@@ -53,6 +55,7 @@ public class TacticalPause : MonoBehaviour {
         Menus.gameObject.SetActive(false);
         ControlMenu = transform.Find("ControlMenu");
         ControlMenu.gameObject.SetActive(false);
+        viewCharacterButton = transform.FindChild("Character Menu");
 
         AbilitiesScreen = Menus.transform.Find("Abilities").gameObject;
         AbilitiesScreen.SetActive(false);
@@ -172,7 +175,7 @@ public class TacticalPause : MonoBehaviour {
             //PauseScreen.enabled = true;
             //AbilitiesScreen.SetActive(false);
         }
-        else
+        else if(!tm.IsTeamInCombat())
         {
             Debug.Log("2");
             //PauseScreen.enabled = false;
@@ -356,6 +359,13 @@ public class TacticalPause : MonoBehaviour {
         inTacticalPause = true;
         ControlMenu.gameObject.SetActive(false); //idk I added these here and everything now works -nick
         Menus.gameObject.SetActive(false);
+        if (tm.IsTeamInCombat())
+        {
+            viewCharacterButton.GetComponent<Button>().interactable = false;
+        } else
+        {
+            viewCharacterButton.GetComponent<Button>().interactable = true;
+        }
     }
 
     public void Disable()

@@ -103,7 +103,8 @@ public class SimpleGameManager : MonoBehaviour
         Camera.main.GetComponent<OffsetCamera>().setCamera(tm.activePlayer.gameObject);
         if(level == 1 && saved.checkPoint == 0)
         {
-
+            //wow this convenient if statement was created all for me! -nick
+            GameObject.Find("WelcomeScreen").transform.GetChild(0).gameObject.SetActive(true);
         }
 
     }

@@ -8,11 +8,17 @@ public class WelcomeScreenScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {  
-        cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
+
     }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void CloseScreen()
+    {
+        gameObject.SetActive(false);
+    }
+
 }
