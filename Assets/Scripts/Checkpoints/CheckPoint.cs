@@ -33,13 +33,13 @@ public class CheckPoint : MonoBehaviour
     {
         if (!startCheckpoint)
         {
-            CheckPointPopUp = transform.GetChild(0).gameObject.GetComponent<Canvas>();
-            SaveAsScreen = transform.GetChild(1).gameObject.GetComponent<Canvas>();
+            CheckPointPopUp = transform.Find("CheckPointCanvas").gameObject.GetComponent<Canvas>();
+            SaveAsScreen = transform.Find("SaveScreen").gameObject.GetComponent<Canvas>();
 
             SaveAsScreen.enabled = false;
             CheckPointPopUp.enabled = false;
 
-            nameInputField = SaveAsScreen.transform.GetChild(5).GetComponent<InputField>();
+            nameInputField = SaveAsScreen.transform.Find("New Saved Game").GetComponent<InputField>();
             nameInputField.onEndEdit.AddListener(delegate { SaveGame(nameInputField.text, true); });
         }
         inTrigger = false;
