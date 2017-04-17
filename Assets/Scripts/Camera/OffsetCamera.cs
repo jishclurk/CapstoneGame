@@ -68,7 +68,7 @@ public class OffsetCamera : MonoBehaviour
                 followPlayer = true;
             }
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             anglesIndex--;
             if (anglesIndex < 0)
@@ -77,7 +77,7 @@ public class OffsetCamera : MonoBehaviour
             }
             offset = new Vector3(radius * Mathf.Sin(angles[anglesIndex]), offset.y, radius * Mathf.Cos(angles[anglesIndex]));
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             anglesIndex++;
             if(anglesIndex >= numberOfAngles)
