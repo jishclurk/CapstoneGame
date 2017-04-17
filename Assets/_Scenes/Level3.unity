@@ -5043,7 +5043,7 @@ Prefab:
     - target: {fileID: 224781827666593464, guid: 7880d1ca7fe4a6d4fb34cf3abad8fe1a,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: -179.772
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1659689136865052, guid: 7880d1ca7fe4a6d4fb34cf3abad8fe1a, type: 2}
       propertyPath: m_Name
@@ -6943,7 +6943,7 @@ Prefab:
     - target: {fileID: 224781827666593464, guid: 7880d1ca7fe4a6d4fb34cf3abad8fe1a,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: -179.772
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1659689136865052, guid: 7880d1ca7fe4a6d4fb34cf3abad8fe1a, type: 2}
       propertyPath: m_Name
@@ -12804,50 +12804,6 @@ Transform:
   m_Father: {fileID: 1171657430}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &725614785
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1260349939968742, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 725614786}
-  - component: {fileID: 725614787}
-  m_Layer: 0
-  m_Name: Locate the Quad-Console
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &725614786
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4961356231882700, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 725614785}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -366.3, y: -603.1, z: 340.9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1017220784}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &725614787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 725614785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39b79d838c137456082d4c8f8a73f211, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  location: {fileID: 0}
-  goalText: Locate the Quad-Console
 --- !u!1001 &728606487
 Prefab:
   m_ObjectHideFlags: 0
@@ -13576,94 +13532,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 421086, guid: 0e7f7cf219b88b64d81b56764d1df760, type: 2}
   m_PrefabInternal: {fileID: 760679318}
---- !u!1 &761405023
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1043898181921674, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 761405024}
-  - component: {fileID: 761405025}
-  m_Layer: 0
-  m_Name: Reach Sector H
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &761405024
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4396629166535566, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 761405023}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1049481065}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &761405025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 761405023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39b79d838c137456082d4c8f8a73f211, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  location: {fileID: 0}
-  goalText: Reach Center of Sector H
---- !u!1 &762984335
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1260349939968742, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 762984336}
-  - component: {fileID: 762984337}
-  m_Layer: 0
-  m_Name: Locate the Quad-Console
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &762984336
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4961356231882700, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 762984335}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -366.3, y: -603.1, z: 340.9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1356520310}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &762984337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 762984335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39b79d838c137456082d4c8f8a73f211, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  location: {fileID: 0}
-  goalText: Enter 1J and Walk to Wing 3 Door
 --- !u!1001 &768487655
 Prefab:
   m_ObjectHideFlags: 0
@@ -15365,10 +15233,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 691.37384, y: 448.71368, z: -8.549789}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1017220784}
-  - {fileID: 1049481065}
-  - {fileID: 1356520310}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15797,50 +15662,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 462222, guid: 035c5231493fef641b614f8fab32a5a9, type: 2}
   m_PrefabInternal: {fileID: 854778846}
---- !u!1 &857822316
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1043898181921674, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 857822317}
-  - component: {fileID: 857822318}
-  m_Layer: 0
-  m_Name: Interact with the Console
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &857822317
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4396629166535566, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 857822316}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1017220784}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &857822318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 857822316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9855537ecfc84e9a9b036fbfd9359b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  console: {fileID: 0}
-  goalText: Interact With The Console
 --- !u!1001 &873150612
 Prefab:
   m_ObjectHideFlags: 0
@@ -16474,51 +16295,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 427254, guid: 0d99059bb6770e740b6ca0441adaf337, type: 2}
   m_PrefabInternal: {fileID: 902271608}
---- !u!1 &902881515
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1260349939968742, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 902881516}
-  - component: {fileID: 902881517}
-  m_Layer: 0
-  m_Name: Unlock door(s)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &902881516
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4961356231882700, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 902881515}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -366.3, y: -603.1, z: 340.9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1049481065}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &902881517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 902881515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 490fdc89db30742b09a726d4a22608d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clockDoor: {fileID: 0}
-  consoleDoor: {fileID: 0}
-  goalText: Unlock One of the Doors to Sector H
 --- !u!1001 &911355586
 Prefab:
   m_ObjectHideFlags: 0
@@ -17540,7 +17316,7 @@ Prefab:
     - target: {fileID: 224781827666593464, guid: 7880d1ca7fe4a6d4fb34cf3abad8fe1a,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: -179.772
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1659689136865052, guid: 7880d1ca7fe4a6d4fb34cf3abad8fe1a, type: 2}
       propertyPath: m_Name
@@ -18115,53 +17891,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 421086, guid: 0e7f7cf219b88b64d81b56764d1df760, type: 2}
   m_PrefabInternal: {fileID: 1011096909}
---- !u!1 &1017220783
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1942929391104224, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1017220784}
-  - component: {fileID: 1017220785}
-  m_Layer: 0
-  m_Name: LocationObjective
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1017220784
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4279446632630784, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1017220783}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 725614786}
-  - {fileID: 857822317}
-  m_Father: {fileID: 841269540}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1017220785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114619183868445900, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1017220783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c0bf2eddd23d40af9a4270ed0b20cba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectiveName: Find and Investigate the Quad-Console
-  tm: {fileID: 0}
 --- !u!1001 &1024485080
 Prefab:
   m_ObjectHideFlags: 0
@@ -18740,53 +18469,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 448502, guid: 9a26eaaa7d53c2347906022935ba7a64, type: 2}
   m_PrefabInternal: {fileID: 1047365126}
---- !u!1 &1049481064
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1942929391104224, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1049481065}
-  - component: {fileID: 1049481066}
-  m_Layer: 0
-  m_Name: Enter Sector H
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1049481065
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4279446632630784, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1049481064}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 902881516}
-  - {fileID: 761405024}
-  m_Father: {fileID: 841269540}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1049481066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114619183868445900, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1049481064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c0bf2eddd23d40af9a4270ed0b20cba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectiveName: Progress Through Sector H
-  tm: {fileID: 0}
 --- !u!1001 &1066352289
 Prefab:
   m_ObjectHideFlags: 0
@@ -23577,52 +23259,6 @@ Transform:
   m_Father: {fileID: 1385108539}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1356520309
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1942929391104224, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1356520310}
-  - component: {fileID: 1356520311}
-  m_Layer: 0
-  m_Name: LocationObjective (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1356520310
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4279446632630784, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1356520309}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 762984336}
-  m_Father: {fileID: 841269540}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1356520311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114619183868445900, guid: 603239495b05d48d4b5acef66b0c57b3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1356520309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c0bf2eddd23d40af9a4270ed0b20cba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectiveName: Progress Sector 1J and Exit to Wing 3
-  tm: {fileID: 0}
 --- !u!4 &1373618612 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4192567010037436, guid: 7880d1ca7fe4a6d4fb34cf3abad8fe1a,
