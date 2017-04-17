@@ -15,7 +15,6 @@ public class SettingsManager : MonoBehaviour {
 
     void Start()
     {
-        DontDestroyOnLoad(this);
         Settings = Settings.GetComponent<Canvas>();
         Settings.enabled = false;
     }
