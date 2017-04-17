@@ -29,6 +29,7 @@ public class DotUwsDoorSlide : MonoBehaviour {
 	}
 	
  	void slide_door(Collider other, int _id){ // 0 - Open, 1 - Close
+        _id = 0;
 		string _anim = "Door_"+((_id == 0) ? "Open" : "Close");
 		if( ( _animator != null) && (other.gameObject.tag == "Player") ){
 			AnimatorStateInfo _st = _animator.GetCurrentAnimatorStateInfo(0);
@@ -56,10 +57,6 @@ public class DotUwsDoorSlide : MonoBehaviour {
 		}
 	}	
 
-	void OnTriggerExit(Collider other){
-		if (puzzleActivator == null || puzzleActivator.Output()){
-			slide_door(other, 1); // Close door
-		}
-	}	
+
 
 }
