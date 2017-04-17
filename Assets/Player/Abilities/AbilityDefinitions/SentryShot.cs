@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class SentryShot : IBasic, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -30,6 +31,7 @@ public class SentryShot : IBasic, IAbility {
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
         id = -2;
+        useType = "what";
         name = "Sentry Shot";
         effectiveRange = 9.0f;
         baseDamage = 5.0f;

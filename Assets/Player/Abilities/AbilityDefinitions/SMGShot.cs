@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SMGShot : IBasic, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -29,7 +30,8 @@ public class SMGShot : IBasic, IAbility {
         image = Resources.Load("Abilities/SMG", typeof(Image)) as Image;
         id = 2;
         name = "SMG";
-        description = "*Basic Attack* A high fire rate Sub Machine Gun. ";
+        useType = "Basic Attack";
+        description = "A high fire rate Sub Machine Gun.\n";
         effectiveRange = 8.0f;
         baseDamage = 2.0f;
         fireRate = 0.11f;
@@ -69,15 +71,15 @@ public class SMGShot : IBasic, IAbility {
         string strReq = "";
         string intReq = "";
         string stmReq = "";
-        if (p.attributes.Strength < StrengthRequired)
+        if (StrengthRequired > 0)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (p.attributes.Intelligence < IntelligenceRequired)
+        if (IntelligenceRequired > 0)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (p.attributes.Stamina < StaminaRequired)
+        if (StaminaRequired > 0)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
@@ -87,6 +89,6 @@ public class SMGShot : IBasic, IAbility {
             requires = " ";
         }
 
-        return description + requires + strReq + intReq + stmReq + "Damage: " + (baseDamage + (baseDamage * p.attributes.TotalStrength * 0.08f)) + " per shot";
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + (baseDamage + (baseDamage * p.attributes.TotalStrength * 0.08f)) + " per shot";
     }
 }

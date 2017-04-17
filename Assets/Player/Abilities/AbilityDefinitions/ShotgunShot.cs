@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ShotgunShot : IBasic, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -31,7 +32,8 @@ public class ShotgunShot : IBasic, IAbility {
         image = Resources.Load("Abilities/Shotgun", typeof(Image)) as Image;
         id = 3;
         name = "Shotgun";
-        description = "*Basic Attack* A pump action shotgun. Deals a cone of damage at a slow fire rate. ";
+        useType = "Basic Attack";
+        description = "A pump action shotgun. Deals a cone of damage at a slow fire rate.\n";
         effectiveRange = 8.0f;
         baseDamage = 5.0f;
         fireRate = 0.8f;
@@ -99,15 +101,15 @@ public class ShotgunShot : IBasic, IAbility {
         string stmReq = "";
 
 
-        if (p.attributes.Strength < StrengthRequired)
+        if (StrengthRequired > 0)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (p.attributes.Intelligence < IntelligenceRequired)
+        if (IntelligenceRequired > 0)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (p.attributes.Stamina < StaminaRequired)
+        if (StaminaRequired > 0)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
@@ -117,6 +119,6 @@ public class ShotgunShot : IBasic, IAbility {
             requires = " ";
         }
 
-        return description + requires + strReq + intReq + stmReq + "Damage: " + Mathf.Floor((baseDamage + (baseDamage * p.attributes.TotalStrength * 0.08f))) + " per shot";
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + Mathf.Floor((baseDamage + (baseDamage * p.attributes.TotalStrength * 0.08f))) + " per shot";
     }
 }

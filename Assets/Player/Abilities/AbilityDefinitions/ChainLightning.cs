@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ChainLightning : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -33,9 +34,9 @@ public class ChainLightning : ISpecial, IAbility {
         image = Resources.Load("Abilities/ChainLightningIcon", typeof(Image)) as Image;
         id = 6;
         name = "Chain Lightning";
-        description = "Lightning Strike that chains between nearby targets. Select target with left click.";
+        description = "Lightning Strike that chains between nearby targets. Select target with left click.\n";
         effectiveRange = 9.0f;
-        baseDamage = 35.0f;
+        baseDamage = 45.0f;
         timeToCast = 0.0f;
         coolDownTime = 12.0f;
         lastUsedTime = -Mathf.Infinity;
@@ -98,15 +99,15 @@ public class ChainLightning : ISpecial, IAbility {
         string strReq = "";
         string intReq = "";
         string stmReq = "";
-        if (p.attributes.Strength < StrengthRequired)
+        if (StrengthRequired > 0)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (p.attributes.Intelligence < IntelligenceRequired)
+        if (IntelligenceRequired > 0)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (p.attributes.Stamina < StaminaRequired)
+        if (StaminaRequired > 0)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
@@ -116,7 +117,6 @@ public class ChainLightning : ISpecial, IAbility {
             requires = " ";
         }
 
-
-        return description + requires + strReq + intReq + stmReq + "First Impact: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + " damage. Cooldown: " + coolDownTime + " seconds.";
+        return description + requires + strReq + intReq + stmReq + "\nFirst Impact: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + " damage.\nCooldown: " + coolDownTime + " seconds.";
     }
 }

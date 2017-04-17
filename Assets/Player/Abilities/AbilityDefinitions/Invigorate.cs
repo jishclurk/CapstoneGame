@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Invigorate : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -27,12 +28,13 @@ public class Invigorate : ISpecial, IAbility {
 
     public Invigorate()
     {
-        StrengthRequired = 10;
+        StrengthRequired = 9;
         StaminaRequired = 0;
-        IntelligenceRequired = 10;
+        IntelligenceRequired = 9;
         image = Resources.Load("Abilities/InvigorateIcon", typeof(Image)) as Image;
         id = 10;
         name = "Invigorate";
+        useType = "Equip";
         effectiveRange = 0.0f;
         baseDamage = 0.0f;
         timeToCast = 0.0f;
@@ -40,7 +42,7 @@ public class Invigorate : ISpecial, IAbility {
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 0.0f;
         aoeTarget = null;
-        description = "Resets all ability cooldown timers to zero seconds. ";
+        description = "Resets all ability cooldown timers to zero seconds.\n";
         sound = Resources.Load("Invigorate/InvigorateSound");
     }
 
@@ -103,15 +105,15 @@ public class Invigorate : ISpecial, IAbility {
         string strReq = "";
         string intReq = "";
         string stmReq = "";
-        if (p.attributes.Strength < StrengthRequired)
+        if (StrengthRequired > 0)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (p.attributes.Intelligence < IntelligenceRequired)
+        if (IntelligenceRequired > 0)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (p.attributes.Stamina < StaminaRequired)
+        if (StaminaRequired > 0)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
@@ -121,6 +123,6 @@ public class Invigorate : ISpecial, IAbility {
             requires = " ";
         }
 
-        return description + requires + strReq + intReq + stmReq + "Cooldown: " + coolDownTime + " seconds.";
+        return description + requires + strReq + intReq + stmReq + "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

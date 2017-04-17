@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LeechDart : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -27,12 +28,13 @@ public class LeechDart : ISpecial, IAbility {
 
     public LeechDart()
     {
-        StrengthRequired = 5;
+        StrengthRequired = 6;
         StaminaRequired = 0;
-        IntelligenceRequired = 5;
+        IntelligenceRequired = 6;
         image = Resources.Load("Abilities/LeechDartIcon", typeof(Image)) as Image;
         id = 11;
         name = "LeechDart";
+        useType = "Enemy Target";
         effectiveRange = 9.0f;
         baseDamage = 40.0f;
         timeToCast = 0.0f;
@@ -40,7 +42,7 @@ public class LeechDart : ISpecial, IAbility {
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 30.0f;
         aoeTarget = null;
-        description = "Shoots a dart that saps enemy health. Select target with left click. ";
+        description = "Shoots a dart that saps enemy health. Select target with left click.\n";
         bullet = Resources.Load("LeechDart/DartProjectile");
         regenField = Resources.Load("LeechDart/DartBooster");
     }
@@ -109,15 +111,15 @@ public class LeechDart : ISpecial, IAbility {
         string strReq = "";
         string intReq = "";
         string stmReq = "";
-        if (p.attributes.Strength < StrengthRequired)
+        if (StrengthRequired > 0)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (p.attributes.Intelligence < IntelligenceRequired)
+        if (IntelligenceRequired > 0)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (p.attributes.Stamina < StaminaRequired)
+        if (StaminaRequired > 0)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
@@ -127,6 +129,6 @@ public class LeechDart : ISpecial, IAbility {
             requires = " ";
         }
 
-        return description + requires + strReq + intReq + stmReq + " Damage " + Mathf.Floor(baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f)) + ". Cooldown: " + coolDownTime + " seconds.";
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + Mathf.Floor(baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f)) + "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

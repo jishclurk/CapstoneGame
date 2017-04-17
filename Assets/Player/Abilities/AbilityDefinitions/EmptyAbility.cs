@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class EmptyAbility : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -29,6 +30,8 @@ public class EmptyAbility : ISpecial, IAbility {
         image = Resources.Load("Abilities/Empty", typeof(Image)) as Image;
         id = 0;
         name = "Empty Ability";
+        useType = "Empty";
+        description = "empty";
         effectiveRange = 0.0f;
         baseDamage = 0.0f;
         timeToCast = 0.0f;

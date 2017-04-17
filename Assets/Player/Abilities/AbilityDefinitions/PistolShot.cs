@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PistolShot : IBasic, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -31,6 +32,7 @@ public class PistolShot : IBasic, IAbility {
         image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
         id = -1;
         name = "Pistol Shot";
+        useType = "Summon";
         effectiveRange = 9.0f;
         baseDamage = 5.0f;
         fireRate = 0.8f;

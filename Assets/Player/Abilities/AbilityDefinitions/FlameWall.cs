@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class FlameWall : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -30,14 +31,15 @@ public class FlameWall : ISpecial, IAbility {
 
     public FlameWall()
     {
-        StrengthRequired = 5;
-        StaminaRequired = 5;
+        StrengthRequired = 6;
+        StaminaRequired = 6;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/FlameWallIcon", typeof(Image)) as Image;
         id = 8;
         effectLength = 8.0f;
         name = "Flame Wall";
-        description = "Shoots a wall of fire. Deals burn damage. Lasts " + Mathf.Floor(effectLength) + " seconds. ";
+        useType = "Area of Effect";
+        description = "Shoots a wall of fire. Deals burn damage. Lasts " + Mathf.Floor(effectLength) + " seconds.\n";
         effectiveRange = 5.5f;
         baseDamage = 30.0f;
         timeToCast = 0.0f;
@@ -101,15 +103,15 @@ public class FlameWall : ISpecial, IAbility {
         string strReq = "";
         string intReq = "";
         string stmReq = "";
-        if (p.attributes.Strength < StrengthRequired)
+        if (StrengthRequired > 0)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (p.attributes.Intelligence < IntelligenceRequired)
+        if (IntelligenceRequired > 0)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (p.attributes.Stamina < StaminaRequired)
+        if (StaminaRequired > 0)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
@@ -119,6 +121,6 @@ public class FlameWall : ISpecial, IAbility {
             requires = " ";
         }
 
-        return description + requires + strReq + intReq + stmReq + "Damage: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + ". Cooldown: " + coolDownTime + " seconds.";
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

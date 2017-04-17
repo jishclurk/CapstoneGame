@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class SentryTurret : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -31,15 +32,16 @@ public class SentryTurret : ISpecial, IAbility {
     public SentryTurret()
     {
         StrengthRequired = 0;
-        StaminaRequired = 10;
-        IntelligenceRequired = 10;
+        StaminaRequired = 9;
+        IntelligenceRequired = 9;
         image = Resources.Load("Abilities/SentryTurretIcon", typeof(Image)) as Image;
         id = 15;
         effectLength = 10.0f;
         name = "Sentry Turret";
-        description = "Construct a turret for extra firepower. Lasts " + Mathf.Floor(effectLength) + " seconds. ";
+        useType = "Construct";
+        description = "Construct a turret for extra firepower. Lasts " + Mathf.Floor(effectLength) + " seconds.\n";
         effectiveRange = 2.0f;
-        baseDamage = 0.0f;
+        baseDamage = 5.0f;
         timeToCast = 0.0f;
         coolDownTime = 10.0f;
         lastUsedTime = -Mathf.Infinity;
@@ -101,15 +103,15 @@ public class SentryTurret : ISpecial, IAbility {
         string strReq = "";
         string intReq = "";
         string stmReq = "";
-        if (p.attributes.Strength < StrengthRequired)
+        if (StrengthRequired > 0)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (p.attributes.Intelligence < IntelligenceRequired)
+        if (IntelligenceRequired > 0)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (p.attributes.Stamina < StaminaRequired)
+        if (StaminaRequired > 0)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
@@ -119,7 +121,7 @@ public class SentryTurret : ISpecial, IAbility {
             requires = " ";
         }
 
-        return description + requires + strReq + intReq + stmReq + "Damage: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.08f))) + 
-            ". Cooldown: " + coolDownTime + " seconds.";
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + Mathf.Floor(baseDamage) +
+            "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Revive : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -32,7 +33,8 @@ public class Revive : ISpecial, IAbility {
         IntelligenceRequired = 10;
         image = Resources.Load("Abilities/ReviveIcon", typeof(Image)) as Image;
         id = 13;
-        name = "Revive";
+        name = "Restore";
+        useType = "Friend Target";
         effectiveRange = 1.8f;
         baseDamage = 50.0f;
         timeToCast = 0.0f;
@@ -40,7 +42,7 @@ public class Revive : ISpecial, IAbility {
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 40.0f;
         aoeTarget = null;
-        description = "Revive a downed teammate and heal them. Can also be used on alive teammates. ";
+        description = "Revive a downed teammate and heal them. Can also be used on alive teammates.\n";
         regenField = Resources.Load("Revive/RevBuff");
     }
 
@@ -118,15 +120,15 @@ public class Revive : ISpecial, IAbility {
         string strReq = "";
         string intReq = "";
         string stmReq = "";
-        if (p.attributes.Strength < StrengthRequired)
+        if (StrengthRequired > 0)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (p.attributes.Intelligence < IntelligenceRequired)
+        if (IntelligenceRequired > 0)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (p.attributes.Stamina < StaminaRequired)
+        if (StaminaRequired > 0)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
@@ -136,6 +138,6 @@ public class Revive : ISpecial, IAbility {
             requires = " ";
         }
 
-        return description + requires + strReq + intReq + stmReq + " Heal Amount " + Mathf.Max(Mathf.Floor(baseDamage + (baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired))), 0.0f) + " Cooldown: " + coolDownTime + " seconds.";
+        return description + requires + strReq + intReq + stmReq + "\nHeal Amount: " + Mathf.Floor(baseDamage + Mathf.Max((baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired)), 0.0f)) + "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

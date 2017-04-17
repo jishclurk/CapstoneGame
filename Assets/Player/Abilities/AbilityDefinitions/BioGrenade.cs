@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BioGrenade : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public float effectiveRange { get; set; }
     public float baseDamage { get; set; }
@@ -35,9 +36,10 @@ public class BioGrenade : ISpecial, IAbility {
         image = Resources.Load("Abilities/BioGrenadeIcon", typeof(Image)) as Image;
         id = 5;
         name = "Bio Grenade";
-        description = "A healing field that heals allied players over time. ";
+        useType = "Area of Effect";
+        description = "A healing field that heals allied players over time.\n";
         effectiveRange = 8.0f;
-        baseDamage = 2.0f;
+        baseDamage = 3.0f;
         timeToCast = 0.0f;
         coolDownTime = 25.0f;
         lastUsedTime = -Mathf.Infinity;
@@ -110,15 +112,15 @@ public class BioGrenade : ISpecial, IAbility {
         string strReq = "";
         string intReq = "";
         string stmReq = "";
-        if (p.attributes.Strength < StrengthRequired)
+        if (StrengthRequired > 0)
         {
             strReq = StrengthRequired + " " + "STR. ";
         }
-        if (p.attributes.Intelligence < IntelligenceRequired)
+        if (IntelligenceRequired > 0)
         {
             intReq = IntelligenceRequired + " " + "INT. ";
         }
-        if (p.attributes.Stamina < StaminaRequired)
+        if (StaminaRequired > 0)
         {
             stmReq = StaminaRequired + " " + "STM. ";
         }
@@ -128,7 +130,7 @@ public class BioGrenade : ISpecial, IAbility {
             requires = " ";
         }
 
-        return description + requires + strReq + intReq + stmReq + "Heal Amount: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired) * 0.03f)) * healLength/healRate) + " over " + healLength + " seconds. Cooldown: " + coolDownTime + " seconds.";
+        return description + requires + strReq + intReq + stmReq + "\nHeal Amount: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired) * 0.03f)) * healLength/healRate) + " over " + healLength + " seconds.\nCooldown: " + coolDownTime + " seconds.";
     }
 
 }
