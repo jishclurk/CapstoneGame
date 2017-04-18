@@ -35,7 +35,7 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
 
     int level;
     int experience;
-    int experienceNeededForNextLevel;
+    public int experienceNeededForNextLevel;
     int experienceMultiplier;
     public int StatPoints;
     int strength;
