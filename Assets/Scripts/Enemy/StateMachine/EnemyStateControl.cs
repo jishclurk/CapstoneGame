@@ -94,6 +94,7 @@ public class EnemyStateControl : MonoBehaviour {
             foreach (GameObject player in visiblePlayers)
                 mobKnowledge.RemoveVisiblePlayer(player);
 
+            mobKnowledge.SignalEnemyDead();
             navMeshAgent.enabled = false;
             this.enabled = false;
         }
