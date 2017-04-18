@@ -9,6 +9,7 @@ public class BossHealth : EnemyHealth {
     private Image healthBar_B;
     private GameObject healthBarCanvas_B;
     private GameObject damageText_B;
+    private GameObject dmgTxtCanvas_B;
     private Transform damageTextTrans_B;
     private BossAnimationController animator_B;
     private TeamManager teamManager_B;
@@ -24,7 +25,8 @@ public class BossHealth : EnemyHealth {
         healthBar_B.fillAmount = 1;
         HideHealthBar();
 
-        damageText_B = healthBarCanvas_B.transform.FindChild("FloatingDamageText").gameObject;
+        dmgTxtCanvas_B = transform.FindChild("FloatingDamageCanvas").gameObject;
+        damageText_B = dmgTxtCanvas_B.transform.FindChild("FloatingDamageText").gameObject;
         damageTextTrans_B = damageText_B.transform;
         teamManager_B = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
     }
@@ -83,7 +85,7 @@ public class BossHealth : EnemyHealth {
     private void DisplayCombatText(float damage)
     {
         GameObject newDmg = Instantiate(damageText_B);
-        newDmg.transform.SetParent(healthBarCanvas_B.transform);
+        newDmg.transform.SetParent(dmgTxtCanvas_B.transform);
 
         newDmg.transform.localRotation = damageTextTrans_B.localRotation;
         newDmg.transform.localScale = damageTextTrans_B.localScale * (0.5f + Mathf.Clamp(damage / 50f, 0, 1.25f));
