@@ -77,10 +77,10 @@ public class CheckPoint : MonoBehaviour
             {
                 if (objmanager.LevelComplete())
                 {
-                    CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [S] to save and continue Press [N] to continue";
+                    CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [F] to save and continue Press [N] to continue";
                 }else
                 {
-                    CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Need to complete objectives to advance!  Press [S] to save";
+                    CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Need to complete objectives to advance!  Press [F] to save";
 
                 }
             }
@@ -102,7 +102,7 @@ public class CheckPoint : MonoBehaviour
     {
         if (inTrigger)
         {
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 LanchSaveScreen();
                // CheckPointPopUp.enabled = false;

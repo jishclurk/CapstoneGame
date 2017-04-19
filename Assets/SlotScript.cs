@@ -22,6 +22,7 @@ public class SlotScript : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     public GameObject hoverBubble;
     private Text hoverText;
     private Text abilityName;
+    private Text AbilityType;
     private Player displayedPlayer;
     private TacticalPause tp;
 
@@ -34,9 +35,12 @@ public class SlotScript : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         tp = GameObject.Find("TacticalPause").GetComponent<TacticalPause>();
         if (!hoverBubble.Equals(null))
         {
-            hoverText = hoverBubble.transform.GetChild(0).GetComponent<Text>();
-            abilityName = hoverBubble.transform.GetChild(1).GetComponent<Text>();
+            hoverText = hoverBubble.transform.FindChild("description").GetComponent<Text>();
+            abilityName = hoverBubble.transform.FindChild("name").GetComponent<Text>();
+            AbilityType = hoverBubble.transform.FindChild("type").GetComponent<Text>();
+
             abilityName.text = ability.name;
+            AbilityType.text = ability.useType;
             hoverBubble.SetActive(false);
         }
     }

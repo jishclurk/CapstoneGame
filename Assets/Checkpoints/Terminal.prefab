@@ -1295,7 +1295,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Checkpoint! Press [S] to save
+  m_Text: Checkpoint! Press [F] to save
 --- !u!114 &114312868728469714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1346,6 +1346,7 @@ MonoBehaviour:
   player4: {fileID: 1165439376923414}
   SaveScreenGameObject: {fileID: 0}
   checkpointReached: 0
+  firstEnter: 1
   finalCheckpoint: 0
   startCheckpoint: 0
 --- !u!114 &114757214972281352
