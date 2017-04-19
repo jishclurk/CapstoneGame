@@ -15,7 +15,6 @@ public class MinimapCameraController : MonoBehaviour {
     private float minimapSizeMax;
     private Camera minimapCamera;
 
-    //Simple script from Roll a Ball
     void Start()
     {
         minimapCamera = gameObject.GetComponent<Camera>();
@@ -31,7 +30,7 @@ public class MinimapCameraController : MonoBehaviour {
                 minimapSizeSpeed = 1f;
                 minimapSizeMin = 20f;
                 minimapSizeMax = 100f;
-    offset = new Vector3(offsetXValue, offsetYValue, offsetZValue);
+                offset = new Vector3(offsetXValue, offsetYValue, offsetZValue);
                 transform.position = activePlayerCharacter.transform.position + offset;
             }
             else

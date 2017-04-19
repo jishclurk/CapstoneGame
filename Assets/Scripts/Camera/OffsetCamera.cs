@@ -35,7 +35,8 @@ public class OffsetCamera : MonoBehaviour
         {
             angles[i] = i * 2 * Mathf.PI / numberOfAngles;
         }
-        anglesIndex = 0;
+        anglesIndex = 1;
+        Debug.Log("anglesIndex = " + anglesIndex);
         offset = new Vector3(radius * Mathf.Sin(angles[anglesIndex]), offsetYValue, radius * Mathf.Cos(angles[anglesIndex]));
         fixedEulerAngles = transform.eulerAngles;
         cameraVerticalSpeed = 0.2f;
@@ -76,6 +77,8 @@ public class OffsetCamera : MonoBehaviour
                 anglesIndex = 7;
             }
             offset = new Vector3(radius * Mathf.Sin(angles[anglesIndex]), offset.y, radius * Mathf.Cos(angles[anglesIndex]));
+
+            Debug.Log("anglesIndex = " + anglesIndex);
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -85,6 +88,8 @@ public class OffsetCamera : MonoBehaviour
                 anglesIndex = 0;
             }
             offset = new Vector3(radius * Mathf.Sin(angles[anglesIndex]), offset.y, radius * Mathf.Cos(angles[anglesIndex]));
+
+            Debug.Log("anglesIndex = " + anglesIndex);
         }
         if (Input.GetKey(KeyCode.Equals) && offsetYValue > yPositionMin)
         {
