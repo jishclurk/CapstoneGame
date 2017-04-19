@@ -12,10 +12,12 @@ public class CheckPoint : MonoBehaviour
     public GameObject player3;
     public GameObject player4;
 
+    public GameObject SaveScreenGameObject;
+
     private Canvas CheckPointPopUp;
-    private Canvas SaveAsScreen;
+    private SaveSlotScript SaveScreen;
     private Canvas LevelComplete;
-    private InputField nameInputField;
+   // private InputField nameInputField;
 
     //managers
     private TeamManager tm;
@@ -34,13 +36,9 @@ public class CheckPoint : MonoBehaviour
         if (!startCheckpoint)
         {
             CheckPointPopUp = transform.Find("cp canvas").gameObject.GetComponent<Canvas>();
-            SaveAsScreen = transform.Find("SaveScreen").gameObject.GetComponent<Canvas>();
-
-            SaveAsScreen.enabled = false;
             CheckPointPopUp.enabled = false;
+            SaveScreen = SaveScreenGameObject.GetComponent<SaveSlotScript>();
 
-            nameInputField = SaveAsScreen.transform.Find("New Saved Game").GetComponent<InputField>();
-            nameInputField.onEndEdit.AddListener(delegate { SaveGame(nameInputField.text, true); });
         }
         inTrigger = false;
         firstEnter = true;
@@ -134,7 +132,7 @@ public class CheckPoint : MonoBehaviour
     {
             gm.OnStateChange += Pause;
             gm.SetGameState(GameState.PAUSE);
-            SaveAsScreen.enabled = true;
+            SaveScreen.enableSaveScreen();
     }
 
     private void autosave()
@@ -142,42 +140,44 @@ public class CheckPoint : MonoBehaviour
         Debug.Log("autosaving");
         SavedState autosave = new SavedState();
         autosave.setFromGameManager();
-        autosave.name = "autosave";
+       // autosave.name = "autosave";
         autosave.players = tm.currentState();
         autosave.objectives = objmanager.currentState();
         autosave.checkPoint = checkpointManager.GetCheckPoint(this);
+        autosave.date = System.DateTime.Now.ToString();
+        autosave.saveSlot = 6;
         if (finalCheckpoint && objmanager.LevelComplete())
         {
             autosave.level++;
             autosave.checkPoint = 0;
         }
-        SaveLoad.Save(autosave, "autosave");
+        SaveLoad.Save(autosave, 6);
         gm.autosave = autosave;
     }
 
     //Sets game name as input in InputFeild, saves the game 
-    public void SaveGame(string name, bool newGame)
-    {
-        Debug.Log("in save game");
-        SaveAsScreen.enabled = false;
-        SavedState toSave = new SavedState();
-        toSave.setFromGameManager();
-        toSave.name = name;
-        toSave.players = tm.currentState();
-        toSave.objectives = objmanager.currentState();
-        toSave.checkPoint = checkpointManager.GetCheckPoint(this);
-        if (finalCheckpoint && objmanager.LevelComplete()) {
-            toSave.level++;
-            toSave.checkPoint = 0;
-        }
-        SaveLoad.Save(toSave,name);
-        if (newGame)
-        {
-            checkpointManager.UpdateButtons(name);
-        }
-        Debug.Log("saved");
-        progressGame();
-    }
+    //public void SaveGame(string name, bool newGame)
+    //{
+    //    Debug.Log("in save game");
+    //    SaveScreen.enabled = false;
+    //    SavedState toSave = new SavedState();
+    //    toSave.setFromGameManager();
+    //    toSave.name = name;
+    //    toSave.players = tm.currentState();
+    //    toSave.objectives = objmanager.currentState();
+    //    toSave.checkPoint = checkpointManager.GetCheckPoint(this);
+    //    if (finalCheckpoint && objmanager.LevelComplete()) {
+    //        toSave.level++;
+    //        toSave.checkPoint = 0;
+    //    }
+    //    SaveLoad.Save(toSave,name);
+    //    if (newGame)
+    //    {
+    //        checkpointManager.UpdateButtons(name);
+    //    }
+    //    Debug.Log("saved");
+    //    progressGame();
+    //}
 
     //Freezes game
     public void Pause()
@@ -192,7 +192,7 @@ public class CheckPoint : MonoBehaviour
 
     public void progressGame()
     {
-        SaveAsScreen.enabled = false;
+        SaveScreen.disableSaveScreen();
         gm.OnStateChange += UnPause;
         gm.SetGameState(GameState.PLAY);
         if (finalCheckpoint && objmanager.LevelComplete())

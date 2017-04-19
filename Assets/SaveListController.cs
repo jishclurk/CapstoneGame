@@ -10,34 +10,34 @@ public class SaveListController : MonoBehaviour
     public GameObject ContentPanel;
 
     // Use this for initialization
-    void Start()
-    {
-        CheckPoint cp = transform.parent.parent.parent.gameObject.GetComponent<CheckPoint>();
-        foreach (string name in SaveLoad.savedGames())
-        {
-            GameObject listItem = Instantiate(ListItemPrefab) as GameObject;
-            listItem.transform.parent = ContentPanel.transform;
-            listItem.transform.localScale = Vector3.one;
-            int start = name.IndexOf("savedGame") + "savedGame".Length;
-            int end = name.IndexOf(".gd");
-            string croppedName = name.Substring(start, end - start);
-            listItem.GetComponent<Text>().text = croppedName;
-            Button button = listItem.GetComponent<Button>();
-            button.onClick.AddListener(delegate { cp.SaveGame(croppedName, false); });
-        }
-    }
+    //void Start()
+    //{
+    //    CheckPoint cp = transform.parent.parent.parent.gameObject.GetComponent<CheckPoint>();
+    //    foreach (string name in SaveLoad.savedGames())
+    //    {
+    //        GameObject listItem = Instantiate(ListItemPrefab) as GameObject;
+    //        listItem.transform.parent = ContentPanel.transform;
+    //        listItem.transform.localScale = Vector3.one;
+    //        int start = name.IndexOf("savedGame") + "savedGame".Length;
+    //        int end = name.IndexOf(".gd");
+    //        string croppedName = name.Substring(start, end - start);
+    //        listItem.GetComponent<Text>().text = croppedName;
+    //        Button button = listItem.GetComponent<Button>();
+    //        button.onClick.AddListener(delegate { cp.SaveGame(croppedName, false); });
+    //    }
+    //}
 
-    public void UpdateButtons(string name)
-    {
-        Debug.Log("in updatebuttons");
-        CheckPoint cp = transform.parent.parent.parent.gameObject.GetComponent<CheckPoint>();
-        GameObject listItem = Instantiate(ListItemPrefab) as GameObject;
-        listItem.transform.parent = ContentPanel.transform;
-        listItem.transform.localScale = Vector3.one;
-        listItem.GetComponent<Text>().text = name;
-        Button button = listItem.GetComponent<Button>();
-        button.onClick.AddListener(delegate { cp.SaveGame(name, false); });
+    //public void UpdateButtons(string name)
+    //{
+    //    Debug.Log("in updatebuttons");
+    //    CheckPoint cp = transform.parent.parent.parent.gameObject.GetComponent<CheckPoint>();
+    //    GameObject listItem = Instantiate(ListItemPrefab) as GameObject;
+    //    listItem.transform.parent = ContentPanel.transform;
+    //    listItem.transform.localScale = Vector3.one;
+    //    listItem.GetComponent<Text>().text = name;
+    //    Button button = listItem.GetComponent<Button>();
+    //    button.onClick.AddListener(delegate { cp.SaveGame(name, false); });
 
-    }
+    //}
 
 }

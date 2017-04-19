@@ -42,7 +42,7 @@ public class SimpleGameManager : MonoBehaviour
         Debug.Log("start");
         tm = GameObject.Find("TeamManager").GetComponent<TeamManager>();
         cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
-        SetSavedState(SaveLoad.Load("autosave"));
+        SetSavedState(SaveLoad.Load(6));
         objManager = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>();
         GameOverScreen = transform.GetChild(0).GetComponent<Canvas>();
         GameOverScreen.enabled = false;
@@ -133,7 +133,7 @@ public class SimpleGameManager : MonoBehaviour
     {
         if(autosave == null)
         {
-            autosave = SaveLoad.Load("autosave");
+            autosave = SaveLoad.Load(6);
         }
         OnStateChange += unPause;
         SetGameState(GameState.PLAY);
@@ -154,7 +154,7 @@ public class SimpleGameManager : MonoBehaviour
         //OnStateChange += unPause;
        // SetGameState(GameState.PLAY);
         GameOverScreen.enabled = false;
-        SavedState autosave = SaveLoad.Load("autosave");
+        SavedState autosave = SaveLoad.Load(6);
         SetSavedState(autosave);
     }
 

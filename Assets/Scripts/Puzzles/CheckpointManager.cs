@@ -38,13 +38,13 @@ public class CheckpointManager : MonoBehaviour {
         return -1;
     }
 
-    public void UpdateButtons(string name)
-    {
-        foreach(Transform child in transform)
-        {
-            GameObject terminal = child.gameObject;
-            terminal.GetComponentInChildren<SaveListController>().UpdateButtons(name);
-        }
-    }
+    //public void UpdateButtons(string name)
+    //{
+    //    //foreach(Transform child in transform)
+    //    //{
+    //    //    GameObject terminal = child.gameObject;
+    //    //    terminal.GetComponentInChildren<SaveListController>().UpdateButtons(name);
+    //    //}
+    //}
 	
 }

@@ -7,9 +7,6 @@ using UnityEngine;
 public class SavedState
 {
 
-    [XmlElement("name")]
-    public string name;
-
     [XmlElement("Level")]
     public int level;
 
@@ -23,6 +20,12 @@ public class SavedState
     [XmlArray("Objectives")]
     [XmlArrayItem("objectives")]
     public bool[] objectives;
+
+    [XmlElement("SaveSlot")]
+    public int saveSlot;
+
+    [XmlElement("Date")]
+    public string date;
 
     public SavedState()
     {

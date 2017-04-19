@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <GameState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <name>autosave</name>
   <Level>1</Level>
   <Check_x0020_Point>0</Check_x0020_Point>
   <Players>
     <Player>
       <In_x0020_Control>true</In_x0020_Control>
       <level>1</level>
-      <experience>0</experience>
+      <experience>3</experience>
       <statPoints>5</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
@@ -26,7 +25,7 @@
     <Player>
       <In_x0020_Control>false</In_x0020_Control>
       <level>1</level>
-      <experience>0</experience>
+      <experience>3</experience>
       <statPoints>5</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
@@ -45,7 +44,7 @@
     <Player>
       <In_x0020_Control>false</In_x0020_Control>
       <level>1</level>
-      <experience>0</experience>
+      <experience>3</experience>
       <statPoints>5</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
@@ -64,7 +63,7 @@
     <Player>
       <In_x0020_Control>false</In_x0020_Control>
       <level>1</level>
-      <experience>0</experience>
+      <experience>3</experience>
       <statPoints>5</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
@@ -89,4 +88,6 @@
     <objectives>false</objectives>
     <objectives>false</objectives>
   </Objectives>
+  <SaveSlot>3</SaveSlot>
+  <Date>4/19/2017 4:28:37 PM</Date>
 </GameState>
