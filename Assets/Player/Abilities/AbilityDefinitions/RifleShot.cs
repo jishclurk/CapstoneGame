@@ -34,7 +34,7 @@ public class RifleShot : IBasic, IAbility {
         description = "A standard issue space rifle.\n";
         effectiveRange = 9.0f;
         baseDamage = 3.0f;
-        fireRate = 0.25f;
+        fireRate = 0.24f;
         lastUsedTime = 0.0f;
 
     }
