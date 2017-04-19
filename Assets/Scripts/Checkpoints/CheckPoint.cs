@@ -88,6 +88,7 @@ public class CheckPoint : MonoBehaviour
             //Debug.Log("EXITED TRIGGER");
             CheckPointPopUp.enabled = false;
             inTrigger = false;
+            SaveScreen.enabled = false;
         }
     }
 

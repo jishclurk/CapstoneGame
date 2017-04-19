@@ -5,9 +5,9 @@
   <Players>
     <Player>
       <In_x0020_Control>true</In_x0020_Control>
-      <level>1</level>
-      <experience>3</experience>
-      <statPoints>5</statPoints>
+      <level>2</level>
+      <experience>0</experience>
+      <statPoints>8</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
       <stamina>1</stamina>
@@ -24,9 +24,9 @@
     </Player>
     <Player>
       <In_x0020_Control>false</In_x0020_Control>
-      <level>1</level>
-      <experience>3</experience>
-      <statPoints>5</statPoints>
+      <level>2</level>
+      <experience>0</experience>
+      <statPoints>8</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
       <stamina>1</stamina>
@@ -43,9 +43,9 @@
     </Player>
     <Player>
       <In_x0020_Control>false</In_x0020_Control>
-      <level>1</level>
-      <experience>3</experience>
-      <statPoints>5</statPoints>
+      <level>2</level>
+      <experience>0</experience>
+      <statPoints>8</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
       <stamina>1</stamina>
@@ -62,9 +62,9 @@
     </Player>
     <Player>
       <In_x0020_Control>false</In_x0020_Control>
-      <level>1</level>
-      <experience>3</experience>
-      <statPoints>5</statPoints>
+      <level>2</level>
+      <experience>0</experience>
+      <statPoints>8</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
       <stamina>1</stamina>
@@ -89,5 +89,5 @@
     <objectives>false</objectives>
   </Objectives>
   <SaveSlot>2</SaveSlot>
-  <Date>4/19/2017 4:38:06 PM</Date>
+  <Date>4/19/2017 5:11:28 PM</Date>
 </GameState>
