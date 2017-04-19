@@ -14,7 +14,6 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         set
         {
             experience = value;
-            Debug.Log("Experience: " + experience);
             if(experience >= experienceNeededForNextLevel)
             {
                 this.LevelUp();
@@ -75,8 +74,6 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         // strength += 1;
         // intelligence += 1;
         // stamina += 1;
-        Debug.Log("level = " + level);
-        Debug.Log("experienceNeededForNextLevel = " + experienceNeededForNextLevel);
         GameObject aura = Instantiate(levelUpAura, transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
         aura.GetComponent<StayWithPlayer>().player = transform;
         GameObject buff = Instantiate(levelUpBuff, transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;

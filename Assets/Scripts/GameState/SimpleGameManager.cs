@@ -39,7 +39,7 @@ public class SimpleGameManager : MonoBehaviour
     private void Start()
     {
 
-        Debug.Log("start");
+        //Debug.Log("start");
         tm = GameObject.Find("TeamManager").GetComponent<TeamManager>();
         cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
         SetSavedState(SaveLoad.Load("autosave"));
@@ -57,7 +57,7 @@ public class SimpleGameManager : MonoBehaviour
     //State is changed and function set to OnStateChange is called
     public void SetGameState(GameState state)
     {
-        Debug.Log("changing state");
+        //Debug.Log("changing state");
 
         this.gameState = state;
         OnStateChange();
@@ -65,13 +65,13 @@ public class SimpleGameManager : MonoBehaviour
         {
             OnStateChange -= (function as OnStateChangeHandler);
         }
-        Debug.Log("here");
+        //Debug.Log("here");
     }
 
     public void nextLevel()
     {
         level++;
-        Debug.Log("advance to level " + level);
+        //Debug.Log("advance to level " + level);
         autosave.checkPoint = 0;
         autosave.level++;
         StartCoroutine(LoadScene("Level" + level.ToString()));
@@ -81,7 +81,7 @@ public class SimpleGameManager : MonoBehaviour
     IEnumerator LoadScene(string sceneName)
     {
         LoadingScreen.enabled = true;
-        Debug.Log("Loading " + sceneName);
+        //Debug.Log("Loading " + sceneName);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         while (!asyncLoad.isDone)
         {
@@ -98,8 +98,6 @@ public class SimpleGameManager : MonoBehaviour
         tm.LoadSavedState(saved.players);
         cpManager.setState(saved.checkPoint);
         GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>().loadState(saved.objectives);
-        Debug.Log( tm);
-        Debug.Log("active player" + tm.activePlayer.gameObject);
         Camera.main.GetComponent<OffsetCamera>().setCamera(tm.activePlayer.gameObject);
         if(level == 1 && saved.checkPoint == 0)
         {
@@ -125,7 +123,6 @@ public class SimpleGameManager : MonoBehaviour
     {
         OnStateChange += Pause;
         SetGameState(GameState.PAUSE);
-        Debug.Log("DEAD");
         GameOverScreen.enabled = true;
     }
 
@@ -144,7 +141,6 @@ public class SimpleGameManager : MonoBehaviour
     {
         OnStateChange += unPause;
         SetGameState(GameState.MAIN_MENU);
-        Debug.Log("here 2");
         StartCoroutine(LoadScene("MainMenu"));
     }
 

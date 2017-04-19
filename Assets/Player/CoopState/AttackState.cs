@@ -102,14 +102,15 @@ public class AttackState : ICoopState
             else
             {
                 lastAbilityCast = Time.time;
-                Debug.Log("USING: " + aiPlayer.activeSpecialAbility);
                 //Use Special based on its action
                 switch (aiPlayer.activeSpecialAbility.GetCoopAction())
                 {
                     case AbilityHelper.CoopAction.TargetHurt:
+                        lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
                         UseOffensiveTargetSpecial();
                         break;
                     case AbilityHelper.CoopAction.AOEHurt:
+                        lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
                         UseOffensiveTargetSpecial();
                         break;
                     case AbilityHelper.CoopAction.Equip:
@@ -117,9 +118,11 @@ public class AttackState : ICoopState
                         aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.gameObject);
                         break;
                     case AbilityHelper.CoopAction.InstantHeal:
+                        lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
                         aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.gameObject);
                         break;
                     case AbilityHelper.CoopAction.AOEHeal:
+                        lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
                         UseDefensiveTargetSpecial();
                         break;
                     default:
@@ -385,9 +388,9 @@ public class AttackState : ICoopState
             //Within range, look at enemy and shoot
             aiPlayer.transform.LookAt(aiPlayer.targetedEnemy);
 
-            
             if (aiPlayer.abilities.Basic.isReady() && Time.time > lastAbilityCast + lastAbilityDelay) //EQUIP abilities are checked here.
             {
+                lastAbilityDelay = 0.0f;
                 aiPlayer.animController.AnimateShoot();
                 aiPlayer.abilities.Basic.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
 

@@ -205,8 +205,6 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(key))
             {
-                Debug.Log(abilities.AbilityBindings[key]);
-                Debug.Log(abilities.abilityArray[abilities.AbilityBindings[key]]);
                 if (activeSpecialAbility == null)
                 {
                     useSpecialIfPossible(abilities.abilityArray[abilities.AbilityBindings[key]]);
@@ -500,6 +498,7 @@ public class PlayerController : MonoBehaviour
     public void ResetOnSwitch()
     {
         targetedEnemy = null;
+        navMeshAgent.speed = navSpeedDefault;
         navMeshAgent.destination = transform.position;
         inheritDefendState = false;
         specialTargetedFriend = null;

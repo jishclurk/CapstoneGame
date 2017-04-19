@@ -98,9 +98,11 @@ public class DefendState : ICoopState
                     switch (aiPlayer.activeSpecialAbility.GetCoopAction())
                     {
                         case AbilityHelper.CoopAction.TargetHurt:
+                            lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
                             UseOffensiveTargetSpecial();
                             break;
                         case AbilityHelper.CoopAction.AOEHurt:
+                            lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
                             UseOffensiveTargetSpecial();
                             break;
                         case AbilityHelper.CoopAction.Equip:
@@ -108,9 +110,11 @@ public class DefendState : ICoopState
                             aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.gameObject);
                             break;
                         case AbilityHelper.CoopAction.InstantHeal:
+                            lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
                             aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.gameObject);
                             break;
                         case AbilityHelper.CoopAction.AOEHeal:
+                            lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
                             UseDefensiveTargetSpecial();
                             break;
                         default:
@@ -316,6 +320,7 @@ public class DefendState : ICoopState
             
             if (aiPlayer.abilities.Basic.isReady() && Time.time > lastAbilityCast + lastAbilityDelay) //EQUIP abilities are checked here.
             {
+                lastAbilityDelay = 0.0f;
                 aiPlayer.animController.AnimateShoot();
                 aiPlayer.abilities.Basic.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
 

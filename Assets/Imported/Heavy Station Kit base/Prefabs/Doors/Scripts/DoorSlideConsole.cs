@@ -57,7 +57,6 @@
 			if (puzzleActivator == null || puzzleActivator.Output ()) {
 //				if (!doorOpen) {
 					slide_door (other, 0); // Open door
-					Debug.Log ("Trying to open door");
 			popUpObject.gameObject.SetActive (false);
 					doorOpen = true;
 //				}
@@ -70,7 +69,6 @@
 		void OnTriggerExit(Collider other){
 			if (puzzleActivator == null || puzzleActivator.Output()){
 				//slide_door(other, 1); // Close door
-				Debug.Log("Closing open door");
 			}
 		}	
 

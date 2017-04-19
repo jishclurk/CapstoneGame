@@ -87,7 +87,7 @@ public class CheckPoint : MonoBehaviour
     {
         if (inTrigger)
         {
-            Debug.Log("EXITED TRIGGER");
+            //Debug.Log("EXITED TRIGGER");
             CheckPointPopUp.enabled = false;
             inTrigger = false;
         }
@@ -107,8 +107,8 @@ public class CheckPoint : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.N))
                 {
                     CheckPointPopUp.enabled = false;
-                    Debug.Log("MOVING TO NEXT LEVEL");
-                    Debug.Log(gm.level);
+                    //Debug.Log("MOVING TO NEXT LEVEL");
+                    //Debug.Log(gm.level);
                     gm.nextLevel();
                 }
             }
@@ -118,7 +118,7 @@ public class CheckPoint : MonoBehaviour
 
     public void ToMain()
     {
-        Debug.Log("setting state change to load main menu");
+        //Debug.Log("setting state change to load main menu");
         gm.OnStateChange += loadMainMenu;
         gm.SetGameState(GameState.MAIN_MENU);
     }
