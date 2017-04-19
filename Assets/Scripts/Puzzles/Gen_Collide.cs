@@ -24,7 +24,7 @@ public class Gen_Collide : MonoBehaviour {
 		if (active) {
 			if (Input.GetKeyDown(KeyCode.G)){
 				sound.Play ();
-				Debug.Log ("Generator flipped");
+				//Debug.Log ("Generator flipped");
 				triggered = !triggered;
 			}
 

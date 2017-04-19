@@ -42,9 +42,9 @@ public class Flamethrower : ISpecial, IAbility {
         id = 7;
         name = "Flamethrower";
         description = "Equip a Flamethrower for " + effectLength + " seconds. Hold left click to fire.\n";
-        effectiveRange = 6.0f;
+        effectiveRange = 6.5f;
         baseDamage = 10.0f;
-        timeToCast = 5.0f;
+        timeToCast = effectLength;
         coolDownTime = 20.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 45.0f;

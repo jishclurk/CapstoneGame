@@ -40,7 +40,6 @@ public class PlayerAbilities : MonoBehaviour
         {
             abilityArray[i] = new EmptyAbility();
         }
-        Debug.Log(abilityArray);
         SetDefaultBindings();
     }
 
@@ -96,22 +95,6 @@ public class PlayerAbilities : MonoBehaviour
         Basic = basicToSet;
     }
 
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Basic = new ShotgunShot();
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            Basic = new SMGShot();
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Basic = new SniperShot();
-        }
-    }
 
     public void UpdateUnlockedAbilities(CharacterAttributes attributes)
     {

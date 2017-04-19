@@ -46,7 +46,7 @@ public class ShotgunShot : IBasic, IAbility {
         lastUsedTime = Time.time;
         Vector3 targetDest = new Vector3(target.transform.position.x, player.gunbarrel.position.y, target.transform.position.z);
 
-        float adjustedDamage = baseDamage + (baseDamage * player.attributes.TotalStrength * 0.08f);
+        float adjustedDamage = baseDamage + (baseDamage * player.attributes.TotalStrength * 0.04f);
 
         for (float shellRot = -30.0f; shellRot <30.1f; shellRot += 15.0f)
         {
@@ -119,6 +119,6 @@ public class ShotgunShot : IBasic, IAbility {
             requires = " ";
         }
 
-        return description + requires + strReq + intReq + stmReq + "\nDamage: " + Mathf.Floor((baseDamage + (baseDamage * p.attributes.TotalStrength * 0.08f))) + " per shot";
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + Mathf.Floor((baseDamage + (baseDamage * p.attributes.TotalStrength * 0.04f))*5.0f) + " max damage";
     }
 }

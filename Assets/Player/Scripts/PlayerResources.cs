@@ -58,27 +58,13 @@ public class PlayerResources : MonoBehaviour {
 	}
 	
 
-	void Update ()
-    {
-        //debug key, currently hurts ALL players
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            TakeDamage(10);
-        }
-        //Debug.Log(currentEnergy);
-		
-	}
-
     public void TakeDamage (float amount)
     {
         float staminaMultiplier = staminaMultLowBound;
         if (attributes.TotalStamina < staminaToReachLowBound)
             staminaMultiplier = (attributes.TotalStamina)*((staminaMultLowBound - 1)/(staminaToReachLowBound)) + 1; //Maps 0-50 stamina to 1.0-0.5 multiplier for incoming damage
         float adjustedAmount = amount * staminaMultiplier;
-        Debug.Log(staminaMultiplier + " <--- stamina multiplier");
         currentHealth -= Mathf.Abs(adjustedAmount);
-        Debug.Log("Player Lost " + adjustedAmount.ToString() + " Health");
-        Debug.Log("Player Health:  " + currentHealth);
         if (isDead && !deathHandled)
         {
             Death();
@@ -90,15 +76,12 @@ public class PlayerResources : MonoBehaviour {
         if (!isDead)
         {
             currentHealth += Mathf.Abs(amount);
-            Debug.Log("Player Health:  " + currentHealth);
         }
     }
 
     public void UseEnergy(float amount)
     {
         currentEnergy -= Mathf.Abs(amount);
-        Debug.Log("Player Lost " + amount.ToString() + " Energy");
-        Debug.Log("Player Energy:  " + currentEnergy);
     }
 
     public void RegenerateEnergy()
@@ -117,7 +100,6 @@ public class PlayerResources : MonoBehaviour {
         deadCollider.enabled = true;
 
        //Destroy(gameObject, 5.0f);
-        Debug.Log("Player died!");
         tm.UpdateDeathCount();
         // Animation stuff goes here
     }

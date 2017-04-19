@@ -43,7 +43,6 @@ public class FlameThrowScript : MonoBehaviour {
     void FixedUpdate() {
         if (dissipate)
         {
-            Debug.Log("DONE!");
             ps.Stop();
             sound.volume = sound.volume - 0.03f;
             lite.enabled = false;
