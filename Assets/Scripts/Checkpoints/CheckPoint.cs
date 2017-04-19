@@ -33,7 +33,7 @@ public class CheckPoint : MonoBehaviour
     {
         if (!startCheckpoint)
         {
-            CheckPointPopUp = transform.Find("CheckPointCanvas").gameObject.GetComponent<Canvas>();
+            CheckPointPopUp = transform.Find("cp canvas").gameObject.GetComponent<Canvas>();
             SaveAsScreen = transform.Find("SaveScreen").gameObject.GetComponent<Canvas>();
 
             SaveAsScreen.enabled = false;
