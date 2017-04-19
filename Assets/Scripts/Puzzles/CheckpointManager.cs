@@ -20,7 +20,7 @@ public class CheckpointManager : MonoBehaviour {
 
     public void setState(int checkpointToStartAt)
     {
-
+        checkpoints[checkpointToStartAt].firstEnter = false;
         GameObject.Find("TeamManager").GetComponent<TeamManager>().setPlayers(checkpoints[checkpointToStartAt]);
     }
 

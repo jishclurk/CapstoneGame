@@ -33,8 +33,9 @@ public static class SaveLoad
         return gameState;
     }
 
-    public static void setSaveButton(SaveButton toSet)
+    public static bool setSaveButton(SaveButton toSet)
     {
+        bool savedInSlot = true;
         if (File.Exists(Application.dataPath + "/savedGame" + toSet.slotNumber.ToString() + ".gd"))
         {
             Debug.Log("1111");
@@ -47,6 +48,7 @@ public static class SaveLoad
         }else
         {
             Debug.Log("22222");
+            savedInSlot = false;
 
             toSet.Title.enabled = true;
             toSet.Date.enabled = false;
@@ -54,7 +56,7 @@ public static class SaveLoad
 
             //nothing saved in slot
         }
-
+        return savedInSlot;
 
     }
 

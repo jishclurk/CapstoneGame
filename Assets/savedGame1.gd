@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <GameState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Level>1</Level>
-  <Check_x0020_Point>0</Check_x0020_Point>
+  <Check_x0020_Point>1</Check_x0020_Point>
   <Players>
     <Player>
       <In_x0020_Control>true</In_x0020_Control>
       <level>1</level>
-      <experience>3</experience>
+      <experience>5</experience>
       <statPoints>5</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
@@ -25,7 +25,7 @@
     <Player>
       <In_x0020_Control>false</In_x0020_Control>
       <level>1</level>
-      <experience>3</experience>
+      <experience>5</experience>
       <statPoints>5</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
@@ -44,7 +44,7 @@
     <Player>
       <In_x0020_Control>false</In_x0020_Control>
       <level>1</level>
-      <experience>3</experience>
+      <experience>5</experience>
       <statPoints>5</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
@@ -63,7 +63,7 @@
     <Player>
       <In_x0020_Control>false</In_x0020_Control>
       <level>1</level>
-      <experience>3</experience>
+      <experience>5</experience>
       <statPoints>5</statPoints>
       <strength>1</strength>
       <intelligence>1</intelligence>
@@ -89,5 +89,5 @@
     <objectives>false</objectives>
   </Objectives>
   <SaveSlot>1</SaveSlot>
-  <Date>4/19/2017 4:38:03 PM</Date>
+  <Date>4/19/2017 6:26:42 PM</Date>
 </GameState>

@@ -28,7 +28,7 @@ public class CheckPoint : MonoBehaviour
 
     public bool checkpointReached;
     private bool inTrigger;
-    private bool firstEnter;
+    public bool firstEnter = true;
     public bool finalCheckpoint;
     public bool startCheckpoint;
 
@@ -45,7 +45,6 @@ public class CheckPoint : MonoBehaviour
 
         }
         inTrigger = false;
-        firstEnter = true;
         checkpointReached = false;
 
         gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();

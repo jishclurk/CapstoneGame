@@ -94,6 +94,7 @@ public class SimpleGameManager : MonoBehaviour
     //after the level of saved in loaded, sets the state of the game
     public void SetSavedState(SavedState saved)
     {
+        
         level = saved.level;
         tm.LoadSavedState(saved.players);
         cpManager.setState(saved.checkPoint);
