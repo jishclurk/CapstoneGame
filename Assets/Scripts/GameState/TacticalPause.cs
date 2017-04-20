@@ -231,6 +231,9 @@ public class TacticalPause : MonoBehaviour {
             {
                 Image image = GameObject.Instantiate(active.abilities.abilityArray[i].image) as Image;
                 image.transform.SetParent(setAbilitesSlots[i].transform, false);
+                //setAbilitesSlots[i].GetComponent<SlotScript>().ability = active.abilities.abilityArray[i];
+                setAbilitesSlots[i].GetComponent<SlotScript>().abilityId = active.abilities.abilityArray[i].id;
+
                 setAbilities.Add(active.abilities.abilityArray[i].GetType());
             }
         }
