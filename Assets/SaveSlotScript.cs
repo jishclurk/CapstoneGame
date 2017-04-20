@@ -25,7 +25,6 @@ public class SaveSlotScript : MonoBehaviour {
         for (int i = 0; i<slots.Length; i++)
         {
             slots[i] = transform.FindChild("slot" + (i + 1).ToString()).gameObject.GetComponent<SaveButton>();
-            Debug.Log(slots[i]);
             slots[i].slotNumber = i + 1;
             SaveLoad.setSaveButton(slots[i]);
         }

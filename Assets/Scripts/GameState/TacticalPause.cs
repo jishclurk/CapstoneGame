@@ -121,7 +121,6 @@ public class TacticalPause : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.C))
             {
-                Debug.Log("pressed c");
                 toggleAbilityMenu();
             }
 
@@ -129,13 +128,23 @@ public class TacticalPause : MonoBehaviour {
             {
                 displayedPlayer = tm.activePlayer; //note to Claudia, this is my "bandaid" fix for some nulls if you tab before pressing c, an excellent work around -claudia
                 int displayedPlayerId = displayedPlayer.id;
-                if (displayedPlayerId < 4)
+                bool playerFound = false;
+                while (!playerFound)
                 {
-                    displayedPlayerId++;
-                }else
-                {
-                    displayedPlayerId = 1;
+                    if (displayedPlayerId < 4)
+                    {
+                        displayedPlayerId++;
+                    }
+                    else
+                    {
+                        displayedPlayerId = 1;
+                    }
+                    if (!tm.getPlayerFromId(displayedPlayerId).resources.isDead)
+                    {
+                        playerFound = true;
+                    }
                 }
+
                 displayedPlayer = tm.getPlayerFromId(displayedPlayerId);
                 loadCurrentPlayerInfo(displayedPlayer);
             }
@@ -170,15 +179,11 @@ public class TacticalPause : MonoBehaviour {
     {
         if (Menus.gameObject.activeInHierarchy)
         {
-            Debug.Log("1");
             Menus.gameObject.SetActive(false);
-            //PauseScreen.enabled = true;
-            //AbilitiesScreen.SetActive(false);
         }
         else if(!tm.IsTeamInCombat())
         {
-            Debug.Log("2");
-            //PauseScreen.enabled = false;
+            ControlMenu.gameObject.SetActive(false);
             Menus.gameObject.SetActive(true);
             AbilitiesScreen.SetActive(true);
             CustomizeScreen.SetActive(false);
@@ -197,7 +202,7 @@ public class TacticalPause : MonoBehaviour {
         }
         else
         {
-            //PauseScreen.enabled = false;
+            Menus.gameObject.SetActive(false);
             ControlMenu.gameObject.SetActive(true);
         }
     }

@@ -4,10 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-public class SettingsManager : MonoBehaviour {
+public class SettingsManager : MonoBehaviour
+{
 
     public Toggle fullscreenToggle;
     public Dropdown resolutionDropdown;
+    public Dropdown textureQualityDropdown;
+    public Dropdown vSyncDropdown;
     public Slider volumeSlider;
     public Canvas Settings;
     public Resolution[] resolutions;
@@ -24,6 +27,8 @@ public class SettingsManager : MonoBehaviour {
         fullscreenToggle.onValueChanged.AddListener(delegate { OnFullscreenToggle(); });
         resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
         volumeSlider.onValueChanged.AddListener(delegate { OnVolumeChange(); });
+        vSyncDropdown.onValueChanged.AddListener(delegate { OnVSyncChange(); });
+        textureQualityDropdown.onValueChanged.AddListener(delegate { OnTextureQualityChange(); });
 
         gameSettings = new GameSettings();
         gameSettings.fullscreen = fullscreenToggle.isOn = Screen.fullScreen;
@@ -33,10 +38,11 @@ public class SettingsManager : MonoBehaviour {
             resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.ToString()));
         }
         Resolution current = Screen.currentResolution;
-        Debug.Log("current = " + current.ToString());
         resolutionDropdown.RefreshShownValue();
         gameSettings.resolutionIndex = resolutionDropdown.value;
         gameSettings.volume = volumeSlider.value = AudioListener.volume;
+        gameSettings.vSync = vSyncDropdown.value = QualitySettings.vSyncCount;
+        gameSettings.textureQuality = textureQualityDropdown.value = QualitySettings.masterTextureLimit;
     }
 
     public void UpdateSettingsWhenEnabled()
@@ -44,7 +50,7 @@ public class SettingsManager : MonoBehaviour {
         gameSettings.fullscreen = fullscreenToggle.isOn = Screen.fullScreen;
         string currentResolutionWidth = Screen.width.ToString();
         string currentResolutionHeight = Screen.height.ToString();
-        foreach(Dropdown.OptionData option in resolutionDropdown.options)
+        foreach (Dropdown.OptionData option in resolutionDropdown.options)
         {
             if (option.text.ToString().Contains(currentResolutionWidth)
                 && option.text.ToString().Contains(currentResolutionHeight))
@@ -55,6 +61,8 @@ public class SettingsManager : MonoBehaviour {
         resolutionDropdown.RefreshShownValue();
         gameSettings.resolutionIndex = resolutionDropdown.value;
         gameSettings.volume = volumeSlider.value = AudioListener.volume;
+        gameSettings.vSync = vSyncDropdown.value = QualitySettings.vSyncCount;
+        gameSettings.textureQuality = textureQualityDropdown.value = QualitySettings.masterTextureLimit;
     }
 
     public void OnFullscreenToggle()
@@ -67,6 +75,16 @@ public class SettingsManager : MonoBehaviour {
         Screen.SetResolution(resolutions[resolutionDropdown.value].width,
             resolutions[resolutionDropdown.value].height, Screen.fullScreen);
         gameSettings.resolutionIndex = resolutionDropdown.value;
+    }
+
+    public void OnTextureQualityChange()
+    {
+        QualitySettings.masterTextureLimit = gameSettings.textureQuality = textureQualityDropdown.value;
+    }
+
+    public void OnVSyncChange()
+    {
+        QualitySettings.vSyncCount = gameSettings.vSync = vSyncDropdown.value;
     }
 
     public void OnVolumeChange()

@@ -100,7 +100,7 @@ public class PlayerResources : MonoBehaviour {
         deadCollider.enabled = true;
 
        //Destroy(gameObject, 5.0f);
-        tm.UpdateDeathCount();
+        tm.UpdateDeathCount(1);
         // Animation stuff goes here
     }
 
@@ -112,6 +112,8 @@ public class PlayerResources : MonoBehaviour {
         gameObject.GetComponent<Collider>().enabled = true;
         deadCollider.enabled = false;
         currentHealth = 1;
+        tm.UpdateDeathCount(-1);
+
     }
 
 }

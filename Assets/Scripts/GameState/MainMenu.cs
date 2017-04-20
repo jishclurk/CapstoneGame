@@ -50,10 +50,10 @@ public class MainMenu : MonoBehaviour
             SerializedPlayer playerStart = new SerializedPlayer();
             playerStart.level = 1;
             playerStart.experience = 0;
-            playerStart.statPoints = 5;
-            playerStart.stamina = 1;
-            playerStart.strength = 1;
-            playerStart.intelligence = 1; 
+            playerStart.statPoints = 2;
+            playerStart.stamina = 0;
+            playerStart.strength = 0;
+            playerStart.intelligence = 0; 
             playerStart.id = i + 1;
             playerStart.health = PlayerResources.maxHealth;
             playerStart.energy = PlayerResources.maxEnergy;
@@ -72,12 +72,8 @@ public class MainMenu : MonoBehaviour
         bool[] objectives = new bool[6] { false, false, false, false, false, false };
         newGame.objectives = objectives;
 
-        Debug.Log("setting state change to Load level 1");
         levelToLoad = 1;
         SaveLoad.Save(newGame, 6);
-        //  gm.newGame = true;
-        // gm.OnStateChange += LoadLevel;
-        //Play();
         LoadLevel();
     }
 
@@ -108,7 +104,6 @@ public class MainMenu : MonoBehaviour
         Menu.enabled = false;
         LoadMenu.enabled = true;
         List<string> gameNames = SaveLoad.savedGames();
-        Debug.Log(gameNames[0]);
     }
 
     public void CloseLoadMenu()
@@ -121,7 +116,6 @@ public class MainMenu : MonoBehaviour
     {
         LoadMenu.enabled = false;
         SavedState gameToLoad = SaveLoad.Load(spot);
-        Debug.Log(gameToLoad);
         SaveLoad.Save(gameToLoad, 6);
         levelToLoad = gameToLoad.level;
         LoadLevel();
