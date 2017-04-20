@@ -14,6 +14,8 @@ public class BossHealth : EnemyHealth {
     private BossAnimationController animator_B;
     private TeamManager teamManager_B;
 
+    public GameObject EndScreen;
+
     void Awake () {
         currentHealth = maxHealth;
 
@@ -29,6 +31,8 @@ public class BossHealth : EnemyHealth {
         damageText_B = dmgTxtCanvas_B.transform.FindChild("FloatingDamageText").gameObject;
         damageTextTrans_B = damageText_B.transform;
         teamManager_B = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
+
+        EndScreen.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -69,6 +73,7 @@ public class BossHealth : EnemyHealth {
         animator_B.AnimateDeath();
         teamManager_B.AwardExperience(experiencePoints);
         HideHealthBar();
+        EndScreen.SetActive(true);
         Destroy(gameObject, 30.0f);
     }
 

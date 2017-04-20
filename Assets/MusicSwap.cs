@@ -18,7 +18,7 @@ public class MusicSwap : MonoBehaviour {
 	}
     private void OnTriggerEnter(Collider other)
     {
-    if (other.gameObject.CompareTag("Player") && !isTriggered)
+        if (other.gameObject.CompareTag("Player") && !other.isTrigger && !isTriggered)
         {
             isTriggered = true;
             thisPlayer.Play();
