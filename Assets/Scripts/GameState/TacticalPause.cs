@@ -129,13 +129,23 @@ public class TacticalPause : MonoBehaviour {
             {
                 displayedPlayer = tm.activePlayer; //note to Claudia, this is my "bandaid" fix for some nulls if you tab before pressing c, an excellent work around -claudia
                 int displayedPlayerId = displayedPlayer.id;
-                if (displayedPlayerId < 4)
+                bool playerFound = false;
+                while (!playerFound)
                 {
-                    displayedPlayerId++;
-                }else
-                {
-                    displayedPlayerId = 1;
+                    if (displayedPlayerId < 4)
+                    {
+                        displayedPlayerId++;
+                    }
+                    else
+                    {
+                        displayedPlayerId = 1;
+                    }
+                    if (!tm.getPlayerFromId(displayedPlayerId).resources.isDead)
+                    {
+                        playerFound = true;
+                    }
                 }
+
                 displayedPlayer = tm.getPlayerFromId(displayedPlayerId);
                 loadCurrentPlayerInfo(displayedPlayer);
             }

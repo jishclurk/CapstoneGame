@@ -50,10 +50,10 @@ public class MainMenu : MonoBehaviour
             SerializedPlayer playerStart = new SerializedPlayer();
             playerStart.level = 1;
             playerStart.experience = 0;
-            playerStart.statPoints = 5;
-            playerStart.stamina = 1;
-            playerStart.strength = 1;
-            playerStart.intelligence = 1; 
+            playerStart.statPoints = 2;
+            playerStart.stamina = 0;
+            playerStart.strength = 0;
+            playerStart.intelligence = 0; 
             playerStart.id = i + 1;
             playerStart.health = PlayerResources.maxHealth;
             playerStart.energy = PlayerResources.maxEnergy;
