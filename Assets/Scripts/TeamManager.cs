@@ -157,9 +157,9 @@ public class TeamManager : MonoBehaviour {
 
     }
 
-    public void UpdateDeathCount()
+    public void UpdateDeathCount(int update)
     {
-        deathCount++;
+        deathCount += update;
         if(deathCount == 4)
         {
             gm.onDeath();
