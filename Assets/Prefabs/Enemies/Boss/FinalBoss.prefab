@@ -1931,7 +1931,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1399074812360562}
-  m_LocalRotation: {x: 0.15533614, y: 0.6249377, z: 0.30021185, w: 0.70370203}
+  m_LocalRotation: {x: 0.15533613, y: 0.62493765, z: 0.30021182, w: 0.703702}
   m_LocalPosition: {x: 0.000000018626451, y: 0.048192278, z: -0.000000052154064}
   m_LocalScale: {x: 0.9999999, y: 0.9999999, z: 1}
   m_Children: []
@@ -2072,7 +2072,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.12
+  m_Volume: 0.649
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2083,7 +2083,7 @@ AudioSource:
   MinDistance: 18.057985
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -2091,20 +2091,26 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      time: 0.34316096
+      value: 0.9032752
+      inSlope: -1.7312284
+      outSlope: -1.7312284
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6244326
+      value: 0.48526207
+      inSlope: -0.4328071
+      outSlope: -0.4328071
       tangentMode: 0
     - serializedVersion: 2
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -0.03613038
+      outSlope: -0.03613038
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -2128,7 +2134,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -2285,7 +2291,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd63097401dfae4d8f3158fcb016cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aggroSounds: []
+  aggroSounds:
+  - {fileID: 8300000, guid: 7be9d0ba5be2a1146b57003c01ce173a, type: 3}
   attackSounds: []
   deathSounds: []
 --- !u!114 &114268217134846106
