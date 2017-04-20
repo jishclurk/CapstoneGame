@@ -35,6 +35,7 @@ public class ChainLightning : ISpecial, IAbility {
         id = 6;
         name = "Chain Lightning";
         description = "Lightning Strike that chains between nearby targets. Select target with left click.\n";
+        useType = "Enemy Target";
         effectiveRange = 9.0f;
         baseDamage = 45.0f;
         timeToCast = 0.0f;
