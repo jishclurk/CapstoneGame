@@ -2653,7 +2653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf77abab5b86f6b458a8767631037b08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 20
+  attackDamage: 5
   attackRange: 4
   attackRangeOffset: 0.2
 --- !u!114 &114721930767985390
@@ -2680,7 +2680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f78d599aff23b74c9987ed5cd4856a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1200
+  maxHealth: 100
   experiencePoints: 50
   _currentHealth: 0
 --- !u!114 &114897983779133630
