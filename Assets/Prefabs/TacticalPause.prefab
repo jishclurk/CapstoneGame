@@ -9248,7 +9248,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player 1
+  m_Text: Jules
 --- !u!114 &114499131292935040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10819,7 +10819,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player 3
+  m_Text: Dodger
 --- !u!114 &114649570930704994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13107,7 +13107,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player 2
+  m_Text: Ghost
 --- !u!114 &114845164279994562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13716,7 +13716,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player 4
+  m_Text: Kelly
 --- !u!114 &114898740374946540
 MonoBehaviour:
   m_ObjectHideFlags: 1
