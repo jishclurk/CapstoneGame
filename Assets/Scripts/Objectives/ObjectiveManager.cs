@@ -59,15 +59,15 @@ public class ObjectiveManager : MonoBehaviour {
         {
             Debug.Log(goal);
         }
-        if(state.Length == objectives.Count)
-        {
+        //if(state.Length == objectives.Count)
+        //{
 
             for (int i = 0; i< objectives.Count; i++)
             {
                 Debug.Log(state[i]);
 				objectives[i].CompleteGoals(state[i]);
             }
-        }
+        //}
         foreach (GoalManager goal in objectives)
         {
             Debug.Log(goal.isComplete());

@@ -43,6 +43,10 @@ public class SimpleGameManager : MonoBehaviour
         tm = GameObject.Find("TeamManager").GetComponent<TeamManager>();
         cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
         SetSavedState(SaveLoad.Load(6));
+        if(autosave == null)
+        {
+            autosave = SaveLoad.Load(6);
+        }
         objManager = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>();
         GameOverScreen = transform.GetChild(0).GetComponent<Canvas>();
         GameOverScreen.enabled = false;
@@ -74,6 +78,11 @@ public class SimpleGameManager : MonoBehaviour
         //Debug.Log("advance to level " + level);
         autosave.checkPoint = 0;
         autosave.level++;
+        for (int i = 0; i <autosave.objectives.Length; i++)
+        {
+            autosave.objectives[i] = false;
+        }
+        SaveLoad.Save(autosave, 6);
         StartCoroutine(LoadScene("Level" + level.ToString()));
     }
 
