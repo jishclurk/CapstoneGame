@@ -72,12 +72,8 @@ public class MainMenu : MonoBehaviour
         bool[] objectives = new bool[6] { false, false, false, false, false, false };
         newGame.objectives = objectives;
 
-        Debug.Log("setting state change to Load level 1");
         levelToLoad = 1;
         SaveLoad.Save(newGame, 6);
-        //  gm.newGame = true;
-        // gm.OnStateChange += LoadLevel;
-        //Play();
         LoadLevel();
     }
 
@@ -108,7 +104,6 @@ public class MainMenu : MonoBehaviour
         Menu.enabled = false;
         LoadMenu.enabled = true;
         List<string> gameNames = SaveLoad.savedGames();
-        Debug.Log(gameNames[0]);
     }
 
     public void CloseLoadMenu()
@@ -121,7 +116,6 @@ public class MainMenu : MonoBehaviour
     {
         LoadMenu.enabled = false;
         SavedState gameToLoad = SaveLoad.Load(spot);
-        Debug.Log(gameToLoad);
         SaveLoad.Save(gameToLoad, 6);
         levelToLoad = gameToLoad.level;
         LoadLevel();

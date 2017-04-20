@@ -38,7 +38,6 @@ public static class SaveLoad
         bool savedInSlot = true;
         if (File.Exists(Application.dataPath + "/savedGame" + toSet.slotNumber.ToString() + ".gd"))
         {
-            Debug.Log("1111");
             SavedState state = Load(toSet.slotNumber);
             toSet.Title.enabled = false;
             toSet.Date.enabled = true;
@@ -47,14 +46,11 @@ public static class SaveLoad
             toSet.Level.text = "Level " + state.level.ToString();
         }else
         {
-            Debug.Log("22222");
             savedInSlot = false;
-
             toSet.Title.enabled = true;
             toSet.Date.enabled = false;
             toSet.Level.enabled = false;
 
-            //nothing saved in slot
         }
         return savedInSlot;
 
