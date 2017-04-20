@@ -121,7 +121,6 @@ public class TacticalPause : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.C))
             {
-                Debug.Log("pressed c");
                 toggleAbilityMenu();
             }
 
@@ -180,15 +179,11 @@ public class TacticalPause : MonoBehaviour {
     {
         if (Menus.gameObject.activeInHierarchy)
         {
-            Debug.Log("1");
             Menus.gameObject.SetActive(false);
-            //PauseScreen.enabled = true;
-            //AbilitiesScreen.SetActive(false);
         }
         else if(!tm.IsTeamInCombat())
         {
-            Debug.Log("2");
-            //PauseScreen.enabled = false;
+            ControlMenu.gameObject.SetActive(false);
             Menus.gameObject.SetActive(true);
             AbilitiesScreen.SetActive(true);
             CustomizeScreen.SetActive(false);
@@ -207,7 +202,7 @@ public class TacticalPause : MonoBehaviour {
         }
         else
         {
-            //PauseScreen.enabled = false;
+            Menus.gameObject.SetActive(false);
             ControlMenu.gameObject.SetActive(true);
         }
     }
