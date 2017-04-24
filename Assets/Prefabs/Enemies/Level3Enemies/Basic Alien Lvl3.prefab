@@ -2090,8 +2090,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f78d599aff23b74c9987ed5cd4856a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  experiencePoints: 1
+  maxHealth: 150
+  experiencePoints: 2
   _currentHealth: 0
 --- !u!114 &114853292475505486
 MonoBehaviour:

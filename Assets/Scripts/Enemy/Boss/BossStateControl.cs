@@ -148,6 +148,13 @@ public class BossStateControl : MonoBehaviour {
             }
         }
 
+        if (Vector3.Distance(currentTarget.transform.position, this.transform.position) > 12f)
+        {
+            currentAttack = AttackBeingPerformed.Spawn;
+            animator.AnimateSpawnAttack();
+            return;
+        }
+
         int choice = Random.Range(0, 5);
         if (choice == previousAttackChoice)
             choice = Random.Range(0, 5);
