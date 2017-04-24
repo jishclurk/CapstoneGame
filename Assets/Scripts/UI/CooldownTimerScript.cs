@@ -28,7 +28,7 @@ public class CooldownTimerScript : MonoBehaviour {
                 float timeLeft = abil.RemainingTime();
                 float totalTime = abil.coolDownTime;
                 Overlay.fillAmount = timeLeft / totalTime;
-                Timer.text = ((int)timeLeft).ToString();
+                Timer.text = ((int) Mathf.Ceil(timeLeft)).ToString();
             }
         }
 	}

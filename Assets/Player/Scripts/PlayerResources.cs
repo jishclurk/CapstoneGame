@@ -86,7 +86,7 @@ public class PlayerResources : MonoBehaviour {
 
     public void RegenerateEnergy()
     {
-        currentEnergy += energyRegenAmt;
+        currentEnergy += (energyRegenAmt + attributes.TotalIntelligence * 0.03f);
     }
 
     private void Death()

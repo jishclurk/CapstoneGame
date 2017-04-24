@@ -65,6 +65,12 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         alert = GameObject.Find("AbilityAlert").GetComponent<AbilityAlert>();
     }
 
+    //fixes level transition auto-level up
+    public void Start()
+    {
+        experienceNeededForNextLevel = level * experienceMultiplier;
+    }
+
     void LevelUp()
     {
         level += 1;
