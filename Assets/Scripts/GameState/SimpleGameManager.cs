@@ -75,9 +75,9 @@ public class SimpleGameManager : MonoBehaviour
     public void nextLevel()
     {
         level++;
-        //Debug.Log("advance to level " + level);
+        Debug.Log("advance to level " + level);
         autosave.checkPoint = 0;
-        autosave.level++;
+        autosave.level = level;
         for (int i = 0; i <autosave.objectives.Length; i++)
         {
             autosave.objectives[i] = false;
