@@ -124,7 +124,7 @@ public class TacticalPause : MonoBehaviour {
                 toggleAbilityMenu();
             }
 
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Alpha4))
             {
                 displayedPlayer = tm.activePlayer; //note to Claudia, this is my "bandaid" fix for some nulls if you tab before pressing c, an excellent work around -claudia
                 int displayedPlayerId = displayedPlayer.id;
