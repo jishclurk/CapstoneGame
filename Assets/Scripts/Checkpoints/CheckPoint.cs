@@ -59,30 +59,38 @@ public class CheckPoint : MonoBehaviour
     {
         if (other.gameObject.tag.Equals("Player") && (!other.isTrigger) && !inTrigger)
         {
-            if (firstEnter)
-            {
-                autosaveText.enabled = true;
-                tm.ReviveTeam(this);
-                autosave();
-                firstEnter = false;
-                checkpointReached = true;
-
-            }else
-            {
-                autosaveText.enabled = false;
-            }
             inTrigger = true;
             CheckPointPopUp.enabled = true;
-            if (finalCheckpoint)
+            if (!finalCheckpoint)
+            {
+                if (firstEnter)
+                {
+                    autosaveText.enabled = true;
+                    tm.ReviveTeam(this);
+                    autosave();
+                    firstEnter = false;
+                    checkpointReached = true;
+
+                }
+                else
+                {
+                    autosaveText.enabled = false;
+                }
+            } else 
             {
                 if (objmanager.LevelComplete())
                 {
+                    Debug.Log("yes, checkpoint");
+                    tm.ReviveTeam(this);
+                    autosave();
+                    checkpointReached = true;
                     CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [F] to save and continue Press [N] to continue";
                 }else
                 {
                     CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Need to complete objectives to advance!  Press [F] to save";
-
                 }
+
+
             }
         }
     }

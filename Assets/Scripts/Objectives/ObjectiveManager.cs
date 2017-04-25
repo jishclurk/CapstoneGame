@@ -62,7 +62,7 @@ public class ObjectiveManager : MonoBehaviour {
         //if(state.Length == objectives.Count)
         //{
 
-            for (int i = 0; i< objectives.Count; i++)
+            for (int i = 0; i< objectives.Count && i < state.Length; i++)       //I added state.Length here because ????. I was getting null exceptions but this seems to work
             {
                 Debug.Log(state[i]);
 				objectives[i].CompleteGoals(state[i]);
