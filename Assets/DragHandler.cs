@@ -43,8 +43,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         {
             if (!abilityBeingDraggedSlot.isBasicBarSlot) //if the ability being draged is not from the basic slot
             {
-                Debug.Log("non basic dragged to non slot");
-                Debug.Log(abilityBeingDraggedSlot.abilityId);
+                //Debug.Log("non basic dragged to non slot");
+                //Debug.Log(abilityBeingDraggedSlot.abilityId);
                 Transform treeSpot = tp.FindSlotById(abilityBeingDraggedSlot.abilityId).transform;
                 transform.SetParent(treeSpot, false);
                 transform.position = treeSpot.position;
@@ -55,7 +55,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             }
             else
             {
-                Debug.Log("basic being draggeed somewhere");
+                //Debug.Log("basic being draggeed somewhere");
                 transform.position = startPosition;
             }
 

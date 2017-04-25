@@ -15,7 +15,7 @@ public class ObjectiveManager : MonoBehaviour {
 	public TeamManager tm;
 
 	void Awake() {
-        Debug.Log("obj manager starting");
+        //Debug.Log("obj manager starting");
 		objectives = new List<GoalManager>(GetComponentsInChildren<GoalManager> ());
 		foreach (GoalManager gm in objectives){
 
@@ -54,11 +54,11 @@ public class ObjectiveManager : MonoBehaviour {
 
     public void loadState(bool[] state)
     {
-        Debug.Log(state);
+        /*Debug.Log(state);
         foreach(GoalManager goal in objectives)
         {
             Debug.Log(goal);
-        }
+        }*/
         //if(state.Length == objectives.Count)
         //{
 
@@ -68,10 +68,10 @@ public class ObjectiveManager : MonoBehaviour {
 				objectives[i].CompleteGoals(state[i]);
             }
         //}
-        foreach (GoalManager goal in objectives)
+        /*foreach (GoalManager goal in objectives)
         {
             Debug.Log(goal.isComplete());
-        }
+        }*/
     }
 
     //returns the state of the objectives

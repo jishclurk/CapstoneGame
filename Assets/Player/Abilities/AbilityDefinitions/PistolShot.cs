@@ -44,7 +44,7 @@ public class PistolShot : IBasic, IAbility {
     {
         lastUsedTime = Time.time;
         float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
-        Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
+        //Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
         //useEnergy not required
     }

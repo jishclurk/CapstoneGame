@@ -9,21 +9,21 @@ EditorBuildSettings:
     path: Assets/_Scenes/InitialLoadScene.unity
   - enabled: 0
     path: Assets/_Scenes/Pong.unity
+  - enabled: 0
+    path: Assets/_Scenes/MainMenu.unity
   - enabled: 1
     path: Assets/_Scenes/MainMenu.unity
-  - enabled: 0
-    path: Assets/_Scenes/test.unity
-  - enabled: 1
-    path: Assets/_Scenes/MainMenu.unity
-  - enabled: 0
-    path: Assets/_Scenes/LevelTest.unity
-  - enabled: 1
-    path: Assets/_Scenes/preload.unity
-  - enabled: 1
-    path: Assets/_Scenes/Level2.unity
-  - enabled: 0
-    path: Assets/_Scenes/Level1Final.unity
   - enabled: 1
     path: Assets/_Scenes/Level1.unity
   - enabled: 1
+    path: Assets/_Scenes/Level2.unity
+  - enabled: 1
     path: Assets/_Scenes/Level3.unity
+  - enabled: 0
+    path: Assets/_Scenes/test.unity
+  - enabled: 0
+    path: Assets/_Scenes/LevelTest.unity
+  - enabled: 0
+    path: Assets/_Scenes/preload.unity
+  - enabled: 0
+    path: Assets/_Scenes/Level1Final.unity

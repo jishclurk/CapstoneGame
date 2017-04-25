@@ -66,7 +66,7 @@ public class SaveSlotScript : MonoBehaviour {
 
     public void SaveGame(int slot)
     {
-        Debug.Log("in save game");
+        //Debug.Log("in save game");
      //   saveScreen.enabled = false;
         SavedState toSave = new SavedState();
         toSave.setFromGameManager();
@@ -88,7 +88,7 @@ public class SaveSlotScript : MonoBehaviour {
 
     private void SavedSuccessfully()
     {
-        Debug.Log("Saved Succesfully");
+       // Debug.Log("Saved Succesfully");
         
         //show message
         //close save screen;

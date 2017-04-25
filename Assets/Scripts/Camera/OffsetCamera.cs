@@ -56,7 +56,7 @@ public class OffsetCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        /*if (Input.GetKeyDown(KeyCode.Z))
         {
             if (followPlayer)
             {
@@ -67,7 +67,7 @@ public class OffsetCamera : MonoBehaviour
             {
                 followPlayer = true;
             }
-        }
+        }*/
         if (Input.GetKeyDown(KeyCode.S))
         {
             anglesIndex--;

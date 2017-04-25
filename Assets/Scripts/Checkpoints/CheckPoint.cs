@@ -80,7 +80,7 @@ public class CheckPoint : MonoBehaviour
             {
                 if (objmanager.LevelComplete())
                 {
-                    Debug.Log("yes, checkpoint");
+                    //Debug.Log("yes, checkpoint");
                     tm.ReviveTeam(this);
                     autosave();
                     checkpointReached = true;
@@ -153,7 +153,7 @@ public class CheckPoint : MonoBehaviour
 
     private void autosave()
     {
-        Debug.Log("autosaving");
+        //Debug.Log("autosaving");
         SavedState autosave = new SavedState();
         autosave.setFromGameManager();
        // autosave.name = "autosave";

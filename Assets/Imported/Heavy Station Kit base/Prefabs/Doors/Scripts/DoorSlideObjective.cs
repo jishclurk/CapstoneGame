@@ -58,7 +58,7 @@ public class DoorSlideObjective : MonoBehaviour {
 		if (objective.isComplete()) {
 			//				if (!doorOpen) {
 			slide_door (other, 0); // Open door
-			Debug.Log ("Trying to open door");
+			//Debug.Log ("Trying to open door");
 			popUpObject.gameObject.SetActive (false);
 			doorOpen = true;
 			//				}
@@ -77,7 +77,7 @@ public class DoorSlideObjective : MonoBehaviour {
 	void OnTriggerExit(Collider other){
 		if (objective.isComplete()){
 			//slide_door(other, 1); // Close door
-			Debug.Log("Closing open door");
+			//Debug.Log("Closing open door");
 		}
 	}	
 
