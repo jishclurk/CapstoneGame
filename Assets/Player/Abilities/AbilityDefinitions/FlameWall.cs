@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class FlameWall : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -30,28 +31,30 @@ public class FlameWall : ISpecial, IAbility {
 
     public FlameWall()
     {
-        StrengthRequired = 5;
-        StaminaRequired = 5;
+        StrengthRequired = 6;
+        StaminaRequired = 6;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/FlameWallIcon", typeof(Image)) as Image;
         id = 8;
+        effectLength = 8.0f;
         name = "Flame Wall";
-        description = "Spawns a fiery wall";
+        useType = "Area of Effect";
+        description = "Shoots a wall of fire. Deals burn damage. Lasts " + Mathf.Floor(effectLength) + " seconds.\n";
         effectiveRange = 5.5f;
-        baseDamage = 55.0f;
+        baseDamage = 30.0f;
         timeToCast = 0.0f;
-        coolDownTime = 10.0f;
-        effectLength = 10.0f;
+        coolDownTime = 15.0f;
         lastUsedTime = -Mathf.Infinity;
-        energyRequired = 30.0f;
+        energyRequired = 70.0f;
         aoeTarget = Resources.Load("FlameWall/4x1RedAuraTarget");
         wall = Resources.Load("FlameWall/FlameWallObj");
         abilityObj = GameObject.FindWithTag("AbilityHelper");
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) 
-    {  
-        abilityObj.GetComponent<AbilityHelper>().FlameWallRoutine(player, target, baseDamage, effectLength, wall);
+    {
+        float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalStrength - StrengthRequired) * 0.04f);
+        abilityObj.GetComponent<AbilityHelper>().FlameWallRoutine(player, target, adjustedDamage, effectLength, wall);
         player.animController.AnimateUse(0.4f);
         lastUsedTime = Time.time;
         player.resources.UseEnergy(energyRequired);
@@ -93,5 +96,31 @@ public class FlameWall : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.AOEHurt;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
+
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

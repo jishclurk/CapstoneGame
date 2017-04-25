@@ -38,9 +38,11 @@ public class MainMenu : MonoBehaviour
     public void LoadNewGame()
     {
         SavedState newGame = new SavedState();
-        newGame.name = "autosave";
+        //newGame.name = "autosave";
         newGame.level = 1;
         newGame.checkPoint = 0;
+        newGame.saveSlot = 6;
+        newGame.date = System.DateTime.Now.ToString();
 
         SerializedPlayer[] players = new SerializedPlayer[4];
         for(int i = 0; i<4; i++)
@@ -48,14 +50,17 @@ public class MainMenu : MonoBehaviour
             SerializedPlayer playerStart = new SerializedPlayer();
             playerStart.level = 1;
             playerStart.experience = 0;
-            playerStart.statPoints = 5;
-            playerStart.stamina = 1;
-            playerStart.strength = 1;
-            playerStart.intelligence = 1; 
+            playerStart.statPoints = 2;
+            playerStart.stamina = 0;
+            playerStart.strength = 0;
+            playerStart.intelligence = 0; 
             playerStart.id = i + 1;
             playerStart.health = PlayerResources.maxHealth;
             playerStart.energy = PlayerResources.maxEnergy;
+            playerStart.abilities = new int[4];
+            playerStart.basic = 1;
             players[i] = playerStart;
+
             if(i == 0)
             {
                 playerStart.isInControl = true;
@@ -67,12 +72,8 @@ public class MainMenu : MonoBehaviour
         bool[] objectives = new bool[6] { false, false, false, false, false, false };
         newGame.objectives = objectives;
 
-        Debug.Log("setting state change to Load level 1");
         levelToLoad = 1;
-        SaveLoad.Save(newGame, "autosave");
-        //  gm.newGame = true;
-        // gm.OnStateChange += LoadLevel;
-        //Play();
+        SaveLoad.Save(newGame, 6);
         LoadLevel();
     }
 
@@ -103,7 +104,6 @@ public class MainMenu : MonoBehaviour
         Menu.enabled = false;
         LoadMenu.enabled = true;
         List<string> gameNames = SaveLoad.savedGames();
-        Debug.Log(gameNames[0]);
     }
 
     public void CloseLoadMenu()
@@ -112,12 +112,11 @@ public class MainMenu : MonoBehaviour
         Menu.enabled = true;
     }
 
-    public void LoadSavedGame(string name)
+    public void LoadSavedGame(int spot)
     {
         LoadMenu.enabled = false;
-        SavedState gameToLoad = SaveLoad.Load(name);
-        Debug.Log(gameToLoad);
-        SaveLoad.Save(gameToLoad, "autosave");
+        SavedState gameToLoad = SaveLoad.Load(spot);
+        SaveLoad.Save(gameToLoad, 6);
         levelToLoad = gameToLoad.level;
         LoadLevel();
     }

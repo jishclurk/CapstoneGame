@@ -15,6 +15,9 @@ TagManager:
   - EnemyMob
   - Piece
   - AbilityHelper
+  - DeadPlayer
+  - slot
+  - Minimap
   layers:
   - Default
   - TransparentFX

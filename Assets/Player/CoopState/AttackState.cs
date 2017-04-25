@@ -87,6 +87,10 @@ public class AttackState : ICoopState
             
         }
         if(aiPlayer.targetedEnemy != null){
+            if (aiPlayer.targetedEnemy.GetComponent<EnemyHealth>().isDead)
+            {
+                reEvalutateTarget = true;
+            }
             MoveAndShoot();
             if (aiPlayer.activeSpecialAbility == null)
             {
@@ -98,14 +102,15 @@ public class AttackState : ICoopState
             else
             {
                 lastAbilityCast = Time.time;
-                Debug.Log("USING: " + aiPlayer.activeSpecialAbility);
                 //Use Special based on its action
                 switch (aiPlayer.activeSpecialAbility.GetCoopAction())
                 {
                     case AbilityHelper.CoopAction.TargetHurt:
+                        lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
                         UseOffensiveTargetSpecial();
                         break;
                     case AbilityHelper.CoopAction.AOEHurt:
+                        lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
                         UseOffensiveTargetSpecial();
                         break;
                     case AbilityHelper.CoopAction.Equip:
@@ -113,9 +118,11 @@ public class AttackState : ICoopState
                         aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.gameObject);
                         break;
                     case AbilityHelper.CoopAction.InstantHeal:
+                        lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
                         aiPlayer.activeSpecialAbility.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.gameObject);
                         break;
                     case AbilityHelper.CoopAction.AOEHeal:
+                        lastAbilityDelay = aiPlayer.activeSpecialAbility.timeToCast;
                         UseDefensiveTargetSpecial();
                         break;
                     default:
@@ -124,8 +131,8 @@ public class AttackState : ICoopState
                 }
                 
                 aiPlayer.activeSpecialAbility = null;
-
             }
+
         }
 
         aiPlayer.CheckLocalVision(); //Update visible enemies
@@ -305,10 +312,6 @@ public class AttackState : ICoopState
                 {
                     //on kill, remove from both team manager visible enemies and all local watchedenemies
                     aiPlayer.targetedEnemy = null;
-                    if (!aiPlayer.tm.IsTeamInCombat())
-                    {
-                        ToIdleState();
-                    }
                 }
             }
             reEvalutateTarget = true;
@@ -385,9 +388,9 @@ public class AttackState : ICoopState
             //Within range, look at enemy and shoot
             aiPlayer.transform.LookAt(aiPlayer.targetedEnemy);
 
-            
             if (aiPlayer.abilities.Basic.isReady() && Time.time > lastAbilityCast + lastAbilityDelay) //EQUIP abilities are checked here.
             {
+                lastAbilityDelay = 0.0f;
                 aiPlayer.animController.AnimateShoot();
                 aiPlayer.abilities.Basic.Execute(aiPlayer.player, aiPlayer.gameObject, aiPlayer.targetedEnemy.gameObject);
 
@@ -399,10 +402,6 @@ public class AttackState : ICoopState
                     {
                         //on kill, remove from both team manager visible enemies and all local watchedenemies
                         aiPlayer.targetedEnemy = null;
-                        if (!aiPlayer.tm.IsTeamInCombat())
-                        {
-                            ToIdleState();
-                        }
                     }
                 }
                 reEvalutateTarget = true;

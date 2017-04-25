@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BioGrenade : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public float effectiveRange { get; set; }
     public float baseDamage { get; set; }
@@ -35,10 +36,12 @@ public class BioGrenade : ISpecial, IAbility {
         image = Resources.Load("Abilities/BioGrenadeIcon", typeof(Image)) as Image;
         id = 5;
         name = "Bio Grenade";
+        useType = "Area of Effect";
+        description = "A healing field that heals allied players over time.\n";
         effectiveRange = 8.0f;
-        baseDamage = 2.0f;
+        baseDamage = 3.0f;
         timeToCast = 0.0f;
-        coolDownTime = 1.0f;
+        coolDownTime = 25.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 50.0f;
         aoeTarget = Resources.Load("BioGrenade/5x5GreenAuraTarget");
@@ -51,7 +54,8 @@ public class BioGrenade : ISpecial, IAbility {
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
-        abilityObj.GetComponent<AbilityHelper>().BioGrenadeRoutine(player.attributes, origin, target, baseDamage, healRate, healLength, timeToCast, bubble);
+        float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalIntelligence - IntelligenceRequired) * 0.03f);
+        abilityObj.GetComponent<AbilityHelper>().BioGrenadeRoutine(player.attributes, origin, target, adjustedDamage, healRate, healLength, timeToCast, bubble);
 
         lastUsedTime = Time.time;
 
@@ -102,6 +106,31 @@ public class BioGrenade : ISpecial, IAbility {
     {
         return AbilityHelper.CoopAction.AOEHeal;
     }
-    
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
+
+        return description + requires + strReq + intReq + stmReq + "\nHeal Amount: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired) * 0.03f)) * healLength/healRate) + " over " + healLength + " seconds.\nCooldown: " + coolDownTime + " seconds.";
+    }
 
 }

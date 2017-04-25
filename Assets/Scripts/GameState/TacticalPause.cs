@@ -12,6 +12,7 @@ public class TacticalPause : MonoBehaviour {
     Canvas PauseScreen;
     public GameObject AbilitiesScreen;
     private Transform Menus;
+    private Transform ControlMenu;
     private GameObject attributesScreen;
     private GameObject CustomizeScreen;
 
@@ -44,12 +45,17 @@ public class TacticalPause : MonoBehaviour {
     private string intellString;
     private string staminaString;
 
+    private Transform viewCharacterButton;
+
     // Use this for initialization
     void Start() {
         PauseScreen = GetComponent<Canvas>();
         PauseScreen.enabled = false;
         Menus = transform.Find("Menus");
         Menus.gameObject.SetActive(false);
+        ControlMenu = transform.Find("ControlMenu");
+        ControlMenu.gameObject.SetActive(false);
+        viewCharacterButton = transform.FindChild("Character Menu");
 
         AbilitiesScreen = Menus.transform.Find("Abilities").gameObject;
         AbilitiesScreen.SetActive(false);
@@ -80,8 +86,11 @@ public class TacticalPause : MonoBehaviour {
         for (int i = 0; i < unlockedAbilities.childCount; i++)
         {
             GameObject slot = unlockedAbilities.GetChild(i).gameObject;
-            unLockedAbitiesSlots.Add(slot);
-            unLockedAbilitesSlotScripts.Add(slot.GetComponent<SlotScript>());
+            if (slot.tag.Equals("slot"))
+            {
+                unLockedAbitiesSlots.Add(slot);
+                unLockedAbilitesSlotScripts.Add(slot.GetComponent<SlotScript>());
+            }
         }
 
         //get list of set ability slots
@@ -112,21 +121,30 @@ public class TacticalPause : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.C))
             {
-                Debug.Log("pressed c");
                 toggleAbilityMenu();
             }
 
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Alpha4))
             {
                 displayedPlayer = tm.activePlayer; //note to Claudia, this is my "bandaid" fix for some nulls if you tab before pressing c, an excellent work around -claudia
                 int displayedPlayerId = displayedPlayer.id;
-                if (displayedPlayerId < 4)
+                bool playerFound = false;
+                while (!playerFound)
                 {
-                    displayedPlayerId++;
-                }else
-                {
-                    displayedPlayerId = 1;
+                    if (displayedPlayerId < 4)
+                    {
+                        displayedPlayerId++;
+                    }
+                    else
+                    {
+                        displayedPlayerId = 1;
+                    }
+                    if (!tm.getPlayerFromId(displayedPlayerId).resources.isDead)
+                    {
+                        playerFound = true;
+                    }
                 }
+
                 displayedPlayer = tm.getPlayerFromId(displayedPlayerId);
                 loadCurrentPlayerInfo(displayedPlayer);
             }
@@ -161,20 +179,31 @@ public class TacticalPause : MonoBehaviour {
     {
         if (Menus.gameObject.activeInHierarchy)
         {
-            Debug.Log("1");
             Menus.gameObject.SetActive(false);
-            //PauseScreen.enabled = true;
-            //AbilitiesScreen.SetActive(false);
         }
-        else
+        else if(!tm.IsTeamInCombat())
         {
-            Debug.Log("2");
-            //PauseScreen.enabled = false;
+            ControlMenu.gameObject.SetActive(false);
             Menus.gameObject.SetActive(true);
             AbilitiesScreen.SetActive(true);
             CustomizeScreen.SetActive(false);
             displayedPlayer = tm.activePlayer;
             loadCurrentPlayerInfo(tm.activePlayer);
+        }
+    }
+
+    public void toggleControlMenu()
+    {
+        if (ControlMenu.gameObject.activeInHierarchy)
+        {
+            ControlMenu.gameObject.SetActive(false);
+            //PauseScreen.enabled = true;
+            //AbilitiesScreen.SetActive(false);
+        }
+        else
+        {
+            Menus.gameObject.SetActive(false);
+            ControlMenu.gameObject.SetActive(true);
         }
     }
 
@@ -202,6 +231,9 @@ public class TacticalPause : MonoBehaviour {
             {
                 Image image = GameObject.Instantiate(active.abilities.abilityArray[i].image) as Image;
                 image.transform.SetParent(setAbilitesSlots[i].transform, false);
+                //setAbilitesSlots[i].GetComponent<SlotScript>().ability = active.abilities.abilityArray[i];
+                setAbilitesSlots[i].GetComponent<SlotScript>().abilityId = active.abilities.abilityArray[i].id;
+
                 setAbilities.Add(active.abilities.abilityArray[i].GetType());
             }
         }
@@ -212,6 +244,10 @@ public class TacticalPause : MonoBehaviour {
         setAbilities.Add(active.abilities.Basic.GetType());
 
       //  Debug.Log(setAbilities);
+      foreach(SlotScript slot in unLockedAbilitesSlotScripts)
+        {
+            slot.setDisplayedPlayer(active);
+        }
 
         foreach (IAbility unlockedAbility in active.abilities.unlockedAbilities)
         {
@@ -329,6 +365,15 @@ public class TacticalPause : MonoBehaviour {
         PauseScreen.enabled = true;
         Time.timeScale = 0;
         inTacticalPause = true;
+        ControlMenu.gameObject.SetActive(false); //idk I added these here and everything now works -nick
+        Menus.gameObject.SetActive(false);
+        if (tm.IsTeamInCombat())
+        {
+            viewCharacterButton.GetComponent<Button>().interactable = false;
+        } else
+        {
+            viewCharacterButton.GetComponent<Button>().interactable = true;
+        }
     }
 
     public void Disable()
@@ -337,7 +382,9 @@ public class TacticalPause : MonoBehaviour {
         AbilitiesScreen.SetActive(false);
         PauseScreen.enabled = false;
         Time.timeScale = 1;
-        inTacticalPause = false; Menus.gameObject.SetActive(false);
+        inTacticalPause = false;
+        Menus.gameObject.SetActive(false);
+        ControlMenu.gameObject.SetActive(false);
 
     }
 

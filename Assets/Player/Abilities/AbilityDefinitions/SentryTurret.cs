@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class SentryTurret : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -31,17 +32,18 @@ public class SentryTurret : ISpecial, IAbility {
     public SentryTurret()
     {
         StrengthRequired = 0;
-        StaminaRequired = 10;
-        IntelligenceRequired = 10;
+        StaminaRequired = 9;
+        IntelligenceRequired = 9;
         image = Resources.Load("Abilities/SentryTurretIcon", typeof(Image)) as Image;
         id = 15;
+        effectLength = 10.0f;
         name = "Sentry Turret";
-        description = "Spawns a turret";
+        useType = "Construct";
+        description = "Construct a turret for extra firepower. Lasts " + Mathf.Floor(effectLength) + " seconds.\n";
         effectiveRange = 2.0f;
-        baseDamage = 0.0f;
+        baseDamage = 5.0f;
         timeToCast = 0.0f;
         coolDownTime = 10.0f;
-        effectLength = 10.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 30.0f;
         aoeTarget = Resources.Load("SentryTurret/1x1YellowAuraTarget");
@@ -94,5 +96,32 @@ public class SentryTurret : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.AOEHeal;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
+
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + Mathf.Floor(baseDamage) +
+            "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

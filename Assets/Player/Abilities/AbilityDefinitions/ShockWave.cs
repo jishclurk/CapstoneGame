@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Shockwave : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -28,27 +29,29 @@ public class Shockwave : ISpecial, IAbility {
 
     public Shockwave()
     {
-        StrengthRequired = 10;
-        StaminaRequired = 10;
+        StrengthRequired = 9;
+        StaminaRequired = 9;
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/ShockwaveIcon", typeof(Image)) as Image;
         id = 17;
         name = "Shockwave";
-        description = "Knock Back enemies, damage them, do damage";
+        useType = "Area of Effect";
+        description = "Knock back enemies within the AOE. Stuns enemies and deals minor damage.\n";
         effectiveRange = 0.05f;
-        baseDamage = 0.0f;
+        baseDamage = 10.0f;
         timeToCast = 0.0f;
         coolDownTime = 15.0f;
         lastUsedTime = -Mathf.Infinity;
-        energyRequired = 30.0f;
+        energyRequired = 35.0f;
         aoeTarget = Resources.Load("Shockwave/4x4BlueAuraTarget");
         blast = Resources.Load("Shockwave/blast");
         abilityObj = GameObject.FindWithTag("AbilityHelper");
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
-    {  
-        abilityObj.GetComponent<AbilityHelper>().ShockwaveRoutine(player.transform, target, blast, baseDamage, 3.0f);
+    {
+        float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalStrength - StrengthRequired) * 0.04f);
+        abilityObj.GetComponent<AbilityHelper>().ShockwaveRoutine(player.transform, target, blast, adjustedDamage, 3.0f);
         player.animController.AnimatePickup();
 
         lastUsedTime = Time.time;
@@ -100,5 +103,31 @@ public class Shockwave : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.AOEHeal;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
+
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

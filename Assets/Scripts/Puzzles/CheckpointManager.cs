@@ -16,18 +16,11 @@ public class CheckpointManager : MonoBehaviour {
         {
             checkpoints.Add(child.gameObject.GetComponent<CheckPoint>());
         }
-        Debug.Log("cpmanager got checkpoints");
-        Debug.Log("checkpoints=" + checkpoints.Count);
     }
 
     public void setState(int checkpointToStartAt)
     {
-        Debug.Log(checkpointToStartAt);
-        foreach(CheckPoint cp in checkpoints)
-        {
-            Debug.Log(cp);
-        }
-        Debug.Log("moving players to checkpoint " + checkpointToStartAt.ToString());
+        checkpoints[checkpointToStartAt].firstEnter = false;
         GameObject.Find("TeamManager").GetComponent<TeamManager>().setPlayers(checkpoints[checkpointToStartAt]);
     }
 
@@ -45,13 +38,13 @@ public class CheckpointManager : MonoBehaviour {
         return -1;
     }
 
-    public void UpdateButtons(string name)
-    {
-        foreach(Transform child in transform)
-        {
-            GameObject terminal = child.gameObject;
-            terminal.GetComponentInChildren<SaveListController>().UpdateButtons(name);
-        }
-    }
+    //public void UpdateButtons(string name)
+    //{
+    //    //foreach(Transform child in transform)
+    //    //{
+    //    //    GameObject terminal = child.gameObject;
+    //    //    terminal.GetComponentInChildren<SaveListController>().UpdateButtons(name);
+    //    //}
+    //}
 	
 }

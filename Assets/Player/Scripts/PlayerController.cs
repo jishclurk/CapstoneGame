@@ -119,9 +119,19 @@ public class PlayerController : MonoBehaviour
                 activeSpecialAbility = null;
             }
         }
-        else if (targetedEnemy != null)
+        else 
         {
-            ShootGun();
+            if (Input.GetButtonDown("Fire1"))
+            {
+                if (Physics.Raycast(ray, out hit, 100f, Layers.Enemy))
+                {
+                    HandleRayCastHit(hit);
+                }
+            }
+            if (targetedEnemy != null)
+            {
+                ShootGun();
+            }
         }
 
         //PLAYER ANIMATION//
@@ -159,7 +169,7 @@ public class PlayerController : MonoBehaviour
             tm.visibleEnemies.Add(targetedEnemy.gameObject);
             watchedEnemies.Add(targetedEnemy.gameObject);
         }
-        else
+        else if(hit.collider.CompareTag("Floor"))
         {
 
             if (Input.GetKey(KeyCode.LeftShift))
@@ -195,8 +205,6 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(key))
             {
-                Debug.Log(abilities.AbilityBindings[key]);
-                Debug.Log(abilities.abilityArray[abilities.AbilityBindings[key]]);
                 if (activeSpecialAbility == null)
                 {
                     useSpecialIfPossible(abilities.abilityArray[abilities.AbilityBindings[key]]);
@@ -363,7 +371,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, 100f, Layers.Player))
             {
-                if (hit.collider.CompareTag("Player"))
+                if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("DeadPlayer"))
                 {
                     specialTargetedFriend = hit.transform;
                 }
@@ -490,6 +498,7 @@ public class PlayerController : MonoBehaviour
     public void ResetOnSwitch()
     {
         targetedEnemy = null;
+        navMeshAgent.speed = navSpeedDefault;
         navMeshAgent.destination = transform.position;
         inheritDefendState = false;
         specialTargetedFriend = null;

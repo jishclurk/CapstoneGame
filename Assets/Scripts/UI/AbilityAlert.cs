@@ -9,6 +9,7 @@ public class AbilityAlert : MonoBehaviour {
     private AudioSource sound;
     private TeamManager tm;
     private Text text;
+    private Color origColor;
 
     // Use this for initialization
     void Awake () {
@@ -16,6 +17,7 @@ public class AbilityAlert : MonoBehaviour {
         sound = GetComponent<AudioSource>();
         text = GetComponent<Text>();
         text.CrossFadeAlpha(0, 0, false);
+        origColor = text.color;
     }
 	
 	// Update is called once per frame
@@ -41,6 +43,7 @@ public class AbilityAlert : MonoBehaviour {
     void alertNotReady()
     {
         text.text = "Ability Not Ready Yet";
+        text.color = origColor;
         text.CrossFadeAlpha(1, 0, false);
         text.CrossFadeAlpha(0, 2, false);
         sound.Play();
@@ -49,8 +52,18 @@ public class AbilityAlert : MonoBehaviour {
     void alertNotEnoughEnergy()
     {
         text.text = "Not Enough Energy";
+        text.color = origColor;
         text.CrossFadeAlpha(1, 0, false);
         text.CrossFadeAlpha(0, 2, false);
         sound.Play();
     }
+
+    public void customMessage(string msg, Color col, float duration)
+    {
+        text.text = msg;
+        text.color = col;
+        text.CrossFadeAlpha(1, 0, false);
+        text.CrossFadeAlpha(0, duration, false);
+    }
+
 }

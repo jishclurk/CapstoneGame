@@ -15,6 +15,7 @@ public class FlameThrowScript : MonoBehaviour {
     private AudioSource sound;
     private Light lite;
     private bool damageOn;
+    public bool dissipate;
 
     private Vector3 playerToPoint;
 
@@ -28,6 +29,7 @@ public class FlameThrowScript : MonoBehaviour {
         sound = GetComponent<AudioSource>();
         lite = transform.FindChild("Point light").GetComponent<Light>();
         damageOn = false;
+        dissipate = false;
     }
 
     // Use this for initialization
@@ -39,8 +41,18 @@ public class FlameThrowScript : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate() {
+        if (dissipate)
+        {
+            ps.Stop();
+            sound.volume = sound.volume - 0.03f;
+            lite.enabled = false;
+            return;
+        }
+
         transform.position = castedPlayer.gunbarrel.position;
         transform.rotation = castedPlayer.transform.rotation;
+
+
         if (castedPlayer == tm.activePlayer)
         {
             //player controlled code

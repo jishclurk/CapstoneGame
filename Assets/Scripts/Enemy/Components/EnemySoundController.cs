@@ -17,19 +17,30 @@ public class EnemySoundController : MonoBehaviour {
 
     public void PlayAggroSound()
     {
-        source.clip = aggroSounds[(int)(Random.Range(0, aggroSounds.Count))];
-        source.Play();
+        if (aggroSounds.Count > 0)
+        {
+            source.clip = aggroSounds[(int)(Random.Range(0, aggroSounds.Count))];
+            source.Play();
+        }
     }
 
     public void PlayAttackSound()
     {
-        source.clip = attackSounds[(int)(Random.Range(0, attackSounds.Count))];
-        source.Play();
+        if (attackSounds.Count > 0)
+        {
+            source.clip = attackSounds[(int)(Random.Range(0, attackSounds.Count))];
+            source.Play();
+        }
+        
     }
 
     public void PlayDeathSound()
     {
-        source.clip = deathSounds[(int)(Random.Range(0, deathSounds.Count))];
-        source.Play();
+        if (deathSounds.Count > 0)
+        {
+            source.clip = deathSounds[(int)(Random.Range(0, deathSounds.Count))];
+            source.Play();
+        }
+        
     }
 }

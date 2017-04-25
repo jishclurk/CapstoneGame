@@ -4,49 +4,65 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-public class SettingsManager : MonoBehaviour {
+public class SettingsManager : MonoBehaviour
+{
 
     public Toggle fullscreenToggle;
     public Dropdown resolutionDropdown;
+    public Dropdown textureQualityDropdown;
+    public Dropdown vSyncDropdown;
     public Slider volumeSlider;
-    public Canvas Menu;
     public Canvas Settings;
     public Resolution[] resolutions;
     private GameSettings gameSettings;
 
     void Start()
     {
-        DontDestroyOnLoad(this);
-        Menu = Menu.GetComponent<Canvas>();
         Settings = Settings.GetComponent<Canvas>();
         Settings.enabled = false;
     }
 
     private void OnEnable()
     {
-        resolutions = Screen.resolutions;
-        foreach(Resolution resolution in resolutions)
-        {
-            resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.ToString()));
-        }
-
         fullscreenToggle.onValueChanged.AddListener(delegate { OnFullscreenToggle(); });
         resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
         volumeSlider.onValueChanged.AddListener(delegate { OnVolumeChange(); });
+        vSyncDropdown.onValueChanged.AddListener(delegate { OnVSyncChange(); });
+        textureQualityDropdown.onValueChanged.AddListener(delegate { OnTextureQualityChange(); });
 
         gameSettings = new GameSettings();
         gameSettings.fullscreen = fullscreenToggle.isOn = Screen.fullScreen;
+        resolutions = Screen.resolutions;
+        foreach (Resolution resolution in resolutions)
+        {
+            resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.ToString()));
+        }
+        Resolution current = Screen.currentResolution;
         resolutionDropdown.RefreshShownValue();
         gameSettings.resolutionIndex = resolutionDropdown.value;
         gameSettings.volume = volumeSlider.value = AudioListener.volume;
+        gameSettings.vSync = vSyncDropdown.value = QualitySettings.vSyncCount;
+        gameSettings.textureQuality = textureQualityDropdown.value = QualitySettings.masterTextureLimit;
     }
 
     public void UpdateSettingsWhenEnabled()
     {
         gameSettings.fullscreen = fullscreenToggle.isOn = Screen.fullScreen;
+        string currentResolutionWidth = Screen.width.ToString();
+        string currentResolutionHeight = Screen.height.ToString();
+        foreach (Dropdown.OptionData option in resolutionDropdown.options)
+        {
+            if (option.text.ToString().Contains(currentResolutionWidth)
+                && option.text.ToString().Contains(currentResolutionHeight))
+            {
+                resolutionDropdown.value = resolutionDropdown.options.IndexOf(option);
+            }
+        }
         resolutionDropdown.RefreshShownValue();
         gameSettings.resolutionIndex = resolutionDropdown.value;
         gameSettings.volume = volumeSlider.value = AudioListener.volume;
+        gameSettings.vSync = vSyncDropdown.value = QualitySettings.vSyncCount;
+        gameSettings.textureQuality = textureQualityDropdown.value = QualitySettings.masterTextureLimit;
     }
 
     public void OnFullscreenToggle()
@@ -58,30 +74,32 @@ public class SettingsManager : MonoBehaviour {
     {
         Screen.SetResolution(resolutions[resolutionDropdown.value].width,
             resolutions[resolutionDropdown.value].height, Screen.fullScreen);
+        gameSettings.resolutionIndex = resolutionDropdown.value;
+    }
+
+    public void OnTextureQualityChange()
+    {
+        QualitySettings.masterTextureLimit = gameSettings.textureQuality = textureQualityDropdown.value;
+    }
+
+    public void OnVSyncChange()
+    {
+        QualitySettings.vSyncCount = gameSettings.vSync = vSyncDropdown.value;
     }
 
     public void OnVolumeChange()
     {
         AudioListener.volume = gameSettings.volume = volumeSlider.value;
-        // Debug.Log("AudioListener.volume = " + AudioListener.volume);
     }
 
     public void LoadSettingsMenu()
     {
-        if(Menu != null)
-        {
-            Menu.enabled = false;
-        }
         Settings.enabled = true;
     }
 
     public void CloseSettingsMenu()
     {
         Settings.enabled = false;
-        if (Menu != null)
-        {
-            Menu.enabled = true;
-        }
     }
 
     /*

@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class SlotScript : MonoBehaviour, IDropHandler {
+public class SlotScript : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler {
 
     //ability in the slot
     public IAbility ability { get; set; }
@@ -18,9 +19,11 @@ public class SlotScript : MonoBehaviour, IDropHandler {
     public bool isBarSlot;
 
     public bool isBasicBarSlot;
-
-   // public bool isSpecialSlot;
-
+    public GameObject hoverBubble;
+    private Text hoverText;
+    private Text abilityName;
+    private Text AbilityType;
+    private Player displayedPlayer;
     private TacticalPause tp;
 
     private void Start()
@@ -30,7 +33,21 @@ public class SlotScript : MonoBehaviour, IDropHandler {
             ability = Utils.AbilityIDs[abilityId];
         }
         tp = GameObject.Find("TacticalPause").GetComponent<TacticalPause>();
+        if (!hoverBubble.Equals(null))
+        {
+            hoverText = hoverBubble.transform.FindChild("description").GetComponent<Text>();
+            abilityName = hoverBubble.transform.FindChild("name").GetComponent<Text>();
+            AbilityType = hoverBubble.transform.FindChild("type").GetComponent<Text>();
 
+            abilityName.text = ability.name;
+            AbilityType.text = ability.useType;
+            hoverBubble.SetActive(false);
+        }
+    }
+
+    public void setDisplayedPlayer(Player player)
+    {
+        displayedPlayer = player;
     }
 
     public GameObject item
@@ -62,19 +79,19 @@ public class SlotScript : MonoBehaviour, IDropHandler {
     {
         if (isValidDrop())
         {
-            Debug.Log("Good Drop");
+           // Debug.Log("Good Drop");
             if (DragHandler.abilityBeingDraggedSlot.isBarSlot)
             {
-                Debug.Log("leaving bar slot");
+               // Debug.Log("leaving bar slot");
                 tp.updateSpecialAbilities(DragHandler.abilityBeingDraggedSlot.spot, new EmptyAbility());
             }
 
             if (item) 
             {
-                Debug.Log("Something in the slot");
+               // Debug.Log("Something in the slot");
                 if (isBarSlot)
                 {
-                    Debug.Log("Swap");
+                   // Debug.Log("Swap");
                     if(ability == null)
                     {
                        // ability = item.get
@@ -85,14 +102,14 @@ public class SlotScript : MonoBehaviour, IDropHandler {
                     DragHandler.itemBeingDragged.transform.SetParent(transform);
                     if (!isBasicBarSlot)
                     {
-                        Debug.Log("update non basic");
+                      //  Debug.Log("update non basic");
                          tp.updateSpecialAbilities(spot, (ISpecial)ability);
                     }
                     else
                     {
-                        Debug.Log(ability);
+                      //  Debug.Log(ability);
                         ability = DragHandler.abilityBeingDraggedSlot.ability;
-                        Debug.Log(ability);
+                     //   Debug.Log(ability);
                         tp.updateBasicAbility((IBasic)ability);
                     }
                 }
@@ -105,13 +122,13 @@ public class SlotScript : MonoBehaviour, IDropHandler {
 
             }else
             {
-                Debug.Log("nothing in the spot");
+               // Debug.Log("nothing in the spot");
                 if (isBarSlot)
                 {
                     ability = DragHandler.abilityBeingDraggedSlot.ability;
                     if (isBasicBarSlot)
                     {
-                        Debug.Log("Shouln't ever come here??");
+                       // Debug.Log("Shouln't ever come here??");
                         tp.updateBasicAbility((IBasic)ability);
 
                     }
@@ -126,11 +143,11 @@ public class SlotScript : MonoBehaviour, IDropHandler {
                 {
 
                     Transform treeSlot = tp.FindSlotById(DragHandler.abilityBeingDraggedSlot.abilityId).transform;
-                    Debug.Log("moving to slot of ability with id" + DragHandler.abilityBeingDraggedSlot.abilityId);
+                   // Debug.Log("moving to slot of ability with id" + DragHandler.abilityBeingDraggedSlot.abilityId);
                     DragHandler.itemBeingDragged.transform.SetParent(treeSlot, false);
                     if (DragHandler.abilityBeingDraggedSlot.isBarSlot)
                     {
-                        Debug.Log("moving from bar");
+                       // Debug.Log("moving from bar");
                         tp.updateSpecialAbilities(DragHandler.abilityBeingDraggedSlot.spot, new EmptyAbility());
                     }
                 }
@@ -147,5 +164,23 @@ public class SlotScript : MonoBehaviour, IDropHandler {
             Debug.Log("Bad Drop");
         }
 
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!hoverBubble.Equals(null))
+        {
+            hoverBubble.SetActive(false);
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!hoverBubble.Equals(null))
+        {
+            hoverText.text = ability.GetHoverDescription(displayedPlayer);
+            hoverBubble.SetActive(true);
+           // hoverBubble.transform.position = new Vector3(Input.mousePosition.x + bubbleWidth / 2, Input.mousePosition.y + bubbleHeight / 2, hoverBubble.transform.position.z);
+        }
     }
 }

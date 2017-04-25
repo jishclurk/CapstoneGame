@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ShotgunShot : IBasic, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -30,7 +31,9 @@ public class ShotgunShot : IBasic, IAbility {
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/Shotgun", typeof(Image)) as Image;
         id = 3;
-        name = "Shotgun Shot";
+        name = "Shotgun";
+        useType = "Basic Attack";
+        description = "A pump action shotgun. Deals a cone of damage at a slow fire rate.\n";
         effectiveRange = 8.0f;
         baseDamage = 5.0f;
         fireRate = 0.8f;
@@ -43,9 +46,9 @@ public class ShotgunShot : IBasic, IAbility {
         lastUsedTime = Time.time;
         Vector3 targetDest = new Vector3(target.transform.position.x, player.gunbarrel.position.y, target.transform.position.z);
 
-        float adjustedDamage = baseDamage + player.attributes.Strength * 0.5f;
-        
-        for(float shellRot = -30.0f; shellRot <30.1f; shellRot += 15.0f)
+        float adjustedDamage = baseDamage + (baseDamage * player.attributes.TotalStrength * 0.04f);
+
+        for (float shellRot = -30.0f; shellRot <30.1f; shellRot += 15.0f)
         {
             GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
             project.GetComponent<ShotgunProjectileScript>().destination = targetDest;
@@ -89,5 +92,33 @@ public class ShotgunShot : IBasic, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.Basic;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+
+
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
+
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + Mathf.Floor((baseDamage + (baseDamage * p.attributes.TotalStrength * 0.04f))*5.0f) + " max damage";
     }
 }

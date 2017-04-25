@@ -15,9 +15,10 @@ public class ObjectiveManager : MonoBehaviour {
 	public TeamManager tm;
 
 	void Awake() {
-        Debug.Log("obj manager starting");
+        //Debug.Log("obj manager starting");
 		objectives = new List<GoalManager>(GetComponentsInChildren<GoalManager> ());
 		foreach (GoalManager gm in objectives){
+
 			gm.tm = this.tm;
 
 		}
@@ -29,6 +30,7 @@ public class ObjectiveManager : MonoBehaviour {
     void Update() {
 		objectiveList =  "Objectives: \n";
 		for (int i = 0; i<objectives.Count ; i++){
+			//Debug.Log("obj count:" +i);
 			objectiveList += "\n"+(i+1)+".  " + objectives[i].objectiveName;
 			if (objectives [i].isComplete ()) {
 				objectiveList += "\n **Completed**";
@@ -40,33 +42,36 @@ public class ObjectiveManager : MonoBehaviour {
 			} 
 			if (!objectives [i].isComplete () && activeObjNum == i) {
 				objectiveList += "\n" + objectives [i].goalList () +"\n";
+
 			}
 			if (objectives [i].isComplete () && activeObjective) {
 				activeObjective = false;
 			}
 		}
 		goalListText.text = objectiveList;
+		//Debug.Log (goalListText.text);
 	}
 
     public void loadState(bool[] state)
     {
-        Debug.Log(state);
+        /*Debug.Log(state);
         foreach(GoalManager goal in objectives)
         {
             Debug.Log(goal);
-        }
-        if(state.Length == objectives.Count)
-        {
-            for (int i = 0; i< objectives.Count; i++)
+        }*/
+        //if(state.Length == objectives.Count)
+        //{
+
+            for (int i = 0; i< objectives.Count && i < state.Length; i++)       //I added state.Length here because ????. I was getting null exceptions but this seems to work
             {
                 Debug.Log(state[i]);
 				objectives[i].CompleteGoals(state[i]);
             }
-        }
-        foreach (GoalManager goal in objectives)
+        //}
+        /*foreach (GoalManager goal in objectives)
         {
             Debug.Log(goal.isComplete());
-        }
+        }*/
     }
 
     //returns the state of the objectives
@@ -86,11 +91,11 @@ public class ObjectiveManager : MonoBehaviour {
         bool complete = true;
         foreach (GoalManager objective in objectives)
         {
-            if (!objective.isComplete())
-            {
-                complete = false;
-                break;
-            }
+			if (!objective.isComplete ()) {
+				
+				complete = false;
+				break;
+			} 
         }
         return complete;
     }

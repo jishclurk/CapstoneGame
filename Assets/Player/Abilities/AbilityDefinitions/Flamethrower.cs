@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Flamethrower : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -22,7 +23,7 @@ public class Flamethrower : ISpecial, IAbility {
     private AbilityHelper ah;
     private Object flame;
     private float lastUsedTime;
-    private float effectLength = 8.0f;
+    private float effectLength = 6.0f;
 
 
 
@@ -40,12 +41,14 @@ public class Flamethrower : ISpecial, IAbility {
         image = Resources.Load("Abilities/FlamethrowerIcon", typeof(Image)) as Image;
         id = 7;
         name = "Flamethrower";
-        effectiveRange = 6.0f;
-        baseDamage = 8.0f;
-        timeToCast = 5.0f;
+        description = "Equip a Flamethrower for " + effectLength + " seconds. Hold left click to fire.\n";
+        useType = "Equip";
+        effectiveRange = 7.0f;
+        baseDamage = 9.5f;
+        timeToCast = effectLength;
         coolDownTime = 20.0f;
         lastUsedTime = -Mathf.Infinity;
-        energyRequired = 50.0f;
+        energyRequired = 45.0f;
         ah = GameObject.FindWithTag("AbilityHelper").GetComponent<AbilityHelper>();
         flame = Resources.Load("FlameThrower/yFlame");
 
@@ -54,8 +57,8 @@ public class Flamethrower : ISpecial, IAbility {
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        baseDamage = baseDamage + (player.attributes.Strength * 0.5f);
-        ah.FlameThrowerRoutine(player, origin, target, flame, baseDamage, effectiveRange, effectLength);
+        float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalStrength - StrengthRequired) * 0.04f);
+        ah.FlameThrowerRoutine(player, origin, target, flame, adjustedDamage, effectiveRange, effectLength);
 
         player.resources.UseEnergy(energyRequired);
     }
@@ -97,5 +100,31 @@ public class Flamethrower : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.Equip;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
+
+        return description + requires + strReq + intReq + stmReq + "\nDamage per hit: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

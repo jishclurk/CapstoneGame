@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LeechDart : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -27,28 +28,29 @@ public class LeechDart : ISpecial, IAbility {
 
     public LeechDart()
     {
-        StrengthRequired = 5;
+        StrengthRequired = 6;
         StaminaRequired = 0;
-        IntelligenceRequired = 5;
+        IntelligenceRequired = 6;
         image = Resources.Load("Abilities/LeechDartIcon", typeof(Image)) as Image;
         id = 11;
         name = "LeechDart";
+        useType = "Enemy Target";
         effectiveRange = 9.0f;
         baseDamage = 40.0f;
         timeToCast = 0.0f;
-        coolDownTime = 10.0f;
+        coolDownTime = 15.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 30.0f;
         aoeTarget = null;
-        description = "HurtnHeal";
+        description = "Shoots a dart that saps enemy health. Select target with left click.\n";
         bullet = Resources.Load("LeechDart/DartProjectile");
         regenField = Resources.Load("LeechDart/DartBooster");
     }
 
-    public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
+    public void Execute(Player player, GameObject origin, GameObject target) 
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
+        float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalStrength - StrengthRequired) * 0.04f);
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
         player.GetComponent<PlayerResources>().Heal(adjustedDamage / 2);
 
@@ -102,5 +104,31 @@ public class LeechDart : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.TargetHurt;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
+
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + Mathf.Floor(baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f)) + "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

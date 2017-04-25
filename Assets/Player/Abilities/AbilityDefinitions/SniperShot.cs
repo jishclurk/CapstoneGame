@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SniperShot : IBasic, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -28,7 +29,9 @@ public class SniperShot : IBasic, IAbility {
         IntelligenceRequired = 15;
         image = Resources.Load("Abilities/Sniper", typeof(Image)) as Image;
         id = 4;
-        name = "Sniper Shot";
+        name = "Sniper Rifle";
+        useType = "Basic Attack";
+        description = "A high damage, long range Sniper Rifle.\n";
         effectiveRange = 11.0f;
         baseDamage = 22.0f;
         fireRate = 0.9f;
@@ -39,7 +42,7 @@ public class SniperShot : IBasic, IAbility {
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.TotalStrength * 0.5f;
+        float adjustedDamage = baseDamage + (baseDamage * player.attributes.TotalStrength * 0.04f);
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
 
         GameObject project = Object.Instantiate(bullet, player.gunbarrel.position, Quaternion.identity) as GameObject;
@@ -61,5 +64,31 @@ public class SniperShot : IBasic, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.Basic;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
+
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + (baseDamage + (baseDamage * p.attributes.TotalStrength * 0.04f)) + " per shot";
     }
 }

@@ -49,7 +49,7 @@ public class HealBubbleScript : MonoBehaviour {
             foreach (GameObject player in aoeController.affectedPlayers)
             {
                 player.GetComponent<PlayerResources>().Heal(healHP);
-                Debug.Log(name + " on " + target.name + " does " + healHP + " heal.");
+                //Debug.Log(name + " on " + target.name + " does " + healHP + " heal.");
             }
             tracker += healRate;
         }

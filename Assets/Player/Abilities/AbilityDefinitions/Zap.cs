@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Zap : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -32,21 +33,22 @@ public class Zap : ISpecial, IAbility {
         image = Resources.Load("Abilities/ZapIcon", typeof(Image)) as Image;
         id = 19;
         name = "Zap";
+        useType = "Enemy Target";
         effectiveRange = 9.0f;
         baseDamage = 40.0f;
         timeToCast = 0.0f;
-        coolDownTime = 10.0f;
+        coolDownTime = 12.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 30.0f;
         aoeTarget = null;
-        description = "A lightning shot. Base Damage: " + (int) baseDamage + ", Energy Req: " + (int) energyRequired + ", Cool Down Time: " + (int) coolDownTime + ", Range: " + effectiveRange;
+        description = "A lightning shot that deals high damage and stuns the enemy. Select target with left click.\n";
         bullet = Resources.Load("Zap/ZapObj");
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
+        float adjustedDamage = baseDamage + (baseDamage * player.attributes.TotalStrength * 0.04f);
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
         target.GetComponent<EnemyHealth>().TakeStunDamage(1);
 
@@ -68,7 +70,7 @@ public class Zap : ISpecial, IAbility {
 
     public void setAsReady()
     {
-        lastUsedTime = -Mathf.Infinity;
+           lastUsedTime = -Mathf.Infinity;
     }
 
     public bool EvaluateCoopUse(Player player, Transform targetedEnemy, TeamManager tm)
@@ -95,5 +97,31 @@ public class Zap : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.TargetHurt;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
+
+        return description + requires + strReq + intReq + stmReq + "\nDamage: " + Mathf.Floor((baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f))) + "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

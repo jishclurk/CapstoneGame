@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class RIPRounds : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -31,6 +32,7 @@ public class RIPRounds : ISpecial, IAbility {
         image = Resources.Load("Abilities/RIPRoundsIcon", typeof(Image)) as Image;
         id = 14;
         name = "R.I.P. Rounds";
+        useType = "Passive";
         effectiveRange = 0.0f;
         baseDamage = 0.0f;
         timeToCast = 0.0f;
@@ -38,7 +40,7 @@ public class RIPRounds : ISpecial, IAbility {
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 0.0f;
         aoeTarget = null;
-        description = "Double Strength";
+        description = "Doubles the user's strength to deal more damage with all abilities.\n";
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
@@ -48,7 +50,7 @@ public class RIPRounds : ISpecial, IAbility {
 
     public void updatePassiveBonuses(CharacterAttributes attributes)
     {
-        attributes.PassiveStrength = attributes.Strength;
+        attributes.PassiveStrength += attributes.Strength;
     }
 
     public bool isReady()
@@ -85,5 +87,31 @@ public class RIPRounds : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.Passive;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
+
+        return description + requires + strReq + intReq + stmReq + "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

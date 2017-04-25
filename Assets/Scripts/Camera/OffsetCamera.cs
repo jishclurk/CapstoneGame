@@ -6,10 +6,12 @@ public class OffsetCamera : MonoBehaviour
 {
 
     public GameObject activePlayerCharacter;
-   // private TeamManager tm;
     private Vector3 offset;
     private bool followPlayer;
     private float radius;
+    private int numberOfAngles;
+    private float[] angles;
+    private int anglesIndex;
     private float offsetYValue;
     private Vector3 fixedEulerAngles;
     private float cameraVerticalSpeed;
@@ -22,32 +24,22 @@ public class OffsetCamera : MonoBehaviour
     private float[] xzRotationArray;
     private int xzRotationArrayIndex;
 
-    //Simple script from Roll a Ball
     void Start()
     {
-       // tm = GameObject.FindWithTag("TeamManager").GetComponent<TeamManager>();
-        //activePlayerCharacter = tm.activePlayer.gameObject;
-        float offsetXValue = 5f;
         offsetYValue = 9f;
-        float offsetZValue = 5f;
-        xzRotationArray = new float[8];
-        xzRotationArray[0] = offsetXValue;
-        xzRotationArray[1] = offsetZValue;
-        xzRotationArray[2] = -offsetXValue;
-        xzRotationArray[3] = offsetZValue;
-        xzRotationArray[4] = -offsetXValue;
-        xzRotationArray[5] = -offsetZValue;
-        xzRotationArray[6] = offsetXValue;
-        xzRotationArray[7] = -offsetZValue;
-        xzRotationArrayIndex = 4;
-        offset = new Vector3(xzRotationArray[xzRotationArrayIndex], offsetYValue, xzRotationArray[xzRotationArrayIndex + 1]);
-       // SmoothLookAt();
-        Debug.Log("offset:" + offset);
         followPlayer = false;
-        radius = Mathf.Sqrt(offset.x * offset.x + offset.z * offset.z);
+        radius = 7f;
+        numberOfAngles = 8;
+        angles = new float[numberOfAngles];
+        for(int i = 0; i < numberOfAngles; i++)
+        {
+            angles[i] = i * 2 * Mathf.PI / numberOfAngles;
+        }
+        anglesIndex = 1;
+        offset = new Vector3(radius * Mathf.Sin(angles[anglesIndex]), offsetYValue, radius * Mathf.Cos(angles[anglesIndex]));
         fixedEulerAngles = transform.eulerAngles;
         cameraVerticalSpeed = 0.2f;
-        cameraRotationSpeed = cameraVerticalSpeed * 10 / 6; // 10/6 is the ratio of the xRotation range over the yPosition range
+        cameraRotationSpeed = cameraVerticalSpeed * 10 / 6; // (10/6) is the ratio of the xRotation range over the yPosition range
         mouseScrollSpeed = 10f; 
         yPositionMin = offsetYValue - 3f;
         yPositionMax = offsetYValue + 3f;
@@ -60,12 +52,11 @@ public class OffsetCamera : MonoBehaviour
         activePlayerCharacter = player;
         transform.position = activePlayerCharacter.transform.position + offset;
         SmoothLookAt();
-
     }
 
     void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        /*if (Input.GetKeyDown(KeyCode.Z))
         {
             if (followPlayer)
             {
@@ -76,16 +67,24 @@ public class OffsetCamera : MonoBehaviour
             {
                 followPlayer = true;
             }
+        }*/
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            anglesIndex--;
+            if (anglesIndex < 0)
+            {
+                anglesIndex = 7;
+            }
+            offset = new Vector3(radius * Mathf.Sin(angles[anglesIndex]), offset.y, radius * Mathf.Cos(angles[anglesIndex]));
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            xzRotationArrayIndex += 2;
-            if(xzRotationArrayIndex > 7)
+            anglesIndex++;
+            if(anglesIndex >= numberOfAngles)
             {
-                xzRotationArrayIndex = 0;
+                anglesIndex = 0;
             }
-            offset = new Vector3(xzRotationArray[xzRotationArrayIndex], offset.y, xzRotationArray[xzRotationArrayIndex + 1]);
-            SmoothLookAt();
+            offset = new Vector3(radius * Mathf.Sin(angles[anglesIndex]), offset.y, radius * Mathf.Cos(angles[anglesIndex]));
         }
         if (Input.GetKey(KeyCode.Equals) && offsetYValue > yPositionMin)
         {

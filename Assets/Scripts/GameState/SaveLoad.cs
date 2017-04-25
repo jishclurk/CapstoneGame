@@ -10,27 +10,50 @@ public static class SaveLoad
     //static SavedState lastSaved;
 
     //Saves game in saveSpot
-    public static void Save(SavedState game, string name)
+    public static void Save(SavedState game, int spot)
     {
         var serializer = new XmlSerializer(typeof(SavedState));
-        FileStream file = File.Create(Application.dataPath + "/savedGame" + name + ".gd");
+        FileStream file = File.Create(Application.dataPath + "/savedGame" + spot.ToString()  + ".gd");
         serializer.Serialize(file, game);
         file.Close();
     }
 
     //Loads game in saveSpot
-    public static SavedState Load(string name)
+    public static SavedState Load(int slot)
     {
         SavedState gameState = null;
 
-        if (File.Exists(Application.dataPath + "/savedGame" + name + ".gd"))
+        if (File.Exists(Application.dataPath + "/savedGame" + slot.ToString() + ".gd"))
         {
             var serializer = new XmlSerializer(typeof(SavedState));
-            FileStream file = File.Open(Application.dataPath + "/savedGame" + name + ".gd", FileMode.Open);
+            FileStream file = File.Open(Application.dataPath + "/savedGame" + slot.ToString() + ".gd", FileMode.Open);
             gameState = (SavedState)serializer.Deserialize(file);
             file.Close();
         }
         return gameState;
+    }
+
+    public static bool setSaveButton(SaveButton toSet)
+    {
+        bool savedInSlot = true;
+        if (File.Exists(Application.dataPath + "/savedGame" + toSet.slotNumber.ToString() + ".gd"))
+        {
+            SavedState state = Load(toSet.slotNumber);
+            toSet.Title.enabled = false;
+            toSet.Date.enabled = true;
+            toSet.Level.enabled = true;
+            toSet.Date.text = state.date;
+            toSet.Level.text = "Level " + state.level.ToString();
+        }else
+        {
+            savedInSlot = false;
+            toSet.Title.enabled = true;
+            toSet.Date.enabled = false;
+            toSet.Level.enabled = false;
+
+        }
+        return savedInSlot;
+
     }
 
     public static List<string> savedGames()

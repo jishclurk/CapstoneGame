@@ -58,22 +58,26 @@ public class DoorSlideClock : MonoBehaviour {
 		if (puzzleActivator == null || puzzleActivator.Output ()) {
 			//				if (!doorOpen) {
 			slide_door (other, 0); // Open door
-			Debug.Log ("Trying to open door");
+			//Debug.Log ("Trying to open door");
 			popUpObject.gameObject.SetActive (false);
-			//					doorOpen = true;
+								doorOpen = true;
 			//				}
 		} else {
-
+			doorOpen = false;
 			popUpObject.gameObject.SetActive (true);
 		}
 	}	
+
+	public bool isDoorOpen(){
+		return doorOpen;
+	}
 
 
 
 	void OnTriggerExit(Collider other){
 		if (puzzleActivator == null || puzzleActivator.Output()){
 			//slide_door(other, 1); // Close door
-			Debug.Log("Closing open door");
+			//Debug.Log("Closing open door");
 		}
 	}	
 

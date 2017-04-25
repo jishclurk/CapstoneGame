@@ -12,7 +12,6 @@ using UnityEngine;
 public class AttackingState : IEnemyState {
 
     public readonly EnemyStateControl enemy;
-    private float timer;
 
     public AttackingState(EnemyStateControl stateControl)
     {
@@ -21,7 +20,6 @@ public class AttackingState : IEnemyState {
 
     public void UpdateState()
     {
-        timer += Time.fixedDeltaTime;
 
         enemy.DisableNavRotation();
         enemy.navMeshAgent.Stop();

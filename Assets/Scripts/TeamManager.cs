@@ -37,7 +37,6 @@ public class TeamManager : MonoBehaviour {
         for (int i = 0; i < prefabList.Length; i++)
         {
             Player player = prefabList[i].GetComponent<Player>();
-            Debug.Log("ID: " + player.id);
 
             playerList.Add(player);
         }
@@ -52,10 +51,6 @@ public class TeamManager : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            gm.onDeath();
-        }
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
         //    StartComabtPause();
@@ -121,10 +116,6 @@ public class TeamManager : MonoBehaviour {
             playerResources = playerList[id-1].resources;
             cameraScript.activePlayerCharacter = activePlayer.gameObject;
         }
-        else
-        {
-            Debug.Log("Cannot switch! Player " + id + " is dead.");
-        }
 
     }
 
@@ -161,17 +152,14 @@ public class TeamManager : MonoBehaviour {
             //update activePlayer and camera
             playerResources = nextResources;
             cameraScript.activePlayerCharacter = activePlayer.gameObject;
-        } else
-        {
-            Debug.Log("Cannot switch! All players are dead.");
         }
     
 
     }
 
-    public void UpdateDeathCount()
+    public void UpdateDeathCount(int update)
     {
-        deathCount++;
+        deathCount += update;
         if(deathCount == 4)
         {
             gm.onDeath();
@@ -180,13 +168,12 @@ public class TeamManager : MonoBehaviour {
 
     public void ReviveTeam(CheckPoint cp)
     {
-        deathCount = 0;
+       // deathCount = 0;
         for(int i = 0; i <playerList.Count; i++)
         {
             Player player = playerList[i];
             if (player.resources.isDead)
             {
-                Debug.Log("is dead coming back to life");
                 player.resources.Revive();
                 player.gameObject.GetComponent<NavMeshAgent>().Warp(cp.player1.transform.position);
             }
@@ -208,19 +195,6 @@ public class TeamManager : MonoBehaviour {
         return visibleEnemies.Count > 0;
     }
 
-    //public void StartComabtPause()
-    //{
-    //    if (gm.gameState.Equals(GameState.COMABT_PAUSE))
-    //    {
-    //        gm.OnStateChange += tacticalPause.Disable;
-    //        gm.SetGameState(GameState.PLAY);
-    //    }
-    //    else
-    //    {
-    //        gm.OnStateChange += tacticalPause.Enable;
-    //        gm.SetGameState(GameState.COMABT_PAUSE);
-    //    }
-    //}
 
     public void RemoveDeadEnemy(GameObject enemy)
     {
@@ -276,6 +250,16 @@ public class TeamManager : MonoBehaviour {
             players[i] = player;
             player.health = playerList[i].resources.currentHealth;
             player.energy = playerList[i].resources.currentEnergy;
+            int[] abilities = new int[4];
+            for (int j = 0; j< playerList[i].abilities.abilityArray.Length; j++)
+            {
+                IAbility ability = playerList[i].abilities.abilityArray[j];
+                abilities[j] = ability.id;
+            }
+            player.abilities = abilities;
+            player.basic = playerList[i].abilities.Basic.id;
+
+
         }
         
         return players;
@@ -283,7 +267,6 @@ public class TeamManager : MonoBehaviour {
 
     public void LoadSavedState(SerializedPlayer[] state)
     {
-        Debug.Log("Setting saved state in tm");
         for (int i = 0; i<playerList.Count; i++)
         {
             SerializedPlayer playerState = state[i];
@@ -299,9 +282,14 @@ public class TeamManager : MonoBehaviour {
             currentPlayer.resources.currentHealth = playerState.health;
             currentPlayer.resources.currentEnergy = playerState.energy;
 
+            for(int j = 0; j<playerState.abilities.Length; j++)
+            {
+                currentPlayer.abilities.SetNewAbility(playerState.abilities[j], j);
+            }
+            currentPlayer.abilities.SetBasic(playerState.basic);
+
             if (playerState.isInControl)
             {
-                Debug.Log("found active player");
                 activePlayer = currentPlayer; 
                 currentPlayer.strategy.isplayerControlled = true;
                 playerResources = activePlayer.GetComponent<PlayerResources>();

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class SentryShot : IBasic, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -30,9 +31,10 @@ public class SentryShot : IBasic, IAbility {
         IntelligenceRequired = 0;
         image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
         id = -2;
+        useType = "what";
         name = "Sentry Shot";
         effectiveRange = 9.0f;
-        baseDamage = 5.0f;
+        baseDamage = 7.0f;
         fireRate = 0.15f;
         lastUsedTime = 0.0f;
 
@@ -41,7 +43,7 @@ public class SentryShot : IBasic, IAbility {
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.TotalStrength * 0.5f;
+        float adjustedDamage = baseDamage + (baseDamage * player.attributes.TotalStrength * 0.06f);
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
 
         GameObject project = Object.Instantiate(bullet, origin.transform.position, Quaternion.identity) as GameObject;
@@ -63,5 +65,12 @@ public class SentryShot : IBasic, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.Basic;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+
+
+        return "Not unlockable.";
     }
 }

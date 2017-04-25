@@ -9,13 +9,22 @@ public class EnemyMobKnowledge : MonoBehaviour {
 
     public MobStrategy strategy;
 
+    public bool AllEnemiesDead { get; private set; }
+
     private Dictionary<GameObject, int> playerVisibilityMap;
     private Dictionary<GameObject, int> playerAggroMap;
+
+    private int enemiesInMob;
+    private int numEnemiesDead;
 
 	// Use this for initialization
 	void Awake () {
         playerVisibilityMap = new Dictionary<GameObject, int>();
         playerAggroMap = new Dictionary<GameObject, int>();
+
+        AllEnemiesDead = false;
+        numEnemiesDead = 0;
+        enemiesInMob = transform.childCount;
     }
 
 	public List<GameObject> GetVisiblePlayers()
@@ -103,5 +112,11 @@ public class EnemyMobKnowledge : MonoBehaviour {
             playerAggroMap.Remove(player);
     }
 
+    public void SignalEnemyDead()
+    {
+        numEnemiesDead += 1;
 
+        if (numEnemiesDead >= enemiesInMob)
+            AllEnemiesDead = true;
+    }
 }

@@ -23,7 +23,7 @@ public class ClockCollide : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (active) {
-			if (Input.GetKeyDown(KeyCode.G)){
+			if (Input.GetKeyDown(KeyCode.F)){
 				sound.Play ();
 				//Debug.Log ("Generator flipped");
 				triggered = !triggered;

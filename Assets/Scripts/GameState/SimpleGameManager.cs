@@ -39,10 +39,14 @@ public class SimpleGameManager : MonoBehaviour
     private void Start()
     {
 
-        Debug.Log("start");
+        //Debug.Log("start");
         tm = GameObject.Find("TeamManager").GetComponent<TeamManager>();
         cpManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
-        SetSavedState(SaveLoad.Load("autosave"));
+        SetSavedState(SaveLoad.Load(6));
+        if(autosave == null)
+        {
+            autosave = SaveLoad.Load(6);
+        }
         objManager = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>();
         GameOverScreen = transform.GetChild(0).GetComponent<Canvas>();
         GameOverScreen.enabled = false;
@@ -53,15 +57,11 @@ public class SimpleGameManager : MonoBehaviour
         percentComplete = 0f;
     }
 
-    private void OnLevelWasLoaded(int level)
-    {
-        Debug.Log("level was loaded");
-    }
 
     //State is changed and function set to OnStateChange is called
     public void SetGameState(GameState state)
     {
-        Debug.Log("changing state");
+        //Debug.Log("changing state");
 
         this.gameState = state;
         OnStateChange();
@@ -69,15 +69,20 @@ public class SimpleGameManager : MonoBehaviour
         {
             OnStateChange -= (function as OnStateChangeHandler);
         }
-        Debug.Log("here");
+        //Debug.Log("here");
     }
 
     public void nextLevel()
     {
         level++;
-        Debug.Log("advance to level " + level);
+        //Debug.Log("advance to level " + level);
         autosave.checkPoint = 0;
-        autosave.level++;
+        autosave.level = level;
+        for (int i = 0; i <autosave.objectives.Length; i++)
+        {
+            autosave.objectives[i] = false;
+        }
+        SaveLoad.Save(autosave, 6);
         StartCoroutine(LoadScene("Level" + level.ToString()));
     }
 
@@ -85,7 +90,7 @@ public class SimpleGameManager : MonoBehaviour
     IEnumerator LoadScene(string sceneName)
     {
         LoadingScreen.enabled = true;
-        Debug.Log("Loading " + sceneName);
+        //Debug.Log("Loading " + sceneName);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         while (!asyncLoad.isDone)
         {
@@ -98,14 +103,19 @@ public class SimpleGameManager : MonoBehaviour
     //after the level of saved in loaded, sets the state of the game
     public void SetSavedState(SavedState saved)
     {
+        
         level = saved.level;
         tm.LoadSavedState(saved.players);
         cpManager.setState(saved.checkPoint);
         GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>().loadState(saved.objectives);
-        Debug.Log( tm);
-
-        Debug.Log("active player" + tm.activePlayer.gameObject);
         Camera.main.GetComponent<OffsetCamera>().setCamera(tm.activePlayer.gameObject);
+        if(level == 1 && saved.checkPoint == 0)
+        {
+            if (GameObject.Find("WelcomeScreen") != null)
+            {
+                GameObject.Find("WelcomeScreen").transform.GetChild(0).gameObject.SetActive(true);
+            }
+        }
 
     }
 
@@ -123,7 +133,6 @@ public class SimpleGameManager : MonoBehaviour
     {
         OnStateChange += Pause;
         SetGameState(GameState.PAUSE);
-        Debug.Log("DEAD");
         GameOverScreen.enabled = true;
     }
 
@@ -131,7 +140,7 @@ public class SimpleGameManager : MonoBehaviour
     {
         if(autosave == null)
         {
-            autosave = SaveLoad.Load("autosave");
+            autosave = SaveLoad.Load(6);
         }
         OnStateChange += unPause;
         SetGameState(GameState.PLAY);
@@ -142,7 +151,6 @@ public class SimpleGameManager : MonoBehaviour
     {
         OnStateChange += unPause;
         SetGameState(GameState.MAIN_MENU);
-        Debug.Log("here 2");
         StartCoroutine(LoadScene("MainMenu"));
     }
 
@@ -152,7 +160,7 @@ public class SimpleGameManager : MonoBehaviour
         //OnStateChange += unPause;
        // SetGameState(GameState.PLAY);
         GameOverScreen.enabled = false;
-        SavedState autosave = SaveLoad.Load("autosave");
+        SavedState autosave = SaveLoad.Load(6);
         SetSavedState(autosave);
     }
 

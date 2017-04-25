@@ -8,9 +8,10 @@ public class AbilityHelper : MonoBehaviour {
     public enum Action { Basic, Equip, Target, TargetFriend, AOE, Passive }
     public enum CoopAction { Basic, InstantHeal, Equip, TargetHeal, TargetHurt, AOEHeal, AOEHurt, Passive }
 
+
     // GRENADE THROW //
 
-    public void GrenadeThrowRoutine(CharacterAttributes attributes, GameObject origin, GameObject target, float baseDamage, Object explosion, float timeToCast, Object grenade)
+    public void GrenadeThrowRoutine(CharacterAttributes attributes, GameObject origin, GameObject target, float damage, Object explosion, float timeToCast, Object grenade)
     {
         Vector3 nadeOrigin = new Vector3(origin.transform.position.x, origin.transform.position.y + 0.8f, origin.transform.position.z + 0.1f);
         GameObject nade = Instantiate(grenade, nadeOrigin, Quaternion.identity) as GameObject;
@@ -21,19 +22,17 @@ public class AbilityHelper : MonoBehaviour {
         StartCoroutine(MoveObject(nade.transform, target.transform, 0.95f));
         Destroy(nade, 1.0f);
         
-        StartCoroutine(Explode(attributes, origin, target, baseDamage, explosion, timeToCast));
+        StartCoroutine(Explode(attributes, origin, target, damage, explosion, timeToCast));
     }
 
-    private IEnumerator Explode(CharacterAttributes attributes, GameObject origin, GameObject target, float baseDamage, Object explosion, float timeToCast)
+    private IEnumerator Explode(CharacterAttributes attributes, GameObject origin, GameObject target, float damage, Object explosion, float timeToCast)
     {
         yield return new WaitForSeconds(timeToCast); 
-        float adjustedDamage = baseDamage + attributes.Strength * 2;
-        Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
         AOETargetController aoeController = target.GetComponent<AOETargetController>();
 
         foreach (GameObject enemy in aoeController.affectedEnemies)
         {
-            enemy.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
+            enemy.GetComponent<EnemyHealth>().TakeDamage(damage);
         }
         Object exp = Instantiate(explosion, target.transform.position, Quaternion.identity);
         Destroy(target, 0.05f);
@@ -66,8 +65,15 @@ public class AbilityHelper : MonoBehaviour {
         ft.castedPlayer = player;
         ft.effectiveRange = effectiveRange;
         ft.damage = baseDamage;
-        Destroy(worldFlame, 5.0f);
+        StartCoroutine(DelayedDisable(ft, length));
+        Destroy(worldFlame, length);
 
+    }
+
+    IEnumerator DelayedDisable(FlameThrowScript ft, float length)
+    {
+        yield return new WaitForSeconds(length - 0.5f);
+        ft.dissipate = true;
     }
 
     // SHIELD BOOSTER //

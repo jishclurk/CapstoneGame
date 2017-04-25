@@ -12,20 +12,23 @@ public class CheckPoint : MonoBehaviour
     public GameObject player3;
     public GameObject player4;
 
+    public GameObject SaveScreenGameObject;
+
     private Canvas CheckPointPopUp;
-    private Canvas SaveAsScreen;
+    private SaveSlotScript SaveScreen;
     private Canvas LevelComplete;
-    private InputField nameInputField;
+   // private InputField nameInputField;
 
     //managers
     private TeamManager tm;
     private ObjectiveManager objmanager;
     private CheckpointManager checkpointManager;
     private SimpleGameManager gm;
+    private Text autosaveText;
 
     public bool checkpointReached;
     private bool inTrigger;
-    private bool firstEnter;
+    public bool firstEnter = true;
     public bool finalCheckpoint;
     public bool startCheckpoint;
 
@@ -33,21 +36,18 @@ public class CheckPoint : MonoBehaviour
     {
         if (!startCheckpoint)
         {
-            CheckPointPopUp = transform.GetChild(0).gameObject.GetComponent<Canvas>();
-            SaveAsScreen = transform.GetChild(1).gameObject.GetComponent<Canvas>();
+            CheckPointPopUp = transform.Find("cp canvas").gameObject.GetComponent<Canvas>();
+            autosaveText = CheckPointPopUp.transform.Find("autosavedText").gameObject.GetComponent<Text>();
+            autosaveText.enabled = false;
 
-            SaveAsScreen.enabled = false;
             CheckPointPopUp.enabled = false;
+            SaveScreen = SaveScreenGameObject.GetComponent<SaveSlotScript>();
 
-            nameInputField = SaveAsScreen.transform.GetChild(5).GetComponent<InputField>();
-            nameInputField.onEndEdit.AddListener(delegate { SaveGame(nameInputField.text, true); });
         }
         inTrigger = false;
-        firstEnter = true;
         checkpointReached = false;
 
         gm = GameObject.Find("GameManager").GetComponent<SimpleGameManager>();
-        //Debug.Log(gm.level);
         tm = GameObject.Find("TeamManager").gameObject.GetComponent<TeamManager>();
         checkpointManager = transform.parent.gameObject.GetComponent<CheckpointManager>();
         objmanager = GameObject.Find("ObjectiveManager").GetComponent<ObjectiveManager>();
@@ -59,26 +59,38 @@ public class CheckPoint : MonoBehaviour
     {
         if (other.gameObject.tag.Equals("Player") && (!other.isTrigger) && !inTrigger)
         {
-            if (firstEnter)
-            {
-                tm.ReviveTeam(this);
-                autosave();
-                firstEnter = false;
-                checkpointReached = true;
-              
-            }
             inTrigger = true;
             CheckPointPopUp.enabled = true;
-            if (finalCheckpoint)
+            if (!finalCheckpoint)
+            {
+                if (firstEnter)
+                {
+                    autosaveText.enabled = true;
+                    tm.ReviveTeam(this);
+                    autosave();
+                    firstEnter = false;
+                    checkpointReached = true;
+
+                }
+                else
+                {
+                    autosaveText.enabled = false;
+                }
+            } else 
             {
                 if (objmanager.LevelComplete())
                 {
-                    CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [S] to save and continue Press [N] to continue";
+                    //Debug.Log("yes, checkpoint");
+                    tm.ReviveTeam(this);
+                    autosave();
+                    checkpointReached = true;
+                    CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Complete! Press [F] to save and continue Press [N] to continue";
                 }else
                 {
-                    CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Need to complete objectives to advance!  Press [S] to save";
-
+                    CheckPointPopUp.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Need to complete objectives to advance!  Press [F] to save";
                 }
+
+
             }
         }
     }
@@ -87,9 +99,10 @@ public class CheckPoint : MonoBehaviour
     {
         if (inTrigger)
         {
-            Debug.Log("EXITED TRIGGER");
+            //Debug.Log("EXITED TRIGGER");
             CheckPointPopUp.enabled = false;
             inTrigger = false;
+            SaveScreen.enabled = false;
         }
     }
 
@@ -97,7 +110,7 @@ public class CheckPoint : MonoBehaviour
     {
         if (inTrigger)
         {
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 LanchSaveScreen();
                // CheckPointPopUp.enabled = false;
@@ -106,8 +119,9 @@ public class CheckPoint : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.N))
                 {
-                    Debug.Log("MOVING TO NEXT LEVEL");
-                    Debug.Log(gm.level);
+                    CheckPointPopUp.enabled = false;
+                    //Debug.Log("MOVING TO NEXT LEVEL");
+                    //Debug.Log(gm.level);
                     gm.nextLevel();
                 }
             }
@@ -117,7 +131,7 @@ public class CheckPoint : MonoBehaviour
 
     public void ToMain()
     {
-        Debug.Log("setting state change to load main menu");
+        //Debug.Log("setting state change to load main menu");
         gm.OnStateChange += loadMainMenu;
         gm.SetGameState(GameState.MAIN_MENU);
     }
@@ -133,50 +147,31 @@ public class CheckPoint : MonoBehaviour
     {
             gm.OnStateChange += Pause;
             gm.SetGameState(GameState.PAUSE);
-            SaveAsScreen.enabled = true;
+        SaveScreen.checkpoint = checkpointManager.GetCheckPoint(this);
+            SaveScreen.enableSaveScreen();
     }
 
     private void autosave()
     {
-        Debug.Log("autosaving");
+        //Debug.Log("autosaving");
         SavedState autosave = new SavedState();
         autosave.setFromGameManager();
-        autosave.name = "autosave";
+       // autosave.name = "autosave";
         autosave.players = tm.currentState();
         autosave.objectives = objmanager.currentState();
         autosave.checkPoint = checkpointManager.GetCheckPoint(this);
+        autosave.date = System.DateTime.Now.ToString();
+        autosave.saveSlot = 6;
         if (finalCheckpoint && objmanager.LevelComplete())
         {
             autosave.level++;
             autosave.checkPoint = 0;
         }
-        SaveLoad.Save(autosave, "autosave");
+        SaveLoad.Save(autosave, 6);
         gm.autosave = autosave;
     }
 
-    //Sets game name as input in InputFeild, saves the game 
-    public void SaveGame(string name, bool newGame)
-    {
-        Debug.Log("in save game");
-        SaveAsScreen.enabled = false;
-        SavedState toSave = new SavedState();
-        toSave.setFromGameManager();
-        toSave.name = name;
-        toSave.players = tm.currentState();
-        toSave.objectives = objmanager.currentState();
-        toSave.checkPoint = checkpointManager.GetCheckPoint(this);
-        if (finalCheckpoint && objmanager.LevelComplete()) {
-            toSave.level++;
-            toSave.checkPoint = 0;
-        }
-        SaveLoad.Save(toSave,name);
-        if (newGame)
-        {
-            checkpointManager.UpdateButtons(name);
-        }
-        Debug.Log("saved");
-        progressGame();
-    }
+    
 
     //Freezes game
     public void Pause()
@@ -191,7 +186,7 @@ public class CheckPoint : MonoBehaviour
 
     public void progressGame()
     {
-        SaveAsScreen.enabled = false;
+        SaveScreen.disableSaveScreen();
         gm.OnStateChange += UnPause;
         gm.SetGameState(GameState.PLAY);
         if (finalCheckpoint && objmanager.LevelComplete())

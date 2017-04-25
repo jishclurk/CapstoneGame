@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PistolShot : IBasic, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -31,6 +32,7 @@ public class PistolShot : IBasic, IAbility {
         image = Resources.Load("Abilities/Pistol", typeof(Image)) as Image;
         id = -1;
         name = "Pistol Shot";
+        useType = "Summon";
         effectiveRange = 9.0f;
         baseDamage = 5.0f;
         fireRate = 0.8f;
@@ -42,7 +44,7 @@ public class PistolShot : IBasic, IAbility {
     {
         lastUsedTime = Time.time;
         float adjustedDamage = baseDamage + player.attributes.Strength * 0.1f;
-        Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
+        //Debug.Log(name + " on " + target.name + " does " + adjustedDamage + " damage.");
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
         //useEnergy not required
     }
@@ -60,5 +62,31 @@ public class PistolShot : IBasic, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.Basic;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
+
+        return description + requires + strReq + intReq + stmReq + "Damage: " + (baseDamage + (baseDamage * (p.attributes.TotalStrength - StrengthRequired) * 0.04f)) + ".";
     }
 }

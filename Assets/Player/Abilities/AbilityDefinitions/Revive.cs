@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Revive : ISpecial, IAbility {
 
     public string name { get; set; }
+    public string useType { get; set; }
     public string description { get; set; }
     public int id { get; private set; }
     public Image image { get; private set; }
@@ -22,7 +23,8 @@ public class Revive : ISpecial, IAbility {
     public int StrengthRequired { get; private set; }
     public int StaminaRequired { get; private set; }
     public int IntelligenceRequired { get; private set; }
-    private Object bullet;
+    private Object regenField;
+
 
     public Revive()
     {
@@ -31,22 +33,24 @@ public class Revive : ISpecial, IAbility {
         IntelligenceRequired = 10;
         image = Resources.Load("Abilities/ReviveIcon", typeof(Image)) as Image;
         id = 13;
-        name = "Revive";
+        name = "Restore";
+        useType = "Friend Target";
         effectiveRange = 1.8f;
         baseDamage = 50.0f;
         timeToCast = 0.0f;
-        coolDownTime = 10.0f;
+        coolDownTime = 20.0f;
         lastUsedTime = -Mathf.Infinity;
         energyRequired = 40.0f;
         aoeTarget = null;
-        description = "Revive or Heal an ally.";
+        description = "Revive a downed teammate and heal them. Can also be used on alive teammates.\n";
+        regenField = Resources.Load("Revive/RevBuff");
     }
 
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + player.attributes.Intelligence * 0.1f;
-        
+        float adjustedDamage = baseDamage + (baseDamage * (player.attributes.TotalIntelligence - IntelligenceRequired) * 0.03f);
+
 
         PlayerResources friendHealth = target.GetComponent<PlayerResources>();
         if (friendHealth.isDead)
@@ -59,7 +63,10 @@ public class Revive : ISpecial, IAbility {
             player.animController.AnimateUse(0.5f);
             friendHealth.Heal(adjustedDamage);
         }
-        
+
+        GameObject gb = Object.Instantiate(regenField, target.transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
+        gb.GetComponent<StayWithPlayer>().player = target.transform;
+
 
         player.resources.UseEnergy(energyRequired);
     }
@@ -106,5 +113,31 @@ public class Revive : ISpecial, IAbility {
     public AbilityHelper.CoopAction GetCoopAction()
     {
         return AbilityHelper.CoopAction.TargetHeal;
+    }
+
+    public string GetHoverDescription(Player p)
+    {
+        string strReq = "";
+        string intReq = "";
+        string stmReq = "";
+        if (StrengthRequired > 0)
+        {
+            strReq = StrengthRequired + " " + "STR. ";
+        }
+        if (IntelligenceRequired > 0)
+        {
+            intReq = IntelligenceRequired + " " + "INT. ";
+        }
+        if (StaminaRequired > 0)
+        {
+            stmReq = StaminaRequired + " " + "STM. ";
+        }
+        string requires = "Requires: ";
+        if (strReq.Length == 0 && intReq.Length == 0 && stmReq.Length == 0)
+        {
+            requires = " ";
+        }
+
+        return description + requires + strReq + intReq + stmReq + "\nHeal Amount: " + Mathf.Floor(baseDamage + Mathf.Max((baseDamage * (p.attributes.TotalIntelligence - IntelligenceRequired)), 0.0f)) + "\nCooldown: " + coolDownTime + " seconds.";
     }
 }

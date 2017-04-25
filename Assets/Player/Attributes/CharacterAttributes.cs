@@ -14,7 +14,6 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         set
         {
             experience = value;
-            Debug.Log("Experience: " + experience);
             if(experience >= experienceNeededForNextLevel)
             {
                 this.LevelUp();
@@ -35,12 +34,17 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
 
     int level;
     int experience;
-    int experienceNeededForNextLevel;
+    public int experienceNeededForNextLevel;
     int experienceMultiplier;
     public int StatPoints;
     int strength;
     int intelligence;
     int stamina;
+
+
+    private Object levelUpAura;
+    private Object levelUpBuff;
+    private AbilityAlert alert;
 
     public void Awake()
     {
@@ -55,6 +59,16 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         PassiveStrength = 0;
         PassiveIntelligence = 0;
         PassiveStamina = 0;
+
+        levelUpAura = Resources.Load("Levelup/LevelAura");
+        levelUpBuff = Resources.Load("Levelup/LevelBuff");
+        alert = GameObject.Find("AbilityAlert").GetComponent<AbilityAlert>();
+    }
+
+    //fixes level transition auto-level up
+    public void Start()
+    {
+        experienceNeededForNextLevel = level * experienceMultiplier;
     }
 
     void LevelUp()
@@ -66,8 +80,13 @@ public class CharacterAttributes : MonoBehaviour, IAttributes {
         // strength += 1;
         // intelligence += 1;
         // stamina += 1;
-        Debug.Log("level = " + level);
-        Debug.Log("experienceNeededForNextLevel = " + experienceNeededForNextLevel);
+        GameObject aura = Instantiate(levelUpAura, transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
+        aura.GetComponent<StayWithPlayer>().player = transform;
+        GameObject buff = Instantiate(levelUpBuff, transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
+        buff.GetComponent<StayWithPlayer>().player = transform;
+        Destroy(aura, 1.2f);
+        Destroy(buff, 1.0f);
+        alert.customMessage("Level up!", Color.yellow, 3.0f);
     }
 
     public void ResetPassiveBonus()

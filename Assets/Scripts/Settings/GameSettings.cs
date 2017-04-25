@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameSettings : MonoBehaviour {
+public class GameSettings : MonoBehaviour
+{
     public bool fullscreen;
     public int resolutionIndex;
+    public int textureQuality;
+    public int vSync;
     public float volume;
 }

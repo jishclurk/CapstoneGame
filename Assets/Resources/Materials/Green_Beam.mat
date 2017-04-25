@@ -50,7 +50,7 @@ Material:
       second:
         m_Texture: {fileID: 2800000, guid: 2679d96988fe24f228bf3f19732e55d7, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: -0.6711619}
+        m_Offset: {x: 0, y: -0.29885468}
     - first:
         name: _MetallicGlossMap
       second:

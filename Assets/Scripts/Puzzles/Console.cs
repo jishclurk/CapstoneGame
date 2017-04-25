@@ -15,9 +15,9 @@ public class Console : MonoBehaviour, ICircuitPiece {
 	// Use this for initialization
 	void Start () {
 		genSpot = this.gameObject.transform.FindChild ("Spot Light").GetComponent<Light> ();
-		turnedOn = false;
+		turnedOn = true;
 		complete = false;
-		trigger = this.gameObject.transform.FindChild ("ColliderEq_5").GetComponent<Gen_Collide> ();
+		//trigger = this.gameObject.transform.FindChild ("ColliderEq_5").GetComponent<Gen_Collide> ();
 		ps = this.transform.FindChild ("T2BlueLootItem").GetComponent<ParticleSystem> ();
 		ps.Stop ();
 		solved = false;
@@ -26,7 +26,7 @@ public class Console : MonoBehaviour, ICircuitPiece {
 	// Update is called once per frame
 	void Update () {
 
-		turnedOn = trigger.triggered;
+		//turnedOn = trigger.triggered;
 		if (!solved) {
 			if (turnedOn) {
 				if (activator == null || activator.Output ()) {

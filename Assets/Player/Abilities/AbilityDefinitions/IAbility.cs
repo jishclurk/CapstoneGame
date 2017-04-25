@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public interface IAbility {
 
     string name { get; set; }
+    string useType { get; }
     Image image { get; }
     int id { get; }
     float effectiveRange { get; }
@@ -19,5 +20,6 @@ public interface IAbility {
     bool isReady();
     AbilityHelper.Action GetAction();
     AbilityHelper.CoopAction GetCoopAction();
+    string GetHoverDescription(Player p);
 
 }
