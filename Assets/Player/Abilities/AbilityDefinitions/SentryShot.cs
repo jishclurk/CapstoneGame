@@ -34,7 +34,7 @@ public class SentryShot : IBasic, IAbility {
         useType = "what";
         name = "Sentry Shot";
         effectiveRange = 9.0f;
-        baseDamage = 5.0f;
+        baseDamage = 7.0f;
         fireRate = 0.15f;
         lastUsedTime = 0.0f;
 
@@ -43,7 +43,7 @@ public class SentryShot : IBasic, IAbility {
     public void Execute(Player player, GameObject origin, GameObject target) //Likely to be replaced with Character or Entity?
     {
         lastUsedTime = Time.time;
-        float adjustedDamage = baseDamage + (baseDamage * player.attributes.TotalStrength * 0.08f);
+        float adjustedDamage = baseDamage + (baseDamage * player.attributes.TotalStrength * 0.06f);
         target.GetComponent<EnemyHealth>().TakeDamage(adjustedDamage);
 
         GameObject project = Object.Instantiate(bullet, origin.transform.position, Quaternion.identity) as GameObject;
